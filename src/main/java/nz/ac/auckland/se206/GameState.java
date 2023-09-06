@@ -7,5 +7,17 @@ public class GameState {
   public static boolean isRiddleResolved = false;
 
   /** Indicates whether the key has been found. */
-  public static boolean isKeyFound = false;
+  public static boolean isCodeFound = false;
+
+  /** Player's name */
+  public static String playerName = null;
+
+  /** Difficulty level (easy/hard) */
+  public static String difficulty = "easy"; // Default to easy
+
+  /** Word to guess */
+  public static String wordToGuess = "couch";
+
+  /** Pincode to find */
+  public static String pincode = "1234";
 }

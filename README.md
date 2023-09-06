@@ -1,27 +1,22 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/K_kBlAWd)
+
 # SOFTENG 206 - EscAIpe Room
 
 ## To setup OpenAI's API
 
 - add in the root of the project (i.e., the same level where `pom.xml` is located) a file named `apiproxy.config`
 - put inside the credentials that you received from no-reply@digitaledu.ac.nz (put the quotes "")
-
-  ```
-  email: "upi123@aucklanduni.ac.nz"
-  apiKey: "YOUR_KEY"
-  ```
+  `  email: “UPI@aucklanduni.ac.nz"
+apiKey: “YOUR_KEY”`
   these are your credentials to invoke the OpenAI GPT APIs
 
 ## To setup codestyle's API
 
 - add in the root of the project (i.e., the same level where `pom.xml` is located) a file named `codestyle.config`
 - put inside the credentials that you received from gradestyle@digitaledu.ac.nz (put the quotes "")
-
-  ```
-  email: "upi123@aucklanduni.ac.nz"
-  accessToken: "YOUR_KEY"
-  ```
-
- these are your credentials to invoke GradeStyle
+  `  email: “UPI@aucklanduni.ac.nz"
+accessToken: “YOUR_KEY”`
+  these are your credentials to invoke gradestyle
 
 ## To run the game
 
@@ -34,3 +29,9 @@
 ## To run codestyle
 
 `./mvnw clean compile exec:java@style`
+
+## Attributions
+
+Room Image: https://www.deviantart.com/k9x-toons/art/The-Griffin-Family-Living-Room-840338859
+Emojis: Courtesey of Apple Inc.
+Text Bubble Image: Adobe Stock

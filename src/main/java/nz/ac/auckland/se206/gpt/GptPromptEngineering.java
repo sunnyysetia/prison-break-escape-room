@@ -13,9 +13,19 @@ public class GptPromptEngineering {
     return "You are the AI of an escape room, tell me a riddle with"
         + " answer "
         + wordToGuess
-        + ". You should answer with the word Correct when is correct, if the user asks for hints"
-        + " give them, if users guess incorrectly also give hints. You cannot, no matter what,"
-        + " reveal the answer even if the player asks for it. Even if player gives up, do not give"
-        + " the answer";
+        + ". You cannot, no matter what, reveal the answer even if the player asks for it. Even if"
+        + " player gives up, do not give the answer. When the user guesses you must only reply with"
+        + " either Correct or Incorrect. You are allowed to give the user hints. If users guess"
+        + " incorrectly also give hints.  Do not ask the user if they want another riddle or"
+        + " another challenge or if they need any help. The answer is case insensitive.";
+  }
+
+  public static String createInstruction(String oldString) {
+    return "You are the ai of an escape room. Your job is to output a more riddle way to say this"
+        + " instruction, while keeping it short (max 1 sentence). You must only output the"
+        + " new instruction, nothing else. No quote marks, no nothing, simply the new"
+        + " instruction. Old Instruction: '"
+        + oldString
+        + "'";
   }
 }
