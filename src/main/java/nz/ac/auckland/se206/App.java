@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.SceneManager.AppUi;
+import nz.ac.auckland.se206.speech.TextToSpeech;
 
 /**
  * This is the entry point of the JavaFX application, while you can change this class, it should
@@ -47,6 +48,13 @@ public class App extends Application {
   public void start(final Stage stage) throws IOException {
     SceneManager.addUi(SceneManager.AppUi.WAITING_LOBBY, App.loadFxml("waitinglobby"));
     Parent root = SceneManager.getUi(AppUi.WAITING_LOBBY);
+
+    stage.setOnCloseRequest(
+        (event) -> {
+          TextToSpeech textToSpeech = new TextToSpeech();
+          textToSpeech.terminate();
+        });
+
     scene = new Scene(root, 600, 470);
     stage.setScene(scene);
     stage.show();
