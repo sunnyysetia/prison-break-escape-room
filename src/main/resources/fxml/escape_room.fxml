@@ -74,34 +74,34 @@
          <children>
             <Pane fx:id="emojisPane" layoutY="-53.0" prefHeight="179.0" prefWidth="409.0">
                <children>
-                  <ImageView fx:id="mountain" disable="true" fitHeight="43.0" fitWidth="45.0" layoutX="65.0" layoutY="58.0" onMouseClicked="#clickEmoji" onMouseEntered="#changeCursorToHand" onMouseExited="#restoreCursorFromHand" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fx:id="pizza" disable="true" fitHeight="43.0" fitWidth="45.0" layoutX="65.0" layoutY="58.0" onMouseClicked="#clickEmoji" onMouseEntered="#changeCursorToHand" onMouseExited="#restoreCursorFromHand" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@../images/emojis/mountain.png" />
+                        <Image url="@../images/emojis/pizza.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="bike" disable="true" fitHeight="43.0" fitWidth="45.0" layoutX="107.0" layoutY="1.0" onMouseClicked="#clickEmoji" onMouseEntered="#changeCursorToHand" onMouseExited="#restoreCursorFromHand" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fx:id="burrito" disable="true" fitHeight="43.0" fitWidth="45.0" layoutX="110.0" layoutY="4.0" onMouseClicked="#clickEmoji" onMouseEntered="#changeCursorToHand" onMouseExited="#restoreCursorFromHand" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@../images/emojis/bike.png" />
+                        <Image url="@../images/emojis/burrito.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="teddy" disable="true" fitHeight="43.0" fitWidth="45.0" layoutX="216.0" layoutY="123.0" onMouseClicked="#clickEmoji" onMouseEntered="#changeCursorToHand" onMouseExited="#restoreCursorFromHand" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fx:id="pineapple" disable="true" fitHeight="52.0" fitWidth="55.0" layoutX="211.0" layoutY="120.0" onMouseClicked="#clickEmoji" onMouseEntered="#changeCursorToHand" onMouseExited="#restoreCursorFromHand" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@../images/emojis/teddy.png" />
+                        <Image url="@../images/emojis/pineapple.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="party" disable="true" fitHeight="43.0" fitWidth="45.0" layoutX="213.0" layoutY="1.0" onMouseClicked="#clickEmoji" onMouseEntered="#changeCursorToHand" onMouseExited="#restoreCursorFromHand" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fx:id="hotdog" disable="true" fitHeight="43.0" fitWidth="45.0" layoutX="213.0" layoutY="1.0" onMouseClicked="#clickEmoji" onMouseEntered="#changeCursorToHand" onMouseExited="#restoreCursorFromHand" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@../images/emojis/party.png" />
+                        <Image url="@../images/emojis/hotdog.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="money" disable="true" fitHeight="43.0" fitWidth="45.0" layoutX="260.0" layoutY="58.0" onMouseClicked="#clickEmoji" onMouseEntered="#changeCursorToHand" onMouseExited="#restoreCursorFromHand" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fx:id="fries" disable="true" fitHeight="43.0" fitWidth="45.0" layoutX="260.0" layoutY="58.0" onMouseClicked="#clickEmoji" onMouseEntered="#changeCursorToHand" onMouseExited="#restoreCursorFromHand" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@../images/emojis/money.png" />
+                        <Image url="@../images/emojis/fries.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="fire" disable="true" fitHeight="43.0" fitWidth="45.0" layoutX="352.0" layoutY="68.0" onMouseClicked="#clickEmoji" onMouseEntered="#changeCursorToHand" onMouseExited="#restoreCursorFromHand" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fx:id="popcorn" disable="true" fitHeight="43.0" fitWidth="45.0" layoutX="352.0" layoutY="68.0" onMouseClicked="#clickEmoji" onMouseEntered="#changeCursorToHand" onMouseExited="#restoreCursorFromHand" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@../images/emojis/fire.png" />
+                        <Image url="@../images/emojis/popcorn.png" />
                      </image>
                   </ImageView>
                   <ImageView fx:id="strawberry" disable="true" fitHeight="43.0" fitWidth="45.0" layoutX="18.0" layoutY="8.0" onMouseClicked="#clickEmoji" onMouseEntered="#changeCursorToHand" onMouseExited="#restoreCursorFromHand" pickOnBounds="true" preserveRatio="true" visible="false">
@@ -114,7 +114,7 @@
                         <Image url="@../images/emojis/burger.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="icecream" disable="true" fitHeight="43.0" fitWidth="45.0" layoutX="109.0" layoutY="123.0" onMouseClicked="#clickEmoji" onMouseEntered="#changeCursorToHand" onMouseExited="#restoreCursorFromHand" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fx:id="icecream" disable="true" fitHeight="49.0" fitWidth="52.0" layoutX="103.0" layoutY="120.0" onMouseClicked="#clickEmoji" onMouseEntered="#changeCursorToHand" onMouseExited="#restoreCursorFromHand" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../images/emojis/icecream.png" />
                      </image>
@@ -129,7 +129,7 @@
                         <Image url="@../images/emojis/chocolate.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="beverage" disable="true" fitHeight="43.0" fitWidth="45.0" layoutX="19.0" layoutY="122.0" onMouseClicked="#clickEmoji" onMouseEntered="#changeCursorToHand" onMouseExited="#restoreCursorFromHand" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fx:id="beverage" disable="true" fitHeight="47.0" fitWidth="52.0" layoutX="19.0" layoutY="118.0" onMouseClicked="#clickEmoji" onMouseEntered="#changeCursorToHand" onMouseExited="#restoreCursorFromHand" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../images/emojis/beverage.png" />
                      </image>
