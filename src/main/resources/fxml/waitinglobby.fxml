@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="waitingLobby" prefHeight="470.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.WaitingLobbyController">
+    <children>
+        <Label layoutX="36.0" layoutY="24.0" prefHeight="41.0" prefWidth="531.0" text="SOFTENG 206 - ESCAPE ROOM">
+            <font>
+                <Font name="Arial" size="35.0" />
+            </font>
+        </Label>
+        <Label layoutX="192.0" layoutY="120.0" text="Enter Your Name:">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <TextField fx:id="nameField" alignment="CENTER" layoutX="209.0" layoutY="168.0" prefHeight="45.0" prefWidth="184.0" promptText="Your Name">
+         <font>
+            <Font size="24.0" />
+         </font></TextField>
+        
+        <Label layoutX="200.0" layoutY="247.0" text="Select Difficulty:">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <RadioButton fx:id="easyButton" layoutX="216.0" layoutY="300.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="73.0" selected="true" text="Easy">
+         <toggleGroup>
+            <ToggleGroup fx:id="tgDifficulty" />
+         </toggleGroup>
+         <font>
+            <Font size="18.0" />
+         </font></RadioButton>
+        <RadioButton fx:id="hardButton" layoutX="310.0" layoutY="296.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="73.0" text="Hard" toggleGroup="$tgDifficulty">
+         <font>
+            <Font size="18.0" />
+         </font></RadioButton> 
+        
+        <Button fx:id="onBeginGameButton" layoutX="222.0" layoutY="378.0" mnemonicParsing="false" onAction="#onBeginGame" text="Begin Game">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Button>
+    </children>
+</Pane>
