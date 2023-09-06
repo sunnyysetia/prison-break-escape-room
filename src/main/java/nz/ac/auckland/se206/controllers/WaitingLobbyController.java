@@ -21,6 +21,7 @@ public class WaitingLobbyController {
   @FXML private TextField nameField;
   @FXML private Button onBeginGameButton;
   @FXML private ToggleGroup tgDifficulty;
+  @FXML private ToggleGroup tgTime;
 
   private ArrayList<String> easyList = new ArrayList<>(Arrays.asList("curtains", "couch", "plant"));
   private ArrayList<String> hardList =
@@ -64,13 +65,18 @@ public class WaitingLobbyController {
       GameState.playerName = playerName;
 
       // Get the selected radio button (difficulty)
-      RadioButton selectedRadioButton = (RadioButton) tgDifficulty.getSelectedToggle();
+      RadioButton selectedDifficultyButton = (RadioButton) tgDifficulty.getSelectedToggle();
+      RadioButton selectedTimeButton = (RadioButton) tgTime.getSelectedToggle();
 
-      if (selectedRadioButton != null) {
+      if (selectedDifficultyButton != null && selectedTimeButton != null) {
 
-        String selectedDifficulty = selectedRadioButton.getText().toLowerCase();
+        String selectedDifficulty = selectedDifficultyButton.getText().toLowerCase();
         System.out.println("Difficulty: " + selectedDifficulty);
         GameState.difficulty = selectedDifficulty;
+
+        String selectedTime = selectedTimeButton.getText().toLowerCase();
+        System.out.println("Time: " + selectedTime);
+        GameState.time = selectedTime;
 
         Random randomWord = new Random();
 

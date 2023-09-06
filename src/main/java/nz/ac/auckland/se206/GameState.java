@@ -12,8 +12,11 @@ public class GameState {
   /** Player's name */
   public static String playerName = null;
 
-  /** Difficulty level (easy/hard) */
+  /** Difficulty level (easy/medium/hard) */
   public static String difficulty = "easy"; // Default to easy
+
+  /** Timer length (2m/4m/6m) */
+  public static String time = "2:00"; // Default to 2 minutes
 
   /** Word to guess */
   public static String wordToGuess = "couch";
