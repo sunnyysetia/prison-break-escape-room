@@ -133,6 +133,15 @@ public class EscapeRoomController {
    */
   public void initialize() throws ApiProxyException {
 
+    // Configure the timer length based on what the user selected.
+    if (GameState.time.equals("2:00")) {
+      remainingSeconds = 120;
+    } else if (GameState.time.equals("4:00")) {
+      remainingSeconds = 240;
+    } else if (GameState.time.equals("6:00")) {
+      remainingSeconds = 360;
+    }
+
     // Start a timer for the game.
     startTimer();
 
