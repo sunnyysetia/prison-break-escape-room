@@ -29,36 +29,36 @@
             <font>
                 <Font size="30.0" />
             </font>
-        </Label>
-        <RadioButton fx:id="easyButton" layoutX="143.0" layoutY="241.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="73.0" selected="true" text="Easy">
-         <toggleGroup>
-            <ToggleGroup fx:id="tgDifficulty" />
-         </toggleGroup>
-         <font>
-            <Font size="18.0" />
-         </font></RadioButton> 
+        </Label> 
         
         <Button fx:id="onBeginGameButton" layoutX="222.0" layoutY="378.0" mnemonicParsing="false" onAction="#onBeginGame" text="Begin Game">
             <font>
                 <Font size="24.0" />
             </font>
         </Button>
+      <RadioButton fx:id="hardButton" layoutX="373.0" layoutY="241.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="73.0" selected="true" text="Hard">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <toggleGroup>
+            <ToggleGroup fx:id="tgDifficulty" />
+         </toggleGroup>
+      </RadioButton>
       <RadioButton fx:id="mediumButton" layoutX="247.0" layoutY="241.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="107.0" selected="true" text="Medium" toggleGroup="$tgDifficulty">
          <font>
             <Font size="18.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="hardButton" layoutX="373.0" layoutY="241.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="73.0" selected="true" text="Hard" toggleGroup="$tgDifficulty">
+        <RadioButton fx:id="easyButton" layoutX="143.0" layoutY="241.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="73.0" selected="true" text="Easy" toggleGroup="$tgDifficulty">
          <font>
             <Font size="18.0" />
-         </font>
-      </RadioButton>
+         </font></RadioButton>
       <Label layoutX="221.0" layoutY="278.0" text="Select Time:">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <RadioButton fx:id="twoMinButton" layoutX="149.0" layoutY="331.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="73.0" selected="true" text="2:00">
+      <RadioButton fx:id="sixMinButton" layoutX="379.0" layoutY="331.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="73.0" selected="true" text="6:00">
          <font>
             <Font size="18.0" />
          </font>
@@ -71,7 +71,7 @@
             <Font size="18.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="sixMinButton" layoutX="379.0" layoutY="331.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="73.0" selected="true" text="6:00" toggleGroup="$tgTime">
+      <RadioButton fx:id="twoMinButton" layoutX="149.0" layoutY="331.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="73.0" selected="true" text="2:00" toggleGroup="$tgTime">
          <font>
             <Font size="18.0" />
          </font>
