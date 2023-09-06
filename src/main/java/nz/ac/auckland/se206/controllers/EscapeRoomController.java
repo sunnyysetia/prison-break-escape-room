@@ -135,12 +135,10 @@ public class EscapeRoomController {
 
     // Configure the timer length based on what the user selected.
     if (GameState.time.equals("2:00")) {
-      System.out.println("code failed");
       remainingSeconds = 120;
     } else if (GameState.time.equals("4:00")) {
       remainingSeconds = 240;
     } else if (GameState.time.equals("6:00")) {
-      System.out.println("code reached");
       remainingSeconds = 360;
     }
 
