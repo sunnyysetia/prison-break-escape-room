@@ -72,12 +72,12 @@ public class EscapeRoomController {
   @FXML private Button checkGuessMemory;
   @FXML private Button goBackMemory;
   @FXML private Label memoryCountdownLabel;
-  @FXML private ImageView teddy;
-  @FXML private ImageView mountain;
-  @FXML private ImageView bike;
-  @FXML private ImageView party;
-  @FXML private ImageView money;
-  @FXML private ImageView fire;
+  @FXML private ImageView pineapple;
+  @FXML private ImageView pizza;
+  @FXML private ImageView burrito;
+  @FXML private ImageView hotdog;
+  @FXML private ImageView fries;
+  @FXML private ImageView popcorn;
   @FXML private ImageView strawberry;
   @FXML private ImageView burger;
   @FXML private ImageView icecream;
@@ -105,12 +105,12 @@ public class EscapeRoomController {
   private List<String> allEmojis =
       new ArrayList<>(
           List.of(
-              "teddy",
-              "mountain",
-              "bike",
-              "party",
-              "money",
-              "fire",
+              "pineapple",
+              "pizza",
+              "burrito",
+              "hotdog",
+              "fries",
+              "popcorn",
               "strawberry",
               "burger",
               "chocolate",
@@ -576,16 +576,9 @@ public class EscapeRoomController {
       setImageView(false, emoji, true);
     }
 
-    // Generate random number of emojis to guess based on difficulty
-    int minEmojis;
-    int maxEmojis;
-    if (GameState.difficulty.equals("easy")) {
-      minEmojis = 3;
-      maxEmojis = 4;
-    } else {
-      minEmojis = 5;
-      maxEmojis = 6;
-    }
+    // Generate random number of emojis between min and max
+    int minEmojis = 3;
+    int maxEmojis = 5;
 
     Random random = new Random();
     int numberOfEmojisToGuess = random.nextInt(maxEmojis - minEmojis + 1) + minEmojis;
