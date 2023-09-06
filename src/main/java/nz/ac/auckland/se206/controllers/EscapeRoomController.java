@@ -134,13 +134,7 @@ public class EscapeRoomController {
   public void initialize() throws ApiProxyException {
 
     // Configure the timer length based on what the user selected.
-    if (GameState.time.equals("2:00")) {
-      remainingSeconds = 120;
-    } else if (GameState.time.equals("4:00")) {
-      remainingSeconds = 240;
-    } else if (GameState.time.equals("6:00")) {
-      remainingSeconds = 360;
-    }
+    remainingSeconds = GameState.time;
 
     // Start a timer for the game.
     startTimer();
@@ -227,7 +221,7 @@ public class EscapeRoomController {
     String timeText = String.format("%02d:%02d", minutes, seconds);
 
     // Change timer color from black to red as time runs out
-    double progress = 1.0 - (double) remainingSeconds / (2 * 60);
+    double progress = 1.0 - (double) remainingSeconds / (GameState.time);
     Color textColor = Color.BLACK.interpolate(Color.RED, progress);
 
     timerLabel.setTextFill(textColor);

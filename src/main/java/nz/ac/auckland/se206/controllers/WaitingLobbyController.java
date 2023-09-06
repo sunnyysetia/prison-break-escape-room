@@ -76,8 +76,13 @@ public class WaitingLobbyController {
 
         String selectedTime = selectedTimeButton.getText().toLowerCase();
         System.out.println("Time: " + selectedTime);
-        GameState.time = selectedTime;
-
+        if (selectedTime.equals("2:00")) {
+          GameState.time = 120;
+        } else if (selectedTime.equals("4:00")) {
+          GameState.time = 240;
+        } else if (selectedTime.equals("6:00")) {
+          GameState.time = 360;
+        }
         Random randomWord = new Random();
 
         // Set word to guess

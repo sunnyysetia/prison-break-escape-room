@@ -16,7 +16,7 @@ public class GameState {
   public static String difficulty = "easy"; // Default to easy
 
   /** Timer length (2m/4m/6m) */
-  public static String time = "2:00"; // Default to 2 minutes
+  public static int time = 120; // Default to 2 minutes
 
   /** Word to guess */
   public static String wordToGuess = "couch";
