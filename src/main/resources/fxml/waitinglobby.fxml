@@ -30,14 +30,10 @@
                 <Font size="30.0" />
             </font>
         </Label>
-        <RadioButton fx:id="easyButton" layoutX="216.0" layoutY="300.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="73.0" selected="true" text="Easy">
+        <RadioButton fx:id="easyButton" layoutX="143.0" layoutY="300.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="73.0" selected="true" text="Easy">
          <toggleGroup>
             <ToggleGroup fx:id="tgDifficulty" />
          </toggleGroup>
-         <font>
-            <Font size="18.0" />
-         </font></RadioButton>
-        <RadioButton fx:id="hardButton" layoutX="310.0" layoutY="296.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="73.0" text="Hard" toggleGroup="$tgDifficulty">
          <font>
             <Font size="18.0" />
          </font></RadioButton> 
@@ -47,5 +43,15 @@
                 <Font size="24.0" />
             </font>
         </Button>
+      <RadioButton fx:id="mediumButton" layoutX="247.0" layoutY="300.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="107.0" selected="true" text="Medium" toggleGroup="$tgDifficulty">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </RadioButton>
+      <RadioButton fx:id="hardButton" layoutX="373.0" layoutY="300.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="73.0" selected="true" text="Hard" toggleGroup="$tgDifficulty">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </RadioButton>
     </children>
 </Pane>
