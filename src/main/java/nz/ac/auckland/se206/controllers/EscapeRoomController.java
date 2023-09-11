@@ -768,9 +768,13 @@ public class EscapeRoomController {
             }
 
             if (resultMessage.getContent().contains("hint")) {
-              int hint = Integer.parseInt(hintLabel.getText());
-              hint++;
-              hintLabel.setText("" + hint);
+              try {
+                int hint = Integer.parseInt(hintLabel.getText());
+                hint++;
+                hintLabel.setText("" + hint);
+              } catch (NumberFormatException ex) {
+                hintLabel.setText("Error");
+              }
             }
           }
         });
