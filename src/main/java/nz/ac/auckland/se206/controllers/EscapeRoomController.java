@@ -53,6 +53,7 @@ public class EscapeRoomController {
   @FXML private Group pincodeGroup;
   @FXML private Button giveUpButton;
   @FXML private Label timerLabel;
+  @FXML private Label hintLabel;
   @FXML private Label speechBubble;
 
   // Room FXML
@@ -141,6 +142,9 @@ public class EscapeRoomController {
 
     // Update the UI label to display the timer.
     updateTimerLabel();
+
+    // Set the hint label to display 0 hints.
+    hintLabel.setText("0");
 
     // Use text-to-speech to welcome the player.
     textToSpeech("Welcome to my house " + GameState.playerName + "!");
@@ -761,6 +765,16 @@ public class EscapeRoomController {
             if (resultMessage.getRole().equals("assistant")
                 && resultMessage.getContent().startsWith("Correct")) {
               GameState.isRiddleResolved = true;
+            }
+
+            if (resultMessage.getContent().contains("hint")) {
+              try {
+                int hint = Integer.parseInt(hintLabel.getText());
+                hint++;
+                hintLabel.setText("" + hint);
+              } catch (NumberFormatException ex) {
+                hintLabel.setText("Error");
+              }
             }
           }
         });

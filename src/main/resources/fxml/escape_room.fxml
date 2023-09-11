@@ -188,5 +188,15 @@
             </Label>
          </children>
       </Group>
+      <Label layoutX="232.0" layoutY="419.0" prefHeight="30.0" prefWidth="59.0" text="Hints :" textAlignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="hintLabel" layoutX="289.0" layoutY="413.0" prefHeight="41.0" prefWidth="65.0" textAlignment="CENTER">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
    </children>
 </Pane>
