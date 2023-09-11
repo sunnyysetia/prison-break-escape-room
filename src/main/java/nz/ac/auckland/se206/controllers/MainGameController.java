@@ -7,14 +7,20 @@ import javafx.scene.layout.Pane;
 
 public class MainGameController {
 
+  // This pane contains all the three panes below, we move this pane left and right
   @FXML private Pane roomCollectioPane;
+
+  // These three panes below are the individual rooms
   @FXML private Pane prisonCellPane;
   @FXML private Pane cafeteriaPane;
   @FXML private Pane courtyardPane;
 
+  // Create a transition for each direction
   private TranslateTransition leftSwitch = new TranslateTransition();
   private TranslateTransition rightSwitch = new TranslateTransition();
 
+  // to ensure smooth transition and prevent freeze while transitioning between rooms, use a
+  // seperate thread
   Thread levelSwitchThread =
       new Thread(
           () -> {
@@ -28,12 +34,14 @@ public class MainGameController {
 
   public void initialize() {}
 
+  // plays the animation for moving left
   @FXML
   public void leftPane(MouseEvent event) {
     leftSwitch.play();
     System.out.println("Left switch clicked");
   }
 
+  // plays the animation for moving right
   @FXML
   public void rightPane(MouseEvent event) {
     rightSwitch.play();
