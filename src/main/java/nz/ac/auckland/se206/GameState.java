@@ -23,4 +23,10 @@ public class GameState {
 
   /** Pincode to find */
   public static String pincode = "1234";
+
+  /** current room */
+  public static int currentRoom = 1;
+
+  /** switching room (state of whether room switching animation is playing) */
+  public static boolean switchingRoom = false;
 }

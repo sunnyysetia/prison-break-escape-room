@@ -27,7 +27,7 @@
             <Font size="15.0" />
          </font>
       </Button>
-      <Group fx:id="roomGroup" focusTraversable="true" layoutX="-1.0">
+      <Group fx:id="roomGroup" focusTraversable="true" layoutX="-1.0" visible="false">
          <children>
             <Group layoutX="23.0" layoutY="76.0">
                <children>
@@ -169,7 +169,7 @@
             <Button fx:id="pincodeUnlock" layoutX="135.0" layoutY="108.0" mnemonicParsing="false" onAction="#onPincodeAttempt" text="Unlock" />
          </children>
       </Group>
-      <Group fx:id="chatboxGroup" layoutX="319.0" layoutY="4.0">
+      <Group fx:id="chatboxGroup" layoutX="319.0" layoutY="4.0" visible="false">
          <children>
             <ImageView fitHeight="83.0" fitWidth="235.0" preserveRatio="true">
                <image>
@@ -198,5 +198,50 @@
             <Font size="27.0" />
          </font>
       </Label>
+      <Pane fx:id="roomCollectionPane" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Pane fx:id="courtyardPane" layoutX="-600.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="600.0">
+               <children>
+                  <ImageView fitHeight="340.0" layoutX="6.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/courtyard.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane fx:id="cafeteriaPane" layoutX="600.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="600.0">
+               <children>
+                  <ImageView fitHeight="340.0" layoutX="6.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/kitchen.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane fx:id="prisonCellPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="600.0">
+               <children>
+                  <ImageView fitHeight="340.0" layoutX="6.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/cell.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <Pane fx:id="UIPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="600.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="50.0" layoutX="14.0" layoutY="209.0" onMouseClicked="#leftPane" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+               <image>
+                  <Image url="@../images/arrow.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="50.0" layoutX="536.0" layoutY="209.0" onMouseClicked="#rightPane" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/arrow.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
    </children>
 </Pane>
