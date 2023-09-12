@@ -204,7 +204,7 @@ public class EscapeRoomController {
     // Run a GPT-based riddle using a chat message.
     runGptRiddle(
         new ChatMessage(
-            "user", GptPromptEngineering.getRiddleWithGivenWord(GameState.wordToGuess)));
+            "user", GptPromptEngineering.getRiddleWithGivenWord(GameState.wordToGuess, GameState.difficulty)));
   }
 
   private void switchRoom(int nextRoom) {
