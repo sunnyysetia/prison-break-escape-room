@@ -231,12 +231,12 @@
       </Pane>
       <Pane fx:id="UIPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="600.0">
          <children>
-            <ImageView fitHeight="150.0" fitWidth="50.0" layoutX="14.0" layoutY="209.0" onMouseClicked="#leftPane" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+            <ImageView fx:id="leftButton" fitHeight="150.0" fitWidth="50.0" layoutX="14.0" layoutY="209.0" onMouseClicked="#leftPane" pickOnBounds="true" preserveRatio="true" rotate="180.0">
                <image>
                   <Image url="@../images/arrow.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="50.0" layoutX="536.0" layoutY="209.0" onMouseClicked="#rightPane" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="rightButton" fitHeight="150.0" fitWidth="50.0" layoutX="536.0" layoutY="209.0" onMouseClicked="#rightPane" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/arrow.png" />
                </image>

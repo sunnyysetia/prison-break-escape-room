@@ -76,6 +76,8 @@ public class EscapeRoomController {
   @FXML private Rectangle couch;
   @FXML private Rectangle airvent;
   @FXML private Rectangle plant;
+  @FXML private ImageView leftButton;
+  @FXML private ImageView rightButton;
 
   // Memory recall fxml
   @FXML private Pane emojisPane;
@@ -230,6 +232,15 @@ public class EscapeRoomController {
     }
     roomSwitch.play();
     GameState.currentRoom = nextRoom;
+
+    if (GameState.currentRoom == 0) {
+      leftButton.setVisible(false);
+    } else if (GameState.currentRoom == 2) {
+      rightButton.setVisible(false);
+    } else {
+      leftButton.setVisible(true);
+      rightButton.setVisible(true);
+    }
   }
 
   // plays the animation for moving left
