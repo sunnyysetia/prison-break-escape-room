@@ -207,13 +207,13 @@ public class EscapeRoomController {
 
   private void togglePhone() {
     System.out.println("toggling phone");
-    GameState.phoneAnimation = true;
+    GameState.togglingPhone = true;
     Thread waitThread =
         new Thread(
             () -> {
               try {
                 Thread.sleep(700);
-                GameState.phoneAnimation = false;
+                GameState.togglingPhone = false;
               } catch (InterruptedException e) {
                 e.printStackTrace();
               }
@@ -236,7 +236,7 @@ public class EscapeRoomController {
   @FXML
   public void openPhone(MouseEvent event) {
     System.out.println("Phone clicked");
-    if (GameState.phoneAnimation) {
+    if (GameState.togglingPhone) {
       return;
     } else {
       togglePhone();

@@ -31,7 +31,7 @@ public class GameState {
   public static boolean switchingRoom = false;
 
   /** opening phone to show chat screen, similar to switchingRoom boolean */
-  public static boolean phoneAnimation = false;
+  public static boolean togglingPhone = false;
 
   public static boolean phoneIsOpen = false;
 }
