@@ -62,14 +62,6 @@
             </Group>
          </children>
       </Group>
-      <Group fx:id="chatGroup" layoutX="72.0" layoutY="81.0" visible="false">
-         <children>
-            <TextArea fx:id="chatTextArea" editable="false" focusTraversable="false" prefHeight="254.0" prefWidth="456.0" wrapText="true" />
-            <TextField fx:id="inputText" layoutX="2.0" layoutY="266.0" onKeyPressed="#onKeyPressed" prefHeight="26.0" prefWidth="374.0" />
-            <Button fx:id="sendButton" layoutX="392.0" layoutY="266.0" mnemonicParsing="false" onAction="#onSendMessage" text="Send" />
-            <Button layoutX="392.0" layoutY="291.0" mnemonicParsing="false" onAction="#onNavigateToRoom" text="Go Back" />
-         </children>
-      </Group>
       <Group fx:id="memoryGroup" layoutX="100.0" layoutY="154.0" visible="false">
          <children>
             <Pane fx:id="emojisPane" layoutY="-53.0" prefHeight="179.0" prefWidth="409.0">
@@ -243,5 +235,22 @@
             </ImageView>
          </children>
       </Pane>
+      <Pane fx:id="phonePane" layoutX="110.0" layoutY="365.0" prefHeight="118.0" prefWidth="175.0" scaleX="0.7" scaleY="0.7" scaleZ="0.7">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#openPhone" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
+               <image>
+                  <Image url="@../images/phone.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Group fx:id="chatGroup" layoutX="70.0" layoutY="-333.0">
+         <children>
+            <TextArea fx:id="chatTextArea" editable="false" focusTraversable="false" prefHeight="254.0" prefWidth="456.0" wrapText="true" />
+            <TextField fx:id="inputText" layoutX="2.0" layoutY="266.0" onKeyPressed="#onKeyPressed" prefHeight="26.0" prefWidth="374.0" />
+            <Button fx:id="sendButton" layoutX="392.0" layoutY="266.0" mnemonicParsing="false" onAction="#onSendMessage" text="Send" />
+            <Button layoutX="392.0" layoutY="291.0" mnemonicParsing="false" onAction="#onNavigateToRoom" text="Go Back" />
+         </children>
+      </Group>
    </children>
 </Pane>
