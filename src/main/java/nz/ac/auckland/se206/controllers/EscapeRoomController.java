@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -44,6 +45,14 @@ import nz.ac.auckland.se206.speech.TextToSpeech;
 
 /** Controller class for the room view. */
 public class EscapeRoomController {
+
+  // This pane contains all the three panes below, we move this pane left and right
+  @FXML private Pane roomCollectionPane;
+
+  // These three panes below are the individual rooms
+  @FXML private Pane prisonCellPane;
+  @FXML private Pane cafeteriaPane;
+  @FXML private Pane courtyardPane;
 
   // Shared FXML
   @FXML private Group chatboxGroup;
@@ -136,7 +145,6 @@ public class EscapeRoomController {
 
     // Configure the timer length based on what the user selected.
     remainingSeconds = GameState.time;
-
     // Start a timer for the game.
     startTimer();
 
@@ -195,6 +203,55 @@ public class EscapeRoomController {
     runGptRiddle(
         new ChatMessage(
             "user", GptPromptEngineering.getRiddleWithGivenWord(GameState.wordToGuess)));
+  }
+
+  private void switchRoom(int nextRoom) {
+    GameState.switchingRoom = true;
+    // use a new method to switch between rooms to prevent spamming and causing visual glitches
+    Thread waitThread =
+        new Thread(
+            () -> {
+              try {
+                Thread.sleep(700);
+                GameState.switchingRoom = false;
+              } catch (InterruptedException e) {
+                e.printStackTrace();
+              }
+            });
+    waitThread.setDaemon(true);
+    waitThread.start();
+    final TranslateTransition roomSwitch = new TranslateTransition();
+    roomSwitch.setNode(roomCollectionPane);
+    roomSwitch.setDuration(javafx.util.Duration.millis(500));
+    if (nextRoom > GameState.currentRoom) {
+      roomSwitch.setByX(-600);
+    } else {
+      roomSwitch.setByX(600);
+    }
+    roomSwitch.play();
+    GameState.currentRoom = nextRoom;
+  }
+
+  // plays the animation for moving left
+  @FXML
+  public void leftPane(MouseEvent event) {
+    System.out.println("Left switch clicked");
+    if (GameState.currentRoom == 0 || GameState.switchingRoom) {
+      return;
+    } else {
+      switchRoom(GameState.currentRoom - 1);
+    }
+  }
+
+  // plays the animation for moving right
+  @FXML
+  public void rightPane(MouseEvent event) {
+    System.out.println("Right switch clicked");
+    if (GameState.currentRoom == 2 || GameState.switchingRoom) {
+      return;
+    } else {
+      switchRoom(GameState.currentRoom + 1);
+    }
   }
 
   // Timer
