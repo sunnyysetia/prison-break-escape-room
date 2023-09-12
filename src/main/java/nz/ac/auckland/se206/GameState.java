@@ -29,4 +29,9 @@ public class GameState {
 
   /** switching room (state of whether room switching animation is playing) */
   public static boolean switchingRoom = false;
+
+  /** opening phone to show chat screen, similar to switchingRoom boolean */
+  public static boolean togglingPhone = false;
+
+  public static boolean phoneIsOpen = false;
 }

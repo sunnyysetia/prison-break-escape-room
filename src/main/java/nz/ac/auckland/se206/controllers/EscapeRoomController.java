@@ -207,6 +207,44 @@ public class EscapeRoomController {
             "user", GptPromptEngineering.getRiddleWithGivenWord(GameState.wordToGuess)));
   }
 
+  private void togglePhone() {
+    System.out.println("toggling phone");
+    GameState.togglingPhone = true;
+    Thread waitThread =
+        new Thread(
+            () -> {
+              try {
+                Thread.sleep(700);
+                GameState.togglingPhone = false;
+              } catch (InterruptedException e) {
+                e.printStackTrace();
+              }
+            });
+    waitThread.setDaemon(true);
+    waitThread.start();
+    final TranslateTransition phoneSwitch = new TranslateTransition();
+    phoneSwitch.setNode(chatGroup);
+    phoneSwitch.setDuration(javafx.util.Duration.millis(500));
+    if (GameState.phoneIsOpen) {
+      phoneSwitch.setByY(-410);
+      GameState.phoneIsOpen = false;
+    } else {
+      phoneSwitch.setByY(410);
+      GameState.phoneIsOpen = true;
+    }
+    phoneSwitch.play();
+  }
+
+  @FXML
+  public void openPhone(MouseEvent event) {
+    System.out.println("Phone clicked");
+    if (GameState.togglingPhone) {
+      return;
+    } else {
+      togglePhone();
+    }
+  }
+
   private void switchRoom(int nextRoom) {
     GameState.switchingRoom = true;
     // use a new method to switch between rooms to prevent spamming and causing visual glitches
