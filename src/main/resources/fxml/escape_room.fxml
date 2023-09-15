@@ -15,21 +15,16 @@
 
 <Pane fx:id="room" focusTraversable="true" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="470.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.EscapeRoomController">
    <children>
-      <Label fx:id="timerLabel" layoutX="512.0" layoutY="411.0" prefHeight="41.0" prefWidth="76.0" textAlignment="CENTER">
+      <Label fx:id="timerLabel" layoutX="512.0" layoutY="15.0" prefHeight="41.0" prefWidth="76.0" textAlignment="CENTER">
          <font>
             <Font size="27.0" />
          </font></Label>
-      <Label layoutX="359.0" layoutY="419.0" text="Time Remaining :" textAlignment="CENTER">
+      <Label layoutX="15.0" layoutY="19.0" prefHeight="30.0" prefWidth="59.0" text="Hints :" textAlignment="CENTER">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="232.0" layoutY="419.0" prefHeight="30.0" prefWidth="59.0" text="Hints :" textAlignment="CENTER">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label fx:id="hintLabel" layoutX="289.0" layoutY="413.0" prefHeight="41.0" prefWidth="65.0" textAlignment="CENTER">
+      <Label fx:id="hintLabel" layoutX="75.0" layoutY="15.0" prefHeight="41.0" prefWidth="65.0" textAlignment="CENTER">
          <font>
             <Font size="27.0" />
          </font>
@@ -65,7 +60,7 @@
             </Pane>
          </children>
       </Pane>
-      <Pane fx:id="UIPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="600.0">
+      <Pane fx:id="UIPane" layoutY="200.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="600.0">
          <children>
             <ImageView fx:id="leftButton" fitHeight="150.0" fitWidth="50.0" layoutX="14.0" layoutY="209.0" onMouseClicked="#leftPane" pickOnBounds="true" preserveRatio="true" rotate="180.0">
                <image>
@@ -80,7 +75,7 @@
          </children>
       </Pane>
       <Rectangle fx:id="dimScreen" arcHeight="5.0" arcWidth="5.0" disable="true" height="470.0" opacity="0.6" stroke="BLACK" strokeType="INSIDE" visible="false" width="600.0" />
-      <Pane fx:id="phonePane" layoutX="110.0" layoutY="365.0" prefHeight="118.0" prefWidth="175.0" scaleX="0.7" scaleY="0.7" scaleZ="0.7">
+      <Pane fx:id="phonePane" layoutX="75.0" layoutY="366.0" prefHeight="118.0" prefWidth="175.0" scaleX="0.7" scaleY="0.7" scaleZ="0.7">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#openPhone" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
                <image>
