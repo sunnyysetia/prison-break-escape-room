@@ -1,5 +1,7 @@
 package nz.ac.auckland.se206;
 
+import javafx.beans.property.SimpleBooleanProperty;
+
 /** Represents the state of the game. */
 public class GameState {
 
@@ -36,5 +38,5 @@ public class GameState {
   public static boolean phoneIsOpen = false;
 
   /** disables input functionality when gpt is currently processing a response */
-  public static boolean gptThinking = false;
+  public static SimpleBooleanProperty gptThinking = new SimpleBooleanProperty(false);
 }
