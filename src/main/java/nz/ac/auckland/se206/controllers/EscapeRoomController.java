@@ -327,7 +327,10 @@ public class EscapeRoomController {
     System.out.println("key " + event.getCode() + " pressed");
     if (event.getCode() == KeyCode.ENTER) {
       // Prevent the Enter key event from propagating further
-      event.consume();
+      // event.consume();
+      if (GameState.phoneIsOpen) {
+        send_button.fire();
+      }
 
       // // Call onSendMessage if input is not blank
       // String message = inputText.getText().trim();
