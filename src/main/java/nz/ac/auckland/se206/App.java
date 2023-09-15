@@ -54,6 +54,7 @@ public class App extends Application {
           TextToSpeech textToSpeech = new TextToSpeech();
           textToSpeech.terminate();
         });
+    stage.setResizable(false);
 
     scene = new Scene(root, 600, 470);
     stage.setScene(scene);
