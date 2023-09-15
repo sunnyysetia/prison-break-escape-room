@@ -131,6 +131,13 @@ public class EscapeRoomController {
                   hBox.getChildren().add(textFlow);
                   messagesVBox.getChildren().add(hBox);
                   messagesTextField.clear();
+
+                  try {
+                    runGptRiddle(new ChatMessage("user", message));
+                  } catch (ApiProxyException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                  }
                 }
               }
             });
@@ -158,14 +165,14 @@ public class EscapeRoomController {
     textFlow.setStyle("-fx-background-color: rgb(233,233,235); " + "-fx-background-radius: 10px; ");
     textFlow.setPadding(new Insets(5, 10, 5, 10));
     hBox.getChildren().add(textFlow);
-    vbox.getChildren().add(hBox);
-    // Platform.runLater(
-    //     new Runnable() {
-    //       @Override
-    //       public void run() {
-    //         vbox.getChildren().add(hBox);
-    //       }
-    //     });
+    // vbox.getChildren().add(hBox);
+    Platform.runLater(
+        new Runnable() {
+          @Override
+          public void run() {
+            vbox.getChildren().add(hBox);
+          }
+        });
   }
 
   private void togglePhone() {
@@ -331,16 +338,6 @@ public class EscapeRoomController {
       if (GameState.phoneIsOpen) {
         send_button.fire();
       }
-
-      // // Call onSendMessage if input is not blank
-      // String message = inputText.getText().trim();
-      // if (!message.isEmpty()) {
-      //   try {
-      //     onSendMessage(null);
-      //   } catch (ApiProxyException | IOException e) {
-      //     e.printStackTrace();
-      //   }
-      // }
     }
   }
 
@@ -419,7 +416,7 @@ public class EscapeRoomController {
           System.out.println("GPT result: " + resultContent);
 
           // Send the GPT-generated instruction to the user.
-          // sendMessageToUser(resultContent);
+          addLabel(resultContent, messagesVBox);
         });
 
     // Create a new thread for running the GPT task.
@@ -488,7 +485,7 @@ public class EscapeRoomController {
           ChatMessage resultMessage = gptTask.getValue();
           if (resultMessage != null) {
             // Append the GPT response message to the chat.
-            // appendChatMessage(resultMessage);
+            addLabel(resultMessage.getContent(), messagesVBox);
             // Check if the response indicates a correct riddle answer.
             if (resultMessage.getRole().equals("assistant")
                 && resultMessage.getContent().startsWith("Correct")) {
