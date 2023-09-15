@@ -52,7 +52,7 @@ public class EscapeRoomController {
   // These three panes below are the individual rooms
   @FXML private Pane prisonCellPane;
   @FXML private Pane cafeteriaPane;
-  @FXML private Pane courtyardPane;
+  @FXML private Pane guardRoomPane;
 
   // Shared FXML
   @FXML private Group chatboxGroup;

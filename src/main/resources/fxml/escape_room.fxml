@@ -200,20 +200,20 @@
       </Label>
       <Pane fx:id="roomCollectionPane" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <Pane fx:id="courtyardPane" layoutX="-600.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="600.0">
-               <children>
-                  <ImageView fitHeight="340.0" layoutX="6.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/courtyard.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane fx:id="cafeteriaPane" layoutX="600.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="600.0">
+            <Pane fx:id="cafeteriaPane" layoutX="-600.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="600.0">
                <children>
                   <ImageView fitHeight="340.0" layoutX="6.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/kitchen.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane fx:id="guardRoomPane" layoutX="600.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="600.0">
+               <children>
+                  <ImageView fitHeight="340.0" layoutX="6.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/guardRoom.png" />
                      </image>
                   </ImageView>
                </children>
