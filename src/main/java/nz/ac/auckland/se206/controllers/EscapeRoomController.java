@@ -116,7 +116,7 @@ public class EscapeRoomController {
               public void handle(ActionEvent event) {
                 System.out.println("Send Button clicked");
                 String message = messagesTextField.getText();
-                if (!message.isEmpty()) {
+                if (!message.isEmpty() && !GameState.gptThinking) {
                   HBox hBox = new HBox();
                   hBox.setAlignment(Pos.CENTER_RIGHT);
                   hBox.setPadding(new Insets(5, 5, 5, 10));
@@ -382,6 +382,7 @@ public class EscapeRoomController {
   private Void runGptInstruction(ChatMessage msg) throws ApiProxyException {
     // Add the input message to the instruction completion request.
     instructionCompletionRequest.addMessage(msg);
+    GameState.gptThinking = true;
 
     // Create a task for GPT instruction processing.
     Task<String> gptTask =
@@ -417,6 +418,7 @@ public class EscapeRoomController {
 
           // Send the GPT-generated instruction to the user.
           addLabel(resultContent, messagesVBox);
+          GameState.gptThinking = false;
         });
 
     // Create a new thread for running the GPT task.
@@ -457,6 +459,7 @@ public class EscapeRoomController {
   private ChatMessage runGptRiddle(ChatMessage msg) throws ApiProxyException {
     // Add the input message to the chat completion request.
     chatCompletionRequest.addMessage(msg);
+    GameState.gptThinking = true;
 
     // Create a task for GPT processing.
     Task<ChatMessage> gptTask =
@@ -501,6 +504,7 @@ public class EscapeRoomController {
               }
             }
           }
+          GameState.gptThinking = false;
         });
 
     // Create a new thread for running the GPT task.

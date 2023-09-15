@@ -34,4 +34,7 @@ public class GameState {
   public static boolean togglingPhone = false;
 
   public static boolean phoneIsOpen = false;
+
+  /** disables input functionality when gpt is currently processing a response */
+  public static boolean gptThinking = false;
 }
