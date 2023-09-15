@@ -1,26 +1,35 @@
 package nz.ac.auckland.se206.controllers;
 
-// chatgroup original layout Y position "-333"
 import java.io.IOException;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
@@ -48,14 +57,15 @@ public class EscapeRoomController {
   @FXML private Group chatGroup;
   @FXML private Label timerLabel;
   @FXML private Label hintLabel;
-
+  @FXML private Rectangle dimScreen;
   @FXML private ImageView leftButton;
   @FXML private ImageView rightButton;
 
   // Chat fxml
-  @FXML private TextArea chatTextArea;
-  @FXML private TextField inputText;
-  @FXML private Button sendButton;
+  @FXML private Button send_button;
+  @FXML private TextField messagesTextField;
+  @FXML private VBox messagesVBox;
+  @FXML private ScrollPane chatScrollPane;
 
   // Shared
   private int remainingSeconds = 120;
@@ -86,6 +96,45 @@ public class EscapeRoomController {
     // Set the hint label to display 0 hints.
     hintLabel.setText("0");
 
+    chatScrollPane.setFitToWidth(true);
+    messagesVBox
+        .heightProperty()
+        .addListener(
+            new ChangeListener<Number>() {
+              @Override
+              public void changed(
+                  ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                chatScrollPane.setVvalue((Double) newValue);
+              }
+            });
+
+    // On send message
+    send_button.setOnAction(
+        (EventHandler<ActionEvent>)
+            new EventHandler<ActionEvent>() {
+              @Override
+              public void handle(ActionEvent event) {
+                System.out.println("Send Button clicked");
+                String message = messagesTextField.getText();
+                if (!message.isEmpty()) {
+                  HBox hBox = new HBox();
+                  hBox.setAlignment(Pos.CENTER_RIGHT);
+                  hBox.setPadding(new Insets(5, 5, 5, 10));
+                  Text text = new Text(message);
+                  TextFlow textFlow = new TextFlow(text);
+                  textFlow.setStyle(
+                      "-fx-color: rgb(239,242,255); "
+                          + "-fx-background-color: rgb(15,125,242); "
+                          + "-fx-background-radius: 10px; ");
+                  textFlow.setPadding(new Insets(5, 10, 5, 10));
+                  text.setFill(Color.color(0.934, 0.945, 0.996));
+                  hBox.getChildren().add(textFlow);
+                  messagesVBox.getChildren().add(hBox);
+                  messagesTextField.clear();
+                }
+              }
+            });
+
     // Configure settings for a chat completion request.
     chatCompletionRequest =
         new ChatCompletionRequest().setN(1).setTemperature(0.2).setTopP(0.5).setMaxTokens(100);
@@ -96,6 +145,27 @@ public class EscapeRoomController {
             "user",
             GptPromptEngineering.getRiddleWithGivenWord(
                 GameState.wordToGuess, GameState.difficulty)));
+  }
+
+  // on recieve message, run in different thread
+  private static void addLabel(String messageFromGPT, VBox vbox) {
+    System.out.println("GPT sent user a message");
+    HBox hBox = new HBox();
+    hBox.setAlignment(Pos.CENTER_LEFT);
+    hBox.setPadding(new Insets(5, 5, 5, 10));
+    Text text = new Text(messageFromGPT);
+    TextFlow textFlow = new TextFlow(text);
+    textFlow.setStyle("-fx-background-color: rgb(233,233,235); " + "-fx-background-radius: 10px; ");
+    textFlow.setPadding(new Insets(5, 10, 5, 10));
+    hBox.getChildren().add(textFlow);
+    vbox.getChildren().add(hBox);
+    // Platform.runLater(
+    //     new Runnable() {
+    //       @Override
+    //       public void run() {
+    //         vbox.getChildren().add(hBox);
+    //       }
+    //     });
   }
 
   private void togglePhone() {
@@ -117,11 +187,15 @@ public class EscapeRoomController {
     phoneSwitch.setNode(chatGroup);
     phoneSwitch.setDuration(javafx.util.Duration.millis(500));
     if (GameState.phoneIsOpen) {
-      phoneSwitch.setByY(-410);
+      phoneSwitch.setByY(-450);
       GameState.phoneIsOpen = false;
+      dimScreen.setDisable(true);
+      dimScreen.setVisible(false);
     } else {
-      phoneSwitch.setByY(410);
+      phoneSwitch.setByY(450);
       GameState.phoneIsOpen = true;
+      dimScreen.setDisable(false);
+      dimScreen.setVisible(true);
     }
     phoneSwitch.play();
   }
@@ -253,17 +327,20 @@ public class EscapeRoomController {
     System.out.println("key " + event.getCode() + " pressed");
     if (event.getCode() == KeyCode.ENTER) {
       // Prevent the Enter key event from propagating further
-      event.consume();
-
-      // Call onSendMessage if input is not blank
-      String message = inputText.getText().trim();
-      if (!message.isEmpty()) {
-        try {
-          onSendMessage(null);
-        } catch (ApiProxyException | IOException e) {
-          e.printStackTrace();
-        }
+      // event.consume();
+      if (GameState.phoneIsOpen) {
+        send_button.fire();
       }
+
+      // // Call onSendMessage if input is not blank
+      // String message = inputText.getText().trim();
+      // if (!message.isEmpty()) {
+      //   try {
+      //     onSendMessage(null);
+      //   } catch (ApiProxyException | IOException e) {
+      //     e.printStackTrace();
+      //   }
+      // }
     }
   }
 
@@ -364,14 +441,14 @@ public class EscapeRoomController {
   // Chat
   ///////////////
 
-  /**
-   * Appends a chat message to the chat text area.
-   *
-   * @param msg the chat message to append
-   */
-  private void appendChatMessage(ChatMessage msg) {
-    chatTextArea.appendText(msg.getRole() + ": " + msg.getContent() + "\n\n");
-  }
+  // /**
+  //  * Appends a chat message to the chat text area.
+  //  *
+  //  * @param msg the chat message to append
+  //  */
+  // private void appendChatMessage(ChatMessage msg) {
+  //   chatTextArea.appendText(msg.getRole() + ": " + msg.getContent() + "\n\n");
+  // }
 
   /**
    * Runs a GPT-based riddle using the provided chat message.
@@ -392,13 +469,10 @@ public class EscapeRoomController {
             try {
               // Execute the chat completion request.
               ChatCompletionResult chatCompletionResult = chatCompletionRequest.execute();
-
               // Get the first choice from the result.
               Choice result = chatCompletionResult.getChoices().iterator().next();
-
               // Add the result message to the chat completion request.
               chatCompletionRequest.addMessage(result.getChatMessage());
-
               // Return the GPT-generated response message.
               return result.getChatMessage();
             } catch (ApiProxyException e) {
@@ -412,17 +486,14 @@ public class EscapeRoomController {
     gptTask.setOnSucceeded(
         e -> {
           ChatMessage resultMessage = gptTask.getValue();
-
           if (resultMessage != null) {
             // Append the GPT response message to the chat.
-            appendChatMessage(resultMessage);
-
+            // appendChatMessage(resultMessage);
             // Check if the response indicates a correct riddle answer.
             if (resultMessage.getRole().equals("assistant")
                 && resultMessage.getContent().startsWith("Correct")) {
               GameState.isRiddleResolved = true;
             }
-
             if (resultMessage.getContent().contains("hint")) {
               try {
                 int hint = Integer.parseInt(hintLabel.getText());
@@ -443,22 +514,22 @@ public class EscapeRoomController {
     return null;
   }
 
-  /**
-   * Sends a message to the GPT model.
-   *
-   * @param event the action event triggered by the send button
-   * @throws ApiProxyException if there is an error communicating with the API proxy
-   * @throws IOException if there is an I/O error
-   */
-  @FXML
-  private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
-    String message = inputText.getText();
-    if (message.trim().isEmpty()) {
-      return;
-    }
-    inputText.clear();
-    ChatMessage msg = new ChatMessage("user", message);
-    appendChatMessage(msg);
-    runGptRiddle(msg);
-  }
+  // /**
+  //  * Sends a message to the GPT model.
+  //  *
+  //  * @param event the action event triggered by the send button
+  //  * @throws ApiProxyException if there is an error communicating with the API proxy
+  //  * @throws IOException if there is an I/O error
+  //  */
+  // @FXML
+  // private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
+  //   String message = inputText.getText();
+  //   if (message.trim().isEmpty()) {
+  //     return;
+  //   }
+  //   inputText.clear();
+  //   ChatMessage msg = new ChatMessage("user", message);
+  //   appendChatMessage(msg);
+  //   runGptRiddle(msg);
+  // }
 }
