@@ -98,7 +98,7 @@
                <children>
                   <Label layoutX="221.0" layoutY="7.0" prefHeight="34.0" prefWidth="82.0" text="Prison Guard" />
                   <TextField fx:id="messagesTextField" layoutX="113.0" layoutY="204.0" prefHeight="30.0" prefWidth="334.0" promptText="Text Message" />
-                  <Button fx:id="send_button" layoutX="455.0" layoutY="200.0" minHeight="14.0" minWidth="50.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="54.0" text="send" />
+                  <Button fx:id="send_button" layoutX="455.0" layoutY="204.0" minHeight="14.0" minWidth="50.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="54.0" text="send" />
                   <ScrollPane fx:id="chatScrollPane" hbarPolicy="NEVER" layoutX="24.0" layoutY="42.0" prefHeight="150.0" prefWidth="485.0" style="-fx-background-color: transparent; -fx-background: #FFFFFF; -fx-border-color: #FFFFFF;" vbarPolicy="NEVER">
                      <content>
                         <VBox fx:id="messagesVBox" prefHeight="148.0" prefWidth="484.0" />
