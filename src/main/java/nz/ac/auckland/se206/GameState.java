@@ -35,6 +35,7 @@ public class GameState {
   /** opening phone to show chat screen, similar to switchingRoom boolean */
   public static boolean togglingPhone = false;
 
+  /** boolean value to check when the phone is open */
   public static boolean phoneIsOpen = false;
 
   /** disables input functionality when gpt is currently processing a response */

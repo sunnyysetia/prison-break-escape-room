@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -82,18 +83,25 @@
                   <Image url="@../images/phone.png" />
                </image>
             </ImageView>
+            <Circle fx:id="notifCircle" fill="#f40000" layoutX="110.0" layoutY="40.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
          </children>
       </Pane>
-      <Group fx:id="chatGroup" layoutX="70.0" layoutY="-400.0">
+      <Group fx:id="chatGroup" layoutX="70.0" layoutY="-350.0">
          <children>
-            <AnchorPane layoutX="-40.0" layoutY="-25.0" prefHeight="400.0" prefWidth="400.0">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="260.0" layoutX="-47.0" layoutY="-30.0" stroke="BLACK" strokeType="INSIDE" width="554.0" />
+            <ImageView fitHeight="647.0" fitWidth="316.0" layoutX="74.0" layoutY="-205.0" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
+               <image>
+                  <Image url="@../images/phone_big.png" />
+               </image>
+            </ImageView>
+            <AnchorPane layoutX="-40.0" layoutY="-25.0" prefHeight="240.0" prefWidth="524.0">
                <children>
-                  <Label layoutX="168.0" layoutY="7.0" prefHeight="34.0" prefWidth="183.0" text="PineApple Phone X15 Ultimate" />
-                  <TextField fx:id="messagesTextField" layoutX="24.0" layoutY="351.0" prefHeight="34.0" prefWidth="370.0" />
-                  <Button fx:id="send_button" layoutX="406.0" layoutY="343.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="114.0" text="send" />
-                  <ScrollPane fx:id="chatScrollPane" layoutX="24.0" layoutY="42.0" prefHeight="289.0" prefWidth="496.0">
+                  <Label layoutX="221.0" layoutY="7.0" prefHeight="34.0" prefWidth="82.0" text="Prison Guard" />
+                  <TextField fx:id="messagesTextField" layoutX="113.0" layoutY="204.0" prefHeight="30.0" prefWidth="334.0" promptText="Text Message" />
+                  <Button fx:id="send_button" layoutX="455.0" layoutY="204.0" minHeight="14.0" minWidth="50.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="54.0" text="send" />
+                  <ScrollPane fx:id="chatScrollPane" hbarPolicy="NEVER" layoutX="24.0" layoutY="42.0" prefHeight="150.0" prefWidth="485.0" style="-fx-background-color: transparent; -fx-background: #FFFFFF; -fx-border-color: #FFFFFF;" vbarPolicy="NEVER">
                      <content>
-                        <VBox fx:id="messagesVBox" prefHeight="274.0" prefWidth="486.0" />
+                        <VBox fx:id="messagesVBox" prefHeight="148.0" prefWidth="484.0" />
                      </content>
                   </ScrollPane>
                </children>
