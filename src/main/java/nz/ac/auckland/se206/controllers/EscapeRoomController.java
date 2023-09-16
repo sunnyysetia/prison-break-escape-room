@@ -27,6 +27,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -60,6 +61,7 @@ public class EscapeRoomController {
   @FXML private Rectangle dimScreen;
   @FXML private ImageView leftButton;
   @FXML private ImageView rightButton;
+  @FXML private Circle notifCircle;
 
   // Chat fxml
   @FXML private Button send_button;
@@ -206,6 +208,7 @@ public class EscapeRoomController {
       GameState.phoneIsOpen = true;
       dimScreen.setDisable(false);
       dimScreen.setVisible(true);
+      notifCircle.setVisible(false);
     }
     phoneSwitch.play();
   }
@@ -421,6 +424,7 @@ public class EscapeRoomController {
 
           // Send the GPT-generated instruction to the user.
           addLabel(resultContent, messagesVBox);
+
           GameState.gptThinking.setValue(false);
         });
 
@@ -493,6 +497,9 @@ public class EscapeRoomController {
             // Append the GPT response message to the chat.
             addLabel(resultMessage.getContent(), messagesVBox);
             // Check if the response indicates a correct riddle answer.
+            if (!GameState.phoneIsOpen) {
+              notifCircle.setVisible(true);
+            }
             if (resultMessage.getRole().equals("assistant")
                 && resultMessage.getContent().startsWith("Correct")) {
               GameState.isRiddleResolved = true;
