@@ -88,8 +88,8 @@
       </Pane>
       <Group fx:id="chatGroup" layoutX="70.0" layoutY="-350.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="260.0" layoutX="-50.0" layoutY="-30.0" stroke="BLACK" strokeType="INSIDE" width="554.0" />
-            <ImageView fitHeight="647.0" fitWidth="316.0" layoutX="71.0" layoutY="-205.0" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="260.0" layoutX="-47.0" layoutY="-30.0" stroke="BLACK" strokeType="INSIDE" width="554.0" />
+            <ImageView fitHeight="647.0" fitWidth="316.0" layoutX="74.0" layoutY="-205.0" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
                <image>
                   <Image url="@../images/phone_big.png" />
                </image>
