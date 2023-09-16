@@ -199,12 +199,12 @@ public class EscapeRoomController {
     phoneSwitch.setNode(chatGroup);
     phoneSwitch.setDuration(javafx.util.Duration.millis(500));
     if (GameState.phoneIsOpen) {
-      phoneSwitch.setByY(-450);
+      phoneSwitch.setByY(-550);
       GameState.phoneIsOpen = false;
       dimScreen.setDisable(true);
       dimScreen.setVisible(false);
     } else {
-      phoneSwitch.setByY(450);
+      phoneSwitch.setByY(550);
       GameState.phoneIsOpen = true;
       dimScreen.setDisable(false);
       dimScreen.setVisible(true);
@@ -242,9 +242,9 @@ public class EscapeRoomController {
     roomSwitch.setNode(roomCollectionPane);
     roomSwitch.setDuration(javafx.util.Duration.millis(500));
     if (nextRoom > GameState.currentRoom) {
-      roomSwitch.setByX(-600);
+      roomSwitch.setByX(-1022);
     } else {
-      roomSwitch.setByX(600);
+      roomSwitch.setByX(1022);
     }
     roomSwitch.play();
     GameState.currentRoom = nextRoom;

@@ -56,7 +56,7 @@ public class App extends Application {
         });
     stage.setResizable(false);
 
-    scene = new Scene(root, 600, 470);
+    scene = new Scene(root, 1022, 720);
     stage.setScene(scene);
     stage.show();
     root.requestFocus();
