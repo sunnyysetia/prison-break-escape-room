@@ -14,11 +14,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -51,7 +54,7 @@ public class EscapeRoomController {
 
   // These three panes below are the individual rooms
   @FXML private Pane prisonCellPane;
-  @FXML private Pane cafeteriaPane;
+  @FXML private Pane kitchenPane;
   @FXML private Pane guardRoomPane;
 
   // Shared FXML
@@ -62,6 +65,19 @@ public class EscapeRoomController {
   @FXML private ImageView leftButton;
   @FXML private ImageView rightButton;
   @FXML private Circle notifCircle;
+
+  // Kitchen FXML
+
+  // Cell FXML
+  @FXML private Rectangle sink;
+  @FXML private Rectangle toilet;
+  @FXML private Rectangle shelf;
+  @FXML private Rectangle pillow;
+  @FXML private Rectangle newspaper;
+
+  // Guard's Room FXML
+  @FXML private Rectangle circuit;
+  @FXML private Rectangle computer;
 
   // Chat fxml
   @FXML private Button send_button;
@@ -86,7 +102,6 @@ public class EscapeRoomController {
    * @throws ApiProxyException
    */
   public void initialize() throws ApiProxyException {
-
     // Configure the timer length based on what the user selected.
     remainingSeconds = GameState.time;
     // Start a timer for the game.
@@ -180,6 +195,7 @@ public class EscapeRoomController {
         });
   }
 
+  // Navigation
   private void togglePhone() {
     System.out.println("toggling phone");
     GameState.togglingPhone = true;
@@ -281,6 +297,12 @@ public class EscapeRoomController {
     }
   }
 
+  private void returnToWaitingLobby() {
+    timer.stop();
+
+    App.setUi(AppUi.WAITING_LOBBY);
+  }
+
   // Timer
   private void startTimer() {
     timer =
@@ -326,7 +348,6 @@ public class EscapeRoomController {
   }
 
   // Key Presses
-
   /**
    * Handles the key pressed event in the input text field. If the Enter key is pressed and the
    * input is not blank, triggers the onSendMessage function.
@@ -357,12 +378,7 @@ public class EscapeRoomController {
     System.out.println("key " + event.getCode() + " released");
   }
 
-  private void returnToWaitingLobby() {
-    timer.stop();
-
-    App.setUi(AppUi.WAITING_LOBBY);
-  }
-
+  // TTS
   private void textToSpeech(String message) {
 
     Task<Void> speechTask =
@@ -378,6 +394,7 @@ public class EscapeRoomController {
     new Thread(speechTask).start();
   }
 
+  // GPT
   /**
    * Runs a GPT-based instruction generation using the provided chat message.
    *
@@ -441,6 +458,66 @@ public class EscapeRoomController {
         new ChatCompletionRequest().setN(1).setTemperature(0.3).setTopP(0.5).setMaxTokens(100);
 
     runGptInstruction(new ChatMessage("user", GptPromptEngineering.createInstruction(instruction)));
+  }
+
+  ////////////////////////
+  // Objects Interaction
+  ///////////////////////
+  private Tooltip currentTooltip; // Maintain a reference to the current tooltip
+
+  @FXML
+  private void showObjectName(MouseEvent event) {
+    Node source = (Node) event.getSource();
+    source.getScene().setCursor(Cursor.HAND);
+    if (source instanceof Rectangle) {
+      String rectangleName = ((Rectangle) source).getId();
+      Tooltip tooltip = new Tooltip(rectangleName);
+
+      // Set a shorter tooltip delay (in milliseconds)
+      tooltip.setShowDelay(Duration.millis(100));
+
+      Tooltip.install(source, tooltip);
+
+      // Add mouse move listener to update tooltip position
+      source.setOnMouseMoved(
+          mouseEvent -> {
+            double xOffset = 10; // X-offset from the cursor
+            double yOffset = 10; // Y-offset from the cursor
+            tooltip.show(
+                source, mouseEvent.getScreenX() + xOffset, mouseEvent.getScreenY() + yOffset);
+          });
+
+      // Set the current tooltip
+      currentTooltip = tooltip;
+    }
+  }
+
+  @FXML
+  private void changeCursorToHand(MouseEvent event) {
+    Node source = (Node) event.getSource();
+    if (!source.isDisabled()) {
+      source.getScene().setCursor(Cursor.HAND);
+    }
+  }
+
+  @FXML
+  private void resetCursor(MouseEvent event) {
+    Node source = (Node) event.getSource();
+    if (currentTooltip != null) {
+      currentTooltip.hide(); // Hide the current tooltip
+      currentTooltip = null; // Remove the reference
+    }
+    if (!source.isDisabled()) {
+      source.getScene().setCursor(null);
+    }
+  }
+
+  @FXML
+  private void clickObject(MouseEvent event) {
+    // Find which object was clicked
+    Rectangle clickedRectangle = (Rectangle) event.getSource();
+    String rectangleId = clickedRectangle.getId();
+    System.out.println("Object clicked: " + rectangleId);
   }
 
   ///////////////
