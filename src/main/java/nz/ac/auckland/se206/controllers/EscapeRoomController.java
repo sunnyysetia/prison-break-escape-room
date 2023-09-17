@@ -90,6 +90,9 @@ public class EscapeRoomController {
     // Configure the timer length based on what the user selected.
     remainingSeconds = GameState.time;
 
+    // Set the state of the game.
+    GameState.state = GameState.State.INTRO;
+
     // Start a timer for the game.
     startTimer();
 
@@ -503,7 +506,7 @@ public class EscapeRoomController {
             }
             if (resultMessage.getRole().equals("assistant")
                 && resultMessage.getContent().startsWith("Correct")) {
-              GameState.isRiddleResolved = true;
+              // GameState.state = GameState.State.FIND_ID;
             }
             if (resultMessage.getContent().contains("hint")) {
               try {
