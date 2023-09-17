@@ -45,8 +45,7 @@ public class WaitingLobbyController {
     String playerName = nameField.getText().trim();
     if (!playerName.isEmpty()) {
       // Set all game state variables to their default values
-      GameState.isRiddleResolved = false;
-      GameState.isCodeFound = false;
+      GameState.state = GameState.State.INTRO;
       GameState.playerName = null;
       GameState.difficulty = "easy";
       GameState.wordToGuess = "couch";

@@ -5,11 +5,16 @@ import javafx.beans.property.SimpleBooleanProperty;
 /** Represents the state of the game. */
 public class GameState {
 
-  /** Indicates whether the riddle has been resolved. */
-  public static boolean isRiddleResolved = false;
+  /** Indicates the part of the game that the user is up to. */
+  public static enum State {
+    INTRO,
+    RIDDLE,
+    FIND_ID,
+    UNSCRAMBLE,
+    FINISH
+  }
 
-  /** Indicates whether the key has been found. */
-  public static boolean isCodeFound = false;
+  public static State state = State.INTRO;
 
   /** Player's name */
   public static String playerName = null;
