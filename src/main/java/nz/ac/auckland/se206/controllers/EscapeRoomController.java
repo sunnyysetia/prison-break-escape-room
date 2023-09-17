@@ -173,6 +173,7 @@ public class EscapeRoomController {
     TextFlow textFlow = new TextFlow(text);
     textFlow.setStyle("-fx-background-color: rgb(233,233,235); " + "-fx-background-radius: 10px; ");
     textFlow.setPadding(new Insets(5, 10, 5, 10));
+    textFlow.setMaxWidth(450);
     hBox.getChildren().add(textFlow);
     // vbox.getChildren().add(hBox);
     Platform.runLater(
