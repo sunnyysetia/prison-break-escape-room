@@ -67,6 +67,13 @@ public class EscapeRoomController {
   @FXML private Circle notifCircle;
 
   // Kitchen FXML
+  @FXML private Rectangle cuttingboard;
+  @FXML private Rectangle oven;
+  @FXML private Rectangle plates;
+  @FXML private Rectangle extinguisher;
+  @FXML private Rectangle kettle;
+  @FXML private Rectangle clock;
+  @FXML private Rectangle toaster;
 
   // Cell FXML
   @FXML private Rectangle sink;
@@ -74,6 +81,7 @@ public class EscapeRoomController {
   @FXML private Rectangle shelf;
   @FXML private Rectangle pillow;
   @FXML private Rectangle newspaper;
+  @FXML private Rectangle table;
 
   // Guard's Room FXML
   @FXML private Rectangle circuit;
