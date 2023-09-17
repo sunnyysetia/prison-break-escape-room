@@ -447,6 +447,10 @@ public class EscapeRoomController {
         e -> {
           String resultContent = gptTask.getValue();
 
+          if (!GameState.phoneIsOpen) {
+            notifCircle.setVisible(true);
+          }
+
           // Print the GPT-generated result content to the console.
           System.out.println("GPT result: " + resultContent);
 
