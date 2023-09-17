@@ -50,6 +50,10 @@ public class WaitingLobbyController {
       GameState.playerName = null;
       GameState.difficulty = "easy";
       GameState.wordToGuess = "couch";
+      GameState.phoneIsOpen = false;
+      GameState.togglingPhone = false;
+      GameState.switchingRoom = false;
+      GameState.currentRoom = 1;
 
       // Generate random 4-digit pincode
       Random randomCode = new Random();

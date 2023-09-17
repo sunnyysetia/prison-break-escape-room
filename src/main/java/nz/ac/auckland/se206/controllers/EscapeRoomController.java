@@ -89,6 +89,7 @@ public class EscapeRoomController {
 
     // Configure the timer length based on what the user selected.
     remainingSeconds = GameState.time;
+
     // Start a timer for the game.
     startTimer();
 
