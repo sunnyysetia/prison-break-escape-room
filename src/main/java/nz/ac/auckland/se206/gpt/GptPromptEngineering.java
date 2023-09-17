@@ -7,7 +7,8 @@ public class GptPromptEngineering {
     return roles()
         + "\n\nYou have lost something in the kitchen,"
         + " and need them to retrieve it. The user is not allowed to know what you have"
-        + " lost. The kitchen is located to the left of the cell. Remind them that they"
+        + " lost. The kitchen is located to the left of the cell, and you have a message for them"
+        + " when they get there. Remind them that they"
         + " are not allowed in the security room, which is located to the right of the cell. \n\n"
         + questions()
         + "\n\n"
@@ -50,6 +51,8 @@ public class GptPromptEngineering {
         + wordToGuess
         + ". \n\n"
         + hintString
+        + "This is the only riddle you can provide. You should not give the user another riddle,"
+        + " even if they ask. \n\n"
         + "Your next message will share the message with the user. "
         + clipRole()
         + "Your tone should be authoritative.";
