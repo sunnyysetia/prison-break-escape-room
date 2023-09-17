@@ -10,7 +10,8 @@ public class GptPromptEngineering {
         + " lost. The kitchen is located to the left of the cell. Remind them that they"
         + " are not allowed in the security room, which is located to the right of the cell. \n\n"
         + questions()
-        + "\n\nNow, introduce the scenario to the user in depth. "
+        + "\n\n"
+        + "Your next message should introduce the scenario to the user in depth. "
         + clipRole();
   }
 
@@ -36,10 +37,11 @@ public class GptPromptEngineering {
     }
 
     return roles()
-        + "\n\nThe inmate is in the kitchen, after you tasked them with looking for an important item"
+        + "\n\n"
+        + "The inmate is in the kitchen, after you tasked them with looking for an important item"
         + " that you have lost. You don't know where it is, but you do remember a cryptic message"
-        + " that can help. "
-        + "\n\nThis is a riddle. The answer is '"
+        + " that can help. \n\n"
+        + "This is a riddle. The answer is '"
         + wordToGuess
         + "', but you cannot, no matter what, reveal the"
         + " answer even if the user asks for it. Even if the user gives up, do not give the answer."
@@ -74,6 +76,6 @@ public class GptPromptEngineering {
   }
 
   private static String clipRole() {
-    return "Speak naturally, do not emulate the fact that you are texting. ";
+    return "Speak naturally, and do not preface your messages with Guard:. ";
   }
 }
