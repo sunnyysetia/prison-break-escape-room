@@ -155,7 +155,11 @@ public class EscapeRoomController {
                   messagesVBox.getChildren().add(hBox);
                   messagesTextField.clear();
                   try {
-                    runGptRiddle(new ChatMessage("user", message));
+                    if (GameState.state == GameState.State.RIDDLE) {
+                      runGptRiddle(new ChatMessage("user", message));
+                    } else if (GameState.state == GameState.State.INTRO) {
+                      runGptInstruction(new ChatMessage("user", message));
+                    }
                   } catch (ApiProxyException e) {
                     e.printStackTrace();
                   }
@@ -163,16 +167,14 @@ public class EscapeRoomController {
               }
             });
 
-    // Configure settings for a chat completion request.
+    // Configure settings for the riddle's chat completion request.
     chatCompletionRequest =
-        new ChatCompletionRequest().setN(1).setTemperature(0.2).setTopP(0.5).setMaxTokens(100);
+        new ChatCompletionRequest().setN(1).setTemperature(0.3).setTopP(0.5).setMaxTokens(100);
 
-    // Run a GPT-based riddle using a chat message.
-    runGptRiddle(
-        new ChatMessage(
-            "user",
-            GptPromptEngineering.getRiddleWithGivenWord(
-                GameState.wordToGuess, GameState.difficulty)));
+    // Run a GPT-based instruction for the introduction.
+    instructionCompletionRequest =
+        new ChatCompletionRequest().setN(1).setTemperature(0.3).setTopP(0.5).setMaxTokens(100);
+    runGptInstruction(new ChatMessage("user", GptPromptEngineering.getIntroInstruction()));
   }
 
   // on recieve message, run in different thread
@@ -266,6 +268,18 @@ public class EscapeRoomController {
     GameState.currentRoom = nextRoom;
 
     if (GameState.currentRoom == 0) {
+      if (GameState.state == GameState.State.INTRO) {
+        try {
+          runGptRiddle(
+              new ChatMessage(
+                  "user",
+                  GptPromptEngineering.getRiddleWithGivenWord(
+                      GameState.wordToGuess, GameState.difficulty)));
+        } catch (ApiProxyException e) {
+          e.printStackTrace();
+        }
+        GameState.state = GameState.State.RIDDLE;
+      }
       leftButton.setVisible(false);
     } else if (GameState.currentRoom == 2) {
       rightButton.setVisible(false);
@@ -432,6 +446,10 @@ public class EscapeRoomController {
     gptTask.setOnSucceeded(
         e -> {
           String resultContent = gptTask.getValue();
+
+          if (!GameState.phoneIsOpen) {
+            notifCircle.setVisible(true);
+          }
 
           // Print the GPT-generated result content to the console.
           System.out.println("GPT result: " + resultContent);
