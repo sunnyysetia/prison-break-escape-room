@@ -93,6 +93,9 @@ public class EscapeRoomController {
   @FXML private Rectangle circuit;
   @FXML private Rectangle computer;
 
+  @FXML private Group circuitGroup;
+  @FXML private Rectangle a1, b1, c1, a2, b2, c2, a3, b3, c3, a4, b4, c4, a5, b5, c5;
+
   // Chat fxml
   @FXML private Button send_button;
   @FXML private TextField messagesTextField;
@@ -498,6 +501,41 @@ public class EscapeRoomController {
     Rectangle clickedRectangle = (Rectangle) event.getSource();
     String rectangleId = clickedRectangle.getId();
     System.out.println("Object clicked: " + rectangleId);
+  }
+
+  ///////////////
+  // Guard's Room
+  ///////////////
+  @FXML
+  private void openCircuit(MouseEvent event) {
+    System.out.println("Circuit clicked");
+    circuitGroup.setDisable(false);
+    circuitGroup.setVisible(true);
+  }
+
+  @FXML
+  private void clickSwitch(MouseEvent event) {
+    // Find which object was clicked
+    Rectangle clickedRectangle = (Rectangle) event.getSource();
+    String rectangleId = clickedRectangle.getId();
+    System.out.println("Object clicked: " + rectangleId);
+
+    // Toggle the switch
+    toggleSwitch(rectangleId);
+  }
+
+  private void toggleSwitch(String fxid) {
+    Node node = circuitGroup.lookup("#" + fxid);
+    if (node instanceof Rectangle) {
+      Rectangle switchRect = (Rectangle) node;
+
+      // Check the current fill color and toggle it
+      if (switchRect.getFill().equals(Color.rgb(255, 0, 0))) {
+        switchRect.setFill(Color.rgb(0, 255, 0));
+      } else {
+        switchRect.setFill(Color.rgb(255, 0, 0));
+      }
+    }
   }
 
   ///////////////

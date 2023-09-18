@@ -60,7 +60,7 @@
                      </image>
                   </ImageView>
                   <Rectangle fx:id="computer" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="96.0" layoutX="451.0" layoutY="334.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="187.0" />
-                  <Rectangle fx:id="circuit" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="142.0" layoutX="38.0" layoutY="295.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="63.0" />
+                  <Rectangle fx:id="circuit" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="142.0" layoutX="38.0" layoutY="295.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#openCircuit" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="63.0" />
                </children>
             </Pane>
             <Pane fx:id="prisonCellPane" layoutX="-3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1022.0">
@@ -118,6 +118,31 @@
             <Circle fx:id="notifCircle" fill="#f40000" layoutX="110.0" layoutY="40.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
          </children>
       </Pane>
+      <Group fx:id="circuitGroup" disable="true" visible="false">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="720.0" opacity="0.6" stroke="BLACK" strokeType="INSIDE" width="1022.0" />
+            <ImageView fitHeight="529.0" fitWidth="796.0" layoutX="102.0" layoutY="90.0">
+               <image>
+                  <Image url="@../images/circuitBoard.jpg" />
+               </image>
+            </ImageView>
+            <Rectangle fx:id="a1" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="330.0" layoutY="264.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
+            <Rectangle fx:id="b1" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="330.0" layoutY="338.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
+            <Rectangle fx:id="c1" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="330.0" layoutY="409.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
+            <Rectangle fx:id="a2" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="406.0" layoutY="264.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
+            <Rectangle fx:id="b2" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="406.0" layoutY="338.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
+            <Rectangle fx:id="c2" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="406.0" layoutY="409.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
+            <Rectangle fx:id="a3" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="483.0" layoutY="264.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
+            <Rectangle fx:id="b3" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="483.0" layoutY="338.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
+            <Rectangle fx:id="c3" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="483.0" layoutY="409.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
+            <Rectangle fx:id="a4" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="559.0" layoutY="264.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
+            <Rectangle fx:id="b4" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="559.0" layoutY="338.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
+            <Rectangle fx:id="c4" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="559.0" layoutY="409.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
+            <Rectangle fx:id="a5" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="635.0" layoutY="264.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
+            <Rectangle fx:id="b5" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="635.0" layoutY="338.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
+            <Rectangle fx:id="c5" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="635.0" layoutY="409.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
+         </children>
+      </Group>
       <Group fx:id="chatGroup" layoutX="225.0" layoutY="-400.0">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="340.0" layoutX="-80.0" layoutY="25.0" stroke="BLACK" strokeType="INSIDE" width="713.0" />
