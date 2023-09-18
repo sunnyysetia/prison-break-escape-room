@@ -62,6 +62,7 @@ public class EscapeRoomController {
 
   // Shared FXML
   @FXML private Group chatGroup;
+  @FXML private Group computerGroup;
   @FXML private Label timerLabel;
   @FXML private Label hintLabel;
   @FXML private Rectangle dimScreen;
@@ -92,6 +93,8 @@ public class EscapeRoomController {
   // Guard's Room FXML
   @FXML private Rectangle circuit;
   @FXML private Rectangle computer;
+  @FXML private Button computerCloseButton;
+  @FXML private Rectangle computerDimScreen;
 
   // Chat fxml
   @FXML private Button send_button;
@@ -158,6 +161,26 @@ public class EscapeRoomController {
                   return string;
                 },
                 GameState.gptThinking));
+
+    computer.setOnMouseClicked(
+        (EventHandler<MouseEvent>)
+            event -> {
+              if (GameState.togglingComputer) {
+                return;
+              } else {
+                toggleComputer();
+              }
+            });
+
+    computerCloseButton.setOnAction(
+        (EventHandler<ActionEvent>)
+            event -> {
+              if (GameState.togglingComputer) {
+                return;
+              } else {
+                toggleComputer();
+              }
+            });
 
     // On send message
     send_button.setOnAction(
@@ -263,6 +286,38 @@ public class EscapeRoomController {
       notifCircle.setVisible(false);
     }
     phoneSwitch.play();
+  }
+
+  private void toggleComputer() {
+    System.out.println("toggling computer");
+    GameState.togglingComputer = true;
+    Thread waitThread =
+        new Thread(
+            () -> {
+              try {
+                Thread.sleep(700);
+                GameState.togglingComputer = false;
+              } catch (InterruptedException e) {
+                e.printStackTrace();
+              }
+            });
+    waitThread.setDaemon(true);
+    waitThread.start();
+    final TranslateTransition computerSwitch = new TranslateTransition();
+    computerSwitch.setNode(computerGroup);
+    computerSwitch.setDuration(javafx.util.Duration.millis(500));
+    if (GameState.computerIsOpen) {
+      computerSwitch.setByY(-550);
+      GameState.computerIsOpen = false;
+      computerDimScreen.setDisable(true);
+      computerDimScreen.setVisible(false);
+    } else {
+      computerSwitch.setByY(550);
+      GameState.computerIsOpen = true;
+      computerDimScreen.setDisable(false);
+      computerDimScreen.setVisible(true);
+    }
+    computerSwitch.play();
   }
 
   @FXML
