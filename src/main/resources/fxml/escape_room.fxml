@@ -141,6 +141,21 @@
             <Rectangle fx:id="a5" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="635.0" layoutY="264.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
             <Rectangle fx:id="b5" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="635.0" layoutY="338.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
             <Rectangle fx:id="c5" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="635.0" layoutY="409.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
+            <Label fx:id="memoryCountdownLabel" layoutX="378.0" layoutY="462.0" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="checkGuessMemory" focusTraversable="false" layoutX="500.0" layoutY="527.0" mnemonicParsing="false" onMouseClicked="#checkIfUserInputCorrect" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="35.0" prefWidth="105.0" text="Check Guess" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="goBackMemory" focusTraversable="false" layoutX="403.0" layoutY="528.0" mnemonicParsing="false" onMouseClicked="#closeCircuit" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="35.0" prefWidth="75.0" text="Go Back" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
          </children>
       </Group>
       <Group fx:id="chatGroup" layoutX="225.0" layoutY="-400.0">
