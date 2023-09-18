@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+import java.util.HashMap;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -102,10 +103,10 @@ public class EscapeRoomController {
   // Shared
   private int remainingSeconds = 120;
   private Timeline timer;
-  private ChatCompletionRequest instructionCompletionRequest;
 
   // Chat
-  private ChatCompletionRequest chatCompletionRequest;
+  private HashMap<GameState.State, ChatCompletionRequest> chatCompletionRequests =
+      new HashMap<GameState.State, ChatCompletionRequest>();
 
   ///////////////
   // Shared
@@ -182,11 +183,7 @@ public class EscapeRoomController {
                   messagesVBox.getChildren().add(hBox);
                   messagesTextField.clear();
                   try {
-                    if (GameState.state == GameState.State.RIDDLE) {
-                      runGptRiddle(new ChatMessage("user", message));
-                    } else if (GameState.state == GameState.State.INTRO) {
-                      runGptInstruction(new ChatMessage("user", message));
-                    }
+                    runGpt(new ChatMessage("user", message));
                   } catch (ApiProxyException e) {
                     e.printStackTrace();
                   }
@@ -203,13 +200,14 @@ public class EscapeRoomController {
     uvLightEffect.visibleProperty().bind(GameState.torchIsOn);
 
     // Configure settings for the riddle's chat completion request.
-    chatCompletionRequest =
-        new ChatCompletionRequest().setN(1).setTemperature(0.3).setTopP(0.5).setMaxTokens(100);
+    for (GameState.State state : GameState.State.values()) {
+      chatCompletionRequests.put(
+          state,
+          new ChatCompletionRequest().setN(1).setTemperature(0.3).setTopP(0.5).setMaxTokens(100));
+    }
 
     // Run a GPT-based instruction for the introduction.
-    instructionCompletionRequest =
-        new ChatCompletionRequest().setN(1).setTemperature(0.3).setTopP(0.5).setMaxTokens(100);
-    runGptInstruction(new ChatMessage("user", GptPromptEngineering.getIntroInstruction()));
+    runGpt(new ChatMessage("user", GptPromptEngineering.getIntroInstruction()));
   }
 
   // on recieve message, run in different thread
@@ -305,8 +303,9 @@ public class EscapeRoomController {
 
     if (GameState.currentRoom == 0) {
       if (GameState.state == GameState.State.INTRO) {
+        GameState.state = GameState.State.RIDDLE;
         try {
-          runGptRiddle(
+          runGpt(
               new ChatMessage(
                   "user",
                   GptPromptEngineering.getRiddleWithGivenWord(
@@ -314,7 +313,6 @@ public class EscapeRoomController {
         } catch (ApiProxyException e) {
           e.printStackTrace();
         }
-        GameState.state = GameState.State.RIDDLE;
       }
       leftButton.setVisible(false);
     } else if (GameState.currentRoom == 2) {
@@ -442,76 +440,6 @@ public class EscapeRoomController {
     new Thread(speechTask).start();
   }
 
-  // GPT
-  /**
-   * Runs a GPT-based instruction generation using the provided chat message.
-   *
-   * @param msg The input chat message for the instruction.
-   * @return Always returns null (result not used).
-   * @throws ApiProxyException If there's an issue with the API proxy.
-   */
-  private Void runGptInstruction(ChatMessage msg) throws ApiProxyException {
-    // Add the input message to the instruction completion request.
-    instructionCompletionRequest.addMessage(msg);
-    GameState.gptThinking.setValue(true);
-
-    // Create a task for GPT instruction processing.
-    Task<String> gptTask =
-        new Task<String>() {
-          @Override
-          protected String call() throws Exception {
-            try {
-              // Execute the instruction completion request.
-              ChatCompletionResult chatCompletionResult = instructionCompletionRequest.execute();
-
-              // Get the first choice from the result.
-              Choice result = chatCompletionResult.getChoices().iterator().next();
-
-              // Add the result message to the instruction completion request.
-              instructionCompletionRequest.addMessage(result.getChatMessage());
-
-              // Return the content of the GPT-generated instruction.
-              return result.getChatMessage().getContent();
-            } catch (ApiProxyException e) {
-              e.printStackTrace();
-              return null;
-            }
-          }
-        };
-
-    // Define actions to be performed when the task succeeds.
-    gptTask.setOnSucceeded(
-        e -> {
-          String resultContent = gptTask.getValue();
-
-          if (!GameState.phoneIsOpen) {
-            notifCircle.setVisible(true);
-          }
-
-          // Print the GPT-generated result content to the console.
-          System.out.println("GPT result: " + resultContent);
-
-          // Send the GPT-generated instruction to the user.
-          addLabel(resultContent, messagesVBox);
-
-          GameState.gptThinking.setValue(false);
-        });
-
-    // Create a new thread for running the GPT task.
-    Thread gptThread = new Thread(gptTask, "Gpt Thread");
-    gptThread.start();
-
-    // Always returns null (result not used).
-    return null;
-  }
-
-  private void generateInstruction(String instruction) throws ApiProxyException {
-    instructionCompletionRequest =
-        new ChatCompletionRequest().setN(1).setTemperature(0.3).setTopP(0.5).setMaxTokens(100);
-
-    runGptInstruction(new ChatMessage("user", GptPromptEngineering.createInstruction(instruction)));
-  }
-
   ////////////////////////
   // Objects Interaction
   ///////////////////////
@@ -583,9 +511,10 @@ public class EscapeRoomController {
    * @return The response chat message from GPT.
    * @throws ApiProxyException If there's an issue with the API proxy.
    */
-  private ChatMessage runGptRiddle(ChatMessage msg) throws ApiProxyException {
+  private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
     // Add the input message to the chat completion request.
-    chatCompletionRequest.addMessage(msg);
+    ChatCompletionRequest chatCompletionRequest =
+        chatCompletionRequests.get(GameState.state).addMessage(msg);
     GameState.gptThinking.setValue(true);
 
     // Create a task for GPT processing.

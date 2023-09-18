@@ -9,9 +9,8 @@ public class GameState {
   public static enum State {
     INTRO,
     RIDDLE,
-    FIND_ID,
-    UNSCRAMBLE,
-    FINISH
+    FIND_CODE,
+    ENTER_CODE
   }
 
   public static State state = State.INTRO;
