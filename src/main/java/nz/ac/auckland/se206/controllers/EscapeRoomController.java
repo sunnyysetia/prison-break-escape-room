@@ -645,6 +645,7 @@ public class EscapeRoomController {
 
     if (areEqual) {
       closeCircuit(null);
+      circuit.setDisable(true);
     } else {
       initialiseMemoryGame();
       startMemoryRecallGame();
