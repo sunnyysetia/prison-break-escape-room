@@ -33,6 +33,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
@@ -66,6 +67,8 @@ public class EscapeRoomController {
   @FXML private ImageView leftButton;
   @FXML private ImageView rightButton;
   @FXML private Circle notifCircle;
+  @FXML private ImageView torchButton;
+  @FXML private SVGPath uvLightEffect;
 
   // Kitchen FXML
   @FXML private Rectangle cuttingboard;
@@ -77,6 +80,7 @@ public class EscapeRoomController {
   @FXML private Rectangle toaster;
 
   // Cell FXML
+  @FXML private Text uvLightText;
   @FXML private Rectangle sink;
   @FXML private Rectangle toilet;
   @FXML private Rectangle shelf;
@@ -189,6 +193,14 @@ public class EscapeRoomController {
                 }
               }
             });
+
+    torchButton.setOnMouseClicked(
+        EventHandler -> {
+          GameState.torchIsOn.setValue(!GameState.torchIsOn.getValue());
+        });
+    uvLightText.visibleProperty().bind(GameState.torchIsOn);
+
+    uvLightEffect.visibleProperty().bind(GameState.torchIsOn);
 
     // Configure settings for the riddle's chat completion request.
     chatCompletionRequest =
