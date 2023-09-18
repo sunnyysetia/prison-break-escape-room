@@ -307,12 +307,12 @@ public class EscapeRoomController {
     computerSwitch.setNode(computerGroup);
     computerSwitch.setDuration(javafx.util.Duration.millis(500));
     if (GameState.computerIsOpen) {
-      computerSwitch.setByY(-550);
+      computerSwitch.setByY(-650);
       GameState.computerIsOpen = false;
       computerDimScreen.setDisable(true);
       computerDimScreen.setVisible(false);
     } else {
-      computerSwitch.setByY(550);
+      computerSwitch.setByY(650);
       GameState.computerIsOpen = true;
       computerDimScreen.setDisable(false);
       computerDimScreen.setVisible(true);
