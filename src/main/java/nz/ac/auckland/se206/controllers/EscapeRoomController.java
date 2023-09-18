@@ -116,13 +116,13 @@ public class EscapeRoomController {
       new HashMap<Integer, int[]>() {
         {
           put(-45, new int[] {733, 300});
-          // put(-30, new int[] {734, 187}); // goes into guard room
-          put(30, new int[] {233, 623}); //
-          // put(31, new int[] {33, 221}); // works
+          put(-30, new int[] {734, 187});
+          put(30, new int[] {233, 623});
+          put(31, new int[] {33, 221});
           put(66, new int[] {558, 374});
           put(19, new int[] {361, 623});
           put(32, new int[] {362, 148});
-          // put(-23, new int[] {809, 136}); // goes into guard room
+          put(-23, new int[] {809, 136});
         }
       };
 
@@ -158,12 +158,14 @@ public class EscapeRoomController {
     int randomAngle = (int) uvRotateAngles[(int) (Math.random() * uvRotateAngles.length)];
     int[] uvCodeLocation = uvCodeLocations.get(randomAngle);
     uvLightText.setRotate(randomAngle);
+    uvLightText.setManaged(false);
     uvLightText.xProperty().setValue(uvCodeLocation[0]);
     uvLightText.yProperty().setValue(uvCodeLocation[1]);
     // debugging
     System.out.println("uvLightText R: " + uvLightText.getRotate() + " Value: " + randomAngle);
     System.out.println("uvLightText X: " + uvLightText.getX() + " Value: " + uvCodeLocation[0]);
     System.out.println("uvLightText Y: " + uvLightText.getY() + " Value: " + uvCodeLocation[1]);
+    System.out.println("uvLightText Parent: " + uvLightText.getParent());
 
     GameState.uvPassword = (int) (Math.random() * 100000000);
     uvLightText.setText(Integer.toString(GameState.uvPassword));
@@ -293,7 +295,7 @@ public class EscapeRoomController {
         new Thread(
             () -> {
               try {
-                Thread.sleep(700);
+                Thread.sleep(500);
                 GameState.togglingPhone = false;
               } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -312,6 +314,7 @@ public class EscapeRoomController {
     } else {
       phoneSwitch.setByY(550);
       GameState.phoneIsOpen = true;
+      GameState.torchIsOn.setValue(false);
       dimScreen.setDisable(false);
       dimScreen.setVisible(true);
       notifCircle.setVisible(false);
@@ -326,7 +329,7 @@ public class EscapeRoomController {
         new Thread(
             () -> {
               try {
-                Thread.sleep(700);
+                Thread.sleep(500);
                 GameState.togglingComputer = false;
               } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -345,6 +348,7 @@ public class EscapeRoomController {
     } else {
       computerSwitch.setByY(650);
       GameState.computerIsOpen = true;
+      GameState.torchIsOn.setValue(false);
       computerDimScreen.setDisable(false);
       computerDimScreen.setVisible(true);
     }

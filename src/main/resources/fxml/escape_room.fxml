@@ -76,7 +76,7 @@
                   <Rectangle fx:id="sink" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="176.0" layoutX="9.0" layoutY="307.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="79.0" />
                   <Rectangle fx:id="shelf" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="69.0" layoutX="109.0" layoutY="255.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="117.0" />
                   <Rectangle fx:id="table" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="179.0" layoutX="752.0" layoutY="412.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="226.0" />
-                  <Text fx:id="uvLightText" disable="true" fill="#81fdfd" layoutX="809.0" layoutY="136.0" rotate="-23.0" strokeType="OUTSIDE" text="uvCode" visible="false" wrappingWidth="200.0">
+                  <Text fx:id="uvLightText" disable="true" fill="#81fdfd" strokeType="OUTSIDE" text="uvCode" visible="false" wrappingWidth="200.0">
                      <font>
                         <Font size="35.0" />
                      </font>
@@ -144,7 +144,7 @@
             </AnchorPane>
          </children>
       </Group>
-      <SVGPath fx:id="uvLightEffect" content="M 0 100 Q 400 0 800 100 L 500 600 L 300 600 L 0 100 " fill="#4636f7" layoutX="110.0" layoutY="45.0" opacity="0.4" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" visible="false">
+      <SVGPath fx:id="uvLightEffect" content="M 0 100 Q 400 0 800 100 L 500 600 L 300 600 L 0 100 " disable="true" fill="#4636f7" layoutX="110.0" layoutY="45.0" opacity="0.4" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" visible="false">
          <effect>
             <GaussianBlur radius="12.0" />
          </effect>
