@@ -43,6 +43,9 @@ public class GameState {
   /** boolean value to check when the phone is open */
   public static boolean phoneIsOpen = false;
 
+  /** boolean value to determine if torch is on or off */
+  public static SimpleBooleanProperty torchIsOn = new SimpleBooleanProperty(false);
+
   /** disables input functionality when gpt is currently processing a response */
   public static SimpleBooleanProperty gptThinking = new SimpleBooleanProperty(false);
 }
