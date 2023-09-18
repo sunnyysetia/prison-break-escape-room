@@ -76,7 +76,7 @@
                   <Rectangle fx:id="sink" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="176.0" layoutX="9.0" layoutY="307.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="79.0" />
                   <Rectangle fx:id="shelf" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="69.0" layoutX="109.0" layoutY="255.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="117.0" />
                   <Rectangle fx:id="table" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="179.0" layoutX="752.0" layoutY="412.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="226.0" />
-                  <Text fx:id="uvLightText" fill="#81fdfd" layoutX="781.0" layoutY="250.0" rotate="-45.0" strokeType="OUTSIDE" text="uvCode" visible="false" wrappingWidth="200.0">
+                  <Text fx:id="uvLightText" disable="true" fill="#81fdfd" layoutX="809.0" layoutY="136.0" rotate="-23.0" strokeType="OUTSIDE" text="uvCode" visible="false" wrappingWidth="200.0">
                      <font>
                         <Font size="35.0" />
                      </font>
@@ -100,7 +100,7 @@
                   <Image url="@../images/arrow.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="torchButton" fitHeight="50.0" fitWidth="71.0" layoutX="880.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="torchButton" fitHeight="50.0" fitWidth="71.0" layoutX="880.0" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/torch.png" />
                </image>

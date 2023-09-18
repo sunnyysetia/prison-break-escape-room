@@ -51,4 +51,6 @@ public class GameState {
 
   /** disables input functionality when gpt is currently processing a response */
   public static SimpleBooleanProperty gptThinking = new SimpleBooleanProperty(false);
+
+  public static int uvPassword;
 }

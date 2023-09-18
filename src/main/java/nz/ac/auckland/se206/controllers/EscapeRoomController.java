@@ -111,6 +111,21 @@ public class EscapeRoomController {
   private HashMap<GameState.State, ChatCompletionRequest> chatCompletionRequests =
       new HashMap<GameState.State, ChatCompletionRequest>();
 
+  // UV code
+  private HashMap<Integer, int[]> uvCodeLocations =
+      new HashMap<Integer, int[]>() {
+        {
+          put(-45, new int[] {733, 300});
+          // put(-30, new int[] {734, 187}); // goes into guard room
+          put(30, new int[] {233, 623}); //
+          // put(31, new int[] {33, 221}); // works
+          put(66, new int[] {558, 374});
+          put(19, new int[] {361, 623});
+          put(32, new int[] {362, 148});
+          // put(-23, new int[] {809, 136}); // goes into guard room
+        }
+      };
+
   ///////////////
   // Shared
   ///////////////
@@ -137,6 +152,22 @@ public class EscapeRoomController {
 
     // Set the hint label to display 0 hints.
     hintLabel.setText("0");
+
+    // Generate a different passcode everytime
+    Object[] uvRotateAngles = uvCodeLocations.keySet().toArray();
+    int randomAngle = (int) uvRotateAngles[(int) (Math.random() * uvRotateAngles.length)];
+    int[] uvCodeLocation = uvCodeLocations.get(randomAngle);
+    uvLightText.setRotate(randomAngle);
+    uvLightText.xProperty().setValue(uvCodeLocation[0]);
+    uvLightText.yProperty().setValue(uvCodeLocation[1]);
+    // debugging
+    System.out.println("uvLightText R: " + uvLightText.getRotate() + " Value: " + randomAngle);
+    System.out.println("uvLightText X: " + uvLightText.getX() + " Value: " + uvCodeLocation[0]);
+    System.out.println("uvLightText Y: " + uvLightText.getY() + " Value: " + uvCodeLocation[1]);
+
+    GameState.uvPassword = (int) (Math.random() * 100000000);
+    uvLightText.setText(Integer.toString(GameState.uvPassword));
+    System.out.println("uvPassword: " + GameState.uvPassword);
 
     chatScrollPane.setFitToWidth(true);
     messagesVBox
