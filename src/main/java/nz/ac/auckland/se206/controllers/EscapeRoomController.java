@@ -1,7 +1,13 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -96,6 +102,19 @@ public class EscapeRoomController {
   @FXML private Button computerCloseButton;
   @FXML private Rectangle computerDimScreen;
 
+  @FXML private Group circuitGroup;
+  @FXML private Label memoryCountdownLabel;
+  @FXML private Button goBackMemory, checkGuessMemory;
+  @FXML private Rectangle a1, b1, c1, a2, b2, c2, a3, b3, c3, a4, b4, c4, a5, b5, c5;
+
+  private List<String> allSwitches =
+      new ArrayList<>(
+          List.of(
+              "a1", "b1", "c1", "a2", "b2", "c2", "a3", "b3", "c3", "a4", "b4", "c4", "a5", "b5",
+              "c5"));
+  private List<String> switchesToRecall = new ArrayList<>();
+  private List<String> playerChoices = new ArrayList<>();
+
   // Chat fxml
   @FXML private Button send_button;
   @FXML private TextField messagesTextField;
@@ -131,6 +150,9 @@ public class EscapeRoomController {
 
     // Update the UI label to display the timer.
     updateTimerLabel();
+
+    // Initialise memory recall game.
+    initialiseMemoryGame();
 
     // Binds send button so that it is disabled while gpt is writing a message.
     send_button.disableProperty().bind(GameState.gptThinking);
@@ -553,6 +575,185 @@ public class EscapeRoomController {
     Rectangle clickedRectangle = (Rectangle) event.getSource();
     String rectangleId = clickedRectangle.getId();
     System.out.println("Object clicked: " + rectangleId);
+  }
+
+  ///////////////
+  // Guard's Room
+  ///////////////
+  @FXML
+  private void openCircuit(MouseEvent event) {
+    System.out.println("Circuit clicked");
+    circuitGroup.setDisable(false);
+    circuitGroup.setVisible(true);
+    startMemoryRecallGame();
+  }
+
+  @FXML
+  private void closeCircuit(MouseEvent event) {
+    System.out.println("Circuit clicked");
+    circuitGroup.setDisable(true);
+    circuitGroup.setVisible(false);
+  }
+
+  @FXML
+  private void clickSwitch(MouseEvent event) {
+    // Find which object was clicked
+    Rectangle clickedRectangle = (Rectangle) event.getSource();
+    String rectangleId = clickedRectangle.getId();
+    System.out.println("Object clicked: " + rectangleId);
+
+    // Toggle the switch
+    toggleSwitch(rectangleId);
+  }
+
+  private void initialiseMemoryGame() {
+    // Clear the switchesToRecall array
+    switchesToRecall.clear();
+    playerChoices.clear();
+
+    // Create a copy of allSwitches to avoid modifying the original list
+    List<String> availableSwitches = new ArrayList<>(allSwitches);
+
+    // Initialize a random number generator
+    Random random = new Random();
+
+    // Choose and toggle 7 random switches
+    for (int i = 0; i < 7 && !availableSwitches.isEmpty(); i++) {
+      // Generate a random index within the availableSwitches list
+      int randomIndex = random.nextInt(availableSwitches.size());
+
+      // Get the fx:id at the random index
+      String randomSwitch = availableSwitches.get(randomIndex);
+
+      // Call setSwitchToGreen on the selected switch
+      setSwitchToGreen(randomSwitch);
+
+      // Add it to the switchesToRecall list
+      switchesToRecall.add(randomSwitch);
+
+      // Remove the selected switch from the availableSwitches list
+      availableSwitches.remove(randomIndex);
+    }
+  }
+
+  private void toggleSwitch(String fxid) {
+    Node node = circuitGroup.lookup("#" + fxid);
+    if (node instanceof Rectangle) {
+      Rectangle switchRect = (Rectangle) node;
+
+      // Check the current fill color and toggle it
+      if (switchRect.getFill().equals(Color.rgb(255, 0, 0))) {
+        // Changing from red to green
+        switchRect.setFill(Color.rgb(0, 255, 0));
+
+        // Add the id to playerChoices if it doesn't exist
+        if (!playerChoices.contains(fxid)) {
+          playerChoices.add(fxid);
+        }
+      } else {
+        // Changing from green to red
+        switchRect.setFill(Color.rgb(255, 0, 0));
+
+        // Remove the id from playerChoices if it exists
+        playerChoices.remove(fxid);
+      }
+    }
+  }
+
+  private void setSwitchToGreen(String fxid) {
+    Node node = circuitGroup.lookup("#" + fxid);
+    if (node instanceof Rectangle) {
+      Rectangle switchRect = (Rectangle) node;
+      switchRect.setFill(Color.rgb(0, 255, 0));
+    }
+  }
+
+  private void setSwitchToRed(String fxid) {
+    Node node = circuitGroup.lookup("#" + fxid);
+    if (node instanceof Rectangle) {
+      Rectangle switchRect = (Rectangle) node;
+      switchRect.setFill(Color.rgb(255, 0, 0));
+    }
+  }
+
+  private void disableALlSwitches(boolean disable) {
+    for (String fxid : allSwitches) {
+      Node node = circuitGroup.lookup("#" + fxid);
+      if (node instanceof Rectangle) {
+        Rectangle switchRect = (Rectangle) node;
+        switchRect.setDisable(disable);
+      }
+    }
+  }
+
+  @FXML
+  private void checkIfUserInputCorrect() {
+    // Convert both lists to HashSet for comparison
+    HashSet<String> switchesToRecallSet = new HashSet<>(switchesToRecall);
+    HashSet<String> playerChoicesSet = new HashSet<>(playerChoices);
+
+    // Check if the sets are equal (order doesn't matter)
+    boolean areEqual = switchesToRecallSet.equals(playerChoicesSet);
+
+    // Now, 'areEqual' will be true if both sets have the same elements, regardless of order.
+    System.out.println("Are equal: " + areEqual);
+
+    if (areEqual) {
+      closeCircuit(null);
+      circuit.setDisable(true);
+    } else {
+      initialiseMemoryGame();
+      startMemoryRecallGame();
+    }
+  }
+
+  private void startMemoryRecallGame() {
+    goBackMemory.setVisible(false);
+    checkGuessMemory.setVisible(false);
+    disableALlSwitches(true);
+    memoryCountdownLabel.setVisible(true);
+    // Countdown Label
+    int countdownSeconds = 5;
+
+    new Thread(
+            () -> {
+              for (int i = countdownSeconds; i >= 0; i--) {
+                final int remainingTime = i;
+                Platform.runLater(
+                    () -> {
+                      if (remainingTime != 1) {
+                        memoryCountdownLabel.setText(
+                            "You have " + remainingTime + " seconds to remember");
+                      } else {
+                        memoryCountdownLabel.setText(
+                            "You have " + remainingTime + " second to remember");
+                      }
+                    });
+
+                try {
+                  Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                  e.printStackTrace();
+                }
+              }
+            })
+        .start();
+
+    // Execute code after countdown
+    CompletableFuture.delayedExecutor(countdownSeconds, TimeUnit.SECONDS)
+        .execute(
+            () -> {
+              Platform.runLater(
+                  () -> {
+                    memoryCountdownLabel.setVisible(false);
+                    for (String fxid : allSwitches) {
+                      setSwitchToRed(fxid);
+                    }
+                    goBackMemory.setVisible(true);
+                    checkGuessMemory.setVisible(true);
+                    disableALlSwitches(false);
+                  });
+            });
   }
 
   ///////////////
