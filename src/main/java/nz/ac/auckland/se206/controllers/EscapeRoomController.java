@@ -553,7 +553,6 @@ public class EscapeRoomController {
    */
   @FXML
   private void onKeyPressed(KeyEvent event) {
-    System.out.println("key " + event.getCode() + " pressed");
     if (event.getCode() == KeyCode.ENTER) {
       // Prevent the Enter key event from propagating further
       if (GameState.phoneIsOpen) {
