@@ -25,7 +25,7 @@ public class GameState {
   public static int time = 120; // Default to 2 minutes
 
   /** Word to guess */
-  public static String wordToGuess = "couch";
+  public static String wordToGuess = "kettle";
 
   /** Pincode to find */
   public static String pincode = "1234";

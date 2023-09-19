@@ -23,9 +23,10 @@ public class WaitingLobbyController {
   @FXML private ToggleGroup tgDifficulty;
   @FXML private ToggleGroup tgTime;
 
-  private ArrayList<String> easyList = new ArrayList<>(Arrays.asList("curtains", "couch", "plant"));
-  private ArrayList<String> hardList =
-      new ArrayList<>(Arrays.asList("painting", "lampshade", "airvent"));
+  private ArrayList<String> kitchenItems =
+      new ArrayList<>(
+          Arrays.asList(
+              "cuttingboard", "oven", "plates", "extinguisher", "kettle", "clock", "toaster"));
 
   @FXML
   public void initialize() {
@@ -48,7 +49,7 @@ public class WaitingLobbyController {
       GameState.state = GameState.State.INTRO;
       GameState.playerName = null;
       GameState.difficulty = "easy";
-      GameState.wordToGuess = "couch";
+      GameState.wordToGuess = "kettle";
       GameState.phoneIsOpen = false;
       GameState.togglingPhone = false;
       GameState.switchingRoom = false;
@@ -89,11 +90,9 @@ public class WaitingLobbyController {
         Random randomWord = new Random();
 
         // Set word to guess
-        if (selectedDifficulty.equals("hard")) {
-          GameState.wordToGuess = hardList.get(randomWord.nextInt(hardList.size()));
-        } else {
-          GameState.wordToGuess = easyList.get(randomWord.nextInt(easyList.size()));
-        }
+
+        GameState.wordToGuess = kitchenItems.get(randomWord.nextInt(kitchenItems.size()));
+
         System.out.println("Word to guess: " + GameState.wordToGuess);
         SceneManager.addUi(SceneManager.AppUi.ROOM, App.loadFxml("escape_room"));
         App.setUi(AppUi.ROOM);
