@@ -884,7 +884,7 @@ public class EscapeRoomController {
             }
             if (resultMessage.getRole().equals("assistant")
                 && resultMessage.getContent().startsWith("Correct")) {
-              // GameState.state = GameState.State.FIND_ID;
+              GameState.riddleSolved = true;
             }
             if (resultMessage.getContent().contains("hint")) {
               try {

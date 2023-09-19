@@ -15,6 +15,9 @@ public class GameState {
 
   public static State state = State.INTRO;
 
+  /** Indicates whether the riddle has been solved. */
+  public static boolean riddleSolved = false;
+
   /** Player's name */
   public static String playerName = null;
 

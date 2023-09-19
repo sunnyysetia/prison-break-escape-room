@@ -53,6 +53,7 @@ public class WaitingLobbyController {
       GameState.phoneIsOpen = false;
       GameState.togglingPhone = false;
       GameState.switchingRoom = false;
+      GameState.riddleSolved = false;
       GameState.currentRoom = 1;
 
       // Generate random 4-digit pincode
