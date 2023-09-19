@@ -27,6 +27,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -34,6 +35,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -101,6 +103,11 @@ public class EscapeRoomController {
   @FXML private Rectangle computer;
   @FXML private Button computerCloseButton;
   @FXML private Rectangle computerDimScreen;
+  @FXML private AnchorPane computerLoginAPane;
+  @FXML private PasswordField computerPasswordField;
+  @FXML private Button computerLoginButton;
+  @FXML private AnchorPane endingControlAPane;
+  @FXML private Label computerLoginLabel;
 
   @FXML private Group circuitGroup;
   @FXML private Label memoryCountdownLabel;
@@ -202,6 +209,35 @@ public class EscapeRoomController {
               public void changed(
                   ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 chatScrollPane.setVvalue((Double) newValue);
+              }
+            });
+
+    computerLoginButton.setOnAction(
+        (EventHandler<ActionEvent>)
+            event -> {
+              if (computerPasswordField.getText().equals(GameState.uvPassword + "")) {
+                computerLoginAPane.setVisible(false);
+                computerLoginAPane.setDisable(true);
+                endingControlAPane.setVisible(true);
+                endingControlAPane.setDisable(false);
+              } else {
+                computerLoginLabel.setText("Incorrect Password!");
+                computerPasswordField.clear();
+                Thread waitThread =
+                    new Thread(
+                        () -> {
+                          try {
+                            Thread.sleep(2000);
+                          } catch (InterruptedException e) {
+                            e.printStackTrace();
+                          }
+                          Platform.runLater(
+                              () -> {
+                                computerLoginLabel.setText("Super Prison Computer");
+                              });
+                        });
+                waitThread.setDaemon(true);
+                waitThread.start();
               }
             });
 
