@@ -18,9 +18,6 @@ public class GameState {
   /** Indicates whether the riddle has been solved. */
   public static boolean riddleSolved = false;
 
-  /** Player's name */
-  public static String playerName = null;
-
   /** Difficulty level (easy/medium/hard) */
   public static String difficulty = "easy"; // Default to easy
 
