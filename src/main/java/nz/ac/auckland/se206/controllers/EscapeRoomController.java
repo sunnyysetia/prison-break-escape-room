@@ -553,7 +553,6 @@ public class EscapeRoomController {
    */
   @FXML
   private void onKeyPressed(KeyEvent event) {
-    System.out.println("key " + event.getCode() + " pressed");
     if (event.getCode() == KeyCode.ENTER) {
       // Prevent the Enter key event from propagating further
       if (GameState.phoneIsOpen) {
@@ -884,7 +883,7 @@ public class EscapeRoomController {
             }
             if (resultMessage.getRole().equals("assistant")
                 && resultMessage.getContent().startsWith("Correct")) {
-              // GameState.state = GameState.State.FIND_ID;
+              GameState.riddleSolved = true;
             }
             if (resultMessage.getContent().contains("hint")) {
               try {
