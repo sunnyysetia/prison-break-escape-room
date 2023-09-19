@@ -4,14 +4,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.shape.Rectangle;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager;
@@ -23,6 +31,52 @@ public class WaitingLobbyController {
   @FXML private Button onBeginGameButton;
   @FXML private ToggleGroup tgDifficulty;
   @FXML private ToggleGroup tgTime;
+  @FXML private Rectangle lightDim;
+
+  BooleanProperty lightsOn = new SimpleBooleanProperty();
+  // Create a completely random timeline to simulate lights flickering
+  Timeline timeline =
+      new Timeline(
+          new KeyFrame(
+              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, true)),
+          new KeyFrame(
+              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, false)),
+          new KeyFrame(
+              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, true)),
+          new KeyFrame(
+              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, false)),
+          new KeyFrame(
+              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, true)),
+          new KeyFrame(
+              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, false)),
+          new KeyFrame(
+              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, true)),
+          new KeyFrame(
+              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, false)),
+          new KeyFrame(
+              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, true)),
+          new KeyFrame(
+              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, false)),
+          new KeyFrame(
+              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, true)),
+          new KeyFrame(
+              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, false)),
+          new KeyFrame(
+              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, true)),
+          new KeyFrame(
+              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, false)),
+          new KeyFrame(
+              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, true)),
+          new KeyFrame(
+              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, false)),
+          new KeyFrame(
+              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, true)),
+          new KeyFrame(
+              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, false)),
+          new KeyFrame(
+              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, true)),
+          new KeyFrame(
+              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, false)));
 
   private ArrayList<String> kitchenItems =
       new ArrayList<>(
@@ -30,14 +84,18 @@ public class WaitingLobbyController {
               "cuttingboard", "oven", "plates", "extinguisher", "kettle", "clock", "toaster"));
 
   @FXML
-  public void initialize() {}
+  public void initialize() {
+    lightDim.visibleProperty().bind(Bindings.when(lightsOn).then(true).otherwise(false));
+    timeline.setCycleCount(Animation.INDEFINITE);
+    timeline.play();
+  }
 
   @FXML
   private void onBeginGame(ActionEvent event) throws IOException {
     TranslateTransition phoneTransition = new TranslateTransition();
     phoneTransition.setNode(phoneGroup);
     phoneTransition.setDuration(javafx.util.Duration.millis(500));
-    phoneTransition.setByY(-600);
+    phoneTransition.setByY(-550);
     Thread animationThread =
         new Thread(
             () -> {
@@ -51,6 +109,7 @@ public class WaitingLobbyController {
               } catch (InterruptedException e) {
                 e.printStackTrace();
               }
+              timeline.stop();
               Platform.runLater(
                   () -> {
                     try {
