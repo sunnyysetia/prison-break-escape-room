@@ -30,6 +30,11 @@ public class WaitingLobbyController {
 
   @FXML
   public void initialize() {
+    try {
+      SceneManager.delUI(AppUi.ROOM); // Delete the room UI if it exists
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     // Check if name already exists in GameState and populate nameField
     if (GameState.playerName != null && !GameState.playerName.isEmpty()) {
       nameField.setText(GameState.playerName);
@@ -55,6 +60,11 @@ public class WaitingLobbyController {
       GameState.switchingRoom = false;
       GameState.riddleSolved = false;
       GameState.currentRoom = 1;
+      GameState.togglingComputer = false;
+      GameState.computerIsOpen = false;
+      GameState.torchIsOn.set(false);
+      GameState.gptThinking.set(false);
+      GameState.uvPassword = 00000000;
 
       // Generate random 4-digit pincode
       Random randomCode = new Random();

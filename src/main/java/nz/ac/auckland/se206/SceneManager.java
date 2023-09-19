@@ -19,4 +19,10 @@ public class SceneManager {
   public static Parent getUi(AppUi appUi) {
     return sceneMap.get(appUi);
   }
+
+  public static void delUI(AppUi appUi) {
+    sceneMap.remove(appUi);
+    System.out.println("Deleted UI: " + appUi);
+    System.out.println("Current UIs: " + sceneMap.keySet());
+  }
 }
