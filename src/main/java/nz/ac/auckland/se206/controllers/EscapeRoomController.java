@@ -642,9 +642,15 @@ public class EscapeRoomController {
   }
 
   private void initialiseMemoryGame() {
+    System.out.println("Initialising memory game");
     // Clear the switchesToRecall array
     switchesToRecall.clear();
     playerChoices.clear();
+
+    // Set all switches to red
+    for (String fxid : allSwitches) {
+      setSwitchToRed(fxid);
+    }
 
     // Create a copy of allSwitches to avoid modifying the original list
     List<String> availableSwitches = new ArrayList<>(allSwitches);
