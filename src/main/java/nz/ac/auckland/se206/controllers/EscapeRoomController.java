@@ -27,8 +27,8 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
@@ -104,11 +104,11 @@ public class EscapeRoomController {
   @FXML private Rectangle computer;
   @FXML private Button computerCloseButton;
   @FXML private Rectangle computerDimScreen;
-  @FXML private AnchorPane computerLoginAPane;
-  @FXML private PasswordField computerPasswordField;
+  @FXML private TextField computerPasswordField;
+  @FXML private TextArea computerConsoleTextArea;
   @FXML private Button computerLoginButton;
   @FXML private AnchorPane endingControlAPane;
-  @FXML private Label computerLoginLabel;
+  @FXML private AnchorPane computerConsoleAPane;
 
   @FXML private Group circuitGroup;
   @FXML private Label memoryCountdownLabel;
@@ -216,19 +216,30 @@ public class EscapeRoomController {
     computerLoginButton.setOnAction(
         (EventHandler<ActionEvent>)
             event -> {
-              if (computerPasswordField.getText().equals(GameState.uvPassword + "")) {
-                computerLoginAPane.setVisible(false);
-                computerLoginAPane.setDisable(true);
-                endingControlAPane.setVisible(true);
-                endingControlAPane.setDisable(false);
-              } else {
-                computerLoginLabel.setText("Incorrect Password!");
+              // Only runs if the computer is not logged in
+              if (!GameState.computerLoggedIn) {
+                String password = computerPasswordField.getText();
                 computerPasswordField.clear();
-                wait(
-                    2000,
-                    () -> {
-                      computerLoginLabel.setText("Super Prison Computer");
-                    });
+                computerConsoleTextArea.setText(
+                    computerConsoleTextArea.getText() + "\nC:\\PrisonPC\\>" + password);
+                if (password.equals(GameState.uvPassword + "")) {
+                  computerConsoleAPane.setVisible(false);
+                  computerConsoleAPane.setDisable(true);
+                  endingControlAPane.setVisible(true);
+                  endingControlAPane.setDisable(false);
+                  GameState.computerLoggedIn = true;
+                } else {
+                  Thread writerThread =
+                      new Thread(
+                          () -> {
+                            typeWrite(
+                                computerConsoleTextArea,
+                                "\n" + "System:>Incorrect Password!\n" + "System:>Enter Password:",
+                                20);
+                          });
+                  writerThread.setDaemon(true);
+                  writerThread.start();
+                }
               }
             });
 
@@ -315,6 +326,21 @@ public class EscapeRoomController {
     runGpt(new ChatMessage("user", GptPromptEngineering.getIntroInstruction()));
   }
 
+  private static void typeWrite(TextArea sceneTextArea, String message, int interval) {
+    int i = 0;
+    while (i < message.length()) {
+      sceneTextArea.setText(sceneTextArea.getText() + message.charAt(i));
+      sceneTextArea.appendText("");
+      sceneTextArea.setScrollTop(Double.MAX_VALUE);
+      i++;
+      try {
+        Thread.sleep(interval);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
   // on recieve message, run in different thread
   private static void addLabel(String messageFromGPT, VBox vbox) {
     System.out.println("GPT sent user a message");
@@ -383,6 +409,7 @@ public class EscapeRoomController {
     } else {
       computerSwitch.setByY(650);
       GameState.computerIsOpen = true;
+      computerPasswordField.requestFocus();
       GameState.torchIsOn.setValue(false);
       computerDimScreen.setDisable(false);
       computerDimScreen.setVisible(true);
@@ -532,6 +559,9 @@ public class EscapeRoomController {
       // Prevent the Enter key event from propagating further
       if (GameState.phoneIsOpen) {
         send_button.fire();
+      }
+      if (GameState.computerIsOpen) {
+        computerLoginButton.fire();
       }
     }
   }

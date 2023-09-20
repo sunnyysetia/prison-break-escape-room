@@ -4,9 +4,9 @@
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.GaussianBlur?>
 <?import javafx.scene.image.Image?>
@@ -23,13 +23,13 @@
 <Pane fx:id="room" focusTraversable="true" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="720.0" prefWidth="1022.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.EscapeRoomController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="720.0" opacity="0.6" stroke="BLACK" strokeType="INSIDE" width="1022.0" />
-      <Label fx:id="timerLabel" layoutX="910.0" layoutY="15.0" prefHeight="41.0" prefWidth="102.0" textAlignment="CENTER">
+      <Label fx:id="timerLabel" layoutX="910.0" layoutY="15.0" prefHeight="41.0" prefWidth="102.0" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Stencil" size="27.0" />
          </font></Label>
       <Label layoutX="15.0" layoutY="19.0" prefHeight="30.0" prefWidth="123.0" text="Hints :" textAlignment="CENTER">
          <font>
-            <Font name="Stencil" size="20.0" />
+            <Font name="Stencil" size="27.0" />
          </font>
       </Label>
       <Label fx:id="hintLabel" layoutX="100.0" layoutY="15.0" prefHeight="41.0" prefWidth="65.0" textAlignment="CENTER">
@@ -195,9 +195,13 @@
       <Rectangle fx:id="computerDimScreen" arcHeight="5.0" arcWidth="5.0" disable="true" height="720.0" opacity="0.6" stroke="BLACK" strokeType="INSIDE" visible="false" width="1022.0" />
       <Group fx:id="computerGroup" layoutX="221.0" layoutY="-500.0">
          <children>
-            <Rectangle arcHeight="80.0" arcWidth="80.0" height="450.0" layoutX="-25.0" layoutY="-25.0" stroke="BLACK" strokeType="INSIDE" width="650.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="400.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
-            <Button fx:id="computerCloseButton" layoutX="14.0" layoutY="370.0" mnemonicParsing="false" text="close" />
+            <Rectangle arcHeight="80.0" arcWidth="80.0" fill="#5b5b5b" height="450.0" layoutX="-25.0" layoutY="-25.0" stroke="BLACK" strokeType="INSIDE" width="650.0" />
+            <Circle fill="#00ff33" layoutX="300.0" layoutY="411.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dfdfdf" height="400.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+            <Button fx:id="computerCloseButton" layoutX="14.0" layoutY="370.0" mnemonicParsing="false" text="close">
+               <font>
+                  <Font name="Consolas" size="12.0" />
+               </font></Button>
             <AnchorPane fx:id="endingControlAPane" disable="true" prefHeight="360.0" prefWidth="600.0" visible="false">
                <children>
                   <RadioButton layoutX="66.0" layoutY="238.0" mnemonicParsing="false" text="Ending 3" />
@@ -206,19 +210,22 @@
                   <Button layoutX="358.0" layoutY="170.0" mnemonicParsing="false" text="Go!" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="computerLoginAPane" prefHeight="360.0" prefWidth="600.0">
+            <AnchorPane fx:id="computerConsoleAPane" prefHeight="360.0" prefWidth="600.0">
                <children>
-                  <Label fx:id="computerLoginLabel" layoutX="130.0" layoutY="67.0" text="Super Prison Computer">
+                  <TextArea fx:id="computerConsoleTextArea" editable="false" prefHeight="315.0" prefWidth="600.0" style="-fx-text-fill: green; -fx-background-color: black; -fx-control-inner-background: black;" text="System:&gt;Enter the password:">
                      <font>
-                        <Font size="33.0" />
+                        <Font name="Consolas" size="18.0" />
                      </font>
-                  </Label>
-                  <PasswordField fx:id="computerPasswordField" layoutX="154.0" layoutY="163.0" promptText="Enter Password">
+                  </TextArea>
+                  <TextField fx:id="computerPasswordField" layoutY="314.0" prefHeight="45.0" prefWidth="480.0" style="-fx-text-fill: green; -fx-background-color: black; -fx-control-inner-background: black;">
                      <font>
-                        <Font size="26.0" />
+                        <Font name="Consolas" size="18.0" />
+                     </font></TextField>
+                  <Button fx:id="computerLoginButton" layoutX="480.0" layoutY="314.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="120.0" style="-fx-alignment: center;" text="Enter">
+                     <font>
+                        <Font name="Consolas" size="20.0" />
                      </font>
-                  </PasswordField>
-                  <Button fx:id="computerLoginButton" layoutX="270.0" layoutY="241.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="59.0" text="Login" />
+                  </Button>
                </children>
             </AnchorPane>
          </children>
