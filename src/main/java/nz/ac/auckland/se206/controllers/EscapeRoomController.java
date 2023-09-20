@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
@@ -89,6 +90,7 @@ public class EscapeRoomController {
   @FXML private Rectangle kettle;
   @FXML private Rectangle clock;
   @FXML private Rectangle toaster;
+  @FXML private Group torchGetGroup;
 
   // Cell FXML
   @FXML private Text uvLightText;
@@ -671,8 +673,53 @@ public class EscapeRoomController {
     System.out.println("Object clicked: " + rectangleId);
     System.out.println("Riddle solved: " + GameState.riddleSolved);
 
-    if (GameState.riddleSolved && rectangleId.equals(GameState.wordToGuess)) {
+    if (GameState.riddleSolved
+        && rectangleId.equals(GameState.wordToGuess)
+        && !GameState.torchFound) {
+      GameState.torchFound = true;
       torchButton.setVisible(true);
+      // insert torch retrieved animation
+
+      Thread animationThread =
+          new Thread(
+              () -> {
+                TranslateTransition torchGet = new TranslateTransition();
+                torchGet.setNode(torchGetGroup);
+                torchGet.setDuration(javafx.util.Duration.millis(500));
+                torchGet.setByY(600);
+                FadeTransition torchFade = new FadeTransition();
+                torchFade.setNode(torchGetGroup);
+                torchFade.setDuration(javafx.util.Duration.millis(1000));
+                torchFade.setFromValue(0);
+                torchFade.setToValue(1);
+                torchFade.play();
+                torchGet.play();
+              });
+
+      Thread disappearThread =
+          new Thread(
+              () -> {
+                try {
+                  Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                  e.printStackTrace();
+                }
+                TranslateTransition torchGet = new TranslateTransition();
+                torchGet.setNode(torchGetGroup);
+                torchGet.setDuration(javafx.util.Duration.millis(500));
+                torchGet.setByY(600);
+                FadeTransition torchFade = new FadeTransition();
+                torchFade.setNode(torchGetGroup);
+                torchFade.setDuration(javafx.util.Duration.millis(500));
+                torchFade.setFromValue(1);
+                torchFade.setToValue(0);
+                torchFade.play();
+                torchGet.play();
+              });
+      animationThread.setDaemon(true);
+      disappearThread.setDaemon(true);
+      animationThread.start();
+      disappearThread.start();
     }
   }
 

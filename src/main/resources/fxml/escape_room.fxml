@@ -235,5 +235,24 @@
             </AnchorPane>
          </children>
       </Group>
+      <Group fx:id="torchGetGroup" disable="true" layoutY="-600.0" opacity="0.0">
+         <children>
+            <AnchorPane layoutX="261.0" layoutY="210.0" prefHeight="300.0" prefWidth="500.0">
+               <children>
+                  <Rectangle fill="#767676" height="300.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="500.0" />
+                  <Label layoutX="62.0" layoutY="14.0" prefHeight="134.0" prefWidth="376.0" text="You Unlocked: UV light Torch" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="Stencil" size="45.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="175.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/torch.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+      </Group>
    </children>
 </Pane>
