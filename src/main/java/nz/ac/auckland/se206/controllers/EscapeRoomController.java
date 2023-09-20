@@ -676,11 +676,11 @@ public class EscapeRoomController {
               () -> {
                 TranslateTransition torchGet = new TranslateTransition();
                 torchGet.setNode(torchGetGroup);
-                torchGet.setDuration(javafx.util.Duration.millis(500));
+                torchGet.setDuration(Duration.millis(500));
                 torchGet.setByY(600);
                 FadeTransition torchFade = new FadeTransition();
                 torchFade.setNode(torchGetGroup);
-                torchFade.setDuration(javafx.util.Duration.millis(1000));
+                torchFade.setDuration(Duration.millis(1000));
                 torchFade.setFromValue(0);
                 torchFade.setToValue(1);
                 torchFade.play();
@@ -697,11 +697,11 @@ public class EscapeRoomController {
                 }
                 TranslateTransition torchGet = new TranslateTransition();
                 torchGet.setNode(torchGetGroup);
-                torchGet.setDuration(javafx.util.Duration.millis(500));
+                torchGet.setDuration(Duration.millis(500));
                 torchGet.setByY(600);
                 FadeTransition torchFade = new FadeTransition();
                 torchFade.setNode(torchGetGroup);
-                torchFade.setDuration(javafx.util.Duration.millis(500));
+                torchFade.setDuration(Duration.millis(500));
                 torchFade.setFromValue(1);
                 torchFade.setToValue(0);
                 torchFade.play();
