@@ -144,6 +144,7 @@ public class WaitingLobbyController {
     GameState.gptThinking.set(false);
     GameState.uvPassword = 00000000;
     GameState.computerLoggedIn = false;
+    GameState.torchFound = false;
 
     // Get the selected radio button (difficulty)
     RadioButton selectedDifficultyButton = (RadioButton) tgDifficulty.getSelectedToggle();

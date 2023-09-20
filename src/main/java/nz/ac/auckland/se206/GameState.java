@@ -55,4 +55,6 @@ public class GameState {
   public static int uvPassword;
 
   public static boolean computerLoggedIn = false;
+
+  public static boolean torchFound = false;
 }
