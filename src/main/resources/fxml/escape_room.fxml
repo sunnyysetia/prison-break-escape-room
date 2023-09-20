@@ -27,12 +27,12 @@
          <font>
             <Font name="Stencil" size="27.0" />
          </font></Label>
-      <Label layoutX="15.0" layoutY="19.0" prefHeight="30.0" prefWidth="123.0" text="Hints :" textAlignment="CENTER" textFill="WHITE">
+      <Label layoutX="15.0" layoutY="19.0" prefHeight="30.0" prefWidth="123.0" text="Hints :" textAlignment="CENTER">
          <font>
-            <Font name="Stencil" size="20.0" />
+            <Font name="Stencil" size="27.0" />
          </font>
       </Label>
-      <Label fx:id="hintLabel" layoutX="100.0" layoutY="15.0" prefHeight="41.0" prefWidth="65.0" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="hintLabel" layoutX="100.0" layoutY="15.0" prefHeight="41.0" prefWidth="65.0" textAlignment="CENTER">
          <font>
             <Font name="Stencil" size="27.0" />
          </font>
@@ -212,12 +212,15 @@
             </AnchorPane>
             <AnchorPane fx:id="computerConsoleAPane" prefHeight="360.0" prefWidth="600.0">
                <children>
-                  <TextArea fx:id="computerConsoleTextArea" editable="false" prefHeight="315.0" prefWidth="600.0" style="-fx-text-fill: green; -fx-background-color: black; -fx-control-inner-background: black;" text="Enter the password">
+                  <TextArea fx:id="computerConsoleTextArea" editable="false" prefHeight="315.0" prefWidth="600.0" style="-fx-text-fill: green; -fx-background-color: black; -fx-control-inner-background: black;" text="Enter the password:">
                      <font>
                         <Font name="Consolas" size="18.0" />
                      </font>
                   </TextArea>
-                  <TextField fx:id="computerPasswordField" layoutY="314.0" prefHeight="45.0" prefWidth="480.0" style="-fx-text-fill: green; -fx-background-color: black; -fx-control-inner-background: black;" />
+                  <TextField fx:id="computerPasswordField" layoutY="314.0" prefHeight="45.0" prefWidth="480.0" style="-fx-text-fill: green; -fx-background-color: black; -fx-control-inner-background: black;">
+                     <font>
+                        <Font name="Consolas" size="18.0" />
+                     </font></TextField>
                   <Button fx:id="computerLoginButton" layoutX="480.0" layoutY="314.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="120.0" style="-fx-alignment: center;" text="Enter">
                      <font>
                         <Font name="Consolas" size="20.0" />

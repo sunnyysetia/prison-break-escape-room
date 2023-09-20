@@ -218,33 +218,27 @@ public class EscapeRoomController {
             event -> {
               // Only runs if the computer is not logged in
               if (!GameState.computerLoggedIn) {
+                String password = computerPasswordField.getText();
                 computerPasswordField.clear();
-                if (computerPasswordField.getText().equals(GameState.uvPassword + "")) {
+                computerConsoleTextArea.setText(
+                    computerConsoleTextArea.getText() + "\nC:\\PrisonPC\\>" + password);
+                if (password.equals(GameState.uvPassword + "")) {
                   computerConsoleAPane.setVisible(false);
                   computerConsoleAPane.setDisable(true);
                   endingControlAPane.setVisible(true);
                   endingControlAPane.setDisable(false);
+                  GameState.computerLoggedIn = true;
                 } else {
-                  // computerLoginLabel.setText("Incorrect Password!");
-                  // typeWrite(TextArea sceneTextArea, String message, int interval)
-                  typeWrite(computerConsoleTextArea, "Incorrect Password!", 50);
-                  computerPasswordField.clear();
-                  Thread waitThread =
+                  Thread writerThread =
                       new Thread(
                           () -> {
-                            try {
-                              Thread.sleep(2000);
-                            } catch (InterruptedException e) {
-                              e.printStackTrace();
-                            }
-                            Platform.runLater(
-                                () -> {
-                                  // computerLoginLabel.setText("Super Prison Computer");
-                                  // typeWrite(TextArea sceneTextArea, String message, int interval)
-                                });
+                            typeWrite(
+                                computerConsoleTextArea,
+                                "\n" + "System:>Incorrect Password!\n" + "System:>Enter Password:",
+                                20);
                           });
-                  waitThread.setDaemon(true);
-                  waitThread.start();
+                  writerThread.setDaemon(true);
+                  writerThread.start();
                 }
               }
             });
@@ -429,6 +423,7 @@ public class EscapeRoomController {
     } else {
       computerSwitch.setByY(650);
       GameState.computerIsOpen = true;
+      computerPasswordField.requestFocus();
       GameState.torchIsOn.setValue(false);
       computerDimScreen.setDisable(false);
       computerDimScreen.setVisible(true);
