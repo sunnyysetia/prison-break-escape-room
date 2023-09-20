@@ -171,6 +171,8 @@ public class EscapeRoomController {
         }
       };
 
+  private Tooltip currentTooltip; // Maintain a reference to the current tooltip
+
   ///////////////
   // Shared
   ///////////////
@@ -587,16 +589,6 @@ public class EscapeRoomController {
     }
   }
 
-  /**
-   * Handles the key released event.
-   *
-   * @param event the key event
-   */
-  @FXML
-  private void onKeyReleased(KeyEvent event) {
-    System.out.println("key " + event.getCode() + " released");
-  }
-
   // TTS
   private void textToSpeech(String message) {
 
@@ -616,7 +608,6 @@ public class EscapeRoomController {
   ////////////////////////
   // Objects Interaction
   ///////////////////////
-  private Tooltip currentTooltip; // Maintain a reference to the current tooltip
 
   @FXML
   private void showObjectName(MouseEvent event) {
