@@ -255,16 +255,10 @@ public class EscapeRoomController {
                   Thread writerThread =
                       new Thread(
                           () -> {
-                            // Hopefully this fixes it
-                            Platform.runLater(
-                                () -> {
-                                  typeWrite(
-                                      computerConsoleTextArea,
-                                      "\n"
-                                          + "System:>Incorrect Password!\n"
-                                          + "System:>Enter Password:",
-                                      15);
-                                });
+                            typeWrite(
+                                computerConsoleTextArea,
+                                "\n" + "System:>Incorrect Password!\n" + "System:>Enter Password:",
+                                15);
                           });
                   writerThread.setDaemon(true);
                   writerThread.start();
@@ -361,9 +355,14 @@ public class EscapeRoomController {
   private void typeWrite(TextArea sceneTextArea, String message, int interval) {
     int i = 0;
     while (i < message.length()) {
-      sceneTextArea.setText(sceneTextArea.getText() + message.charAt(i));
-      sceneTextArea.appendText("");
-      sceneTextArea.setScrollTop(Double.MAX_VALUE);
+      int j = i;
+      Platform.runLater(
+          () -> {
+            sceneTextArea.setText(sceneTextArea.getText() + message.charAt(j));
+            sceneTextArea.appendText("");
+            sceneTextArea.setScrollTop(Double.MAX_VALUE);
+          });
+
       i++;
       try {
         Thread.sleep(interval);
