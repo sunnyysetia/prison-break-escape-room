@@ -36,6 +36,7 @@ public class WaitingLobbyController {
   private BooleanProperty lightsOn = new SimpleBooleanProperty();
   // Create a completely random timeline to simulate lights flickering
   private Timeline timeline = new Timeline();
+  private int keyFrames = 20;
 
   private ArrayList<String> kitchenItems =
       new ArrayList<>(
@@ -44,7 +45,7 @@ public class WaitingLobbyController {
 
   @FXML
   public void initialize() {
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < keyFrames; i++) {
       boolean onCheck = (i % 2 == 0) ? true : false;
       timeline
           .getKeyFrames()
