@@ -650,6 +650,11 @@ public class EscapeRoomController {
     Rectangle clickedRectangle = (Rectangle) event.getSource();
     String rectangleId = clickedRectangle.getId();
     System.out.println("Object clicked: " + rectangleId);
+    System.out.println("Riddle solved: " + GameState.riddleSolved);
+
+    if (GameState.riddleSolved && rectangleId.equals(GameState.wordToGuess)) {
+      torchButton.setVisible(true);
+    }
   }
 
   ///////////////

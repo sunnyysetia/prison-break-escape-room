@@ -103,7 +103,7 @@
                   <Image url="@../images/arrow.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="torchButton" fitHeight="50.0" fitWidth="71.0" layoutX="880.0" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="torchButton" fitHeight="50.0" fitWidth="71.0" layoutX="880.0" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../images/torch.png" />
                </image>
