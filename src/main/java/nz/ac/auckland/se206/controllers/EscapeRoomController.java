@@ -869,10 +869,10 @@ public class EscapeRoomController {
             String apology =
                 "Sorry, it seems like you cannot receive messages at this time. Maybe try to check"
                     + " your internet connection or your apiproxy.config file in order to see what"
-                    + " is causing this problem. You cannot escape from this facility without"
-                    + " assistance.";
+                    + " is causing this problem, and then restart the application when you are"
+                    + " ready to retry. You cannot escape from this facility without assistance.";
             wait(
-                3000,
+                3500,
                 () -> {
                   addLabel(apology, messagesVBox);
                   if (!GameState.phoneIsOpen) {
