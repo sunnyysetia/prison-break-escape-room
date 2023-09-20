@@ -110,6 +110,7 @@ public class EscapeRoomController {
   @FXML private AnchorPane endingControlAPane;
   @FXML private AnchorPane computerConsoleAPane;
 
+  @FXML private ImageView darknessGuardRoom;
   @FXML private Group circuitGroup;
   @FXML private Label memoryCountdownLabel;
   @FXML private Button goBackMemory, checkGuessMemory;
@@ -782,6 +783,7 @@ public class EscapeRoomController {
     if (areEqual) {
       closeCircuit(null);
       circuit.setDisable(true);
+      darknessGuardRoom.setVisible(false);
     } else {
       initialiseMemoryGame();
       startMemoryRecallGame();
