@@ -223,21 +223,11 @@ public class EscapeRoomController {
               } else {
                 computerLoginLabel.setText("Incorrect Password!");
                 computerPasswordField.clear();
-                Thread waitThread =
-                    new Thread(
-                        () -> {
-                          try {
-                            Thread.sleep(2000);
-                          } catch (InterruptedException e) {
-                            e.printStackTrace();
-                          }
-                          Platform.runLater(
-                              () -> {
-                                computerLoginLabel.setText("Super Prison Computer");
-                              });
-                        });
-                waitThread.setDaemon(true);
-                waitThread.start();
+                wait(
+                    2000,
+                    () -> {
+                      computerLoginLabel.setText("Super Prison Computer");
+                    });
               }
             });
 
@@ -349,18 +339,11 @@ public class EscapeRoomController {
   private void togglePhone() {
     System.out.println("toggling phone");
     GameState.togglingPhone = true;
-    Thread waitThread =
-        new Thread(
-            () -> {
-              try {
-                Thread.sleep(500);
-                GameState.togglingPhone = false;
-              } catch (InterruptedException e) {
-                e.printStackTrace();
-              }
-            });
-    waitThread.setDaemon(true);
-    waitThread.start();
+    wait(
+        500,
+        () -> {
+          GameState.togglingPhone = false;
+        });
     final TranslateTransition phoneSwitch = new TranslateTransition();
     phoneSwitch.setNode(chatGroup);
     phoneSwitch.setDuration(javafx.util.Duration.millis(500));
@@ -383,18 +366,11 @@ public class EscapeRoomController {
   private void toggleComputer() {
     System.out.println("toggling computer");
     GameState.togglingComputer = true;
-    Thread waitThread =
-        new Thread(
-            () -> {
-              try {
-                Thread.sleep(500);
-                GameState.togglingComputer = false;
-              } catch (InterruptedException e) {
-                e.printStackTrace();
-              }
-            });
-    waitThread.setDaemon(true);
-    waitThread.start();
+    wait(
+        500,
+        () -> {
+          GameState.togglingComputer = false;
+        });
     final TranslateTransition computerSwitch = new TranslateTransition();
     computerSwitch.setNode(computerGroup);
     computerSwitch.setDuration(javafx.util.Duration.millis(500));
@@ -426,18 +402,11 @@ public class EscapeRoomController {
   private void switchRoom(int nextRoom) {
     GameState.switchingRoom = true;
     // use a new method to switch between rooms to prevent spamming and causing visual glitches
-    Thread waitThread =
-        new Thread(
-            () -> {
-              try {
-                Thread.sleep(700);
-                GameState.switchingRoom = false;
-              } catch (InterruptedException e) {
-                e.printStackTrace();
-              }
-            });
-    waitThread.setDaemon(true);
-    waitThread.start();
+    wait(
+        700,
+        () -> {
+          GameState.switchingRoom = false;
+        });
     final TranslateTransition roomSwitch = new TranslateTransition();
     roomSwitch.setNode(roomCollectionPane);
     roomSwitch.setDuration(javafx.util.Duration.millis(500));
@@ -902,13 +871,16 @@ public class EscapeRoomController {
                     + " your internet connection or your apiproxy.config file in order to see what"
                     + " is causing this problem. You cannot escape from this facility without"
                     + " assistance.";
-            addLabel(apology, messagesVBox);
-            // gptThinking does not turn back off as the message should only be sent once.
-            if (!GameState.phoneIsOpen) {
-              notifCircle.setVisible(true);
-            }
-            phoneNameLabel.textProperty().unbind();
-            phoneNameLabel.setText("Prison Guard");
+            wait(
+                3000,
+                () -> {
+                  addLabel(apology, messagesVBox);
+                  if (!GameState.phoneIsOpen) {
+                    notifCircle.setVisible(true);
+                  }
+                  phoneNameLabel.textProperty().unbind();
+                  phoneNameLabel.setText("Prison Guard");
+                });
           }
         });
 
@@ -918,5 +890,30 @@ public class EscapeRoomController {
 
     // Return null for now (the actual return value is not used).
     return null;
+  }
+
+  ///////////////
+  // Helper
+  ///////////////
+
+  /**
+   * Waits for the specified amount of time before executing a task.
+   *
+   * @param time The amount of time in milliseconds to wait for.
+   * @param process The process to be completed afterwards.
+   */
+  private void wait(int time, Runnable process) {
+    Thread waitThread =
+        new Thread(
+            () -> {
+              try {
+                Thread.sleep(time);
+              } catch (InterruptedException e) {
+                e.printStackTrace();
+              }
+              Platform.runLater(process);
+            });
+    waitThread.setDaemon(true);
+    waitThread.start();
   }
 }
