@@ -255,10 +255,16 @@ public class EscapeRoomController {
                   Thread writerThread =
                       new Thread(
                           () -> {
-                            typeWrite(
-                                computerConsoleTextArea,
-                                "\n" + "System:>Incorrect Password!\n" + "System:>Enter Password:",
-                                15);
+                            // Hopefully this fixes it
+                            Platform.runLater(
+                                () -> {
+                                  typeWrite(
+                                      computerConsoleTextArea,
+                                      "\n"
+                                          + "System:>Incorrect Password!\n"
+                                          + "System:>Enter Password:",
+                                      15);
+                                });
                           });
                   writerThread.setDaemon(true);
                   writerThread.start();
