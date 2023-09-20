@@ -33,50 +33,10 @@ public class WaitingLobbyController {
   @FXML private ToggleGroup tgTime;
   @FXML private Rectangle lightDim;
 
-  BooleanProperty lightsOn = new SimpleBooleanProperty();
+  private BooleanProperty lightsOn = new SimpleBooleanProperty();
   // Create a completely random timeline to simulate lights flickering
-  Timeline timeline =
-      new Timeline(
-          new KeyFrame(
-              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, true)),
-          new KeyFrame(
-              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, false)),
-          new KeyFrame(
-              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, true)),
-          new KeyFrame(
-              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, false)),
-          new KeyFrame(
-              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, true)),
-          new KeyFrame(
-              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, false)),
-          new KeyFrame(
-              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, true)),
-          new KeyFrame(
-              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, false)),
-          new KeyFrame(
-              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, true)),
-          new KeyFrame(
-              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, false)),
-          new KeyFrame(
-              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, true)),
-          new KeyFrame(
-              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, false)),
-          new KeyFrame(
-              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, true)),
-          new KeyFrame(
-              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, false)),
-          new KeyFrame(
-              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, true)),
-          new KeyFrame(
-              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, false)),
-          new KeyFrame(
-              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, true)),
-          new KeyFrame(
-              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, false)),
-          new KeyFrame(
-              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, true)),
-          new KeyFrame(
-              javafx.util.Duration.millis(Math.random() * 1000), new KeyValue(lightsOn, false)));
+  private Timeline timeline = new Timeline();
+  private int keyFrames = 20;
 
   private ArrayList<String> kitchenItems =
       new ArrayList<>(
@@ -85,8 +45,18 @@ public class WaitingLobbyController {
 
   @FXML
   public void initialize() {
+    for (int i = 0; i < keyFrames; i++) {
+      boolean onCheck = (i % 2 == 0) ? true : false;
+      timeline
+          .getKeyFrames()
+          .add(
+              new KeyFrame(
+                  javafx.util.Duration.millis(Math.random() * 1000),
+                  new KeyValue(lightsOn, onCheck)));
+    }
+
     try {
-      SceneManager.delUI(AppUi.ROOM); // Delete the room UI if it exists
+      SceneManager.delUi(AppUi.ROOM); // Delete the room UI if it exists
     } catch (Exception e) {
       e.printStackTrace();
     }

@@ -63,7 +63,7 @@
                      </image>
                   </ImageView>
                   <Rectangle fx:id="computer" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="96.0" layoutX="451.0" layoutY="334.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="187.0" />
-                  <ImageView fx:id="darknessGuardRoom" fitHeight="580.0" layoutX="6.0" layoutY="65.0" opacity="0.9" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="guardRoomDarkness" fitHeight="580.0" layoutX="6.0" layoutY="65.0" opacity="0.9" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/darknessGuardRoom.png" />
                      </image>
@@ -182,10 +182,10 @@
                         <Font size="19.0" />
                      </font></Label>
                   <TextField fx:id="messagesTextField" layoutX="113.0" layoutY="290.0" prefHeight="30.0" prefWidth="453.0" promptText="Text Message" />
-                  <Button fx:id="send_button" layoutX="570.0" layoutY="290.0" minHeight="14.0" minWidth="38.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" text="send" />
+                  <Button fx:id="sendButton" layoutX="570.0" layoutY="290.0" minHeight="14.0" minWidth="38.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" text="send" />
                   <ScrollPane fx:id="chatScrollPane" hbarPolicy="NEVER" layoutY="42.0" prefHeight="240.0" prefWidth="637.0" style="-fx-background-color: transparent; -fx-background: #FFFFFF; -fx-border-color: #FFFFFF;" vbarPolicy="NEVER">
                      <content>
-                        <VBox fx:id="messagesVBox" prefHeight="148.0" prefWidth="484.0" />
+                        <VBox fx:id="messagesVertBox" prefHeight="148.0" prefWidth="484.0" />
                      </content>
                   </ScrollPane>
                </children>
@@ -207,7 +207,7 @@
                <font>
                   <Font name="Consolas" size="12.0" />
                </font></Button>
-            <AnchorPane fx:id="endingControlAPane" disable="true" prefHeight="360.0" prefWidth="600.0" visible="false">
+            <AnchorPane fx:id="endingControlAnchorPane" disable="true" prefHeight="360.0" prefWidth="600.0" visible="false">
                <children>
                   <RadioButton layoutX="66.0" layoutY="238.0" mnemonicParsing="false" text="Ending 3" />
                   <RadioButton layoutX="66.0" layoutY="171.0" mnemonicParsing="false" text="Ending 2" />
@@ -215,7 +215,7 @@
                   <Button layoutX="358.0" layoutY="170.0" mnemonicParsing="false" text="Go!" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="computerConsoleAPane" prefHeight="360.0" prefWidth="600.0">
+            <AnchorPane fx:id="computerConsoleAnchorPane" prefHeight="360.0" prefWidth="600.0">
                <children>
                   <TextArea fx:id="computerConsoleTextArea" editable="false" prefHeight="315.0" prefWidth="600.0" style="-fx-text-fill: green; -fx-background-color: black; -fx-control-inner-background: black;" text="System:&gt;Enter the password:">
                      <font>

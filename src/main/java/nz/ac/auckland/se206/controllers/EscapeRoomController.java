@@ -107,14 +107,29 @@ public class EscapeRoomController {
   @FXML private TextField computerPasswordField;
   @FXML private TextArea computerConsoleTextArea;
   @FXML private Button computerLoginButton;
-  @FXML private AnchorPane endingControlAPane;
-  @FXML private AnchorPane computerConsoleAPane;
+  @FXML private AnchorPane endingControlAnchorPane;
+  @FXML private AnchorPane computerConsoleAnchorPane;
 
-  @FXML private ImageView darknessGuardRoom;
+  @FXML private ImageView guardRoomDarkness;
   @FXML private Group circuitGroup;
   @FXML private Label memoryCountdownLabel;
-  @FXML private Button goBackMemory, checkGuessMemory;
-  @FXML private Rectangle a1, b1, c1, a2, b2, c2, a3, b3, c3, a4, b4, c4, a5, b5, c5;
+  @FXML private Button goBackMemory;
+  @FXML private Button checkGuessMemory;
+  @FXML private Rectangle a1;
+  @FXML private Rectangle b1;
+  @FXML private Rectangle c1;
+  @FXML private Rectangle a2;
+  @FXML private Rectangle b2;
+  @FXML private Rectangle c2;
+  @FXML private Rectangle a3;
+  @FXML private Rectangle b3;
+  @FXML private Rectangle c3;
+  @FXML private Rectangle a4;
+  @FXML private Rectangle b4;
+  @FXML private Rectangle c4;
+  @FXML private Rectangle a5;
+  @FXML private Rectangle b5;
+  @FXML private Rectangle c5;
 
   private List<String> allSwitches =
       new ArrayList<>(
@@ -125,9 +140,9 @@ public class EscapeRoomController {
   private List<String> playerChoices = new ArrayList<>();
 
   // Chat fxml
-  @FXML private Button send_button;
+  @FXML private Button sendButton;
   @FXML private TextField messagesTextField;
-  @FXML private VBox messagesVBox;
+  @FXML private VBox messagesVertBox;
   @FXML private ScrollPane chatScrollPane;
   @FXML private Label phoneNameLabel;
 
@@ -179,7 +194,7 @@ public class EscapeRoomController {
     initialiseMemoryGame();
 
     // Binds send button so that it is disabled while gpt is writing a message.
-    send_button.disableProperty().bind(GameState.gptThinking);
+    sendButton.disableProperty().bind(GameState.gptThinking);
 
     // Set the hint label to display 0 hints.
     hintLabel.setText("0");
@@ -203,7 +218,7 @@ public class EscapeRoomController {
     System.out.println("uvPassword: " + GameState.uvPassword);
 
     chatScrollPane.setFitToWidth(true);
-    messagesVBox
+    messagesVertBox
         .heightProperty()
         .addListener(
             new ChangeListener<Number>() {
@@ -224,10 +239,10 @@ public class EscapeRoomController {
                 computerConsoleTextArea.setText(
                     computerConsoleTextArea.getText() + "\nC:\\PrisonPC\\>" + password);
                 if (password.equals(GameState.uvPassword + "")) {
-                  computerConsoleAPane.setVisible(false);
-                  computerConsoleAPane.setDisable(true);
-                  endingControlAPane.setVisible(true);
-                  endingControlAPane.setDisable(false);
+                  computerConsoleAnchorPane.setVisible(false);
+                  computerConsoleAnchorPane.setDisable(true);
+                  endingControlAnchorPane.setVisible(true);
+                  endingControlAnchorPane.setDisable(false);
                   GameState.computerLoggedIn = true;
                 } else {
                   Thread writerThread =
@@ -249,9 +264,12 @@ public class EscapeRoomController {
         .bind(
             Bindings.createStringBinding(
                 () -> {
-                  String string = " ";
-                  if (GameState.gptThinking.get()) string = "Typing. . .";
-                  else string = "Prison Guard";
+                  String string;
+                  if (GameState.gptThinking.get()) {
+                    string = "Typing. . .";
+                  } else {
+                    string = "Prison Guard";
+                  }
                   return string;
                 },
                 GameState.gptThinking));
@@ -277,7 +295,7 @@ public class EscapeRoomController {
             });
 
     // On send message
-    send_button.setOnAction(
+    sendButton.setOnAction(
         (EventHandler<ActionEvent>)
             new EventHandler<ActionEvent>() {
               @Override
@@ -285,9 +303,9 @@ public class EscapeRoomController {
                 System.out.println("Send Button clicked");
                 String message = messagesTextField.getText();
                 if (!message.isEmpty() && !GameState.gptThinking.getValue()) {
-                  HBox hBox = new HBox();
-                  hBox.setAlignment(Pos.CENTER_RIGHT);
-                  hBox.setPadding(new Insets(5, 5, 5, 10));
+                  HBox horiBox = new HBox();
+                  horiBox.setAlignment(Pos.CENTER_RIGHT);
+                  horiBox.setPadding(new Insets(5, 5, 5, 10));
                   Text text = new Text(message);
                   TextFlow textFlow = new TextFlow(text);
                   textFlow.setStyle(
@@ -296,8 +314,8 @@ public class EscapeRoomController {
                           + "-fx-background-radius: 10px; ");
                   textFlow.setPadding(new Insets(5, 10, 5, 10));
                   text.setFill(Color.color(0.934, 0.945, 0.996));
-                  hBox.getChildren().add(textFlow);
-                  messagesVBox.getChildren().add(hBox);
+                  horiBox.getChildren().add(textFlow);
+                  messagesVertBox.getChildren().add(horiBox);
                   messagesTextField.clear();
                   try {
                     runGpt(new ChatMessage("user", message));
@@ -309,7 +327,7 @@ public class EscapeRoomController {
             });
 
     torchButton.setOnMouseClicked(
-        EventHandler -> {
+        event -> {
           GameState.torchIsOn.setValue(!GameState.torchIsOn.getValue());
         });
     uvLightText.visibleProperty().bind(GameState.torchIsOn);
@@ -343,22 +361,22 @@ public class EscapeRoomController {
   }
 
   // on recieve message, run in different thread
-  private static void addLabel(String messageFromGPT, VBox vbox) {
+  private static void addLabel(String messageFromGpt, VBox vbox) {
     System.out.println("GPT sent user a message");
-    HBox hBox = new HBox();
-    hBox.setAlignment(Pos.CENTER_LEFT);
-    hBox.setPadding(new Insets(5, 5, 5, 10));
-    Text text = new Text(messageFromGPT);
+    HBox horiBox = new HBox();
+    horiBox.setAlignment(Pos.CENTER_LEFT);
+    horiBox.setPadding(new Insets(5, 5, 5, 10));
+    Text text = new Text(messageFromGpt);
     TextFlow textFlow = new TextFlow(text);
     textFlow.setStyle("-fx-background-color: rgb(233,233,235); " + "-fx-background-radius: 10px; ");
     textFlow.setPadding(new Insets(5, 10, 5, 10));
     textFlow.setMaxWidth(450);
-    hBox.getChildren().add(textFlow);
+    horiBox.getChildren().add(textFlow);
     Platform.runLater(
         new Runnable() {
           @Override
           public void run() {
-            vbox.getChildren().add(hBox);
+            vbox.getChildren().add(horiBox);
           }
         });
   }
@@ -493,7 +511,7 @@ public class EscapeRoomController {
 
   private void returnToWaitingLobby() throws IOException {
     timer.stop();
-    SceneManager.delUI(SceneManager.AppUi.WAITING_LOBBY);
+    SceneManager.delUi(SceneManager.AppUi.WAITING_LOBBY);
     SceneManager.addUi(SceneManager.AppUi.WAITING_LOBBY, App.loadFxml("waitinglobby"));
     App.setUi(AppUi.WAITING_LOBBY);
   }
@@ -559,7 +577,7 @@ public class EscapeRoomController {
     if (event.getCode() == KeyCode.ENTER) {
       // Prevent the Enter key event from propagating further
       if (GameState.phoneIsOpen) {
-        send_button.fire();
+        sendButton.fire();
       }
       if (GameState.computerIsOpen) {
         computerLoginButton.fire();
@@ -614,10 +632,10 @@ public class EscapeRoomController {
       // Add mouse move listener to update tooltip position
       source.setOnMouseMoved(
           mouseEvent -> {
-            double xOffset = 10; // X-offset from the cursor
-            double yOffset = 10; // Y-offset from the cursor
+            double horiOffset = 10; // X-offset from the cursor
+            double vertOffset = 10; // Y-offset from the cursor
             tooltip.show(
-                source, mouseEvent.getScreenX() + xOffset, mouseEvent.getScreenY() + yOffset);
+                source, mouseEvent.getScreenX() + horiOffset, mouseEvent.getScreenY() + vertOffset);
           });
 
       // Set the current tooltip
@@ -763,7 +781,7 @@ public class EscapeRoomController {
     }
   }
 
-  private void disableALlSwitches(boolean disable) {
+  private void disableAllSwitches(boolean disable) {
     for (String fxid : allSwitches) {
       Node node = circuitGroup.lookup("#" + fxid);
       if (node instanceof Rectangle) {
@@ -788,7 +806,7 @@ public class EscapeRoomController {
     if (areEqual) {
       closeCircuit(null);
       circuit.setDisable(true);
-      darknessGuardRoom.setVisible(false);
+      guardRoomDarkness.setVisible(false);
     } else {
       initialiseMemoryGame();
       startMemoryRecallGame();
@@ -798,7 +816,7 @@ public class EscapeRoomController {
   private void startMemoryRecallGame() {
     goBackMemory.setVisible(false);
     checkGuessMemory.setVisible(false);
-    disableALlSwitches(true);
+    disableAllSwitches(true);
     memoryCountdownLabel.setVisible(true);
     // Countdown Label
     int countdownSeconds = 5;
@@ -839,7 +857,7 @@ public class EscapeRoomController {
                     }
                     goBackMemory.setVisible(true);
                     checkGuessMemory.setVisible(true);
-                    disableALlSwitches(false);
+                    disableAllSwitches(false);
                   });
             });
   }
@@ -888,7 +906,7 @@ public class EscapeRoomController {
           ChatMessage resultMessage = gptTask.getValue();
           if (resultMessage != null) {
             // Append the GPT response message to the chat.
-            addLabel(resultMessage.getContent(), messagesVBox);
+            addLabel(resultMessage.getContent(), messagesVertBox);
             // Check if the response indicates a correct riddle answer.
             if (!GameState.phoneIsOpen) {
               notifCircle.setVisible(true);
@@ -917,7 +935,7 @@ public class EscapeRoomController {
             wait(
                 3500,
                 () -> {
-                  addLabel(apology, messagesVBox);
+                  addLabel(apology, messagesVertBox);
                   if (!GameState.phoneIsOpen) {
                     notifCircle.setVisible(true);
                   }

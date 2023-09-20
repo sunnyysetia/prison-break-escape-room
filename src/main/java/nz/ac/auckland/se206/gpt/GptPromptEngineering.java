@@ -4,13 +4,13 @@ package nz.ac.auckland.se206.gpt;
 public class GptPromptEngineering {
 
   public static String getIntroInstruction() {
-    return roles()
+    return getRolesPhrase()
         + "\n\nYou have lost something in the kitchen,"
         + " and need them to retrieve it. The user is not allowed to know what you have"
         + " lost. The kitchen is located to the left of the cell, and you have a message for them"
         + " when they get there. Remind them that they"
         + " are not allowed in the security room, which is located to the right of the cell. \n\n"
-        + questions()
+        + getQuestionsPhrase()
         + "\n\n"
         + "Your next message should introduce the scenario to the user in depth. "
         + clipRole();
@@ -37,7 +37,7 @@ public class GptPromptEngineering {
               + "unless they specifically request for them. ";
     }
 
-    return roles()
+    return getRolesPhrase()
         + "\n\n"
         + "The inmate is in the kitchen, after you tasked them with looking for an important item"
         + " that you have lost. You don't know where it is, but you do remember a cryptic message"
@@ -67,13 +67,13 @@ public class GptPromptEngineering {
         + "'";
   }
 
-  private static String roles() {
+  private static String getRolesPhrase() {
     return "You are playing the role of a prison guard, communicating to the user, an inmate, via"
         + " text message. You are strictly playing the guard - you must never send a message"
         + " as the inmate, that is the user's job. ";
   }
 
-  private static String questions() {
+  private static String getQuestionsPhrase() {
     return "When the user asks questions, keep your answers brief and vague or authoritative. You"
         + " should never imply that the user is free to ask questions. ";
   }

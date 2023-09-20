@@ -20,7 +20,7 @@ public class SceneManager {
     return sceneMap.get(appUi);
   }
 
-  public static void delUI(AppUi appUi) {
+  public static void delUi(AppUi appUi) {
     sceneMap.remove(appUi);
     System.out.println("Deleted UI: " + appUi);
     System.out.println("Current UIs: " + sceneMap.keySet());
