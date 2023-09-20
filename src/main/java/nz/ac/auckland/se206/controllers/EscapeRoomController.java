@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -138,6 +136,7 @@ public class EscapeRoomController {
               "c5"));
   private List<String> switchesToRecall = new ArrayList<>();
   private List<String> playerChoices = new ArrayList<>();
+  private Thread countdownThread;
 
   // Chat fxml
   @FXML private Button sendButton;
@@ -189,9 +188,6 @@ public class EscapeRoomController {
 
     // Update the UI label to display the timer.
     updateTimerLabel();
-
-    // Initialise memory recall game.
-    initialiseMemoryGame();
 
     // Binds send button so that it is disabled while gpt is writing a message.
     sendButton.disableProperty().bind(GameState.gptThinking);
@@ -692,6 +688,12 @@ public class EscapeRoomController {
     System.out.println("Circuit clicked");
     circuitGroup.setDisable(true);
     circuitGroup.setVisible(false);
+
+    // Check if the countdown thread is running and interrupt it
+    if (countdownThread != null && countdownThread.isAlive()) {
+      countdownThread.interrupt();
+      countdownThread = null;
+    }
   }
 
   @FXML
@@ -808,20 +810,23 @@ public class EscapeRoomController {
       circuit.setDisable(true);
       guardRoomDarkness.setVisible(false);
     } else {
-      initialiseMemoryGame();
+      // initialiseMemoryGame();
       startMemoryRecallGame();
     }
   }
 
   private void startMemoryRecallGame() {
-    goBackMemory.setVisible(false);
+    initialiseMemoryGame();
+    goBackMemory.setLayoutX(469);
+    goBackMemory.setLayoutY(528);
     checkGuessMemory.setVisible(false);
     disableAllSwitches(true);
     memoryCountdownLabel.setVisible(true);
     // Countdown Label
     int countdownSeconds = 5;
 
-    new Thread(
+    countdownThread =
+        new Thread(
             () -> {
               for (int i = countdownSeconds; i >= 0; i--) {
                 final int remainingTime = i;
@@ -837,29 +842,33 @@ public class EscapeRoomController {
                     });
 
                 try {
+                  // Check for interruption and break out of the loop
+                  if (Thread.currentThread().isInterrupted()) {
+                    return;
+                  }
                   Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                  e.printStackTrace();
+                  // Handle the InterruptedException here if needed
+                  // In this case, just return without rethrowing or printing the exception
+                  return;
                 }
               }
-            })
-        .start();
 
-    // Execute code after countdown
-    CompletableFuture.delayedExecutor(countdownSeconds, TimeUnit.SECONDS)
-        .execute(
-            () -> {
+              // Execute code after countdown
               Platform.runLater(
                   () -> {
                     memoryCountdownLabel.setVisible(false);
                     for (String fxid : allSwitches) {
                       setSwitchToRed(fxid);
                     }
-                    goBackMemory.setVisible(true);
+                    goBackMemory.setLayoutX(403);
+                    goBackMemory.setLayoutY(528);
                     checkGuessMemory.setVisible(true);
                     disableAllSwitches(false);
                   });
             });
+
+    countdownThread.start(); // Start the thread after creating it
   }
 
   ///////////////
