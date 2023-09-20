@@ -160,7 +160,7 @@
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="goBackMemory" focusTraversable="false" layoutX="403.0" layoutY="528.0" mnemonicParsing="false" onMouseClicked="#closeCircuit" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="35.0" prefWidth="75.0" text="Go Back" visible="false">
+            <Button fx:id="goBackMemory" focusTraversable="false" layoutX="469.0" layoutY="528.0" mnemonicParsing="false" onMouseClicked="#closeCircuit" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="35.0" prefWidth="75.0" text="Go Back">
                <font>
                   <Font size="15.0" />
                </font>
