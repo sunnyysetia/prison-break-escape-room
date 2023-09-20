@@ -48,6 +48,7 @@ import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
+import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
@@ -493,9 +494,10 @@ public class EscapeRoomController {
     }
   }
 
-  private void returnToWaitingLobby() {
+  private void returnToWaitingLobby() throws IOException {
     timer.stop();
-
+    SceneManager.delUI(SceneManager.AppUi.WAITING_LOBBY);
+    SceneManager.addUi(SceneManager.AppUi.WAITING_LOBBY, App.loadFxml("waitinglobby"));
     App.setUi(AppUi.WAITING_LOBBY);
   }
 
@@ -538,7 +540,11 @@ public class EscapeRoomController {
     Platform.runLater(
         () -> {
           textToSpeech("Time's up! You ran out of time!");
-          returnToWaitingLobby();
+          try {
+            returnToWaitingLobby();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
         });
   }
 

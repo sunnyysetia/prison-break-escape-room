@@ -85,6 +85,11 @@ public class WaitingLobbyController {
 
   @FXML
   public void initialize() {
+    try {
+      SceneManager.delUI(AppUi.ROOM); // Delete the room UI if it exists
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     lightDim.visibleProperty().bind(Bindings.when(lightsOn).then(true).otherwise(false));
     timeline.setCycleCount(Animation.INDEFINITE);
     timeline.play();
@@ -133,6 +138,11 @@ public class WaitingLobbyController {
     GameState.switchingRoom = false;
     GameState.riddleSolved = false;
     GameState.currentRoom = 1;
+    GameState.togglingComputer = false;
+    GameState.computerIsOpen = false;
+    GameState.torchIsOn.set(false);
+    GameState.gptThinking.set(false);
+    GameState.uvPassword = 00000000;
 
     // Get the selected radio button (difficulty)
     RadioButton selectedDifficultyButton = (RadioButton) tgDifficulty.getSelectedToggle();
