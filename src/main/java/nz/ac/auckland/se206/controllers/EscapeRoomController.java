@@ -27,8 +27,8 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
@@ -104,11 +104,11 @@ public class EscapeRoomController {
   @FXML private Rectangle computer;
   @FXML private Button computerCloseButton;
   @FXML private Rectangle computerDimScreen;
-  @FXML private AnchorPane computerLoginAPane;
-  @FXML private PasswordField computerPasswordField;
+  @FXML private TextField computerPasswordField;
+  @FXML private TextArea computerConsoleTextArea;
   @FXML private Button computerLoginButton;
   @FXML private AnchorPane endingControlAPane;
-  @FXML private Label computerLoginLabel;
+  @FXML private AnchorPane computerConsoleAPane;
 
   @FXML private Group circuitGroup;
   @FXML private Label memoryCountdownLabel;
@@ -216,29 +216,36 @@ public class EscapeRoomController {
     computerLoginButton.setOnAction(
         (EventHandler<ActionEvent>)
             event -> {
-              if (computerPasswordField.getText().equals(GameState.uvPassword + "")) {
-                computerLoginAPane.setVisible(false);
-                computerLoginAPane.setDisable(true);
-                endingControlAPane.setVisible(true);
-                endingControlAPane.setDisable(false);
-              } else {
-                computerLoginLabel.setText("Incorrect Password!");
+              // Only runs if the computer is not logged in
+              if (!GameState.computerLoggedIn) {
                 computerPasswordField.clear();
-                Thread waitThread =
-                    new Thread(
-                        () -> {
-                          try {
-                            Thread.sleep(2000);
-                          } catch (InterruptedException e) {
-                            e.printStackTrace();
-                          }
-                          Platform.runLater(
-                              () -> {
-                                computerLoginLabel.setText("Super Prison Computer");
-                              });
-                        });
-                waitThread.setDaemon(true);
-                waitThread.start();
+                if (computerPasswordField.getText().equals(GameState.uvPassword + "")) {
+                  computerConsoleAPane.setVisible(false);
+                  computerConsoleAPane.setDisable(true);
+                  endingControlAPane.setVisible(true);
+                  endingControlAPane.setDisable(false);
+                } else {
+                  // computerLoginLabel.setText("Incorrect Password!");
+                  // typeWrite(TextArea sceneTextArea, String message, int interval)
+                  typeWrite(computerConsoleTextArea, "Incorrect Password!", 50);
+                  computerPasswordField.clear();
+                  Thread waitThread =
+                      new Thread(
+                          () -> {
+                            try {
+                              Thread.sleep(2000);
+                            } catch (InterruptedException e) {
+                              e.printStackTrace();
+                            }
+                            Platform.runLater(
+                                () -> {
+                                  // computerLoginLabel.setText("Super Prison Computer");
+                                  // typeWrite(TextArea sceneTextArea, String message, int interval)
+                                });
+                          });
+                  waitThread.setDaemon(true);
+                  waitThread.start();
+                }
               }
             });
 
@@ -323,6 +330,21 @@ public class EscapeRoomController {
 
     // Run a GPT-based instruction for the introduction.
     runGpt(new ChatMessage("user", GptPromptEngineering.getIntroInstruction()));
+  }
+
+  private static void typeWrite(TextArea sceneTextArea, String message, int interval) {
+    int i = 0;
+    while (i < message.length()) {
+      sceneTextArea.setText(sceneTextArea.getText() + message.charAt(i));
+      sceneTextArea.appendText("");
+      sceneTextArea.setScrollTop(Double.MAX_VALUE);
+      i++;
+      try {
+        Thread.sleep(interval);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
   }
 
   // on recieve message, run in different thread
@@ -563,6 +585,9 @@ public class EscapeRoomController {
       // Prevent the Enter key event from propagating further
       if (GameState.phoneIsOpen) {
         send_button.fire();
+      }
+      if (GameState.computerIsOpen) {
+        computerLoginButton.fire();
       }
     }
   }

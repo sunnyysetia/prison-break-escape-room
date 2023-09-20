@@ -53,4 +53,6 @@ public class GameState {
   public static SimpleBooleanProperty gptThinking = new SimpleBooleanProperty(false);
 
   public static int uvPassword;
+
+  public static boolean computerLoggedIn = false;
 }
