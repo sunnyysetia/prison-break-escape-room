@@ -345,7 +345,7 @@ public class EscapeRoomController {
     runGpt(new ChatMessage("user", GptPromptEngineering.getIntroInstruction()));
   }
 
-  private static void typeWrite(TextArea sceneTextArea, String message, int interval) {
+  private void typeWrite(TextArea sceneTextArea, String message, int interval) {
     int i = 0;
     while (i < message.length()) {
       sceneTextArea.setText(sceneTextArea.getText() + message.charAt(i));
@@ -361,7 +361,7 @@ public class EscapeRoomController {
   }
 
   // on recieve message, run in different thread
-  private static void addLabel(String messageFromGpt, VBox vbox) {
+  private void addLabel(String messageFromGpt, VBox vbox) {
     System.out.println("GPT sent user a message");
     HBox horiBox = new HBox();
     horiBox.setAlignment(Pos.CENTER_LEFT);
@@ -392,7 +392,7 @@ public class EscapeRoomController {
         });
     final TranslateTransition phoneSwitch = new TranslateTransition();
     phoneSwitch.setNode(chatGroup);
-    phoneSwitch.setDuration(javafx.util.Duration.millis(500));
+    phoneSwitch.setDuration(Duration.millis(500));
     if (GameState.phoneIsOpen) {
       phoneSwitch.setByY(-550);
       GameState.phoneIsOpen = false;
@@ -419,7 +419,7 @@ public class EscapeRoomController {
         });
     final TranslateTransition computerSwitch = new TranslateTransition();
     computerSwitch.setNode(computerGroup);
-    computerSwitch.setDuration(javafx.util.Duration.millis(500));
+    computerSwitch.setDuration(Duration.millis(500));
     if (GameState.computerIsOpen) {
       computerSwitch.setByY(-650);
       GameState.computerIsOpen = false;
@@ -456,7 +456,7 @@ public class EscapeRoomController {
         });
     final TranslateTransition roomSwitch = new TranslateTransition();
     roomSwitch.setNode(roomCollectionPane);
-    roomSwitch.setDuration(javafx.util.Duration.millis(500));
+    roomSwitch.setDuration(Duration.millis(500));
     if (nextRoom > GameState.currentRoom) {
       roomSwitch.setByX(-1022);
     } else {
