@@ -234,6 +234,9 @@ public class EscapeRoomController {
             event -> {
               // Only runs if the computer is not logged in
               if (!GameState.computerLoggedIn) {
+                if (computerPasswordField.getText().isEmpty()) {
+                  return;
+                }
                 String password = computerPasswordField.getText();
                 computerPasswordField.clear();
                 computerConsoleTextArea.setText(
@@ -251,7 +254,7 @@ public class EscapeRoomController {
                             typeWrite(
                                 computerConsoleTextArea,
                                 "\n" + "System:>Incorrect Password!\n" + "System:>Enter Password:",
-                                20);
+                                15);
                           });
                   writerThread.setDaemon(true);
                   writerThread.start();
