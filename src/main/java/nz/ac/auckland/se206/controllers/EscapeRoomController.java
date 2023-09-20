@@ -894,8 +894,22 @@ public class EscapeRoomController {
                 hintLabel.setText("Error");
               }
             }
+            GameState.gptThinking.setValue(false);
+          } else {
+            // When an error occurs, print a message suggesting fixes to the user.
+            String apology =
+                "Sorry, it seems like you cannot receive messages at this time. Maybe try to check"
+                    + " your internet connection or your apiproxy.config file in order to see what"
+                    + " is causing this problem. You cannot escape from this facility without"
+                    + " assistance.";
+            addLabel(apology, messagesVBox);
+            // gptThinking does not turn back off as the message should only be sent once.
+            if (!GameState.phoneIsOpen) {
+              notifCircle.setVisible(true);
+            }
+            phoneNameLabel.textProperty().unbind();
+            phoneNameLabel.setText("Prison Guard");
           }
-          GameState.gptThinking.setValue(false);
         });
 
     // Create a new thread for running the GPT task.
