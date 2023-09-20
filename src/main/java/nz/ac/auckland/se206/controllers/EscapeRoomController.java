@@ -355,9 +355,14 @@ public class EscapeRoomController {
   private void typeWrite(TextArea sceneTextArea, String message, int interval) {
     int i = 0;
     while (i < message.length()) {
-      sceneTextArea.setText(sceneTextArea.getText() + message.charAt(i));
-      sceneTextArea.appendText("");
-      sceneTextArea.setScrollTop(Double.MAX_VALUE);
+      int j = i;
+      Platform.runLater(
+          () -> {
+            sceneTextArea.setText(sceneTextArea.getText() + message.charAt(j));
+            sceneTextArea.appendText("");
+            sceneTextArea.setScrollTop(Double.MAX_VALUE);
+          });
+
       i++;
       try {
         Thread.sleep(interval);
