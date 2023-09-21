@@ -568,15 +568,8 @@ public class EscapeRoomController {
       if (!GameState.riddleProvided) {
         // Set the riddleProvided flag to true and request a riddle instruction from GPT.
         GameState.riddleProvided = true;
-        try {
-          runGpt(
-              new ChatMessage(
-                  "user",
-                  GptPromptEngineering.getRiddleInstruction(
-                      GameState.wordToGuess, GameState.difficulty)));
-        } catch (ApiProxyException e) {
-          e.printStackTrace();
-        }
+        issueInstruction(
+            GptPromptEngineering.getRiddleInstruction(GameState.wordToGuess, GameState.difficulty));
       }
       leftButton.setVisible(false); // Hide the left button in this room.
     } else if (GameState.currentRoom == 2) {
@@ -584,13 +577,7 @@ public class EscapeRoomController {
       if (!GameState.lightTipProvided) {
         // Set the lightTipProvided flag to true and request a lights-off instruction from GPT.
         GameState.lightTipProvided = true;
-        try {
-          runGpt(
-              new ChatMessage(
-                  "user", GptPromptEngineering.getLightsOffInstruction(GameState.difficulty)));
-        } catch (ApiProxyException e) {
-          e.printStackTrace();
-        }
+        issueInstruction(GptPromptEngineering.getLightsOffInstruction(GameState.difficulty));
       }
       rightButton.setVisible(false); // Hide the right button in this room.
     } else {
@@ -806,15 +793,7 @@ public class EscapeRoomController {
       GameState.torchFound = true;
       torchButton.setVisible(true);
 
-      try {
-        // Display a message to the user indicating that they've solved the riddle and instructing
-        // them.
-        runGpt(
-            new ChatMessage(
-                "user", GptPromptEngineering.getRiddleSolvedInstruction(GameState.difficulty)));
-      } catch (ApiProxyException exception) {
-        exception.printStackTrace();
-      }
+      issueInstruction(GptPromptEngineering.getRiddleSolvedInstruction(GameState.difficulty));
 
       // Insert an animation to show the torch being retrieved.
       Thread animationThread =
@@ -1005,11 +984,7 @@ public class EscapeRoomController {
       closeCircuit(null);
       circuit.setDisable(true);
       guardRoomDarkness.setVisible(false);
-      try {
-        runGpt(new ChatMessage("user", GptPromptEngineering.getLightsOnInstruction()));
-      } catch (ApiProxyException e) {
-        e.printStackTrace();
-      }
+      issueInstruction(GptPromptEngineering.getLightsOnInstruction());
     } else {
       // initialiseMemoryGame();
       startMemoryRecallGame();
@@ -1198,5 +1173,27 @@ public class EscapeRoomController {
 
     // Start the waitThread.
     waitThread.start();
+  }
+
+  /**
+   * Issues an instruction to GPT, waiting for the previous instruction to complete if it has not
+   * completed yet.
+   *
+   * @param message the message to be used.
+   */
+  private void issueInstruction(String message) {
+    if (GameState.gptThinking.getValue()) {
+      wait(
+          200,
+          () -> {
+            issueInstruction(message);
+          });
+    } else {
+      try {
+        runGpt(new ChatMessage("user", message));
+      } catch (ApiProxyException e) {
+        e.printStackTrace();
+      }
+    }
   }
 }
