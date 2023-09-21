@@ -975,7 +975,9 @@ public class EscapeRoomController {
           ChatMessage resultMessage = gptTask.getValue();
           if (resultMessage != null) {
             // Append the GPT response message to the chat.
-            addLabel(resultMessage.getContent(), messagesVertBox);
+            for (String paragraph : resultMessage.getContent().split("\n\n")) {
+              addLabel(paragraph, messagesVertBox);
+            }
             if (!GameState.phoneIsOpen) {
               notifCircle.setVisible(true);
             }
