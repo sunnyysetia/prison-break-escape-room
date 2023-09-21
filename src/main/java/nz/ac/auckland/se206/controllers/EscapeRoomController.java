@@ -9,6 +9,7 @@ import java.util.Random;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
+import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
@@ -146,6 +147,7 @@ public class EscapeRoomController {
   // Shared
   private int remainingSeconds = 120;
   private Timeline timer;
+  private ScaleTransition heartbeatAnimation;
 
   // Chat
   private ChatCompletionRequest chatCompletionRequest;
@@ -190,6 +192,15 @@ public class EscapeRoomController {
 
     // Set the hint label to display 0 hints.
     hintLabel.setText("0");
+
+    // Initialise notification heartbeat animation
+    heartbeatAnimation = new ScaleTransition(Duration.seconds(1), notifCircle);
+    heartbeatAnimation.setFromX(1.0);
+    heartbeatAnimation.setToX(1.5);
+    heartbeatAnimation.setFromY(1.0);
+    heartbeatAnimation.setToY(1.5);
+    heartbeatAnimation.setAutoReverse(true);
+    heartbeatAnimation.setCycleCount(ScaleTransition.INDEFINITE);
 
     // Generate a different passcode everytime
     Object[] uvRotateAngles = uvCodeLocations.keySet().toArray();
@@ -467,6 +478,7 @@ public class EscapeRoomController {
       dimScreen.setVisible(true);
       // Hide the notification circle.
       notifCircle.setVisible(false);
+      heartbeatAnimation.stop();
     }
 
     // Play the phone switch animation.
@@ -1120,6 +1132,7 @@ public class EscapeRoomController {
             }
             if (!GameState.phoneIsOpen) {
               notifCircle.setVisible(true);
+              heartbeatAnimation.play();
             }
             GameState.gptThinking.setValue(false);
 
@@ -1151,6 +1164,7 @@ public class EscapeRoomController {
                   addLabel(apology, messagesVertBox);
                   if (!GameState.phoneIsOpen) {
                     notifCircle.setVisible(true);
+                    heartbeatAnimation.play();
                   }
                   phoneNameLabel.textProperty().unbind();
                   phoneNameLabel.setText("Prison Guard");
