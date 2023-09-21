@@ -134,8 +134,7 @@ public class EscapeRoomController {
   private Timeline timer;
 
   // Chat
-  private HashMap<GameState.State, ChatCompletionRequest> chatCompletionRequests =
-      new HashMap<GameState.State, ChatCompletionRequest>();
+  private ChatCompletionRequest chatCompletionRequest;
 
   // UV code
   private HashMap<Integer, int[]> uvCodeLocations =
@@ -163,9 +162,6 @@ public class EscapeRoomController {
   public void initialize() throws ApiProxyException {
     // Configure the timer length based on what the user selected.
     remainingSeconds = GameState.time;
-
-    // Set the state of the game.
-    GameState.state = GameState.State.INTRO;
 
     // Start a timer for the game.
     startTimer();
@@ -314,11 +310,8 @@ public class EscapeRoomController {
     uvLightEffect.visibleProperty().bind(GameState.torchIsOn);
 
     // Configure settings for the riddle's chat completion request.
-    for (GameState.State state : GameState.State.values()) {
-      chatCompletionRequests.put(
-          state,
-          new ChatCompletionRequest().setN(1).setTemperature(0.3).setTopP(0.5).setMaxTokens(100));
-    }
+    chatCompletionRequest =
+        new ChatCompletionRequest().setN(1).setTemperature(0.3).setTopP(0.5).setMaxTokens(100);
 
     // Run a GPT-based instruction for the introduction.
     runGpt(new ChatMessage("user", GptPromptEngineering.getIntroInstruction()));
@@ -450,8 +443,8 @@ public class EscapeRoomController {
     GameState.currentRoom = nextRoom;
 
     if (GameState.currentRoom == 0) {
-      if (GameState.state == GameState.State.INTRO) {
-        GameState.state = GameState.State.RIDDLE;
+      if (!GameState.riddleProvided) {
+        GameState.riddleProvided = true;
         try {
           runGpt(
               new ChatMessage(
@@ -464,6 +457,16 @@ public class EscapeRoomController {
       }
       leftButton.setVisible(false);
     } else if (GameState.currentRoom == 2) {
+      if (!GameState.lightTipProvided) {
+        GameState.lightTipProvided = true;
+        try {
+          runGpt(
+              new ChatMessage(
+                  "user", GptPromptEngineering.getLightsOffInstruction(GameState.difficulty)));
+        } catch (ApiProxyException e) {
+          e.printStackTrace();
+        }
+      }
       rightButton.setVisible(false);
     } else {
       leftButton.setVisible(true);
@@ -845,8 +848,6 @@ public class EscapeRoomController {
    */
   private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
     // Add the input message to the chat completion request.
-    ChatCompletionRequest chatCompletionRequest =
-        chatCompletionRequests.get(GameState.state).addMessage(msg);
     GameState.gptThinking.setValue(true);
 
     // Create a task for GPT processing.
