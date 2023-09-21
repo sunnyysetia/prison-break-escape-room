@@ -36,7 +36,7 @@ public class WaitingLobbyController {
   private BooleanProperty lightsOn = new SimpleBooleanProperty();
   // Create a completely random timeline to simulate lights flickering
   private Timeline timeline = new Timeline();
-  private int keyFrames = 20;
+  private int keyFrames = 15;
 
   private ArrayList<String> kitchenItems =
       new ArrayList<>(
@@ -46,13 +46,20 @@ public class WaitingLobbyController {
   @FXML
   public void initialize() {
     for (int i = 0; i < keyFrames; i++) {
-      boolean onCheck = (i % 2 == 0) ? true : false;
+      boolean onCheck = (i % 2 == 0);
+
+      // Add the flicker key frame
       timeline
           .getKeyFrames()
           .add(
               new KeyFrame(
                   javafx.util.Duration.millis(Math.random() * 1000),
                   new KeyValue(lightsOn, onCheck)));
+
+      // Add a pause key frame after each flicker
+      timeline
+          .getKeyFrames()
+          .add(new KeyFrame(javafx.util.Duration.millis(2750), new KeyValue(lightsOn, onCheck)));
     }
 
     try {
