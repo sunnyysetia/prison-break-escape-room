@@ -124,6 +124,11 @@
                   <Image url="@../images/myPhone.png" />
                </image>
             </ImageView>
+            <Label fx:id="phoneLabel" layoutX="-6.0" layoutY="58.0" mouseTransparent="true" prefHeight="30.0" prefWidth="123.0" styleClass="stencilText" stylesheets="@../css/font.css" text="PHONE" textAlignment="CENTER">
+               <font>
+                  <Font name="Stencil" size="27.0" />
+               </font>
+            </Label>
             <Circle fx:id="notifCircle" fill="#f40000" layoutX="110.0" layoutY="40.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
          </children>
       </Pane>

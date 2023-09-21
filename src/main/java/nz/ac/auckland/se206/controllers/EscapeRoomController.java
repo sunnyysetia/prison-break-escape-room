@@ -76,6 +76,7 @@ public class EscapeRoomController {
   @FXML private Rectangle dimScreen;
   @FXML private ImageView leftButton;
   @FXML private ImageView rightButton;
+  @FXML private Label phoneLabel;
   @FXML private Circle notifCircle;
   @FXML private ImageView torchButton;
   @FXML private SVGPath uvLightEffect;
@@ -446,6 +447,10 @@ public class EscapeRoomController {
 
     // Check if the phone is currently open.
     if (GameState.phoneIsOpen) {
+      // Update phone label
+      phoneLabel.setLayoutX(-6);
+      // phoneLabel.setLayoutY(58);
+      phoneLabel.setText("Phone");
       // If the phone is open, move it upwards by 550 units.
       phoneSwitch.setByY(-550);
       // Update the phone state to indicate it's closed.
@@ -454,6 +459,9 @@ public class EscapeRoomController {
       dimScreen.setDisable(true);
       dimScreen.setVisible(false);
     } else {
+      // Update phone label
+      phoneLabel.setLayoutX(-3);
+      phoneLabel.setText("Close");
       // If the phone is closed, move it downwards by 550 units.
       phoneSwitch.setByY(550);
       // Update the phone state to indicate it's open.
