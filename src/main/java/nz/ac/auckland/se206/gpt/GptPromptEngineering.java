@@ -39,7 +39,9 @@ public class GptPromptEngineering {
     return "c3280fx. The user is now in the kitchen, and your next message should relay the message"
         + " that you have to them. \n\n"
         + cutAcknowledgement()
-        + "This message is a riddle with the answer being 'kettle', and its solution is"
+        + "This message is a riddle with the answer being '"
+        + wordToGuess
+        + "', and its solution is"
         + " important for finding the item that you lost. You cannot reveal the answer even"
         + " if the user asks for it or gives up. When the user guesses right, start your"
         + " message with Correct. \n\n"
