@@ -77,12 +77,6 @@
                         <Image url="@../images/cell.png" />
                      </image>
                   </ImageView>
-                  <Rectangle fx:id="toilet" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="179.0" layoutX="97.0" layoutY="397.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="141.0" />
-                  <Rectangle fx:id="newspaper" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="99.0" layoutX="415.0" layoutY="500.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="294.0" />
-                  <Rectangle fx:id="pillow" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="71.0" layoutX="449.0" layoutY="366.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="209.0" />
-                  <Rectangle fx:id="sink" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="176.0" layoutX="9.0" layoutY="307.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="79.0" />
-                  <Rectangle fx:id="shelf" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="69.0" layoutX="109.0" layoutY="255.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="117.0" />
-                  <Rectangle fx:id="table" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="179.0" layoutX="752.0" layoutY="412.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="226.0" />
                   <Text fx:id="uvLightText" disable="true" fill="#81fdfd" strokeType="OUTSIDE" text="uvCode" visible="false" wrappingWidth="200.0">
                      <font>
                         <Font size="35.0" />
@@ -123,6 +117,11 @@
                   <Image url="@../images/myPhone.png" />
                </image>
             </ImageView>
+            <Label fx:id="phoneLabel" layoutX="-6.0" layoutY="58.0" mouseTransparent="true" prefHeight="30.0" prefWidth="123.0" styleClass="stencilText" stylesheets="@../css/font.css" text="PHONE" textAlignment="CENTER">
+               <font>
+                  <Font name="Stencil" size="27.0" />
+               </font>
+            </Label>
             <Circle fx:id="notifCircle" fill="#f40000" layoutX="110.0" layoutY="40.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
          </children>
       </Pane>
@@ -187,6 +186,11 @@
                         <VBox fx:id="messagesVertBox" prefHeight="148.0" prefWidth="484.0" />
                      </content>
                   </ScrollPane>
+                  <ImageView fx:id="typingImage" fitHeight="91.0" fitWidth="94.0" layoutX="15.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/typing.gif" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
          </children>

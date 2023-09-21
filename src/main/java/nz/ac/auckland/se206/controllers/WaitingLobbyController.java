@@ -36,7 +36,7 @@ public class WaitingLobbyController {
   private BooleanProperty lightsOn = new SimpleBooleanProperty();
   // Create a completely random timeline to simulate lights flickering
   private Timeline timeline = new Timeline();
-  private int keyFrames = 20;
+  private int keyFrames = 15;
 
   private ArrayList<String> kitchenItems =
       new ArrayList<>(
@@ -46,13 +46,20 @@ public class WaitingLobbyController {
   @FXML
   public void initialize() {
     for (int i = 0; i < keyFrames; i++) {
-      boolean onCheck = (i % 2 == 0) ? true : false;
+      boolean onCheck = (i % 2 == 0);
+
+      // Add the flicker key frame
       timeline
           .getKeyFrames()
           .add(
               new KeyFrame(
                   javafx.util.Duration.millis(Math.random() * 1000),
                   new KeyValue(lightsOn, onCheck)));
+
+      // Add a pause key frame after each flicker
+      timeline
+          .getKeyFrames()
+          .add(new KeyFrame(javafx.util.Duration.millis(2750), new KeyValue(lightsOn, onCheck)));
     }
 
     try {
@@ -67,15 +74,20 @@ public class WaitingLobbyController {
 
   @FXML
   private void onBeginGame(ActionEvent event) throws IOException {
+    // Create a translation animation to move the phone off the screen.
     TranslateTransition phoneTransition = new TranslateTransition();
     phoneTransition.setNode(phoneGroup);
     phoneTransition.setDuration(javafx.util.Duration.millis(500));
     phoneTransition.setByY(-550);
+
+    // Create a thread to play the phone transition animation.
     Thread animationThread =
         new Thread(
             () -> {
               phoneTransition.play();
             });
+
+    // Create a thread to change the scene after a delay.
     Thread changeSceneThread =
         new Thread(
             () -> {
@@ -84,22 +96,31 @@ public class WaitingLobbyController {
               } catch (InterruptedException e) {
                 e.printStackTrace();
               }
+
+              // Stop the timeline.
               timeline.stop();
+
+              // Use Platform.runLater to safely change the scene UI elements.
               Platform.runLater(
                   () -> {
                     try {
+                      // Load and set the ROOM scene UI using SceneManager and App.
                       SceneManager.addUi(SceneManager.AppUi.ROOM, App.loadFxml("escape_room"));
                     } catch (IOException e) {
                       e.printStackTrace();
                     }
+
+                    // Set the UI to the ROOM scene.
                     App.setUi(AppUi.ROOM);
                   });
             });
+
+    // Set both animation threads as daemon threads and start them.
     animationThread.setDaemon(true);
     animationThread.start();
     changeSceneThread.start();
 
-    // Set all game state variables to their default values
+    // Reset all game state variables to their default values.
     GameState.riddleProvided = false;
     GameState.lightTipProvided = false;
     GameState.difficulty = "easy";
@@ -117,16 +138,18 @@ public class WaitingLobbyController {
     GameState.computerLoggedIn = false;
     GameState.torchFound = false;
 
-    // Get the selected radio button (difficulty)
+    // Get the selected radio buttons (difficulty and time).
     RadioButton selectedDifficultyButton = (RadioButton) tgDifficulty.getSelectedToggle();
     RadioButton selectedTimeButton = (RadioButton) tgTime.getSelectedToggle();
 
     if (selectedDifficultyButton != null && selectedTimeButton != null) {
 
+      // Extract the selected difficulty and set it in GameState.
       String selectedDifficulty = selectedDifficultyButton.getText().toLowerCase();
       System.out.println("Difficulty: " + selectedDifficulty);
       GameState.difficulty = selectedDifficulty;
 
+      // Extract the selected time and set it in GameState.
       String selectedTime = selectedTimeButton.getText().toLowerCase();
       System.out.println("Time: " + selectedTime);
       if (selectedTime.equals("2:00")) {
@@ -136,12 +159,10 @@ public class WaitingLobbyController {
       } else if (selectedTime.equals("6:00")) {
         GameState.time = 360;
       }
+
+      // Generate a random word from the kitchenItems list and set it in GameState.
       Random randomWord = new Random();
-
-      // Set word to guess
-
       GameState.wordToGuess = kitchenItems.get(randomWord.nextInt(kitchenItems.size()));
-
       System.out.println("Word to guess: " + GameState.wordToGuess);
     }
   }
