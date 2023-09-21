@@ -5,18 +5,14 @@ import javafx.beans.property.SimpleBooleanProperty;
 /** Represents the state of the game. */
 public class GameState {
 
-  /** Indicates the part of the game that the user is up to. */
-  public static enum State {
-    INTRO,
-    RIDDLE,
-    FIND_CODE,
-    ENTER_CODE
-  }
-
-  public static State state = State.INTRO;
+  /** Indicates whether the riddle needs to be given. */
+  public static boolean riddleProvided = false;
 
   /** Indicates whether the riddle has been solved. */
   public static boolean riddleSolved = false;
+
+  /** Indicates whether the light instructions need to be given. */
+  public static boolean lightTipProvided = false;
 
   /** Difficulty level (easy/medium/hard) */
   public static String difficulty = "easy"; // Default to easy

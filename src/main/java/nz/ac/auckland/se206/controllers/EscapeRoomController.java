@@ -152,8 +152,7 @@ public class EscapeRoomController {
   private Timeline timer;
 
   // Chat
-  private HashMap<GameState.State, ChatCompletionRequest> chatCompletionRequests =
-      new HashMap<GameState.State, ChatCompletionRequest>();
+  private ChatCompletionRequest chatCompletionRequest;
 
   // UV code
   private HashMap<Integer, int[]> uvCodeLocations =
@@ -183,9 +182,6 @@ public class EscapeRoomController {
   public void initialize() throws ApiProxyException {
     // Configure the timer length based on what the user selected.
     remainingSeconds = GameState.time;
-
-    // Set the state of the game.
-    GameState.state = GameState.State.INTRO;
 
     // Start a timer for the game.
     startTimer();
@@ -338,11 +334,8 @@ public class EscapeRoomController {
     uvLightEffect.visibleProperty().bind(GameState.torchIsOn);
 
     // Configure settings for the riddle's chat completion request.
-    for (GameState.State state : GameState.State.values()) {
-      chatCompletionRequests.put(
-          state,
-          new ChatCompletionRequest().setN(1).setTemperature(0.3).setTopP(0.5).setMaxTokens(100));
-    }
+    chatCompletionRequest =
+        new ChatCompletionRequest().setN(1).setTemperature(0.3).setTopP(0.5).setMaxTokens(200);
 
     // Run a GPT-based instruction for the introduction.
     runGpt(new ChatMessage("user", GptPromptEngineering.getIntroInstruction()));
@@ -474,13 +467,13 @@ public class EscapeRoomController {
     GameState.currentRoom = nextRoom;
 
     if (GameState.currentRoom == 0) {
-      if (GameState.state == GameState.State.INTRO) {
-        GameState.state = GameState.State.RIDDLE;
+      if (!GameState.riddleProvided) {
+        GameState.riddleProvided = true;
         try {
           runGpt(
               new ChatMessage(
                   "user",
-                  GptPromptEngineering.getRiddleWithGivenWord(
+                  GptPromptEngineering.getRiddleInstruction(
                       GameState.wordToGuess, GameState.difficulty)));
         } catch (ApiProxyException e) {
           e.printStackTrace();
@@ -488,6 +481,16 @@ public class EscapeRoomController {
       }
       leftButton.setVisible(false);
     } else if (GameState.currentRoom == 2) {
+      if (!GameState.lightTipProvided) {
+        GameState.lightTipProvided = true;
+        try {
+          runGpt(
+              new ChatMessage(
+                  "user", GptPromptEngineering.getLightsOffInstruction(GameState.difficulty)));
+        } catch (ApiProxyException e) {
+          e.printStackTrace();
+        }
+      }
       rightButton.setVisible(false);
     } else {
       leftButton.setVisible(true);
@@ -673,8 +676,15 @@ public class EscapeRoomController {
         && !GameState.torchFound) {
       GameState.torchFound = true;
       torchButton.setVisible(true);
-      // insert torch retrieved animation
+      try {
+        runGpt(
+            new ChatMessage(
+                "user", GptPromptEngineering.getRiddleSolvedInstruction(GameState.difficulty)));
+      } catch (ApiProxyException exception) {
+        exception.printStackTrace();
+      }
 
+      // insert torch retrieved animation
       Thread animationThread =
           new Thread(
               () -> {
@@ -855,6 +865,11 @@ public class EscapeRoomController {
       closeCircuit(null);
       circuit.setDisable(true);
       guardRoomDarkness.setVisible(false);
+      try {
+        runGpt(new ChatMessage("user", GptPromptEngineering.getLightsOnInstruction()));
+      } catch (ApiProxyException e) {
+        e.printStackTrace();
+      }
     } else {
       // initialiseMemoryGame();
       startMemoryRecallGame();
@@ -930,9 +945,8 @@ public class EscapeRoomController {
    */
   private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
     // Add the input message to the chat completion request.
-    ChatCompletionRequest chatCompletionRequest =
-        chatCompletionRequests.get(GameState.state).addMessage(msg);
     GameState.gptThinking.setValue(true);
+    chatCompletionRequest.addMessage(msg);
 
     // Create a task for GPT processing.
     Task<ChatMessage> gptTask =
@@ -962,12 +976,15 @@ public class EscapeRoomController {
           if (resultMessage != null) {
             // Append the GPT response message to the chat.
             addLabel(resultMessage.getContent(), messagesVertBox);
-            // Check if the response indicates a correct riddle answer.
             if (!GameState.phoneIsOpen) {
               notifCircle.setVisible(true);
             }
+            GameState.gptThinking.setValue(false);
+
+            // Check if the response indicates a correct riddle answer.
             if (resultMessage.getRole().equals("assistant")
-                && resultMessage.getContent().startsWith("Correct")) {
+                && resultMessage.getContent().startsWith("Correct")
+                && !GameState.riddleSolved) {
               GameState.riddleSolved = true;
             }
             if (resultMessage.getContent().contains("hint")) {
@@ -979,7 +996,6 @@ public class EscapeRoomController {
                 hintLabel.setText("Error");
               }
             }
-            GameState.gptThinking.setValue(false);
           } else {
             // When an error occurs, print a message suggesting fixes to the user.
             String apology =

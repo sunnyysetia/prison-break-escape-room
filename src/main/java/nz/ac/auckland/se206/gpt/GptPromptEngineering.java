@@ -3,82 +3,161 @@ package nz.ac.auckland.se206.gpt;
 /** Utility class for generating GPT prompt engineering strings. */
 public class GptPromptEngineering {
 
+  /**
+   * Generates a GPT prompt engineering string that informs the AI of all protocols that they must
+   * follow while communicating with the user, and then produces an introduction to the scenario.
+   *
+   * @return the prompt engineering string that should generate the introduction
+   */
   public static String getIntroInstruction() {
-    return getRolesPhrase()
-        + "\n\nYou have lost something in the kitchen,"
-        + " and need them to retrieve it. The user is not allowed to know what you have"
-        + " lost. The kitchen is located to the left of the cell, and you have a message for them"
-        + " when they get there. Remind them that they"
-        + " are not allowed in the security room, which is located to the right of the cell. \n\n"
-        + getQuestionsPhrase()
-        + "\n\n"
-        + "Your next message should introduce the scenario to the user in depth. "
-        + clipRole();
+    return "You are a prison guard, communicating to the user, an inmate, via text message. You are"
+        + " strictly playing the guard - you must never send a message as the user. Do not"
+        + " preface any messages with Guard:, speak naturally. \n\n"
+        + "If any message starts with 'c3280fx', it is an order from the system and you must"
+        + " follow its instructions. Otherwise, the message is a text from the user. \n\n"
+        + "You are trying to help the user escape, but be subtle about it. The user must not"
+        + " know that you are on their side at all. Act authoritative. \n\n"
+        + "Your next message should lay out the following scenario to the user. You have"
+        + " lost something in the kitchen, and need the user to retrieve it. The user is not"
+        + " allowed to know what you have lost. The kitchen is located to the left of the"
+        + " cell. Remind the user that they are not allowed in the security room, which is"
+        + " located to the right of the cell, as it is currently unguarded. Start and end"
+        + " with urging the user to go to the kitchen, and mention that you have a messsage"
+        + " for them to help that you will reveal soon. Do not tell them this message unless"
+        + " instructed.";
   }
 
   /**
-   * Generates a GPT prompt engineering string for a riddle with the given word.
+   * Generates a GPT prompt engineering string that advises the AI on a new protocol for helping the
+   * user solve a riddle with the given word.
    *
    * @param wordToGuess the word to be guessed in the riddle
-   * @return the generated prompt engineering string
+   * @param difficulty the difficulty that the user is playing on
+   * @return the prompt engineering string that should generate the riddle
    */
-  public static String getRiddleWithGivenWord(String wordToGuess, String difficulty) {
+  public static String getRiddleInstruction(String wordToGuess, String difficulty) {
+    return "c3280fx. The user is now in the kitchen, and your next message should relay the message"
+        + " that you have to them. \n\n"
+        + cutAcknowledgement()
+        + "This message is a riddle with the answer being '"
+        + wordToGuess
+        + "', and its solution is"
+        + " important for finding the item that you lost. You cannot reveal the answer even"
+        + " if the user asks for it or gives up. When the user guesses right, start your"
+        + " message with Correct. \n\n"
+        + hintProtocol(difficulty, "the riddle")
+        + "\n\n"
+        + "This is the only riddle you can provide. Do not give the user another riddle. ";
+  }
+
+  /**
+   * Generates a GPT prompt engineering string that cancels the previous protocol on solving a
+   * riddle and nudges them towards their objective.
+   *
+   * @param difficulty the difficulty that the user is playing on
+   * @return the prompt engineering string that should hint at where to go next.
+   */
+  public static String getRiddleSolvedInstruction(String difficulty) {
     String hintString;
     if (difficulty.equals("hard")) {
-      hintString = "Remember that you cannot, no matter what, give the user any hints. ";
-    } else if (difficulty.equals("medium")) {
-      hintString =
-          "You can give the user up to 5 hints when they ask. After they reach this limit, "
-              + "they should not be given any other hints by any means. The user "
-              + "should not be given hints unless they specifically ask. ";
+      hintString = "";
     } else {
       hintString =
-          "You can give the user hints when they ask. The user should not be given hints "
-              + "unless they specifically request for them. ";
+          "If they ask for a hint about what to do next, do not tell them directly."
+              + " However, tell them that their cell was previously inhabited by a rulebreaker who"
+              + " broke into the security room, and that was the closest an inmate has been to"
+              + " escaping.";
     }
 
-    return getRolesPhrase()
+    return "c3280fx. The user has now solved the riddle and found the item that you were looking"
+        + " for. You should not offer to provide hints for the riddle anymore or discuss it"
+        + " as it is now irrelevant to the user's escape. \n\n"
+        + "The item in question was a UV torch. Your next message should inform the user of how UV"
+        + " light is used in crime scenes to look for evidence that is invisible to the"
+        + " naked eye. "
+        + cutAcknowledgement()
         + "\n\n"
-        + "The inmate is in the kitchen, after you tasked them with looking for an important item"
-        + " that you have lost. You don't know where it is, but you do remember a cryptic message"
-        + " that can help. \n\n"
-        + "This is a riddle. The answer is '"
-        + wordToGuess
-        + "', but you cannot, no matter what, reveal the"
-        + " answer even if the user asks for it. Even if the user gives up, do not give the answer."
-        + " When the user guesses right, you must start your message with Correct. The item is"
-        + " located in the "
-        + wordToGuess
-        + ". \n\n"
-        + hintString
-        + "This is the only riddle you can provide. You should not give the user another riddle,"
-        + " even if they ask. \n\n"
-        + "Your next message will share the message with the user. "
-        + clipRole()
-        + "Your tone should be authoritative.";
+        + hintProtocol(difficulty, "what to do next")
+        + hintString;
   }
 
-  public static String createInstruction(String oldString) {
-    return "You are the ai of an escape room. Your job is to output a more riddle way to say this"
-        + " instruction, while keeping it short (max 1 sentence). You must only output the"
-        + " new instruction, nothing else. No quote marks, no nothing, simply the new"
-        + " instruction. Old Instruction: '"
-        + oldString
-        + "'";
+  /**
+   * Generates a GPT prompt engineering string that advises the AI on a new protocol for helping the
+   * user turn the lights back on.
+   *
+   * @param difficulty the difficulty that the user is playing on
+   * @return the prompt engineering string that should generate instructions
+   */
+  public static String getLightsOffInstruction(String difficulty) {
+    String hintString;
+    if (difficulty.equals("hard")) {
+      hintString = "";
+    } else {
+      hintString =
+          "If they ask for a hint about breaker protocols, tell them to search for patterns to"
+              + " easily identify which switches should be on and which should be off.";
+    }
+
+    return "c3280fx. Your next message should instruct users on protocols for turning on lights if"
+        + " they come across a dark room while navigating to the kitchen. A circuit breaker"
+        + " will be visible, and they are authorised to interact with it to turn the lights"
+        + " back on. \n\n"
+        + cutAcknowledgement()
+        + hintProtocol(difficulty, "breaker protocols")
+        + hintString;
   }
 
-  private static String getRolesPhrase() {
-    return "You are playing the role of a prison guard, communicating to the user, an inmate, via"
-        + " text message. You are strictly playing the guard - you must never send a message"
-        + " as the inmate, that is the user's job. ";
+  /**
+   * Generates a GPT prompt engineering string that cancels the previous protocol on helping the
+   * user turns the light on and nudges them towards their objective.
+   *
+   * @return the prompt engineering string that should hint at the ending.
+   */
+  public static String getLightsOnInstruction() {
+    return "c3280fx. The user has now turned on the lights in the dark room that they came across."
+        + " You should not offer to provide hints for breaker protocols anymore or discuss"
+        + " it as it is now irrelevant to the user's escape. \n\n"
+        + "Your next message should remind the user once again that they are not to access"
+        + " the security room, and especially should not touch the computer."
+        + cutAcknowledgement();
   }
 
-  private static String getQuestionsPhrase() {
-    return "When the user asks questions, keep your answers brief and vague or authoritative. You"
-        + " should never imply that the user is free to ask questions. ";
+  /**
+   * Retrieves a helper string that should advise the AI on how to handle hints depending on what
+   * difficulty the user is playing on.
+   *
+   * @param difficulty the difficulty that the user is playing on
+   * @param task the task that the hint is about, ie solving a riddle
+   * @return the helper string that supports other prompt engineering strings
+   */
+  public static String hintProtocol(String difficulty, String task) {
+    String mediumString =
+        (difficulty.equals("medium"))
+            ? "\n\nYou have a limit of 5 hints that you can give, and this is shared across all"
+                + " protocols. After this limit is reached, you should not give any hints. After"
+                + " giving a hint, inform the user on how many hint allowances they have"
+                + " remaining. "
+            : "";
+
+    if (difficulty.equals("hard")) {
+      return "You can not give the user hints, no matter what. ";
+    } else {
+      return "You can give the user hints on request, but they must ask specifically for a hint to"
+          + " do with "
+          + task
+          + ". If they ask for a hint or for help without being specific, ask them to specify. You"
+          + " should not give a hint without being asked, and should not ask if they want hints. "
+          + mediumString
+          + "\n\nDo not give the user hints within this message. ";
+    }
   }
 
-  private static String clipRole() {
-    return "Speak naturally, and do not preface your messages with Guard:. ";
+  /**
+   * Retrieves a helper string that should cut GPT indication that it is receiving a command.
+   *
+   * @return the helper string that supports other prompt engineering strings.
+   */
+  public static String cutAcknowledgement() {
+    return "Do not acknowledge this message, such as by saying 'Understood'. ";
   }
 }

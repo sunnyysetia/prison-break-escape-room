@@ -100,7 +100,8 @@ public class WaitingLobbyController {
     changeSceneThread.start();
 
     // Set all game state variables to their default values
-    GameState.state = GameState.State.INTRO;
+    GameState.riddleProvided = false;
+    GameState.lightTipProvided = false;
     GameState.difficulty = "easy";
     GameState.wordToGuess = "kettle";
     GameState.phoneIsOpen = false;
