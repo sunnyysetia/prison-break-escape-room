@@ -157,12 +157,11 @@ public class GptPromptEngineering {
     } else {
       // For other difficulty levels, provide guidance on hinting.
       return "You can give the user hints on request, but they must ask specifically for a hint to"
-          + " do with "
+          + " help them with "
           + task
-          + ". If they ask for a hint or for help without being specific, ask them to specify. You"
-          + " should not give a hint without being asked, and should not ask if they want hints. "
+          + ". You should not give a hint without being asked, and should not ask if they want hints. "
           + mediumString // Include medium difficulty hinting details if applicable.
-          + "\n\nDo not give the user hints within this message. ";
+          + "\n\nIf you give the user a hint, start with the word 'Hint'. Do not give the user hints within this message. ";
     }
   }
 
