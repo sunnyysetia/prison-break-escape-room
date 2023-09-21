@@ -639,9 +639,15 @@ public class EscapeRoomController {
                     remainingSeconds--;
                     updateTimerLabel(); // Update the timer label to display the remaining time.
 
-                    // Notify the user when 1 minute is remaining.
-                    if (remainingSeconds == 60) {
-                      textToSpeech("You have 1 minute remaining");
+                    // Notify the user when a minute has passed.
+                    if (remainingSeconds % 60 == 0) {
+                      String plural = (remainingSeconds == 60) ? "" : "s";
+                      textToSpeech(
+                          "You have "
+                              + (remainingSeconds / 60)
+                              + " minute"
+                              + plural
+                              + " remaining");
                     }
                   } else {
                     // If no remaining seconds, stop the timer and handle the timer expiration.
