@@ -296,7 +296,7 @@
                               <Font name="Stencil" size="18.0" />
                            </font>
                         </Label>
-                        <Button layoutX="79.0" layoutY="263.0" mnemonicParsing="false" onMouseClicked="#restartGame" style="-fx-font-size: 24;" styleClass="stencilText" stylesheets="@../css/font.css" text="Retart Game">
+                        <Button layoutX="79.0" layoutY="263.0" mnemonicParsing="false" onMouseClicked="#restartGame" style="-fx-font-size: 24;" styleClass="stencilText" stylesheets="@../css/font.css" text="Restart Game">
                            <font>
                               <Font name="Stencil" size="24.0" />
                            </font>

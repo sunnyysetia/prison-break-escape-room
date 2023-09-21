@@ -586,15 +586,21 @@ public class EscapeRoomController {
         + " unforgiving walls will continue to confine you. Try again, for the path to freedom"
         + " is as elusive as ever.";
     if (!ending.equals("0")) {
+      int minutes = (int) ((GameState.time - remainingSeconds) / 60);
+      int seconds = (GameState.time - remainingSeconds) % 60;
       endMessage = String.format(endingMap.get(ending), new DateFormatSymbols().getMonths()[month - 1], day);
       endPhoneTitle.setText("Congratulations!");
       endPhoneMessage.setText(
           "You escaped the prison within "
-              + Math.round(
-                  GameState.time - remainingSeconds - Math.floor(GameState.time - remainingSeconds))
-              + " minutes and "
-              + Math.round(Math.floor(GameState.time - remainingSeconds))
-              + " seconds!");
+              + minutes
+              + " minute"
+              + ((minutes == 1) ? ""
+                  : "s")
+              + " and "
+              + seconds
+              + " second"
+              + ((seconds == 1) ? "" : "s")
+              + "!");
     }
     String finalEndMessage = endMessage;
     endGameImage
