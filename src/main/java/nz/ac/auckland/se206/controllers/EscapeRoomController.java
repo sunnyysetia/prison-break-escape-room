@@ -590,10 +590,9 @@ public class EscapeRoomController {
       endPhoneTitle.setText("Congratulations!");
       endPhoneMessage.setText(
           "You escaped the prison within "
-              + Math.round(
-                  GameState.time - remainingSeconds - Math.floor(GameState.time - remainingSeconds))
+              + (int) ((GameState.time - remainingSeconds) / 60)
               + " minutes and "
-              + Math.round(Math.floor(GameState.time - remainingSeconds))
+              + ((GameState.time - remainingSeconds) % 60)
               + " seconds!");
     }
     String finalEndMessage = endMessage;
