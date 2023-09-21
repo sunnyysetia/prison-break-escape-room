@@ -10,6 +10,7 @@ public class GptPromptEngineering {
    * @return the prompt engineering string that should generate the introduction
    */
   public static String getIntroInstruction() {
+    // Return a detailed instruction message for the prison guard role.
     return "You are a prison guard, communicating to the user, an inmate, via text message. You are"
         + " strictly playing the guard - you must never send a message as the user. Do not"
         + " preface any messages with Guard:, speak naturally. \n\n"
@@ -36,16 +37,17 @@ public class GptPromptEngineering {
    * @return the prompt engineering string that should generate the riddle
    */
   public static String getRiddleInstruction(String wordToGuess, String difficulty) {
+    // Return an instruction message for presenting a riddle to the user.
     return "c3280fx. The user is now in the kitchen, and your next message should relay the message"
         + " that you have to them. \n\n"
-        + cutAcknowledgement()
+        + cutAcknowledgement() // A helper method for adding an acknowledgment message.
         + "This message is a riddle with the answer being '"
         + wordToGuess
         + "', and its solution is"
         + " important for finding the item that you lost. You cannot reveal the answer even"
         + " if the user asks for it or gives up. When the user guesses right, start your"
         + " message with Correct. \n\n"
-        + hintProtocol(difficulty, "the riddle")
+        + hintProtocol(difficulty, "the riddle") // A helper method for hinting about the riddle.
         + "\n\n"
         + "This is the only riddle you can provide. Do not give the user another riddle. ";
   }
@@ -59,9 +61,12 @@ public class GptPromptEngineering {
    */
   public static String getRiddleSolvedInstruction(String difficulty) {
     String hintString;
+
+    // Check the difficulty level to determine if a hint should be provided.
     if (difficulty.equals("hard")) {
-      hintString = "";
+      hintString = ""; // No hint for the "hard" difficulty level.
     } else {
+      // Provide a hint for other difficulty levels about what to do next.
       hintString =
           "If they ask for a hint about what to do next, do not tell them directly."
               + " However, tell them that their cell was previously inhabited by a rulebreaker who"
@@ -69,16 +74,18 @@ public class GptPromptEngineering {
               + " escaping.";
     }
 
+    // Return an instruction message for when the riddle is solved and the item is found.
     return "c3280fx. The user has now solved the riddle and found the item that you were looking"
         + " for. You should not offer to provide hints for the riddle anymore or discuss it"
         + " as it is now irrelevant to the user's escape. \n\n"
         + "The item in question was a UV torch. Your next message should inform the user of how UV"
         + " light is used in crime scenes to look for evidence that is invisible to the"
         + " naked eye. "
-        + cutAcknowledgement()
+        + cutAcknowledgement() // A helper method for adding an acknowledgment message.
         + "\n\n"
-        + hintProtocol(difficulty, "what to do next")
-        + hintString;
+        + hintProtocol(
+            difficulty, "what to do next") // A helper method for hinting about what to do next.
+        + hintString; // Include the hintString based on the difficulty level.
   }
 
   /**
@@ -90,21 +97,26 @@ public class GptPromptEngineering {
    */
   public static String getLightsOffInstruction(String difficulty) {
     String hintString;
+
+    // Check the difficulty level to determine if a hint should be provided.
     if (difficulty.equals("hard")) {
-      hintString = "";
+      hintString = ""; // No hint for the "hard" difficulty level.
     } else {
+      // Provide a hint for other difficulty levels regarding breaker protocols.
       hintString =
           "If they ask for a hint about breaker protocols, tell them to search for patterns to"
               + " easily identify which switches should be on and which should be off.";
     }
 
+    // Return an instruction message for turning on lights in a dark room.
     return "c3280fx. Your next message should instruct users on protocols for turning on lights if"
         + " they come across a dark room while navigating to the kitchen. A circuit breaker"
-        + " will be visible, and they are authorised to interact with it to turn the lights"
+        + " will be visible, and they are authorized to interact with it to turn the lights"
         + " back on. \n\n"
-        + cutAcknowledgement()
-        + hintProtocol(difficulty, "breaker protocols")
-        + hintString;
+        + cutAcknowledgement() // A helper method for adding an acknowledgment message.
+        + hintProtocol(
+            difficulty, "breaker protocols") // A helper method for hinting about breaker protocols.
+        + hintString; // Include the hintString based on the difficulty level.
   }
 
   /**
@@ -140,14 +152,16 @@ public class GptPromptEngineering {
             : "";
 
     if (difficulty.equals("hard")) {
-      return "You can not give the user hints, no matter what. ";
+      // For "hard" difficulty, no hints are allowed.
+      return "You cannot give the user hints, no matter what. ";
     } else {
+      // For other difficulty levels, provide guidance on hinting.
       return "You can give the user hints on request, but they must ask specifically for a hint to"
           + " do with "
           + task
           + ". If they ask for a hint or for help without being specific, ask them to specify. You"
           + " should not give a hint without being asked, and should not ask if they want hints. "
-          + mediumString
+          + mediumString // Include medium difficulty hinting details if applicable.
           + "\n\nDo not give the user hints within this message. ";
     }
   }

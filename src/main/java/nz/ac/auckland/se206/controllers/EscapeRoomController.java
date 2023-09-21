@@ -302,13 +302,23 @@ public class EscapeRoomController {
             new EventHandler<ActionEvent>() {
               @Override
               public void handle(ActionEvent event) {
+                // Print a message to indicate that the Send Button was clicked.
                 System.out.println("Send Button clicked");
+
+                // Get the message from the messagesTextField.
                 String message = messagesTextField.getText();
+
+                // Check if the message is not empty and GPT is not currently generating a response.
                 if (!message.isEmpty() && !GameState.gptThinking.getValue()) {
+                  // Create an HBox for the message display and configure its properties.
                   HBox horiBox = new HBox();
                   horiBox.setAlignment(Pos.CENTER_RIGHT);
                   horiBox.setPadding(new Insets(5, 5, 5, 10));
+
+                  // Create a Text element to display the message.
                   Text text = new Text(message);
+
+                  // Create a TextFlow to display the text message with styling.
                   TextFlow textFlow = new TextFlow(text);
                   textFlow.setStyle(
                       "-fx-color: rgb(239,242,255); "
@@ -316,10 +326,18 @@ public class EscapeRoomController {
                           + "-fx-background-radius: 10px; ");
                   textFlow.setPadding(new Insets(5, 10, 5, 10));
                   text.setFill(Color.color(0.934, 0.945, 0.996));
+
+                  // Add the TextFlow to the HBox.
                   horiBox.getChildren().add(textFlow);
+
+                  // Add the HBox to the messagesVertBox to display the message.
                   messagesVertBox.getChildren().add(horiBox);
+
+                  // Clear the messagesTextField to prepare for the next message.
                   messagesTextField.clear();
+
                   try {
+                    // Send the user's message to the GPT for a response.
                     runGpt(new ChatMessage("user", message));
                   } catch (ApiProxyException e) {
                     e.printStackTrace();
@@ -350,13 +368,20 @@ public class EscapeRoomController {
       int j = i;
       Platform.runLater(
           () -> {
+            // Append the character at position j from the message to the sceneTextArea.
             sceneTextArea.setText(sceneTextArea.getText() + message.charAt(j));
+
+            // Append an empty string to ensure the text area is updated.
             sceneTextArea.appendText("");
+
+            // Scroll the text area to the bottom to display the new text.
             sceneTextArea.setScrollTop(Double.MAX_VALUE);
           });
 
       i++;
+
       try {
+        // Pause the thread to simulate typing at the specified interval.
         Thread.sleep(interval);
       } catch (InterruptedException e) {
         e.printStackTrace();
@@ -366,16 +391,27 @@ public class EscapeRoomController {
 
   // on recieve message, run in different thread
   private void addLabel(String messageFromGpt, VBox vbox) {
+    // Print a message to indicate that GPT sent a message to the user.
     System.out.println("GPT sent user a message");
+
+    // Create an HBox for displaying the GPT message and configure its properties.
     HBox horiBox = new HBox();
     horiBox.setAlignment(Pos.CENTER_LEFT);
     horiBox.setPadding(new Insets(5, 5, 5, 10));
+
+    // Create a Text element to display the GPT message.
     Text text = new Text(messageFromGpt);
+
+    // Create a TextFlow to display the text message with styling.
     TextFlow textFlow = new TextFlow(text);
     textFlow.setStyle("-fx-background-color: rgb(233,233,235); " + "-fx-background-radius: 10px; ");
     textFlow.setPadding(new Insets(5, 10, 5, 10));
     textFlow.setMaxWidth(450);
+
+    // Add the TextFlow to the HBox.
     horiBox.getChildren().add(textFlow);
+
+    // Use Platform.runLater to update the VBox with the new label on the JavaFX application thread.
     Platform.runLater(
         new Runnable() {
           @Override
@@ -387,56 +423,100 @@ public class EscapeRoomController {
 
   // Navigation
   private void togglePhone() {
+    // Print a message to indicate that the phone is being toggled.
     System.out.println("toggling phone");
+
+    // Set a flag to indicate that the phone is in the process of being toggled.
     GameState.togglingPhone = true;
+
+    // Wait for 500 milliseconds (0.5 seconds) before continuing.
     wait(
         500,
         () -> {
+          // Once the wait is over, set the flag to indicate that the phone toggle is complete.
           GameState.togglingPhone = false;
         });
+
+    // Create a translation animation for the phone switch.
     final TranslateTransition phoneSwitch = new TranslateTransition();
     phoneSwitch.setNode(chatGroup);
+
+    // Set the duration of the animation to 500 milliseconds (0.5 seconds).
     phoneSwitch.setDuration(Duration.millis(500));
+
+    // Check if the phone is currently open.
     if (GameState.phoneIsOpen) {
+      // If the phone is open, move it upwards by 550 units.
       phoneSwitch.setByY(-550);
+      // Update the phone state to indicate it's closed.
       GameState.phoneIsOpen = false;
+      // Disable and hide the dim screen overlay.
       dimScreen.setDisable(true);
       dimScreen.setVisible(false);
     } else {
+      // If the phone is closed, move it downwards by 550 units.
       phoneSwitch.setByY(550);
+      // Update the phone state to indicate it's open.
       GameState.phoneIsOpen = true;
+      // Turn off the torch (assuming GameState.torchIsOn represents torch state).
       GameState.torchIsOn.setValue(false);
+      // Enable and show the dim screen overlay.
       dimScreen.setDisable(false);
       dimScreen.setVisible(true);
+      // Hide the notification circle.
       notifCircle.setVisible(false);
     }
+
+    // Play the phone switch animation.
     phoneSwitch.play();
   }
 
   private void toggleComputer() {
+    // Print a message to indicate that the computer is being toggled.
     System.out.println("toggling computer");
+
+    // Set a flag to indicate that the computer is in the process of being toggled.
     GameState.togglingComputer = true;
+
+    // Wait for 500 milliseconds (0.5 seconds) before continuing.
     wait(
         500,
         () -> {
+          // Once the wait is over, set the flag to indicate that the computer toggle is complete.
           GameState.togglingComputer = false;
         });
+
+    // Create a translation animation for the computer switch.
     final TranslateTransition computerSwitch = new TranslateTransition();
     computerSwitch.setNode(computerGroup);
+
+    // Set the duration of the animation to 500 milliseconds (0.5 seconds).
     computerSwitch.setDuration(Duration.millis(500));
+
+    // Check if the computer is currently open.
     if (GameState.computerIsOpen) {
+      // If the computer is open, move it upwards by 650 units.
       computerSwitch.setByY(-650);
+      // Update the computer state to indicate it's closed.
       GameState.computerIsOpen = false;
+      // Disable and hide the computer dim screen overlay.
       computerDimScreen.setDisable(true);
       computerDimScreen.setVisible(false);
     } else {
+      // If the computer is closed, move it downwards by 650 units.
       computerSwitch.setByY(650);
+      // Update the computer state to indicate it's open.
       GameState.computerIsOpen = true;
+      // Request focus on the computer password field.
       computerPasswordField.requestFocus();
+      // Turn off the torch.
       GameState.torchIsOn.setValue(false);
+      // Enable and show the computer dim screen overlay.
       computerDimScreen.setDisable(false);
       computerDimScreen.setVisible(true);
     }
+
+    // Play the computer switch animation.
     computerSwitch.play();
   }
 
@@ -451,26 +531,40 @@ public class EscapeRoomController {
   }
 
   private void switchRoom(int nextRoom) {
+    // Set a flag to indicate that room switching is in progress.
     GameState.switchingRoom = true;
-    // use a new method to switch between rooms to prevent spamming and causing visual glitches
+
+    // Use a wait method to delay and prevent spamming of room switches, then clear the
+    // switchingRoom flag.
     wait(
         700,
         () -> {
           GameState.switchingRoom = false;
         });
+
+    // Create a translation animation to switch between rooms.
     final TranslateTransition roomSwitch = new TranslateTransition();
     roomSwitch.setNode(roomCollectionPane);
     roomSwitch.setDuration(Duration.millis(500));
+
+    // Determine the direction of the room switch based on the nextRoom value.
     if (nextRoom > GameState.currentRoom) {
       roomSwitch.setByX(-1022);
     } else {
       roomSwitch.setByX(1022);
     }
+
+    // Play the room switch animation.
     roomSwitch.play();
+
+    // Update the currentRoom value to the next room.
     GameState.currentRoom = nextRoom;
 
+    // Handle specific actions based on the current room.
     if (GameState.currentRoom == 0) {
+      // Check if the riddle has not been provided yet.
       if (!GameState.riddleProvided) {
+        // Set the riddleProvided flag to true and request a riddle instruction from GPT.
         GameState.riddleProvided = true;
         try {
           runGpt(
@@ -482,9 +576,11 @@ public class EscapeRoomController {
           e.printStackTrace();
         }
       }
-      leftButton.setVisible(false);
+      leftButton.setVisible(false); // Hide the left button in this room.
     } else if (GameState.currentRoom == 2) {
+      // Check if the lightTip has not been provided yet.
       if (!GameState.lightTipProvided) {
+        // Set the lightTipProvided flag to true and request a lights-off instruction from GPT.
         GameState.lightTipProvided = true;
         try {
           runGpt(
@@ -494,10 +590,10 @@ public class EscapeRoomController {
           e.printStackTrace();
         }
       }
-      rightButton.setVisible(false);
+      rightButton.setVisible(false); // Hide the right button in this room.
     } else {
-      leftButton.setVisible(true);
-      rightButton.setVisible(true);
+      leftButton.setVisible(true); // Show the left button for other rooms.
+      rightButton.setVisible(true); // Show the right button for other rooms.
     }
   }
 
@@ -532,23 +628,32 @@ public class EscapeRoomController {
 
   // Timer
   private void startTimer() {
+    // Create a Timeline for the timer with a 1-second interval.
     timer =
         new Timeline(
             new KeyFrame(
                 Duration.seconds(1),
                 event -> {
+                  // Check if there are remaining seconds.
                   if (remainingSeconds > 0) {
                     remainingSeconds--;
-                    updateTimerLabel();
+                    updateTimerLabel(); // Update the timer label to display the remaining time.
+
+                    // Notify the user when 1 minute is remaining.
                     if (remainingSeconds == 60) {
                       textToSpeech("You have 1 minute remaining");
                     }
                   } else {
+                    // If no remaining seconds, stop the timer and handle the timer expiration.
                     timer.stop();
                     handleTimerExpired();
                   }
                 }));
+
+    // Set the cycle count to INDEFINITE, meaning the timer will run continuously.
     timer.setCycleCount(Animation.INDEFINITE);
+
+    // Start the timer.
     timer.play();
   }
 
@@ -566,12 +671,17 @@ public class EscapeRoomController {
   }
 
   private void handleTimerExpired() {
+    // Use Platform.runLater() to safely update the UI from a non-JavaFX thread.
     Platform.runLater(
         () -> {
+          // Notify the user that the time has run out using text-to-speech.
           textToSpeech("Time's up! You ran out of time!");
+
           try {
+            // Attempt to return to a waiting lobby (handle any potential IOException).
             returnToWaitingLobby();
           } catch (IOException e) {
+            // Print the stack trace if an IOException occurs during the operation.
             e.printStackTrace();
           }
         });
@@ -601,17 +711,22 @@ public class EscapeRoomController {
 
   // TTS
   private void textToSpeech(String message) {
-
+    // Create a task to handle text-to-speech processing in a background thread.
     Task<Void> speechTask =
         new Task<Void>() {
           @Override
           public Void call() throws Exception {
+            // Create a TextToSpeech object to convert text to speech.
             TextToSpeech textToSpeech = new TextToSpeech();
+
+            // Use the TextToSpeech object to speak the provided message.
             textToSpeech.speak(message);
+
             return null;
           }
         };
 
+    // Create a new thread and start the text-to-speech task in the background.
     new Thread(speechTask).start();
   }
 
@@ -668,18 +783,24 @@ public class EscapeRoomController {
 
   @FXML
   private void clickObject(MouseEvent event) {
-    // Find which object was clicked
+    // Find which object was clicked.
     Rectangle clickedRectangle = (Rectangle) event.getSource();
     String rectangleId = clickedRectangle.getId();
     System.out.println("Object clicked: " + rectangleId);
     System.out.println("Riddle solved: " + GameState.riddleSolved);
 
+    // Check if the riddle is solved, the clicked object matches the riddle answer, and the torch is
+    // not found yet.
     if (GameState.riddleSolved
         && rectangleId.equals(GameState.wordToGuess)
         && !GameState.torchFound) {
+      // Mark that the torch is found and make the torchButton visible.
       GameState.torchFound = true;
       torchButton.setVisible(true);
+
       try {
+        // Display a message to the user indicating that they've solved the riddle and instructing
+        // them.
         runGpt(
             new ChatMessage(
                 "user", GptPromptEngineering.getRiddleSolvedInstruction(GameState.difficulty)));
@@ -687,7 +808,7 @@ public class EscapeRoomController {
         exception.printStackTrace();
       }
 
-      // insert torch retrieved animation
+      // Insert an animation to show the torch being retrieved.
       Thread animationThread =
           new Thread(
               () -> {
@@ -695,15 +816,18 @@ public class EscapeRoomController {
                 torchGet.setNode(torchGetGroup);
                 torchGet.setDuration(Duration.millis(500));
                 torchGet.setByY(600);
+
                 FadeTransition torchFade = new FadeTransition();
                 torchFade.setNode(torchGetGroup);
                 torchFade.setDuration(Duration.millis(1000));
                 torchFade.setFromValue(0);
                 torchFade.setToValue(1);
+
                 torchFade.play();
                 torchGet.play();
               });
 
+      // Create a thread to make the torch disappear after a certain time period.
       Thread disappearThread =
           new Thread(
               () -> {
@@ -712,18 +836,23 @@ public class EscapeRoomController {
                 } catch (InterruptedException e) {
                   e.printStackTrace();
                 }
+
                 TranslateTransition torchGet = new TranslateTransition();
                 torchGet.setNode(torchGetGroup);
                 torchGet.setDuration(Duration.millis(500));
                 torchGet.setByY(600);
+
                 FadeTransition torchFade = new FadeTransition();
                 torchFade.setNode(torchGetGroup);
                 torchFade.setDuration(Duration.millis(500));
                 torchFade.setFromValue(1);
                 torchFade.setToValue(0);
+
                 torchFade.play();
                 torchGet.play();
               });
+
+      // Set both animation threads as daemon threads and start them.
       animationThread.setDaemon(true);
       disappearThread.setDaemon(true);
       animationThread.start();
@@ -1040,17 +1169,26 @@ public class EscapeRoomController {
    * @param process The process to be completed afterwards.
    */
   private void wait(int time, Runnable process) {
+    // Create a new thread for waiting and processing.
     Thread waitThread =
         new Thread(
             () -> {
               try {
+                // Pause the thread for the specified time (in milliseconds).
                 Thread.sleep(time);
               } catch (InterruptedException e) {
                 e.printStackTrace();
               }
+
+              // Use Platform.runLater to execute the provided process on the JavaFX application
+              // thread.
               Platform.runLater(process);
             });
+
+    // Set the waitThread as a daemon thread, which won't prevent the application from exiting.
     waitThread.setDaemon(true);
+
+    // Start the waitThread.
     waitThread.start();
   }
 }
