@@ -640,7 +640,7 @@ public class EscapeRoomController {
                     updateTimerLabel(); // Update the timer label to display the remaining time.
 
                     // Notify the user when a minute has passed.
-                    if (remainingSeconds % 60 == 0) {
+                    if (remainingSeconds % 60 == 0 && remainingSeconds != 0) {
                       String plural = (remainingSeconds == 60) ? "" : "s";
                       textToSpeech(
                           "You have "
