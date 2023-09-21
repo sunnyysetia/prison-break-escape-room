@@ -1,7 +1,11 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+import java.text.DateFormatSymbols;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -111,6 +115,8 @@ public class EscapeRoomController {
   @FXML private AnchorPane endingControlAnchorPane;
   @FXML private AnchorPane computerConsoleAnchorPane;
 
+  @FXML private AnchorPane finsihedGamePane;
+  @FXML private TextArea endGameTA;
   @FXML private ImageView endGameImage;
   @FXML private AnchorPane gameEndPane;
   @FXML private ImageView guardRoomDarkness;
@@ -142,6 +148,37 @@ public class EscapeRoomController {
   private List<String> switchesToRecall = new ArrayList<>();
   private List<String> playerChoices = new ArrayList<>();
   private Thread countdownThread;
+  // "  1. Unlock all prison cell doors"
+  // "  2. Explode all walls"
+  // "  3. Retrieve new uniform"
+  private HashMap<String, String> endingMap =
+      new HashMap<>() {
+        {
+          put(
+              "1",
+              "On %s %sth, a shocking incident unfolded at The Prison as a"
+                  + " software malfunction inadvertently unlocked all prison cell doors."
+                  + " Pandemonium ensued as prisoners took advantage of this unexpected opportunity"
+                  + " to escape their confinement. Authorities are working diligently to regain"
+                  + " control and investigate the software glitch responsible for this"
+                  + " unprecedented breach of security.");
+          put(
+              "2",
+              "On %s %sth, chaos erupted at The Prison as a series of"
+                  + " explosions caused prison walls to crumble, granting inmates an unexpected"
+                  + " route to freedom. Inmates wasted no time seizing the opportunity, fleeing the"
+                  + " facility in a frantic rush. Authorities are now in pursuit of the escapees,"
+                  + " while an investigation is underway to determine the cause of the explosive"
+                  + " breach in the prison's perimeter.");
+          put(
+              "3",
+              "On %s %sth, a surprising incident occurred at The Prison. One"
+                  + " prisoner had disappeared, leaving an empty cell behind, and a prison guard"
+                  + " uniform was missing. It appeared that the inmate had managed to escape by"
+                  + " impersonating a guard. Authorities are now actively searching for the"
+                  + " escapee, while questions regarding the security lapse loom large.");
+        }
+      };
 
   // Chat fxml
   @FXML private Button sendButton;
@@ -246,15 +283,15 @@ public class EscapeRoomController {
                                     + "System:>Welcome back Prison Guard!\n"
                                     + "System:>Here is a list of admin functions you have access"
                                     + " to:\n\n",
-                                15);
+                                10);
                             typeWrite(
                                 computerConsoleTextArea,
                                 "  1. Unlock all prison cell doors\n"
                                     + "  2. Explode all walls\n"
-                                    + "  3. Unlock pathway to sewers\n"
+                                    + "  3. Retrieve new uniform\n"
                                     + "\n Choose a function by typing the corresponding number\n"
                                     + "System:>Choose an Option:",
-                                10);
+                                6);
                           });
                   writerThread.setDaemon(true);
                   writerThread.start();
@@ -393,13 +430,68 @@ public class EscapeRoomController {
   }
 
   private void endGame(String ending) {
-    // endGameImage
-    // endGameImage.setImage("ending" + ending + ".png");
-    // App.class.getResourceAsStream("/fonts/Metropolis.ttf")
-    // Image image = new Image(inputstream)
+    timer.stop();
+    Date date = new Date();
+    LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    int month = localDate.getMonthValue();
+    int day = localDate.getDayOfMonth();
+    String endMessage =
+        "As the tension in the air thickens and your heart races, you push your luck to the limit"
+            + " in a daring attempt to break free from your prison confines. But alas, as the"
+            + " clock's relentless ticking echoes in your ears, your every move becomes more"
+            + " desperate. Time slips through your fingers like sand, and despite your best"
+            + " efforts, the guards' footsteps draw nearer. With a heavy heart, you realize that"
+            + " your window of opportunity has closed. You failed to escape, and the prison's"
+            + " unforgiving walls will continue to confine you. Try again, for the path to freedom"
+            + " is as elusive as ever.";
+    if (!ending.equals("0")) {
+      endMessage =
+          String.format(endingMap.get(ending), new DateFormatSymbols().getMonths()[month - 1], day);
+    }
+    String finalEndMessage = endMessage;
+
     endGameImage
         .imageProperty()
         .set(new Image(App.class.getResourceAsStream("/images/ending" + ending + ".png")));
+
+    Thread animationThread =
+        new Thread(
+            () -> {
+              TranslateTransition endSlide = new TranslateTransition();
+              endSlide.setNode(gameEndPane);
+              endSlide.setDuration(Duration.millis(500));
+              endSlide.setByY(720);
+              FadeTransition endFade = new FadeTransition();
+              endFade.setNode(gameEndPane);
+              endFade.setDuration(Duration.millis(1000));
+              endFade.setFromValue(0);
+              endFade.setToValue(1);
+              endFade.play();
+              endSlide.play();
+            });
+    animationThread.setDaemon(true);
+    animationThread.start();
+    Thread textThread =
+        new Thread(
+            () -> {
+              // endingMap
+              // endGameTA
+              try {
+                Thread.sleep(1250);
+              } catch (InterruptedException e) {
+                e.printStackTrace();
+              }
+              typeWrite(endGameTA, finalEndMessage, 15);
+              System.out.println("finished typing ending message");
+              try {
+                Thread.sleep(3000);
+              } catch (InterruptedException e) {
+                e.printStackTrace();
+              }
+              System.out.println("Finished waiting for 3 seconds");
+            });
+    textThread.setDaemon(true);
+    textThread.start();
   }
 
   private void typeWrite(TextArea sceneTextArea, String message, int interval) {
@@ -603,7 +695,8 @@ public class EscapeRoomController {
                     }
                   } else {
                     timer.stop();
-                    handleTimerExpired();
+                    // handleTimerExpired();
+                    endGame("0");
                   }
                 }));
     timer.setCycleCount(Animation.INDEFINITE);
@@ -623,17 +716,17 @@ public class EscapeRoomController {
     timerLabel.setText(timeText);
   }
 
-  private void handleTimerExpired() {
-    Platform.runLater(
-        () -> {
-          textToSpeech("Time's up! You ran out of time!");
-          try {
-            returnToWaitingLobby();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        });
-  }
+  // private void handleTimerExpired() {
+  //   Platform.runLater(
+  //       () -> {
+  //         textToSpeech("Time's up! You ran out of time!");
+  //         try {
+  //           returnToWaitingLobby();
+  //         } catch (IOException e) {
+  //           e.printStackTrace();
+  //         }
+  //       });
+  // }
 
   // Key Presses
   /**

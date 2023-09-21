@@ -246,19 +246,20 @@
             </AnchorPane>
          </children>
       </Group>
-      <AnchorPane fx:id="gameEndPane" disable="true" layoutY="-720.0" prefHeight="720.0" prefWidth="1022.0">
+      <AnchorPane fx:id="gameEndPane" layoutY="-720.0" opacity="0.0" prefHeight="720.0" prefWidth="1022.0">
          <children>
             <ImageView fx:id="endGameImage" fitHeight="720.0" fitWidth="1265.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/ending1.png" />
                </image>
             </ImageView>
-            <TextArea layoutX="44.0" layoutY="40.0" prefHeight="213.0" prefWidth="1000.0" style="-fx-text-fill: white;" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue quis lorem eget elementum. Donec ac neque elementum, imperdiet est ac, interdum ipsum. Phasellus sollicitudin lectus orci, vitae luctus ex lobortis vitae. Pellentesque commodo nunc lorem, vel ultrices purus lacinia sit amet. Suspendisse sed accumsan enim. Aliquam sem nisi, bibendum eu ullamcorper vitae, facilisis sit amet neque. Curabitur sit amet vestibulum augue, nec volutpat quam. Nam mollis et diam nec ultrices. Phasellus ornare ex a eros porttitor cursus. Phasellus malesuada fermentum enim, quis iaculis velit varius eu. Nulla facilisi. Proin iaculis sit amet urna vel finibus. Donec eu lacus purus. Aenean vel massa eros. Nam cursus libero non ullamcorper consectetur." wrapText="true">
+            <TextArea fx:id="endGameTA" editable="false" layoutX="61.0" layoutY="40.0" prefHeight="200.0" prefWidth="900.0" style="-fx-text-fill: white; -fx-text-alignment: justify;" styleClass="text-area" stylesheets="@../css/endTextArea.css" wrapText="true">
                <font>
-                  <Font size="26.0" />
+                  <Font size="20.0" />
                </font>
             </TextArea>
          </children>
       </AnchorPane>
+      <AnchorPane fx:id="finsihedGamePane" prefHeight="200.0" prefWidth="200.0" />
    </children>
 </Pane>
