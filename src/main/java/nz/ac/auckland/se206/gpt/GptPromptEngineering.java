@@ -41,7 +41,7 @@ public class GptPromptEngineering {
         + cutAcknowledgement()
         + "This message is a riddle with the answer being '"
         + wordToGuess
-        + "', and its solution is"
+        + "'. The riddle should be about this item, not any other. Its solution is"
         + " important for finding the item that you lost. You cannot reveal the answer even"
         + " if the user asks for it or gives up. When the user guesses right, start your"
         + " message with Correct. \n\n"
