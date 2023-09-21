@@ -45,6 +45,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -52,8 +54,6 @@ import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager;
@@ -149,6 +149,22 @@ public class EscapeRoomController {
   private AnchorPane computerConsoleAnchorPane;
 
   @FXML
+  private AnchorPane finsihedGamePane;
+  @FXML
+  private Group endPhoneGroup;
+  @FXML
+  private TextArea endGameTA;
+  @FXML
+  private TextArea clickContinueTA;
+  @FXML
+  private Label endPhoneTitle;
+  @FXML
+  private Label endPhoneMessage;
+  @FXML
+  private ImageView endGameImage;
+  @FXML
+  private AnchorPane gameEndPane;
+  @FXML
   private ImageView guardRoomDarkness;
   @FXML
   private Group circuitGroup;
@@ -197,37 +213,36 @@ public class EscapeRoomController {
   private List<String> switchesToRecall = new ArrayList<>();
   private List<String> playerChoices = new ArrayList<>();
   private Thread countdownThread;
-  // "  1. Unlock all prison cell doors"
-  // "  2. Explode all walls"
-  // "  3. Retrieve new uniform"
-  private HashMap<String, String> endingMap =
-      new HashMap<>() {
-        {
-          put(
-              "1",
-              "On %s %sth, a shocking incident unfolded at The Prison as a"
-                  + " software malfunction inadvertently unlocked all prison cell doors."
-                  + " Pandemonium ensued as prisoners took advantage of this unexpected opportunity"
-                  + " to escape their confinement. Authorities are working diligently to regain"
-                  + " control and investigate the software glitch responsible for this"
-                  + " unprecedented breach of security.");
-          put(
-              "2",
-              "On %s %sth, chaos erupted at The Prison as a series of"
-                  + " explosions caused prison walls to crumble, granting inmates an unexpected"
-                  + " route to freedom. Inmates wasted no time seizing the opportunity, fleeing the"
-                  + " facility in a frantic rush. Authorities are now in pursuit of the escapees,"
-                  + " while an investigation is underway to determine the cause of the explosive"
-                  + " breach in the prison's perimeter.");
-          put(
-              "3",
-              "On %s %sth, a surprising incident occurred at The Prison. One"
-                  + " prisoner had disappeared, leaving an empty cell behind, and a prison guard"
-                  + " uniform was missing. It appeared that the inmate had managed to escape by"
-                  + " impersonating a guard. Authorities are now actively searching for the"
-                  + " escapee, while questions regarding the security lapse loom large.");
-        }
-      };
+  // " 1. Unlock all prison cell doors"
+  // " 2. Explode all walls"
+  // " 3. Retrieve new uniform"
+  private HashMap<String, String> endingMap = new HashMap<>() {
+    {
+      put(
+          "1",
+          "On %s %sth, a shocking incident unfolded at The Prison as a"
+              + " software malfunction inadvertently unlocked all prison cell doors."
+              + " Pandemonium ensued as prisoners took advantage of this unexpected opportunity"
+              + " to escape their confinement. Authorities are working diligently to regain"
+              + " control and investigate the software glitch responsible for this"
+              + " unprecedented breach of security.");
+      put(
+          "2",
+          "On %s %sth, chaos erupted at The Prison as a series of"
+              + " explosions caused prison walls to crumble, granting inmates an unexpected"
+              + " route to freedom. Inmates wasted no time seizing the opportunity, fleeing the"
+              + " facility in a frantic rush. Authorities are now in pursuit of the escapees,"
+              + " while an investigation is underway to determine the cause of the explosive"
+              + " breach in the prison's perimeter.");
+      put(
+          "3",
+          "On %s %sth, a surprising incident occurred at The Prison. One"
+              + " prisoner had disappeared, leaving an empty cell behind, and a prison guard"
+              + " uniform was missing. It appeared that the inmate had managed to escape by"
+              + " impersonating a guard. Authorities are now actively searching for the"
+              + " escapee, while questions regarding the security lapse loom large.");
+    }
+  };
 
   // Chat fxml
   @FXML
@@ -326,91 +341,85 @@ public class EscapeRoomController {
             });
 
     computerLoginButton.setOnAction(
-        (EventHandler<ActionEvent>)
-            event -> {
-              if (computerPasswordField.getText().isEmpty()) {
-                return;
-              }
-              String userInput = computerPasswordField.getText();
-              computerPasswordField.clear();
-              computerConsoleTextArea.setText(
-                  computerConsoleTextArea.getText() + "\nC:\\PrisonPC\\>" + userInput);
+        (EventHandler<ActionEvent>) event -> {
+          if (computerPasswordField.getText().isEmpty()) {
+            return;
+          }
+          String userInput = computerPasswordField.getText();
+          computerPasswordField.clear();
+          computerConsoleTextArea.setText(
+              computerConsoleTextArea.getText() + "\nC:\\PrisonPC\\>" + userInput);
 
-              if (!GameState.computerLoggedIn) {
-                if (userInput.equals(GameState.uvPassword + "")) {
-                  GameState.computerLoggedIn = true;
-                  Thread writerThread =
-                      new Thread(
-                          () -> {
-                            typeWrite(
-                                computerConsoleTextArea,
-                                "\nSystem:>Login Successful!\n"
-                                    + "System:>Welcome back Prison Guard!\n"
-                                    + "System:>Here is a list of admin functions you have access"
-                                    + " to:\n\n",
-                                10);
-                            typeWrite(
-                                computerConsoleTextArea,
-                                "  1. Unlock all prison cell doors\n"
-                                    + "  2. Explode all walls\n"
-                                    + "  3. Retrieve new uniform\n"
-                                    + "\n Choose a function by typing the corresponding number\n"
-                                    + "System:>Choose an Option:",
-                                6);
-                          });
-                  writerThread.setDaemon(true);
-                  writerThread.start();
-                } else {
-                  Thread writerThread =
-                      new Thread(
-                          () -> {
-                            typeWrite(
-                                computerConsoleTextArea,
-                                "\n" + "System:>Incorrect Password!\n" + "System:>Enter Password:",
-                                15);
-                          });
-                  writerThread.setDaemon(true);
-                  writerThread.start();
+          if (!GameState.computerLoggedIn) {
+            if (userInput.equals(GameState.uvPassword + "")) {
+              GameState.computerLoggedIn = true;
+              Thread writerThread = new Thread(
+                  () -> {
+                    typeWrite(
+                        computerConsoleTextArea,
+                        "\nSystem:>Login Successful!\n"
+                            + "System:>Welcome back Prison Guard!\n"
+                            + "System:>Here is a list of admin functions you have access"
+                            + " to:\n\n",
+                        10);
+                    typeWrite(
+                        computerConsoleTextArea,
+                        "  1. Unlock all prison cell doors\n"
+                            + "  2. Explode all walls\n"
+                            + "  3. Retrieve new uniform\n"
+                            + "\n Choose a function by typing the corresponding number\n"
+                            + "System:>Choose an Option:",
+                        6);
+                  });
+              writerThread.setDaemon(true);
+              writerThread.start();
+            } else {
+              Thread writerThread = new Thread(
+                  () -> {
+                    typeWrite(
+                        computerConsoleTextArea,
+                        "\n" + "System:>Incorrect Password!\n" + "System:>Enter Password:",
+                        15);
+                  });
+              writerThread.setDaemon(true);
+              writerThread.start();
+            }
+          } else {
+            // Runs after the user logins correctly
+            if (userInput.trim().equals("1")
+                || userInput.trim().equals("2")
+                || userInput.trim().equals("3")) {
+              // call the end game method
+              System.out.println("User chose option: " + userInput.trim());
+              endGame(userInput.trim());
+            } else {
+              Thread writerThread = new Thread(
+                  () -> {
+                    typeWrite(
+                        computerConsoleTextArea,
+                        "\n" + "System:>Invalid Option!\n" + "System:>Choose an Option:",
+                        15);
+                  });
+              writerThread.setDaemon(true);
+              writerThread.start();
+            }
+          }
+          // Use to auto scroll the pane to the bottom
+          Thread scrollThread = new Thread(
+              () -> {
+                try {
+                  Thread.sleep(100);
+                } catch (InterruptedException e) {
+                  e.printStackTrace();
                 }
-              } else {
-                // Runs after the user logins correctly
-                if (userInput.trim().equals("1")
-                    || userInput.trim().equals("2")
-                    || userInput.trim().equals("3")) {
-                  // call the end game method
-                  System.out.println("User chose option: " + userInput.trim());
-                  endGame(userInput.trim());
-                } else {
-                  Thread writerThread =
-                      new Thread(
-                          () -> {
-                            typeWrite(
-                                computerConsoleTextArea,
-                                "\n" + "System:>Invalid Option!\n" + "System:>Choose an Option:",
-                                15);
-                          });
-                  writerThread.setDaemon(true);
-                  writerThread.start();
-                }
-              }
-              // Use to auto scroll the pane to the bottom
-              Thread scrollThread =
-                  new Thread(
-                      () -> {
-                        try {
-                          Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                          e.printStackTrace();
-                        }
-                        Platform.runLater(
-                            () -> {
-                              computerConsoleTextArea.setScrollTop(Double.MAX_VALUE);
-                            });
-                      });
-              scrollThread.setDaemon(true);
-              scrollThread.start();
-            });
-
+                Platform.runLater(
+                    () -> {
+                      computerConsoleTextArea.setScrollTop(Double.MAX_VALUE);
+                    });
+              });
+          scrollThread.setDaemon(true);
+          scrollThread.start();
+        });
 
     phoneNameLabel
         .textProperty()
@@ -525,7 +534,8 @@ public class EscapeRoomController {
 
   @FXML
   public void endContinue(MouseEvent event) {
-    // goes to the final final screen to show time used and buttons to restart game or exit game
+    // goes to the final final screen to show time used and buttons to restart game
+    // or exit game
     if (!GameState.continueEnabled) {
       return;
     }
@@ -538,21 +548,19 @@ public class EscapeRoomController {
     phoneTransition.setNode(endPhoneGroup);
     phoneTransition.setByY(550);
     phoneTransition.setDuration(Duration.millis(500));
-    Thread backgroundAnimThread =
-        new Thread(
-            () -> {
-              backgroundTransition.play();
-            });
-    Thread phoneAnimThread =
-        new Thread(
-            () -> {
-              try {
-                Thread.sleep(750);
-              } catch (InterruptedException e) {
-                e.printStackTrace();
-              }
-              phoneTransition.play();
-            });
+    Thread backgroundAnimThread = new Thread(
+        () -> {
+          backgroundTransition.play();
+        });
+    Thread phoneAnimThread = new Thread(
+        () -> {
+          try {
+            Thread.sleep(750);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+          phoneTransition.play();
+        });
     phoneAnimThread.setDaemon(true);
     backgroundAnimThread.setDaemon(true);
     phoneAnimThread.start();
@@ -569,18 +577,16 @@ public class EscapeRoomController {
     clickContinueTA.setMouseTransparent(true);
     endPhoneTitle.setText("Good Luck Next Time");
     endPhoneMessage.setText("Unfortunately you failed to escape the prison within the time limit");
-    String endMessage =
-        "As the tension in the air thickens and your heart races, you push your luck to the limit"
-            + " in a daring attempt to break free from your prison confines. But alas, as the"
-            + " clock's relentless ticking echoes in your ears, your every move becomes more"
-            + " desperate. Time slips through your fingers like sand, and despite your best"
-            + " efforts, the guards' footsteps draw nearer. With a heavy heart, you realize that"
-            + " your window of opportunity has closed. You failed to escape, and the prison's"
-            + " unforgiving walls will continue to confine you. Try again, for the path to freedom"
-            + " is as elusive as ever.";
+    String endMessage = "As the tension in the air thickens and your heart races, you push your luck to the limit"
+        + " in a daring attempt to break free from your prison confines. But alas, as the"
+        + " clock's relentless ticking echoes in your ears, your every move becomes more"
+        + " desperate. Time slips through your fingers like sand, and despite your best"
+        + " efforts, the guards' footsteps draw nearer. With a heavy heart, you realize that"
+        + " your window of opportunity has closed. You failed to escape, and the prison's"
+        + " unforgiving walls will continue to confine you. Try again, for the path to freedom"
+        + " is as elusive as ever.";
     if (!ending.equals("0")) {
-      endMessage =
-          String.format(endingMap.get(ending), new DateFormatSymbols().getMonths()[month - 1], day);
+      endMessage = String.format(endingMap.get(ending), new DateFormatSymbols().getMonths()[month - 1], day);
       endPhoneTitle.setText("Congratulations!");
       endPhoneMessage.setText(
           "You escaped the prison within "
@@ -594,42 +600,40 @@ public class EscapeRoomController {
     endGameImage
         .imageProperty()
         .set(new Image(App.class.getResourceAsStream("/images/ending" + ending + ".png")));
-    Thread animationThread =
-        new Thread(
-            () -> {
-              TranslateTransition endSlide = new TranslateTransition();
-              endSlide.setNode(gameEndPane);
-              endSlide.setDuration(Duration.millis(500));
-              endSlide.setByY(720);
-              FadeTransition endFade = new FadeTransition();
-              endFade.setNode(gameEndPane);
-              endFade.setDuration(Duration.millis(1000));
-              endFade.setFromValue(0);
-              endFade.setToValue(1);
-              endFade.play();
-              endSlide.play();
-            });
+    Thread animationThread = new Thread(
+        () -> {
+          TranslateTransition endSlide = new TranslateTransition();
+          endSlide.setNode(gameEndPane);
+          endSlide.setDuration(Duration.millis(500));
+          endSlide.setByY(720);
+          FadeTransition endFade = new FadeTransition();
+          endFade.setNode(gameEndPane);
+          endFade.setDuration(Duration.millis(1000));
+          endFade.setFromValue(0);
+          endFade.setToValue(1);
+          endFade.play();
+          endSlide.play();
+        });
     animationThread.setDaemon(true);
     animationThread.start();
-    Thread textThread =
-        new Thread(
-            () -> {
-              try {
-                Thread.sleep(1250);
-              } catch (InterruptedException e) {
-                e.printStackTrace();
-              }
-              typeWrite(endGameTA, finalEndMessage, 15);
-              System.out.println("finished typing ending message");
-              try {
-                Thread.sleep(3000);
-              } catch (InterruptedException e) {
-                e.printStackTrace();
-              }
-              System.out.println("Finished waiting for 3 seconds");
-              typeWrite(clickContinueTA, "Click anywhere to continue", 15);
-              GameState.continueEnabled = true;
-            });
+    Thread textThread = new Thread(
+        () -> {
+          try {
+            Thread.sleep(1250);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+          typeWrite(endGameTA, finalEndMessage, 15);
+          System.out.println("finished typing ending message");
+          try {
+            Thread.sleep(2000);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+          System.out.println("Finished waiting for 3 seconds");
+          typeWrite(clickContinueTA, "Click anywhere to continue", 15);
+          GameState.continueEnabled = true;
+        });
     textThread.setDaemon(true);
     textThread.start();
   }
@@ -901,33 +905,32 @@ public class EscapeRoomController {
   // Timer
   private void startTimer() {
     // Create a Timeline for the timer with a 1-second interval.
-    timer =
-        new Timeline(
-            new KeyFrame(
-                Duration.seconds(1),
-                event -> {
-                  // Check if there are remaining seconds.
-                  if (remainingSeconds > 0) {
-                    remainingSeconds--;
-                    updateTimerLabel(); // Update the timer label to display the remaining time.
+    timer = new Timeline(
+        new KeyFrame(
+            Duration.seconds(1),
+            event -> {
+              // Check if there are remaining seconds.
+              if (remainingSeconds > 0) {
+                remainingSeconds--;
+                updateTimerLabel(); // Update the timer label to display the remaining time.
 
-                    // Notify the user when a minute has passed.
-                    if (remainingSeconds % 60 == 0 && remainingSeconds != 0) {
-                      String plural = (remainingSeconds == 60) ? "" : "s";
-                      textToSpeech(
-                          "You have "
-                              + (remainingSeconds / 60)
-                              + " minute"
-                              + plural
-                              + " remaining");
-                    }
-                  } else {
-                    // If no remaining seconds, stop the timer and handle the timer expiration.
-                    timer.stop();
-                    // handleTimerExpired();
-                    endGame("0");
-                  }
-                }));
+                // Notify the user when a minute has passed.
+                if (remainingSeconds % 60 == 0 && remainingSeconds != 0) {
+                  String plural = (remainingSeconds == 60) ? "" : "s";
+                  textToSpeech(
+                      "You have "
+                          + (remainingSeconds / 60)
+                          + " minute"
+                          + plural
+                          + " remaining");
+                }
+              } else {
+                // If no remaining seconds, stop the timer and handle the timer expiration.
+                timer.stop();
+                // handleTimerExpired();
+                endGame("0");
+              }
+            }));
 
     // Set the cycle count to INDEFINITE, meaning the timer will run continuously.
     timer.setCycleCount(Animation.INDEFINITE);
