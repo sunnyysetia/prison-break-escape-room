@@ -456,7 +456,7 @@ public class EscapeRoomController {
           runGpt(
               new ChatMessage(
                   "user",
-                  GptPromptEngineering.getRiddleWithGivenWord(
+                  GptPromptEngineering.getRiddleInstruction(
                       GameState.wordToGuess, GameState.difficulty)));
         } catch (ApiProxyException e) {
           e.printStackTrace();
