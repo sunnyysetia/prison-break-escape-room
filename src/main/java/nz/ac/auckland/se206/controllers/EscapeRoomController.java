@@ -146,6 +146,7 @@ public class EscapeRoomController {
   @FXML private VBox messagesVertBox;
   @FXML private ScrollPane chatScrollPane;
   @FXML private Label phoneNameLabel;
+  @FXML private ImageView typingImage;
 
   // Shared
   private int remainingSeconds = 120;
@@ -266,8 +267,10 @@ public class EscapeRoomController {
                   String string;
                   if (GameState.gptThinking.get()) {
                     string = "Typing. . .";
+                    typingImage.setVisible(true);
                   } else {
                     string = "Prison Guard";
+                    typingImage.setVisible(false);
                   }
                   return string;
                 },
