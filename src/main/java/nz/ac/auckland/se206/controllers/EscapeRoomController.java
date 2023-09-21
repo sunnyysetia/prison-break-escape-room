@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
@@ -46,6 +47,8 @@ import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager;
@@ -363,6 +366,7 @@ public class EscapeRoomController {
           public void handle(ActionEvent event) {
             // Print a message to indicate that the Send Button was clicked.
             System.out.println("Send Button clicked");
+            playSound("outgoingText.mp3");
 
             // Get the message from the messagesTextField.
             String message = messagesTextField.getText();
@@ -769,6 +773,7 @@ public class EscapeRoomController {
       // Prevent the Enter key event from propagating further
       if (GameState.phoneIsOpen) {
         sendButton.fire();
+        playSound("outgoingText.mp3");
       }
       if (GameState.computerIsOpen) {
         computerLoginButton.fire();
@@ -1163,6 +1168,8 @@ public class EscapeRoomController {
               addLabel(paragraph, messagesVertBox);
             }
             if (!GameState.phoneIsOpen) {
+              playSound("incomingText.mp3");
+
               notifCircle.setVisible(true);
               heartbeatAnimation.play();
             }
@@ -1194,6 +1201,7 @@ public class EscapeRoomController {
                 () -> {
                   addLabel(apology, messagesVertBox);
                   if (!GameState.phoneIsOpen) {
+                    playSound("incomingText.mp3");
                     notifCircle.setVisible(true);
                     heartbeatAnimation.play();
                   }
@@ -1268,4 +1276,25 @@ public class EscapeRoomController {
       }
     }
   }
+
+  private void playSound(String fileName) {
+    try {
+      // Build the resource path to the sound file
+      String resourcePath = "/sounds/" + fileName;
+
+      // Create a Media object with the resource path
+      Media sound = new Media(getClass().getResource(resourcePath).toString());
+
+      // Create a MediaPlayer with the Media object
+      MediaPlayer mediaPlayer = new MediaPlayer(sound);
+      mediaPlayer.setVolume(0.1);
+
+      // Play the sound effect
+      mediaPlayer.play();
+    } catch (Exception e) {
+      // Handle any exceptions that may occur (e.g., file not found)
+      e.printStackTrace();
+    }
+  }
+
 }
