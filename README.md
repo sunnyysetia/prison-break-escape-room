@@ -32,6 +32,5 @@ accessToken: “YOUR_KEY”`
 
 ## Attributions
 
-Room Image: https://www.deviantart.com/k9x-toons/art/The-Griffin-Family-Living-Room-840338859
-Emojis: Courtesey of Apple Inc.
-Text Bubble Image: Adobe Stock
+Stencil font: https://fonts.adobe.com/fonts/stencil#about-section
+Metropolis font: https://www.1001fonts.com/metropolis-font.html#license
