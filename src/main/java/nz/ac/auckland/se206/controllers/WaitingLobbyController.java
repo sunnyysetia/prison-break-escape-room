@@ -137,6 +137,7 @@ public class WaitingLobbyController {
     GameState.uvPassword = 00000000;
     GameState.computerLoggedIn = false;
     GameState.torchFound = false;
+    GameState.continueEnabled = false;
 
     // Get the selected radio buttons (difficulty and time).
     RadioButton selectedDifficultyButton = (RadioButton) tgDifficulty.getSelectedToggle();

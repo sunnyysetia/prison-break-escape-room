@@ -1,0 +1,8 @@
+.root {
+    -fx-background-color: #767676;
+
+}
+
+.text-area, .text-area .viewport, .text-area .content {
+    -fx-background-color: #767676 ;
+}
