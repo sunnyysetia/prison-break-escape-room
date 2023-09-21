@@ -92,12 +92,6 @@ public class EscapeRoomController {
 
   // Cell FXML
   @FXML private Text uvLightText;
-  @FXML private Rectangle sink;
-  @FXML private Rectangle toilet;
-  @FXML private Rectangle shelf;
-  @FXML private Rectangle pillow;
-  @FXML private Rectangle newspaper;
-  @FXML private Rectangle table;
 
   // Guard's Room FXML
   @FXML private Rectangle circuit;
