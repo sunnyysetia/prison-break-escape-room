@@ -30,6 +30,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -110,6 +111,8 @@ public class EscapeRoomController {
   @FXML private AnchorPane endingControlAnchorPane;
   @FXML private AnchorPane computerConsoleAnchorPane;
 
+  @FXML private ImageView endGameImage;
+  @FXML private AnchorPane gameEndPane;
   @FXML private ImageView guardRoomDarkness;
   @FXML private Group circuitGroup;
   @FXML private Label memoryCountdownLabel;
@@ -269,30 +272,24 @@ public class EscapeRoomController {
                 }
               } else {
                 // Runs after the user logins correctly
-                switch (userInput.trim()) {
-                  case "1":
-                    break;
-                  case "2":
-                    break;
-                  case "3":
-                    break;
-                  default:
-                    Thread writerThread =
-                        new Thread(
-                            () -> {
-                              typeWrite(
-                                  computerConsoleTextArea,
-                                  "\n" + "System:>Invalid Option!\n" + "System:>Choose an Option:",
-                                  15);
-                            });
-                    writerThread.setDaemon(true);
-                    writerThread.start();
-                    break;
+                if (userInput.trim().equals("1")
+                    || userInput.trim().equals("2")
+                    || userInput.trim().equals("3")) {
+                  // call the end game method
+                  System.out.println("User chose option: " + userInput.trim());
+                  endGame(userInput.trim());
+                } else {
+                  Thread writerThread =
+                      new Thread(
+                          () -> {
+                            typeWrite(
+                                computerConsoleTextArea,
+                                "\n" + "System:>Invalid Option!\n" + "System:>Choose an Option:",
+                                15);
+                          });
+                  writerThread.setDaemon(true);
+                  writerThread.start();
                 }
-                // computerConsoleAnchorPane.setVisible(false);
-                // computerConsoleAnchorPane.setDisable(true);
-                // endingControlAnchorPane.setVisible(true);
-                // endingControlAnchorPane.setDisable(false);
               }
               // Use to auto scroll the pane to the bottom
               Thread scrollThread =
@@ -393,6 +390,16 @@ public class EscapeRoomController {
 
     // Run a GPT-based instruction for the introduction.
     runGpt(new ChatMessage("user", GptPromptEngineering.getIntroInstruction()));
+  }
+
+  private void endGame(String ending) {
+    // endGameImage
+    // endGameImage.setImage("ending" + ending + ".png");
+    // App.class.getResourceAsStream("/fonts/Metropolis.ttf")
+    // Image image = new Image(inputstream)
+    endGameImage
+        .imageProperty()
+        .set(new Image(App.class.getResourceAsStream("/images/ending" + ending + ".png")));
   }
 
   private void typeWrite(TextArea sceneTextArea, String message, int interval) {
