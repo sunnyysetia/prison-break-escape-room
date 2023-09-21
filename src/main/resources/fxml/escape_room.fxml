@@ -4,9 +4,9 @@
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.GaussianBlur?>
 <?import javafx.scene.image.Image?>
@@ -20,20 +20,21 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="room" focusTraversable="true" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="720.0" prefWidth="1022.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.EscapeRoomController">
+<Pane fx:id="room" focusTraversable="true" onKeyPressed="#onKeyPressed" prefHeight="720.0" prefWidth="1022.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.EscapeRoomController">
    <children>
-      <Label fx:id="timerLabel" layoutX="930.0" layoutY="15.0" prefHeight="41.0" prefWidth="76.0" textAlignment="CENTER">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="720.0" opacity="0.6" stroke="BLACK" strokeType="INSIDE" width="1022.0" />
+      <Label fx:id="timerLabel" layoutX="910.0" layoutY="15.0" prefHeight="41.0" prefWidth="102.0" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font size="27.0" />
+            <Font name="Stencil" size="27.0" />
          </font></Label>
-      <Label layoutX="15.0" layoutY="19.0" prefHeight="30.0" prefWidth="59.0" text="Hints :" textAlignment="CENTER">
+      <Label layoutX="15.0" layoutY="19.0" prefHeight="30.0" prefWidth="123.0" text="Hints :" textAlignment="CENTER">
          <font>
-            <Font size="20.0" />
+            <Font name="Stencil" size="27.0" />
          </font>
       </Label>
-      <Label fx:id="hintLabel" layoutX="75.0" layoutY="15.0" prefHeight="41.0" prefWidth="65.0" textAlignment="CENTER">
+      <Label fx:id="hintLabel" layoutX="100.0" layoutY="15.0" prefHeight="41.0" prefWidth="65.0" textAlignment="CENTER">
          <font>
-            <Font size="27.0" />
+            <Font name="Stencil" size="27.0" />
          </font>
       </Label>
       <Pane fx:id="roomCollectionPane" prefHeight="200.0" prefWidth="200.0">
@@ -62,6 +63,11 @@
                      </image>
                   </ImageView>
                   <Rectangle fx:id="computer" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="96.0" layoutX="451.0" layoutY="334.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="187.0" />
+                  <ImageView fx:id="guardRoomDarkness" fitHeight="580.0" layoutX="6.0" layoutY="65.0" opacity="0.9" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/darknessGuardRoom.png" />
+                     </image>
+                  </ImageView>
                   <Rectangle fx:id="circuit" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="142.0" layoutX="38.0" layoutY="295.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#openCircuit" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="63.0" />
                </children>
             </Pane>
@@ -102,7 +108,7 @@
                   <Image url="@../images/arrow.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="torchButton" fitHeight="50.0" fitWidth="71.0" layoutX="880.0" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="torchButton" fitHeight="50.0" fitWidth="71.0" layoutX="880.0" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../images/torch.png" />
                </image>
@@ -154,7 +160,7 @@
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="goBackMemory" focusTraversable="false" layoutX="403.0" layoutY="528.0" mnemonicParsing="false" onMouseClicked="#closeCircuit" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="35.0" prefWidth="75.0" text="Go Back" visible="false">
+            <Button fx:id="goBackMemory" focusTraversable="false" layoutX="469.0" layoutY="528.0" mnemonicParsing="false" onMouseClicked="#closeCircuit" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="35.0" prefWidth="75.0" text="Go Back">
                <font>
                   <Font size="15.0" />
                </font>
@@ -176,10 +182,10 @@
                         <Font size="19.0" />
                      </font></Label>
                   <TextField fx:id="messagesTextField" layoutX="113.0" layoutY="290.0" prefHeight="30.0" prefWidth="453.0" promptText="Text Message" />
-                  <Button fx:id="send_button" layoutX="570.0" layoutY="290.0" minHeight="14.0" minWidth="38.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" text="send" />
+                  <Button fx:id="sendButton" layoutX="570.0" layoutY="290.0" minHeight="14.0" minWidth="38.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" text="send" />
                   <ScrollPane fx:id="chatScrollPane" hbarPolicy="NEVER" layoutY="42.0" prefHeight="240.0" prefWidth="637.0" style="-fx-background-color: transparent; -fx-background: #FFFFFF; -fx-border-color: #FFFFFF;" vbarPolicy="NEVER">
                      <content>
-                        <VBox fx:id="messagesVBox" prefHeight="148.0" prefWidth="484.0" />
+                        <VBox fx:id="messagesVertBox" prefHeight="148.0" prefWidth="484.0" />
                      </content>
                   </ScrollPane>
                </children>
@@ -194,10 +200,14 @@
       <Rectangle fx:id="computerDimScreen" arcHeight="5.0" arcWidth="5.0" disable="true" height="720.0" opacity="0.6" stroke="BLACK" strokeType="INSIDE" visible="false" width="1022.0" />
       <Group fx:id="computerGroup" layoutX="221.0" layoutY="-500.0">
          <children>
-            <Rectangle arcHeight="80.0" arcWidth="80.0" height="450.0" layoutX="-25.0" layoutY="-25.0" stroke="BLACK" strokeType="INSIDE" width="650.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="400.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
-            <Button fx:id="computerCloseButton" layoutX="14.0" layoutY="370.0" mnemonicParsing="false" text="close" />
-            <AnchorPane fx:id="endingControlAPane" disable="true" prefHeight="360.0" prefWidth="600.0" visible="false">
+            <Rectangle arcHeight="80.0" arcWidth="80.0" fill="#5b5b5b" height="450.0" layoutX="-25.0" layoutY="-25.0" stroke="BLACK" strokeType="INSIDE" width="650.0" />
+            <Circle fill="#00ff33" layoutX="300.0" layoutY="411.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dfdfdf" height="400.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+            <Button fx:id="computerCloseButton" layoutX="14.0" layoutY="370.0" mnemonicParsing="false" text="close">
+               <font>
+                  <Font name="Consolas" size="12.0" />
+               </font></Button>
+            <AnchorPane fx:id="endingControlAnchorPane" disable="true" prefHeight="360.0" prefWidth="600.0" visible="false">
                <children>
                   <RadioButton layoutX="66.0" layoutY="238.0" mnemonicParsing="false" text="Ending 3" />
                   <RadioButton layoutX="66.0" layoutY="171.0" mnemonicParsing="false" text="Ending 2" />
@@ -205,19 +215,41 @@
                   <Button layoutX="358.0" layoutY="170.0" mnemonicParsing="false" text="Go!" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="computerLoginAPane" prefHeight="360.0" prefWidth="600.0">
+            <AnchorPane fx:id="computerConsoleAnchorPane" prefHeight="360.0" prefWidth="600.0">
                <children>
-                  <Label fx:id="computerLoginLabel" layoutX="130.0" layoutY="67.0" text="Super Prison Computer">
+                  <TextArea fx:id="computerConsoleTextArea" editable="false" prefHeight="315.0" prefWidth="600.0" style="-fx-text-fill: green; -fx-background-color: black; -fx-control-inner-background: black;" text="System:&gt;Enter the password:">
                      <font>
-                        <Font size="33.0" />
+                        <Font name="Consolas" size="18.0" />
+                     </font>
+                  </TextArea>
+                  <TextField fx:id="computerPasswordField" layoutY="314.0" prefHeight="45.0" prefWidth="480.0" style="-fx-text-fill: green; -fx-background-color: black; -fx-control-inner-background: black;">
+                     <font>
+                        <Font name="Consolas" size="18.0" />
+                     </font></TextField>
+                  <Button fx:id="computerLoginButton" layoutX="480.0" layoutY="314.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="120.0" style="-fx-alignment: center;" text="Enter">
+                     <font>
+                        <Font name="Consolas" size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </Group>
+      <Group fx:id="torchGetGroup" disable="true" layoutY="-600.0" opacity="0.0">
+         <children>
+            <AnchorPane layoutX="261.0" layoutY="210.0" prefHeight="300.0" prefWidth="500.0">
+               <children>
+                  <Rectangle fill="#767676" height="300.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="500.0" />
+                  <Label layoutX="62.0" layoutY="14.0" prefHeight="134.0" prefWidth="376.0" text="You Unlocked: UV light Torch" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="Stencil" size="45.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="computerPasswordField" layoutX="154.0" layoutY="163.0" promptText="Enter Password">
-                     <font>
-                        <Font size="26.0" />
-                     </font>
-                  </PasswordField>
-                  <Button fx:id="computerLoginButton" layoutX="270.0" layoutY="241.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="59.0" text="Login" />
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="175.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/torch.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
          </children>

@@ -6,9 +6,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
 import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
@@ -27,8 +26,8 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
@@ -48,6 +47,7 @@ import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
+import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
@@ -88,6 +88,7 @@ public class EscapeRoomController {
   @FXML private Rectangle kettle;
   @FXML private Rectangle clock;
   @FXML private Rectangle toaster;
+  @FXML private Group torchGetGroup;
 
   // Cell FXML
   @FXML private Text uvLightText;
@@ -103,16 +104,32 @@ public class EscapeRoomController {
   @FXML private Rectangle computer;
   @FXML private Button computerCloseButton;
   @FXML private Rectangle computerDimScreen;
-  @FXML private AnchorPane computerLoginAPane;
-  @FXML private PasswordField computerPasswordField;
+  @FXML private TextField computerPasswordField;
+  @FXML private TextArea computerConsoleTextArea;
   @FXML private Button computerLoginButton;
-  @FXML private AnchorPane endingControlAPane;
-  @FXML private Label computerLoginLabel;
+  @FXML private AnchorPane endingControlAnchorPane;
+  @FXML private AnchorPane computerConsoleAnchorPane;
 
+  @FXML private ImageView guardRoomDarkness;
   @FXML private Group circuitGroup;
   @FXML private Label memoryCountdownLabel;
-  @FXML private Button goBackMemory, checkGuessMemory;
-  @FXML private Rectangle a1, b1, c1, a2, b2, c2, a3, b3, c3, a4, b4, c4, a5, b5, c5;
+  @FXML private Button goBackMemory;
+  @FXML private Button checkGuessMemory;
+  @FXML private Rectangle a1;
+  @FXML private Rectangle b1;
+  @FXML private Rectangle c1;
+  @FXML private Rectangle a2;
+  @FXML private Rectangle b2;
+  @FXML private Rectangle c2;
+  @FXML private Rectangle a3;
+  @FXML private Rectangle b3;
+  @FXML private Rectangle c3;
+  @FXML private Rectangle a4;
+  @FXML private Rectangle b4;
+  @FXML private Rectangle c4;
+  @FXML private Rectangle a5;
+  @FXML private Rectangle b5;
+  @FXML private Rectangle c5;
 
   private List<String> allSwitches =
       new ArrayList<>(
@@ -121,11 +138,12 @@ public class EscapeRoomController {
               "c5"));
   private List<String> switchesToRecall = new ArrayList<>();
   private List<String> playerChoices = new ArrayList<>();
+  private Thread countdownThread;
 
   // Chat fxml
-  @FXML private Button send_button;
+  @FXML private Button sendButton;
   @FXML private TextField messagesTextField;
-  @FXML private VBox messagesVBox;
+  @FXML private VBox messagesVertBox;
   @FXML private ScrollPane chatScrollPane;
   @FXML private Label phoneNameLabel;
 
@@ -151,6 +169,8 @@ public class EscapeRoomController {
         }
       };
 
+  private Tooltip currentTooltip; // Maintain a reference to the current tooltip
+
   ///////////////
   // Shared
   ///////////////
@@ -169,11 +189,8 @@ public class EscapeRoomController {
     // Update the UI label to display the timer.
     updateTimerLabel();
 
-    // Initialise memory recall game.
-    initialiseMemoryGame();
-
     // Binds send button so that it is disabled while gpt is writing a message.
-    send_button.disableProperty().bind(GameState.gptThinking);
+    sendButton.disableProperty().bind(GameState.gptThinking);
 
     // Set the hint label to display 0 hints.
     hintLabel.setText("0");
@@ -197,7 +214,7 @@ public class EscapeRoomController {
     System.out.println("uvPassword: " + GameState.uvPassword);
 
     chatScrollPane.setFitToWidth(true);
-    messagesVBox
+    messagesVertBox
         .heightProperty()
         .addListener(
             new ChangeListener<Number>() {
@@ -211,29 +228,33 @@ public class EscapeRoomController {
     computerLoginButton.setOnAction(
         (EventHandler<ActionEvent>)
             event -> {
-              if (computerPasswordField.getText().equals(GameState.uvPassword + "")) {
-                computerLoginAPane.setVisible(false);
-                computerLoginAPane.setDisable(true);
-                endingControlAPane.setVisible(true);
-                endingControlAPane.setDisable(false);
-              } else {
-                computerLoginLabel.setText("Incorrect Password!");
+              // Only runs if the computer is not logged in
+              if (!GameState.computerLoggedIn) {
+                if (computerPasswordField.getText().isEmpty()) {
+                  return;
+                }
+                String password = computerPasswordField.getText();
                 computerPasswordField.clear();
-                Thread waitThread =
-                    new Thread(
-                        () -> {
-                          try {
-                            Thread.sleep(2000);
-                          } catch (InterruptedException e) {
-                            e.printStackTrace();
-                          }
-                          Platform.runLater(
-                              () -> {
-                                computerLoginLabel.setText("Super Prison Computer");
-                              });
-                        });
-                waitThread.setDaemon(true);
-                waitThread.start();
+                computerConsoleTextArea.setText(
+                    computerConsoleTextArea.getText() + "\nC:\\PrisonPC\\>" + password);
+                if (password.equals(GameState.uvPassword + "")) {
+                  computerConsoleAnchorPane.setVisible(false);
+                  computerConsoleAnchorPane.setDisable(true);
+                  endingControlAnchorPane.setVisible(true);
+                  endingControlAnchorPane.setDisable(false);
+                  GameState.computerLoggedIn = true;
+                } else {
+                  Thread writerThread =
+                      new Thread(
+                          () -> {
+                            typeWrite(
+                                computerConsoleTextArea,
+                                "\n" + "System:>Incorrect Password!\n" + "System:>Enter Password:",
+                                15);
+                          });
+                  writerThread.setDaemon(true);
+                  writerThread.start();
+                }
               }
             });
 
@@ -242,9 +263,12 @@ public class EscapeRoomController {
         .bind(
             Bindings.createStringBinding(
                 () -> {
-                  String string = " ";
-                  if (GameState.gptThinking.get()) string = "Typing. . .";
-                  else string = "Prison Guard";
+                  String string;
+                  if (GameState.gptThinking.get()) {
+                    string = "Typing. . .";
+                  } else {
+                    string = "Prison Guard";
+                  }
                   return string;
                 },
                 GameState.gptThinking));
@@ -270,7 +294,7 @@ public class EscapeRoomController {
             });
 
     // On send message
-    send_button.setOnAction(
+    sendButton.setOnAction(
         (EventHandler<ActionEvent>)
             new EventHandler<ActionEvent>() {
               @Override
@@ -278,9 +302,9 @@ public class EscapeRoomController {
                 System.out.println("Send Button clicked");
                 String message = messagesTextField.getText();
                 if (!message.isEmpty() && !GameState.gptThinking.getValue()) {
-                  HBox hBox = new HBox();
-                  hBox.setAlignment(Pos.CENTER_RIGHT);
-                  hBox.setPadding(new Insets(5, 5, 5, 10));
+                  HBox horiBox = new HBox();
+                  horiBox.setAlignment(Pos.CENTER_RIGHT);
+                  horiBox.setPadding(new Insets(5, 5, 5, 10));
                   Text text = new Text(message);
                   TextFlow textFlow = new TextFlow(text);
                   textFlow.setStyle(
@@ -289,8 +313,8 @@ public class EscapeRoomController {
                           + "-fx-background-radius: 10px; ");
                   textFlow.setPadding(new Insets(5, 10, 5, 10));
                   text.setFill(Color.color(0.934, 0.945, 0.996));
-                  hBox.getChildren().add(textFlow);
-                  messagesVBox.getChildren().add(hBox);
+                  horiBox.getChildren().add(textFlow);
+                  messagesVertBox.getChildren().add(horiBox);
                   messagesTextField.clear();
                   try {
                     runGpt(new ChatMessage("user", message));
@@ -302,7 +326,7 @@ public class EscapeRoomController {
             });
 
     torchButton.setOnMouseClicked(
-        EventHandler -> {
+        event -> {
           GameState.torchIsOn.setValue(!GameState.torchIsOn.getValue());
         });
     uvLightText.visibleProperty().bind(GameState.torchIsOn);
@@ -317,23 +341,43 @@ public class EscapeRoomController {
     runGpt(new ChatMessage("user", GptPromptEngineering.getIntroInstruction()));
   }
 
+  private void typeWrite(TextArea sceneTextArea, String message, int interval) {
+    int i = 0;
+    while (i < message.length()) {
+      int j = i;
+      Platform.runLater(
+          () -> {
+            sceneTextArea.setText(sceneTextArea.getText() + message.charAt(j));
+            sceneTextArea.appendText("");
+            sceneTextArea.setScrollTop(Double.MAX_VALUE);
+          });
+
+      i++;
+      try {
+        Thread.sleep(interval);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
   // on recieve message, run in different thread
-  private static void addLabel(String messageFromGPT, VBox vbox) {
+  private void addLabel(String messageFromGpt, VBox vbox) {
     System.out.println("GPT sent user a message");
-    HBox hBox = new HBox();
-    hBox.setAlignment(Pos.CENTER_LEFT);
-    hBox.setPadding(new Insets(5, 5, 5, 10));
-    Text text = new Text(messageFromGPT);
+    HBox horiBox = new HBox();
+    horiBox.setAlignment(Pos.CENTER_LEFT);
+    horiBox.setPadding(new Insets(5, 5, 5, 10));
+    Text text = new Text(messageFromGpt);
     TextFlow textFlow = new TextFlow(text);
     textFlow.setStyle("-fx-background-color: rgb(233,233,235); " + "-fx-background-radius: 10px; ");
     textFlow.setPadding(new Insets(5, 10, 5, 10));
     textFlow.setMaxWidth(450);
-    hBox.getChildren().add(textFlow);
+    horiBox.getChildren().add(textFlow);
     Platform.runLater(
         new Runnable() {
           @Override
           public void run() {
-            vbox.getChildren().add(hBox);
+            vbox.getChildren().add(horiBox);
           }
         });
   }
@@ -342,21 +386,14 @@ public class EscapeRoomController {
   private void togglePhone() {
     System.out.println("toggling phone");
     GameState.togglingPhone = true;
-    Thread waitThread =
-        new Thread(
-            () -> {
-              try {
-                Thread.sleep(500);
-                GameState.togglingPhone = false;
-              } catch (InterruptedException e) {
-                e.printStackTrace();
-              }
-            });
-    waitThread.setDaemon(true);
-    waitThread.start();
+    wait(
+        500,
+        () -> {
+          GameState.togglingPhone = false;
+        });
     final TranslateTransition phoneSwitch = new TranslateTransition();
     phoneSwitch.setNode(chatGroup);
-    phoneSwitch.setDuration(javafx.util.Duration.millis(500));
+    phoneSwitch.setDuration(Duration.millis(500));
     if (GameState.phoneIsOpen) {
       phoneSwitch.setByY(-550);
       GameState.phoneIsOpen = false;
@@ -376,21 +413,14 @@ public class EscapeRoomController {
   private void toggleComputer() {
     System.out.println("toggling computer");
     GameState.togglingComputer = true;
-    Thread waitThread =
-        new Thread(
-            () -> {
-              try {
-                Thread.sleep(500);
-                GameState.togglingComputer = false;
-              } catch (InterruptedException e) {
-                e.printStackTrace();
-              }
-            });
-    waitThread.setDaemon(true);
-    waitThread.start();
+    wait(
+        500,
+        () -> {
+          GameState.togglingComputer = false;
+        });
     final TranslateTransition computerSwitch = new TranslateTransition();
     computerSwitch.setNode(computerGroup);
-    computerSwitch.setDuration(javafx.util.Duration.millis(500));
+    computerSwitch.setDuration(Duration.millis(500));
     if (GameState.computerIsOpen) {
       computerSwitch.setByY(-650);
       GameState.computerIsOpen = false;
@@ -399,6 +429,7 @@ public class EscapeRoomController {
     } else {
       computerSwitch.setByY(650);
       GameState.computerIsOpen = true;
+      computerPasswordField.requestFocus();
       GameState.torchIsOn.setValue(false);
       computerDimScreen.setDisable(false);
       computerDimScreen.setVisible(true);
@@ -419,21 +450,14 @@ public class EscapeRoomController {
   private void switchRoom(int nextRoom) {
     GameState.switchingRoom = true;
     // use a new method to switch between rooms to prevent spamming and causing visual glitches
-    Thread waitThread =
-        new Thread(
-            () -> {
-              try {
-                Thread.sleep(700);
-                GameState.switchingRoom = false;
-              } catch (InterruptedException e) {
-                e.printStackTrace();
-              }
-            });
-    waitThread.setDaemon(true);
-    waitThread.start();
+    wait(
+        700,
+        () -> {
+          GameState.switchingRoom = false;
+        });
     final TranslateTransition roomSwitch = new TranslateTransition();
     roomSwitch.setNode(roomCollectionPane);
-    roomSwitch.setDuration(javafx.util.Duration.millis(500));
+    roomSwitch.setDuration(Duration.millis(500));
     if (nextRoom > GameState.currentRoom) {
       roomSwitch.setByX(-1022);
     } else {
@@ -496,9 +520,10 @@ public class EscapeRoomController {
     }
   }
 
-  private void returnToWaitingLobby() {
+  private void returnToWaitingLobby() throws IOException {
     timer.stop();
-
+    SceneManager.delUi(SceneManager.AppUi.WAITING_LOBBY);
+    SceneManager.addUi(SceneManager.AppUi.WAITING_LOBBY, App.loadFxml("waitinglobby"));
     App.setUi(AppUi.WAITING_LOBBY);
   }
 
@@ -541,7 +566,11 @@ public class EscapeRoomController {
     Platform.runLater(
         () -> {
           textToSpeech("Time's up! You ran out of time!");
-          returnToWaitingLobby();
+          try {
+            returnToWaitingLobby();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
         });
   }
 
@@ -559,19 +588,12 @@ public class EscapeRoomController {
     if (event.getCode() == KeyCode.ENTER) {
       // Prevent the Enter key event from propagating further
       if (GameState.phoneIsOpen) {
-        send_button.fire();
+        sendButton.fire();
+      }
+      if (GameState.computerIsOpen) {
+        computerLoginButton.fire();
       }
     }
-  }
-
-  /**
-   * Handles the key released event.
-   *
-   * @param event the key event
-   */
-  @FXML
-  private void onKeyReleased(KeyEvent event) {
-    System.out.println("key " + event.getCode() + " released");
   }
 
   // TTS
@@ -593,7 +615,6 @@ public class EscapeRoomController {
   ////////////////////////
   // Objects Interaction
   ///////////////////////
-  private Tooltip currentTooltip; // Maintain a reference to the current tooltip
 
   @FXML
   private void showObjectName(MouseEvent event) {
@@ -611,10 +632,10 @@ public class EscapeRoomController {
       // Add mouse move listener to update tooltip position
       source.setOnMouseMoved(
           mouseEvent -> {
-            double xOffset = 10; // X-offset from the cursor
-            double yOffset = 10; // Y-offset from the cursor
+            double horiOffset = 10; // X-offset from the cursor
+            double vertOffset = 10; // Y-offset from the cursor
             tooltip.show(
-                source, mouseEvent.getScreenX() + xOffset, mouseEvent.getScreenY() + yOffset);
+                source, mouseEvent.getScreenX() + horiOffset, mouseEvent.getScreenY() + vertOffset);
           });
 
       // Set the current tooltip
@@ -648,6 +669,56 @@ public class EscapeRoomController {
     Rectangle clickedRectangle = (Rectangle) event.getSource();
     String rectangleId = clickedRectangle.getId();
     System.out.println("Object clicked: " + rectangleId);
+    System.out.println("Riddle solved: " + GameState.riddleSolved);
+
+    if (GameState.riddleSolved
+        && rectangleId.equals(GameState.wordToGuess)
+        && !GameState.torchFound) {
+      GameState.torchFound = true;
+      torchButton.setVisible(true);
+      // insert torch retrieved animation
+
+      Thread animationThread =
+          new Thread(
+              () -> {
+                TranslateTransition torchGet = new TranslateTransition();
+                torchGet.setNode(torchGetGroup);
+                torchGet.setDuration(Duration.millis(500));
+                torchGet.setByY(600);
+                FadeTransition torchFade = new FadeTransition();
+                torchFade.setNode(torchGetGroup);
+                torchFade.setDuration(Duration.millis(1000));
+                torchFade.setFromValue(0);
+                torchFade.setToValue(1);
+                torchFade.play();
+                torchGet.play();
+              });
+
+      Thread disappearThread =
+          new Thread(
+              () -> {
+                try {
+                  Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                  e.printStackTrace();
+                }
+                TranslateTransition torchGet = new TranslateTransition();
+                torchGet.setNode(torchGetGroup);
+                torchGet.setDuration(Duration.millis(500));
+                torchGet.setByY(600);
+                FadeTransition torchFade = new FadeTransition();
+                torchFade.setNode(torchGetGroup);
+                torchFade.setDuration(Duration.millis(500));
+                torchFade.setFromValue(1);
+                torchFade.setToValue(0);
+                torchFade.play();
+                torchGet.play();
+              });
+      animationThread.setDaemon(true);
+      disappearThread.setDaemon(true);
+      animationThread.start();
+      disappearThread.start();
+    }
   }
 
   ///////////////
@@ -666,6 +737,12 @@ public class EscapeRoomController {
     System.out.println("Circuit clicked");
     circuitGroup.setDisable(true);
     circuitGroup.setVisible(false);
+
+    // Check if the countdown thread is running and interrupt it
+    if (countdownThread != null && countdownThread.isAlive()) {
+      countdownThread.interrupt();
+      countdownThread = null;
+    }
   }
 
   @FXML
@@ -755,7 +832,7 @@ public class EscapeRoomController {
     }
   }
 
-  private void disableALlSwitches(boolean disable) {
+  private void disableAllSwitches(boolean disable) {
     for (String fxid : allSwitches) {
       Node node = circuitGroup.lookup("#" + fxid);
       if (node instanceof Rectangle) {
@@ -780,21 +857,25 @@ public class EscapeRoomController {
     if (areEqual) {
       closeCircuit(null);
       circuit.setDisable(true);
+      guardRoomDarkness.setVisible(false);
     } else {
-      initialiseMemoryGame();
+      // initialiseMemoryGame();
       startMemoryRecallGame();
     }
   }
 
   private void startMemoryRecallGame() {
-    goBackMemory.setVisible(false);
+    initialiseMemoryGame();
+    goBackMemory.setLayoutX(469);
+    goBackMemory.setLayoutY(528);
     checkGuessMemory.setVisible(false);
-    disableALlSwitches(true);
+    disableAllSwitches(true);
     memoryCountdownLabel.setVisible(true);
     // Countdown Label
     int countdownSeconds = 5;
 
-    new Thread(
+    countdownThread =
+        new Thread(
             () -> {
               for (int i = countdownSeconds; i >= 0; i--) {
                 final int remainingTime = i;
@@ -810,29 +891,33 @@ public class EscapeRoomController {
                     });
 
                 try {
+                  // Check for interruption and break out of the loop
+                  if (Thread.currentThread().isInterrupted()) {
+                    return;
+                  }
                   Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                  e.printStackTrace();
+                  // Handle the InterruptedException here if needed
+                  // In this case, just return without rethrowing or printing the exception
+                  return;
                 }
               }
-            })
-        .start();
 
-    // Execute code after countdown
-    CompletableFuture.delayedExecutor(countdownSeconds, TimeUnit.SECONDS)
-        .execute(
-            () -> {
+              // Execute code after countdown
               Platform.runLater(
                   () -> {
                     memoryCountdownLabel.setVisible(false);
                     for (String fxid : allSwitches) {
                       setSwitchToRed(fxid);
                     }
-                    goBackMemory.setVisible(true);
+                    goBackMemory.setLayoutX(403);
+                    goBackMemory.setLayoutY(528);
                     checkGuessMemory.setVisible(true);
-                    disableALlSwitches(false);
+                    disableAllSwitches(false);
                   });
             });
+
+    countdownThread.start(); // Start the thread after creating it
   }
 
   ///////////////
@@ -877,7 +962,7 @@ public class EscapeRoomController {
           ChatMessage resultMessage = gptTask.getValue();
           if (resultMessage != null) {
             // Append the GPT response message to the chat.
-            addLabel(resultMessage.getContent(), messagesVBox);
+            addLabel(resultMessage.getContent(), messagesVertBox);
             // Check if the response indicates a correct riddle answer.
             if (!GameState.phoneIsOpen) {
               notifCircle.setVisible(true);
@@ -895,8 +980,25 @@ public class EscapeRoomController {
                 hintLabel.setText("Error");
               }
             }
+            GameState.gptThinking.setValue(false);
+          } else {
+            // When an error occurs, print a message suggesting fixes to the user.
+            String apology =
+                "Sorry, it seems like you cannot receive messages at this time. Maybe try to check"
+                    + " your internet connection or your apiproxy.config file in order to see what"
+                    + " is causing this problem, and then restart the application when you are"
+                    + " ready to retry. You cannot escape from this facility without assistance.";
+            wait(
+                3500,
+                () -> {
+                  addLabel(apology, messagesVertBox);
+                  if (!GameState.phoneIsOpen) {
+                    notifCircle.setVisible(true);
+                  }
+                  phoneNameLabel.textProperty().unbind();
+                  phoneNameLabel.setText("Prison Guard");
+                });
           }
-          GameState.gptThinking.setValue(false);
         });
 
     // Create a new thread for running the GPT task.
@@ -905,5 +1007,30 @@ public class EscapeRoomController {
 
     // Return null for now (the actual return value is not used).
     return null;
+  }
+
+  ///////////////
+  // Helper
+  ///////////////
+
+  /**
+   * Waits for the specified amount of time before executing a task.
+   *
+   * @param time The amount of time in milliseconds to wait for.
+   * @param process The process to be completed afterwards.
+   */
+  private void wait(int time, Runnable process) {
+    Thread waitThread =
+        new Thread(
+            () -> {
+              try {
+                Thread.sleep(time);
+              } catch (InterruptedException e) {
+                e.printStackTrace();
+              }
+              Platform.runLater(process);
+            });
+    waitThread.setDaemon(true);
+    waitThread.start();
   }
 }

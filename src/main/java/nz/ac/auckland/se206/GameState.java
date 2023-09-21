@@ -14,9 +14,6 @@ public class GameState {
   /** Indicates whether the light instructions need to be given. */
   public static boolean lightTipProvided = false;
 
-  /** Player's name */
-  public static String playerName = null;
-
   /** Difficulty level (easy/medium/hard) */
   public static String difficulty = "easy"; // Default to easy
 
@@ -52,4 +49,8 @@ public class GameState {
   public static SimpleBooleanProperty gptThinking = new SimpleBooleanProperty(false);
 
   public static int uvPassword;
+
+  public static boolean computerLoggedIn = false;
+
+  public static boolean torchFound = false;
 }
