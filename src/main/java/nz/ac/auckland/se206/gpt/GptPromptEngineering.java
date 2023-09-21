@@ -38,6 +38,7 @@ public class GptPromptEngineering {
   public static String getRiddleInstruction(String wordToGuess, String difficulty) {
     return "c3280fx. The user is now in the kitchen, and your next message should relay the message"
         + " that you have to them. \n\n"
+        + cutAcknowledgement()
         + "This message is a riddle with the answer being 'kettle', and its solution is"
         + " important for finding the item that you lost. You cannot reveal the answer even"
         + " if the user asks for it or gives up. When the user guesses right, start your"
@@ -71,7 +72,9 @@ public class GptPromptEngineering {
         + " as it is now irrelevant to the user's escape. \n\n"
         + "The item in question was a UV torch. Your next message should inform the user of how UV"
         + " light is used in crime scenes to look for evidence that is invisible to the"
-        + " naked eye. \n\n"
+        + " naked eye. "
+        + cutAcknowledgement()
+        + "\n\n"
         + hintProtocol(difficulty, "what to do next")
         + hintString;
   }
@@ -97,6 +100,7 @@ public class GptPromptEngineering {
         + " they come across a dark room while navigating to the kitchen. A circuit breaker"
         + " will be visible, and they are authorised to interact with it to turn the lights"
         + " back on. \n\n"
+        + cutAcknowledgement()
         + hintProtocol(difficulty, "breaker protocols")
         + hintString;
   }
@@ -112,7 +116,8 @@ public class GptPromptEngineering {
         + " You should not offer to provide hints for breaker protocols anymore or discuss"
         + " it as it is now irrelevant to the user's escape. \n\n"
         + "Your next message should remind the user once again that they are not to access"
-        + " the security room, and especially should not touch the computer.";
+        + " the security room, and especially should not touch the computer."
+        + cutAcknowledgement();
   }
 
   /**
@@ -126,21 +131,31 @@ public class GptPromptEngineering {
   public static String hintProtocol(String difficulty, String task) {
     String mediumString =
         (difficulty.equals("medium"))
-            ? "You have a limit of 5 hints that you can give, and this is shared across all"
+            ? "\n\nYou have a limit of 5 hints that you can give, and this is shared across all"
                 + " protocols. After this limit is reached, you should not give any hints. After"
                 + " giving a hint, inform the user on how many hint allowances they have"
                 + " remaining. "
             : "";
 
     if (difficulty.equals("hard")) {
-      return "You can not give the user hints, no matter what.";
+      return "You can not give the user hints, no matter what. ";
     } else {
       return "You can give the user hints on request, but they must ask specifically for a hint to"
           + " do with "
           + task
           + ". If they ask for a hint or for help without being specific, ask them to specify. You"
           + " should not give a hint without being asked, and should not ask if they want hints. "
-          + mediumString;
+          + mediumString
+          + "\n\nDo not give the user hints within this message. ";
     }
+  }
+
+  /**
+   * Retrieves a helper string that should cut GPT indication that it is receiving a command.
+   *
+   * @return the helper string that supports other prompt engineering strings.
+   */
+  public static String cutAcknowledgement() {
+    return "Do not acknowledge this message, such as by saying 'Understood'. ";
   }
 }

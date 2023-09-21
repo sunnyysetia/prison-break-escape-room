@@ -676,8 +676,15 @@ public class EscapeRoomController {
         && !GameState.torchFound) {
       GameState.torchFound = true;
       torchButton.setVisible(true);
-      // insert torch retrieved animation
+      try {
+        runGpt(
+            new ChatMessage(
+                "user", GptPromptEngineering.getRiddleSolvedInstruction(GameState.difficulty)));
+      } catch (ApiProxyException exception) {
+        exception.printStackTrace();
+      }
 
+      // insert torch retrieved animation
       Thread animationThread =
           new Thread(
               () -> {
@@ -858,6 +865,11 @@ public class EscapeRoomController {
       closeCircuit(null);
       circuit.setDisable(true);
       guardRoomDarkness.setVisible(false);
+      try {
+        runGpt(new ChatMessage("user", GptPromptEngineering.getLightsOnInstruction()));
+      } catch (ApiProxyException e) {
+        e.printStackTrace();
+      }
     } else {
       // initialiseMemoryGame();
       startMemoryRecallGame();
@@ -934,6 +946,7 @@ public class EscapeRoomController {
   private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
     // Add the input message to the chat completion request.
     GameState.gptThinking.setValue(true);
+    chatCompletionRequest.addMessage(msg);
 
     // Create a task for GPT processing.
     Task<ChatMessage> gptTask =
@@ -963,12 +976,15 @@ public class EscapeRoomController {
           if (resultMessage != null) {
             // Append the GPT response message to the chat.
             addLabel(resultMessage.getContent(), messagesVertBox);
-            // Check if the response indicates a correct riddle answer.
             if (!GameState.phoneIsOpen) {
               notifCircle.setVisible(true);
             }
+            GameState.gptThinking.setValue(false);
+
+            // Check if the response indicates a correct riddle answer.
             if (resultMessage.getRole().equals("assistant")
-                && resultMessage.getContent().startsWith("Correct")) {
+                && resultMessage.getContent().startsWith("Correct")
+                && !GameState.riddleSolved) {
               GameState.riddleSolved = true;
             }
             if (resultMessage.getContent().contains("hint")) {
@@ -980,7 +996,6 @@ public class EscapeRoomController {
                 hintLabel.setText("Error");
               }
             }
-            GameState.gptThinking.setValue(false);
           } else {
             // When an error occurs, print a message suggesting fixes to the user.
             String apology =
