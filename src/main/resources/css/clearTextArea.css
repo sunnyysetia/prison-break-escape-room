@@ -1,0 +1,8 @@
+.root {
+    -fx-background-color: transparent;
+
+}
+
+.text-area, .text-area .viewport, .text-area .content {
+    -fx-background-color: transparent;
+}

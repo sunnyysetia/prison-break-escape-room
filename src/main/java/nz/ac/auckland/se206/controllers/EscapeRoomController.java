@@ -110,6 +110,10 @@ public class EscapeRoomController {
   @FXML private AnchorPane endingControlAnchorPane;
   @FXML private AnchorPane computerConsoleAnchorPane;
 
+  @FXML private Label endPhoneMessage;
+  @FXML private Label endPhoneTitle;
+  @FXML private Group endPhoneGroup;
+  @FXML private TextArea clickContinueTA;
   @FXML private AnchorPane finsihedGamePane;
   @FXML private TextArea endGameTA;
   @FXML private ImageView endGameImage;
@@ -445,12 +449,62 @@ public class EscapeRoomController {
     runGpt(new ChatMessage("user", GptPromptEngineering.getIntroInstruction()));
   }
 
+  @FXML
+  public void exitGame(MouseEvent event) throws IOException {
+    System.exit(0);
+  }
+
+  @FXML
+  public void restartGame(MouseEvent event) throws IOException {
+    returnToWaitingLobby();
+  }
+
+  @FXML
+  public void endContinue(MouseEvent event) {
+    // goes to the final final screen to show time used and buttons to restart game or exit game
+    if (!GameState.continueEnabled) {
+      return;
+    }
+    GameState.continueEnabled = false; // prevent spam
+    TranslateTransition backgroundTransition = new TranslateTransition();
+    backgroundTransition.setNode(finsihedGamePane);
+    backgroundTransition.setByY(720);
+    backgroundTransition.setDuration(Duration.millis(500));
+    TranslateTransition phoneTransition = new TranslateTransition();
+    phoneTransition.setNode(endPhoneGroup);
+    phoneTransition.setByY(550);
+    phoneTransition.setDuration(Duration.millis(500));
+    Thread backgroundAnimThread =
+        new Thread(
+            () -> {
+              backgroundTransition.play();
+            });
+    Thread phoneAnimThread =
+        new Thread(
+            () -> {
+              try {
+                Thread.sleep(750);
+              } catch (InterruptedException e) {
+                e.printStackTrace();
+              }
+              phoneTransition.play();
+            });
+    phoneAnimThread.setDaemon(true);
+    backgroundAnimThread.setDaemon(true);
+    phoneAnimThread.start();
+    backgroundAnimThread.start();
+  }
+
   private void endGame(String ending) {
     timer.stop();
     Date date = new Date();
     LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     int month = localDate.getMonthValue();
     int day = localDate.getDayOfMonth();
+    endGameTA.setMouseTransparent(true);
+    clickContinueTA.setMouseTransparent(true);
+    endPhoneTitle.setText("Good Luck Next Time");
+    endPhoneMessage.setText("Unfortunately you failed to escape the prison within the time limit");
     String endMessage =
         "As the tension in the air thickens and your heart races, you push your luck to the limit"
             + " in a daring attempt to break free from your prison confines. But alas, as the"
@@ -463,13 +517,19 @@ public class EscapeRoomController {
     if (!ending.equals("0")) {
       endMessage =
           String.format(endingMap.get(ending), new DateFormatSymbols().getMonths()[month - 1], day);
+      endPhoneTitle.setText("Congratulations!");
+      endPhoneMessage.setText(
+          "You escaped the prison within "
+              + Math.round(
+                  GameState.time - remainingSeconds - Math.floor(GameState.time - remainingSeconds))
+              + " minutes and "
+              + Math.round(Math.floor(GameState.time - remainingSeconds))
+              + " seconds!");
     }
     String finalEndMessage = endMessage;
-
     endGameImage
         .imageProperty()
         .set(new Image(App.class.getResourceAsStream("/images/ending" + ending + ".png")));
-
     Thread animationThread =
         new Thread(
             () -> {
@@ -490,8 +550,6 @@ public class EscapeRoomController {
     Thread textThread =
         new Thread(
             () -> {
-              // endingMap
-              // endGameTA
               try {
                 Thread.sleep(1250);
               } catch (InterruptedException e) {
@@ -505,6 +563,8 @@ public class EscapeRoomController {
                 e.printStackTrace();
               }
               System.out.println("Finished waiting for 3 seconds");
+              typeWrite(clickContinueTA, "Click anywhere to continue", 15);
+              GameState.continueEnabled = true;
             });
     textThread.setDaemon(true);
     textThread.start();
@@ -775,7 +835,6 @@ public class EscapeRoomController {
   }
 
   private void returnToWaitingLobby() throws IOException {
-    timer.stop();
     SceneManager.delUi(SceneManager.AppUi.WAITING_LOBBY);
     SceneManager.addUi(SceneManager.AppUi.WAITING_LOBBY, App.loadFxml("waitinglobby"));
     App.setUi(AppUi.WAITING_LOBBY);
@@ -831,7 +890,6 @@ public class EscapeRoomController {
     timerLabel.setTextFill(textColor);
     timerLabel.setText(timeText);
   }
-
 
   // Key Presses
   /**

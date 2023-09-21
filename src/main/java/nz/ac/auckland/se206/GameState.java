@@ -53,4 +53,6 @@ public class GameState {
   public static boolean computerLoggedIn = false;
 
   public static boolean torchFound = false;
+
+  public static boolean continueEnabled = false;
 }

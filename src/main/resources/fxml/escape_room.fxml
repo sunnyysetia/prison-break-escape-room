@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Point3D?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
@@ -250,20 +251,70 @@
             </AnchorPane>
          </children>
       </Group>
-      <AnchorPane fx:id="gameEndPane" layoutY="-720.0" opacity="0.0" prefHeight="720.0" prefWidth="1022.0">
+      <AnchorPane fx:id="gameEndPane" layoutY="-720.0" onMouseClicked="#endContinue" opacity="0.0" prefHeight="720.0" prefWidth="1022.0">
          <children>
             <ImageView fx:id="endGameImage" fitHeight="720.0" fitWidth="1265.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/ending1.png" />
                </image>
             </ImageView>
-            <TextArea fx:id="endGameTA" editable="false" layoutX="61.0" layoutY="40.0" prefHeight="200.0" prefWidth="900.0" style="-fx-text-fill: white; -fx-text-alignment: justify;" styleClass="text-area" stylesheets="@../css/endTextArea.css" wrapText="true">
+            <Rectangle arcHeight="20.0" arcWidth="20.0" disable="true" height="220.0" layoutX="51.0" layoutY="30.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" width="920.0" />
+            <TextArea fx:id="endGameTA" editable="false" layoutX="61.0" layoutY="40.0" prefHeight="200.0" prefWidth="900.0" style="-fx-text-fill: white; -fx-text-alignment: justify;" stylesheets="@../css/endTextArea.css" wrapText="true">
                <font>
                   <Font size="20.0" />
                </font>
             </TextArea>
+            <TextArea fx:id="clickContinueTA" editable="false" layoutX="61.0" layoutY="620.0" prefHeight="50.0" prefWidth="340.0" style="-fx-background-color: transparent; -fx-text-fill: white;" styleClass="metropolisText">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <stylesheets>
+                  <URL value="@../css/clearTextArea.css" />
+                  <URL value="@../css/font2.css" />
+               </stylesheets></TextArea>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="finsihedGamePane" prefHeight="200.0" prefWidth="200.0" />
+      <AnchorPane fx:id="finsihedGamePane" layoutY="-720.0" prefHeight="720.0" prefWidth="1022.0">
+         <children>
+            <ImageView fitHeight="720.0" fitWidth="1265.0" layoutX="-144.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/prison_hallway.png" />
+               </image>
+            </ImageView>
+            <Group fx:id="endPhoneGroup" layoutX="235.0" layoutY="-400.0">
+               <children>
+                  <Rectangle arcHeight="100.0" arcWidth="100.0" fill="WHITE" height="355.0" layoutX="-100.0" layoutY="22.0" stroke="BLACK" strokeType="INSIDE" width="750.0" />
+                  <ImageView fitHeight="800.0" fitWidth="500.0" layoutX="74.0" layoutY="-205.0" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
+                     <image>
+                        <Image url="@../images/myPhone.png" />
+                     </image>
+                  </ImageView>
+                  <AnchorPane layoutX="-40.0" layoutY="35.0" prefHeight="320.0" prefWidth="630.0" styleClass="stencilText">
+                     <children>
+                        <Label fx:id="endPhoneMessage" alignment="CENTER" layoutX="12.0" layoutY="102.0" prefHeight="96.0" prefWidth="606.0" style="-fx-font-size: 18;" styleClass="stencilText" stylesheets="@../css/font.css" text="Unfortunately you failed to escape the prison within the time limit" wrapText="true">
+                           <font>
+                              <Font name="Stencil" size="18.0" />
+                           </font>
+                        </Label>
+                        <Button layoutX="79.0" layoutY="263.0" mnemonicParsing="false" onMouseClicked="#restartGame" style="-fx-font-size: 24;" styleClass="stencilText" stylesheets="@../css/font.css" text="Retart Game">
+                           <font>
+                              <Font name="Stencil" size="24.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="415.0" layoutY="263.0" mnemonicParsing="false" onMouseClicked="#exitGame" style="-fx-font-size: 24;" styleClass="stencilText" stylesheets="@../css/font.css" text="Exit Game">
+                           <font>
+                              <Font name="Stencil" size="24.0" />
+                           </font>
+                        </Button>
+                        <Label fx:id="endPhoneTitle" layoutX="70.0" layoutY="14.0" prefHeight="64.0" prefWidth="556.0" style="-fx-font-family: Stencil; -fx-text-alignment: justify;" styleClass="stencilText" stylesheets="@../css/font.css" text="Good Luck Next Time">
+                           <font>
+                              <Font name="Arial" size="45.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </Group>
+         </children></AnchorPane>
    </children>
 </Pane>
