@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Stencil';
+    src: url('../fonts/STENCIL.ttf');
+}
+
+.stencilText {
+    -fx-font-family: 'Stencil';
+}

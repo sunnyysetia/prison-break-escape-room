@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.speech.TextToSpeech;
@@ -18,6 +19,8 @@ public class App extends Application {
   private static Scene scene;
 
   public static void main(final String[] args) {
+    Font.loadFont(App.class.getResourceAsStream("/fonts/Metropolis.ttf"), 16);
+    Font.loadFont(App.class.getResourceAsStream("/fonts/STENCIL.ttf"), 16);
     launch();
   }
 
