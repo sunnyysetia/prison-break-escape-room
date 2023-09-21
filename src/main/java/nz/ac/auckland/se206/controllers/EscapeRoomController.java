@@ -556,7 +556,7 @@ public class EscapeRoomController {
 
     // Change timer color from black to red as time runs out
     double progress = 1.0 - (double) remainingSeconds / (GameState.time);
-    Color textColor = Color.BLACK.interpolate(Color.RED, progress);
+    Color textColor = Color.WHITE.interpolate(Color.RED, progress);
 
     timerLabel.setTextFill(textColor);
     timerLabel.setText(timeText);
