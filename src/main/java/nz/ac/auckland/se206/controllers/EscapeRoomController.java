@@ -203,11 +203,6 @@ public class EscapeRoomController {
     uvLightText.setManaged(false);
     uvLightText.xProperty().setValue(uvCodeLocation[0]);
     uvLightText.yProperty().setValue(uvCodeLocation[1]);
-    // debugging
-    System.out.println("uvLightText R: " + uvLightText.getRotate() + " Value: " + randomAngle);
-    System.out.println("uvLightText X: " + uvLightText.getX() + " Value: " + uvCodeLocation[0]);
-    System.out.println("uvLightText Y: " + uvLightText.getY() + " Value: " + uvCodeLocation[1]);
-    System.out.println("uvLightText Parent: " + uvLightText.getParent());
 
     GameState.uvPassword = (int) (Math.random() * 100000000);
     uvLightText.setText(Integer.toString(GameState.uvPassword));
@@ -228,21 +223,38 @@ public class EscapeRoomController {
     computerLoginButton.setOnAction(
         (EventHandler<ActionEvent>)
             event -> {
-              // Only runs if the computer is not logged in
+              if (computerPasswordField.getText().isEmpty()) {
+                return;
+              }
+              String userInput = computerPasswordField.getText();
+              computerPasswordField.clear();
+              computerConsoleTextArea.setText(
+                  computerConsoleTextArea.getText() + "\nC:\\PrisonPC\\>" + userInput);
+
               if (!GameState.computerLoggedIn) {
-                if (computerPasswordField.getText().isEmpty()) {
-                  return;
-                }
-                String password = computerPasswordField.getText();
-                computerPasswordField.clear();
-                computerConsoleTextArea.setText(
-                    computerConsoleTextArea.getText() + "\nC:\\PrisonPC\\>" + password);
-                if (password.equals(GameState.uvPassword + "")) {
-                  computerConsoleAnchorPane.setVisible(false);
-                  computerConsoleAnchorPane.setDisable(true);
-                  endingControlAnchorPane.setVisible(true);
-                  endingControlAnchorPane.setDisable(false);
+                if (userInput.equals(GameState.uvPassword + "")) {
                   GameState.computerLoggedIn = true;
+                  Thread writerThread =
+                      new Thread(
+                          () -> {
+                            typeWrite(
+                                computerConsoleTextArea,
+                                "\nSystem:>Login Successful!\n"
+                                    + "System:>Welcome back Prison Guard!\n"
+                                    + "System:>Here is a list of admin functions you have access"
+                                    + " to:\n\n",
+                                15);
+                            typeWrite(
+                                computerConsoleTextArea,
+                                "  1. Unlock all prison cell doors\n"
+                                    + "  2. Explode all walls\n"
+                                    + "  3. Unlock pathway to sewers\n"
+                                    + "\n Choose a function by typing the corresponding number\n"
+                                    + "System:>Choose an Option:",
+                                10);
+                          });
+                  writerThread.setDaemon(true);
+                  writerThread.start();
                 } else {
                   Thread writerThread =
                       new Thread(
@@ -255,7 +267,49 @@ public class EscapeRoomController {
                   writerThread.setDaemon(true);
                   writerThread.start();
                 }
+              } else {
+                // Runs after the user logins correctly
+                switch (userInput.trim()) {
+                  case "1":
+                    break;
+                  case "2":
+                    break;
+                  case "3":
+                    break;
+                  default:
+                    Thread writerThread =
+                        new Thread(
+                            () -> {
+                              typeWrite(
+                                  computerConsoleTextArea,
+                                  "\n" + "System:>Invalid Option!\n" + "System:>Choose an Option:",
+                                  15);
+                            });
+                    writerThread.setDaemon(true);
+                    writerThread.start();
+                    break;
+                }
+                // computerConsoleAnchorPane.setVisible(false);
+                // computerConsoleAnchorPane.setDisable(true);
+                // endingControlAnchorPane.setVisible(true);
+                // endingControlAnchorPane.setDisable(false);
               }
+              // Use to auto scroll the pane to the bottom
+              Thread scrollThread =
+                  new Thread(
+                      () -> {
+                        try {
+                          Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                          e.printStackTrace();
+                        }
+                        Platform.runLater(
+                            () -> {
+                              computerConsoleTextArea.setScrollTop(Double.MAX_VALUE);
+                            });
+                      });
+              scrollThread.setDaemon(true);
+              scrollThread.start();
             });
 
     phoneNameLabel
