@@ -188,6 +188,11 @@
                         <VBox fx:id="messagesVertBox" prefHeight="148.0" prefWidth="484.0" />
                      </content>
                   </ScrollPane>
+                  <ImageView fx:id="typingImage" fitHeight="91.0" fitWidth="94.0" layoutX="15.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/typing.gif" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
          </children>
