@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Metropolis';
+    src: url('../fonts/Metropolis.ttf');
+}
+
+.metropolisText {
+    -fx-font-family: 'Metropolis';
+}
