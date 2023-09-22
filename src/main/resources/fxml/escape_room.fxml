@@ -259,12 +259,12 @@
                </image>
             </ImageView>
             <Rectangle arcHeight="20.0" arcWidth="20.0" disable="true" height="220.0" layoutX="51.0" layoutY="30.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" width="920.0" />
-            <TextArea fx:id="endGameTA" editable="false" layoutX="61.0" layoutY="40.0" prefHeight="200.0" prefWidth="900.0" style="-fx-text-fill: white; -fx-text-alignment: justify;" stylesheets="@../css/endTextArea.css" wrapText="true">
+            <TextArea fx:id="endGameTextArea" editable="false" layoutX="61.0" layoutY="40.0" prefHeight="200.0" prefWidth="900.0" style="-fx-text-fill: white; -fx-text-alignment: justify;" stylesheets="@../css/endTextArea.css" wrapText="true">
                <font>
                   <Font size="20.0" />
                </font>
             </TextArea>
-            <TextArea fx:id="clickContinueTA" editable="false" layoutX="61.0" layoutY="620.0" prefHeight="50.0" prefWidth="340.0" style="-fx-background-color: transparent; -fx-text-fill: white;" styleClass="metropolisText">
+            <TextArea fx:id="clickContinueTextArea" editable="false" layoutX="61.0" layoutY="620.0" prefHeight="50.0" prefWidth="340.0" style="-fx-background-color: transparent; -fx-text-fill: white;" styleClass="metropolisText">
                <font>
                   <Font size="18.0" />
                </font>
