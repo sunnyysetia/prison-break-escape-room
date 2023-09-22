@@ -21,8 +21,8 @@ public class SoundUtils {
       // Check if there is a currently playing sound
       if (currentMediaPlayer != null
           && currentMediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
-        // A sound is already playing, do nothing
-        return;
+        // A sound is already playing, stop it
+        currentMediaPlayer.stop();
       }
 
       // Play the sound effect
@@ -36,6 +36,13 @@ public class SoundUtils {
     } catch (Exception e) {
       // Handle any exceptions that may occur (e.g., file not found)
       e.printStackTrace();
+    }
+  }
+
+  public static void stopSound() {
+    if (currentMediaPlayer != null) {
+      currentMediaPlayer.stop();
+      currentMediaPlayer = null;
     }
   }
 }
