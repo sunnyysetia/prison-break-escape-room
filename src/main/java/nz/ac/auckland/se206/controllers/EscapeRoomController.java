@@ -88,6 +88,7 @@ public class EscapeRoomController {
   @FXML private Circle notifCircle;
   @FXML private ImageView torchButton;
   @FXML private SVGPath uvLightEffect;
+  @FXML private SVGPath uvTorchEffect;
 
   // Kitchen FXML
   @FXML private Rectangle cuttingboard;
@@ -461,10 +462,12 @@ public class EscapeRoomController {
     torchButton.setOnMouseClicked(
         event -> {
           GameState.torchIsOn.setValue(!GameState.torchIsOn.getValue());
+          soundUtils.playAudio("typing1.mp3", 1);
         });
     uvLightText.visibleProperty().bind(GameState.torchIsOn);
 
     uvLightEffect.visibleProperty().bind(GameState.torchIsOn);
+    uvTorchEffect.visibleProperty().bind(GameState.torchIsOn);
 
     // Configure settings for the riddle's chat completion request.
     chatCompletionRequest =
@@ -1089,6 +1092,11 @@ public class EscapeRoomController {
       torchButton.setVisible(true);
 
       issueInstruction(GptPromptEngineering.getRiddleSolvedInstruction(GameState.difficulty));
+      Thread audioThread =
+          new Thread(
+              () -> {
+                soundUtils.playAudio("torchGot.mp3", 1);
+              });
 
       // Insert an animation to show the torch being retrieved.
       Thread animationThread =
@@ -1137,8 +1145,10 @@ public class EscapeRoomController {
       // Set both animation threads as daemon threads and start them.
       animationThread.setDaemon(true);
       disappearThread.setDaemon(true);
+      audioThread.setDaemon(true);
       animationThread.start();
       disappearThread.start();
+      audioThread.start();
     }
   }
 
