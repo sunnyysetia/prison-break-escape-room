@@ -222,27 +222,38 @@ public class EscapeRoomController {
     {
       put(
           "1",
-          "On %s %sth, a shocking incident unfolded at The Prison as a"
+          "On %s %s, a shocking incident unfolded at The Prison as a"
               + " software malfunction inadvertently unlocked all prison cell doors."
               + " Pandemonium ensued as prisoners took advantage of this unexpected opportunity"
               + " to escape their confinement. Authorities are working diligently to regain"
               + " control and investigate the software glitch responsible for this"
               + " unprecedented breach of security.");
-      put(
-          "2",
-          "On %s %sth, chaos erupted at The Prison as a series of"
+      put("2",
+          "On %s %s, chaos erupted at The Prison as a series of"
               + " explosions caused prison walls to crumble, granting inmates an unexpected"
               + " route to freedom. Inmates wasted no time seizing the opportunity, fleeing the"
               + " facility in a frantic rush. Authorities are now in pursuit of the escapees,"
               + " while an investigation is underway to determine the cause of the explosive"
               + " breach in the prison's perimeter.");
-      put(
-          "3",
-          "On %s %sth, a surprising incident occurred at The Prison. One"
+      put("3",
+          "On %s %s, a surprising incident occurred at The Prison. One"
               + " prisoner had disappeared, leaving an empty cell behind, and a prison guard"
               + " uniform was missing. It appeared that the inmate had managed to escape by"
               + " impersonating a guard. Authorities are now actively searching for the"
               + " escapee, while questions regarding the security lapse loom large.");
+    }
+  };
+  // Create a new map to adjust dates that have inconsistent suffixes - ie: 1st
+  // instead of 1th.
+  private HashMap<String, String> dateGrammarMap = new HashMap<>() {
+    {
+      put("1", "st");
+      put("2", "nd");
+      put("3", "rd");
+      put("21", "st");
+      put("22", "nd");
+      put("23", "rd");
+      put("31", "st");
     }
   };
 
@@ -602,6 +613,8 @@ public class EscapeRoomController {
     int month = localDate.getMonthValue();
     int day = localDate.getDayOfMonth();
 
+    String dayAdjusted = day + ((dateGrammarMap.keySet().contains(day + "")) ? dateGrammarMap.get(day + "") : "rd");
+
     // Disable mouse interactions with certain UI elements.
     endGameTextArea.setMouseTransparent(true);
     clickContinueTextArea.setMouseTransparent(true);
@@ -626,7 +639,7 @@ public class EscapeRoomController {
       int minutes = (int) ((GameState.time - remainingSeconds) / 60);
       int seconds = (GameState.time - remainingSeconds) % 60;
       // Format and set the ending message based on the selected ending.
-      endMessage = String.format(endingMap.get(ending), new DateFormatSymbols().getMonths()[month - 1], day);
+      endMessage = String.format(endingMap.get(ending), new DateFormatSymbols().getMonths()[month - 1], dayAdjusted);
       // Update the phone UI to display a congratulatory message.
       endPhoneTitle.setText("Congratulations!");
       endPhoneMessage.setText(
