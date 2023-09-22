@@ -262,6 +262,7 @@ public class EscapeRoomController {
   private int remainingSeconds = 120;
   private Timeline timer;
   private ScaleTransition heartbeatAnimation;
+  private int hintsRemaining = 5;
 
   // Chat
   private ChatCompletionRequest chatCompletionRequest;
@@ -303,8 +304,14 @@ public class EscapeRoomController {
     // Binds send button so that it is disabled while gpt is writing a message.
     sendButton.disableProperty().bind(GameState.gptThinking);
 
-    // Set the hint label to display 0 hints.
-    hintLabel.setText("0");
+    // Set the hint label to display hints remaining.
+    if (GameState.difficulty.equals("hard")) {
+      hintLabel.setText("0");
+    } else if (GameState.difficulty.equals("medium")) {
+      hintLabel.setText("5/5");
+    } else {
+      hintLabel.setText("∞");
+    }
 
     // Initialise notification heartbeat animation
     heartbeatAnimation = new ScaleTransition(Duration.seconds(1), notifCircle);
@@ -519,7 +526,7 @@ public class EscapeRoomController {
     chatCompletionRequest = new ChatCompletionRequest().setN(1).setTemperature(0.3).setTopP(0.5).setMaxTokens(200);
 
     // Run a GPT-based instruction for the introduction.
-    runGpt(new ChatMessage("user", GptPromptEngineering.getIntroInstruction()));
+    runGpt(new ChatMessage("user", GptPromptEngineering.getIntroInstruction(GameState.difficulty)));
   }
 
   @FXML
@@ -1365,10 +1372,34 @@ public class EscapeRoomController {
         e -> {
           ChatMessage resultMessage = gptTask.getValue();
           if (resultMessage != null) {
-            // Append the GPT response message to the chat.
-            for (String paragraph : resultMessage.getContent().split("\n\n")) {
-              addLabel(paragraph, messagesVertBox);
+            // This field is used to skip the GPT message if it must be intercepted by a
+            // hard coded message.
+            boolean messageSent = false;
+
+            if (resultMessage.getRole().equals("assistant")
+                && resultMessage.getContent().startsWith("Hint")
+                && GameState.difficulty.equals("medium")) {
+              // If the AI attempts to give a hint while they are supposed to be out of hints,
+              // intercept with a hard coded message.
+              if (hintsRemaining == 0) {
+                addLabel(
+                    "Inmate, you do not have any more hint allowances. "
+                        + "You must find out how to proceed on your own.",
+                    messagesVertBox);
+                messageSent = true;
+              } else {
+                hintsRemaining--;
+                hintLabel.setText(hintsRemaining + "/5");
+              }
             }
+
+            // Append the GPT response message to the chat.
+            if (!messageSent) {
+              for (String paragraph : resultMessage.getContent().split("\n\n")) {
+                addLabel(paragraph, messagesVertBox);
+              }
+            }
+
             if (!GameState.phoneIsOpen) {
               playSound("incomingText.mp3");
 
@@ -1382,15 +1413,6 @@ public class EscapeRoomController {
                 && resultMessage.getContent().startsWith("Correct")
                 && !GameState.riddleSolved) {
               GameState.riddleSolved = true;
-            }
-            if (resultMessage.getContent().contains("hint")) {
-              try {
-                int hint = Integer.parseInt(hintLabel.getText());
-                hint++;
-                hintLabel.setText("" + hint);
-              } catch (NumberFormatException ex) {
-                hintLabel.setText("Error");
-              }
             }
           } else {
             // When an error occurs, print a message suggesting fixes to the user.
@@ -1407,6 +1429,8 @@ public class EscapeRoomController {
                     notifCircle.setVisible(true);
                     heartbeatAnimation.play();
                   }
+                  // gptThinking is kept as true to prevent future messages, so the texter label
+                  // is unbound from "Typing..."
                   phoneNameLabel.textProperty().unbind();
                   phoneNameLabel.setText("Prison Guard");
                 });
