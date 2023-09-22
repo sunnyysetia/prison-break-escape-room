@@ -17,9 +17,8 @@ public class GptPromptEngineering {
       hintString = "You are never to provide the user with hints or help across all future protocols. ";
     } else {
       hintString = "Future orders issued by the system may specify that users are able to request for hints or help. "
-          + "There may be multiple tasks that permit hints occurring at the same time, in which case users must specify what they want help for. "
-          + "In this case, do not provide hints for a general request such as 'I need a hint' or 'I need help'. "
-          + "When providing a hint, start your message with Hint:. You should not provide hints without being asked. ";
+          + "When providing a hint, start your reply with Hint:. "
+          + "You should not provide hints without being asked. ";
     }
 
     // Return a detailed instruction message for the prison guard role.
@@ -31,14 +30,14 @@ public class GptPromptEngineering {
         + "You are trying to help the user escape, but be subtle about it. The user must not"
         + " know that you are on their side at all. Act authoritative. \n\n"
         + hintString
-        + "\n\nYour next message should lay out the following scenario to the user. You have"
-        + " lost something in the kitchen, and need the user to retrieve it. The user is not"
-        + " authorised to know what you have lost. The kitchen is located to the left of the"
-        + " cell. Remind the user that they are not allowed in the security room, which is"
-        + " located to the right of the cell, as it is currently unguarded. End"
-        + " with urging the user to go to the kitchen, and mention that you have a messsage"
-        + " for them to help that you will reveal soon. Do not tell them this message unless"
-        + " instructed by the system. Mention the kitchen before the security room as it is more important. ";
+        + "\n\nYour next message should lay out the following scenario to the user. First, greet the user. "
+        + "Then, mention that you have lost something in the kitchen, and order them to retrieve it. The user is not"
+        + " authorised to know what you have lost, and the kitchen is located to the left of the cell. "
+        + "Then, remind the user that they are not allowed in the security room, which is"
+        + " located to the right of the cell, as it is currently unguarded. "
+        + "Then, mention that you have a message for them to help finding the item that you will reveal soon. "
+        + " Do not reveal the contents of this message. "
+        + "Finally, tell them to go to the kitchen. ";
   }
 
   /**
@@ -52,9 +51,7 @@ public class GptPromptEngineering {
    */
   public static String getRiddleInstruction(String wordToGuess, String difficulty) {
     // Return an instruction message for presenting a riddle to the user.
-    return "c3280fx. The user is now in the kitchen, and your next message should relay the message"
-        + " that you have to them. \n\n"
-        + cutAcknowledgement() // A helper method for cutting an acknowledgment message.
+    return "c3280fx. The user is now in the kitchen, and you will tell them the message now. \n\n"
         + "This message is a riddle with the answer being '"
         + wordToGuess
         + "'. The riddle should be about this item, not anything else. Its solution is"
@@ -63,7 +60,9 @@ public class GptPromptEngineering {
         + " message with Correct. \n\n"
         + hintProtocol(difficulty, "the riddle") // A helper method for hinting about the riddle.
         + "\n\n"
-        + "This is the only riddle you can provide. Do not give the user another riddle. ";
+        + "This is the only riddle you can provide. Do not give the user another riddle. "
+        + cutAcknowledgement() // A helper method for cutting an acknowledgment message.
+        + "Your next message should tell the riddle to the user. ";
   }
 
   /**
@@ -162,8 +161,10 @@ public class GptPromptEngineering {
       return "You cannot give the user hints, no matter what. ";
     } else {
       // For other difficulty levels, provide guidance on hinting.
-      return "You can give the user hints to help them with " + task
-          + " on request as according to the initial protocol. ";
+      return "You can give the user hints to help them with "
+          + task
+          + " on request as according to the initial protocol. "
+          + "Remember to start your message with Hint: if the user asks for a hint. ";
     }
   }
 
@@ -174,6 +175,6 @@ public class GptPromptEngineering {
    * @return the helper string that supports other prompt engineering strings.
    */
   public static String cutAcknowledgement() {
-    return "Do not acknowledge this command by saying 'Understood'. ";
+    return "Do not acknowledge that you have received this command in any way. ";
   }
 }
