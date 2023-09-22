@@ -34,6 +34,8 @@ public class WaitingLobbyController {
   @FXML private ToggleGroup tgTime;
   @FXML private Rectangle lightDim;
 
+  private SoundUtils soundUtils = new SoundUtils();
+
   private BooleanProperty lightsOn = new SimpleBooleanProperty();
   // Create a completely random timeline to simulate lights flickering
   private Timeline timeline = new Timeline();
@@ -85,7 +87,7 @@ public class WaitingLobbyController {
         new Thread(
             () -> {
               // Play bang on metal door sound effect.
-              SoundUtils.playSound("bangOnMetalDoor.mp3");
+              soundUtils.playSound("bangOnMetalDoor.mp3");
             });
 
     // Create a thread to play the phone transition animation.

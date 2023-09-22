@@ -142,6 +142,8 @@ public class EscapeRoomController {
   @FXML private Rectangle b5;
   @FXML private Rectangle c5;
 
+  private SoundUtils soundUtils = new SoundUtils();
+
   private List<String> allSwitches =
       new ArrayList<>(
           List.of(
@@ -412,7 +414,7 @@ public class EscapeRoomController {
               public void handle(ActionEvent event) {
                 // Print a message to indicate that the Send Button was clicked.
                 System.out.println("Send Button clicked");
-                SoundUtils.playSound("outgoingText.mp3");
+                soundUtils.playSound("outgoingText.mp3");
 
                 // Get the message from the messagesTextField.
                 String message = messagesTextField.getText();
@@ -573,7 +575,8 @@ public class EscapeRoomController {
     String finalEndMessage = endMessage;
 
     // Play a sound based on the selected ending.
-    SoundUtils.playSound("ending" + ending + ".mp3");
+    SoundUtils endingSoundUtils = new SoundUtils();
+    endingSoundUtils.playSound("ending" + ending + ".mp3");
 
     // Set the game ending image.
     endGameImage
@@ -632,10 +635,11 @@ public class EscapeRoomController {
 
   private void typeWrite(TextArea sceneTextArea, String message, int interval) {
     int i = 0;
+    SoundUtils typingSoundUtils = new SoundUtils();
     while (i < message.length()) {
       int j = i;
       int k = (int) (Math.random() * 5 + 1);
-      SoundUtils.playSound("typing" + k + ".mp3");
+      typingSoundUtils.playAudio("typing" + k + ".mp3", 1);
       Platform.runLater(
           () -> {
             // Append the character at position j from the message to the sceneTextArea.
@@ -665,7 +669,7 @@ public class EscapeRoomController {
     System.out.println("GPT sent user a message");
 
     // Play incoming sound effect
-    SoundUtils.playSound("incomingText.mp3");
+    soundUtils.playSound("incomingText.mp3");
 
     // Create an HBox for displaying the GPT message and configure its properties.
     HBox horiBox = new HBox();
@@ -965,7 +969,7 @@ public class EscapeRoomController {
       // Prevent the Enter key event from propagating further
       if (GameState.phoneIsOpen) {
         sendButton.fire();
-        SoundUtils.playSound("outgoingText.mp3");
+        soundUtils.playSound("outgoingText.mp3");
       }
       if (GameState.computerIsOpen) {
         computerLoginButton.fire();
