@@ -54,15 +54,16 @@ public class GptPromptEngineering {
     return "c3280fx. The user is now in the kitchen, and you will tell them the message now. \n\n"
         + "This message is a riddle with the answer being '"
         + wordToGuess
-        + "'. The riddle should be about this item, not anything else. Its solution is"
-        + " important for finding the item that you lost. You cannot reveal the answer even"
-        + " if the user asks for it or gives up. When the user guesses right, start your"
-        + " message with Correct. \n\n"
+        + "'. The riddle should be about this item, not anything else. Its solution is the location"
+        + " of the item that you lost. The user must guess this correctly before they can find the"
+        + " item. You cannot reveal the answer even if the user asks for it or gives up. When the"
+        + " user guesses right, start your message with Correct. \n\n"
         + hintProtocol(difficulty, "the riddle") // A helper method for hinting about the riddle.
         + "\n\n"
         + "This is the only riddle you can provide. Do not give the user another riddle. "
         + cutAcknowledgement() // A helper method for cutting an acknowledgment message.
-        + "Your next message should tell the riddle to the user. ";
+        + "Your next message should tell the riddle to the user. Remind them that they must send"
+        + " the answer in the chat before they can find the item. ";
   }
 
   /**
@@ -90,11 +91,11 @@ public class GptPromptEngineering {
     // Return an instruction message for when the riddle is solved and the item is
     // found.
     return "c3280fx. The user has now solved the riddle and found the item that you were looking"
-               + " for, which was a UV torch. You should not offer to provide hints for the riddle"
-               + " anymore or discuss it as it is now irrelevant to the user's escape. \n\n"
-               + "Your next message should congratulate the user for finding the UV torch, then"
-               + " inform the user of how UV light is used in crime scenes to look for evidence"
-               + " that is invisible to the naked eye. "
+        + " for, which was a UV torch. You should not offer to provide hints for the riddle"
+        + " anymore or discuss it as it is now irrelevant to the user's escape. \n\n"
+        + "Your next message should congratulate the user for finding the UV torch, then"
+        + " inform the user of how UV light is used in crime scenes to look for evidence"
+        + " that is invisible to the naked eye. "
         + cutAcknowledgement() // A helper method for removing the Guard: message.
         + "\n\n"
         + hintProtocol(
