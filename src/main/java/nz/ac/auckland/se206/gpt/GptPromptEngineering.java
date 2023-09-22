@@ -82,17 +82,19 @@ public class GptPromptEngineering {
       hintString =
           "If they ask for a hint about what to do next, tell them that their cell was previously"
               + " inhabited by a rulebreaker who broke into the security room, and that was the"
-              + " closest an inmate has been to escaping. Only say this if the user asks for a"
-              + " hint, not in the current message. ";
+              + " closest an inmate has been to escaping. The guards always heard scratching sounds"
+              + " at night from his cell. Only say this if the user asks for a hint, not in the"
+              + " current message. ";
     }
 
     // Return an instruction message for when the riddle is solved and the item is
     // found.
     return "c3280fx. The user has now solved the riddle and found the item that you were looking"
-        + " for, which was a UV torch. You should not offer to provide hints for the riddle"
-        + " anymore or discuss it as it is now irrelevant to the user's escape. \n\n"
-        + "Your next message should inform the user of how UV light is used in crime scenes"
-        + " to look for evidence that is invisible to the naked eye. "
+               + " for, which was a UV torch. You should not offer to provide hints for the riddle"
+               + " anymore or discuss it as it is now irrelevant to the user's escape. \n\n"
+               + "Your next message should congratulate the user for finding the UV torch, then"
+               + " inform the user of how UV light is used in crime scenes to look for evidence"
+               + " that is invisible to the naked eye. "
         + cutAcknowledgement() // A helper method for removing the Guard: message.
         + "\n\n"
         + hintProtocol(
