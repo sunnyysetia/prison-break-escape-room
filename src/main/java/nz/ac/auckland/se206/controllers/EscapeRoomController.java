@@ -492,6 +492,17 @@ public class EscapeRoomController {
       return;
     }
     GameState.continueEnabled = false; // prevent spam
+    Thread audioThread =
+        new Thread(
+            () -> {
+              SoundUtils gameEndSoundUtils = new SoundUtils();
+              if (GameState.gameWon) {
+                gameEndSoundUtils.playAudio("win.m4a", 1);
+              } else {
+                gameEndSoundUtils.playAudio("lose.m4a", 1);
+              }
+            });
+
     TranslateTransition backgroundTransition = new TranslateTransition();
     backgroundTransition.setNode(finsihedGamePane);
     backgroundTransition.setByY(720);
@@ -515,8 +526,11 @@ public class EscapeRoomController {
               }
               phoneTransition.play();
             });
+
+    audioThread.setDaemon(true);
     phoneAnimThread.setDaemon(true);
     backgroundAnimThread.setDaemon(true);
+    audioThread.start();
     phoneAnimThread.start();
     backgroundAnimThread.start();
   }
@@ -552,6 +566,7 @@ public class EscapeRoomController {
 
     // Check if the game ending is not the default ending ("0").
     if (!ending.equals("0")) {
+      GameState.gameWon = true;
       int minutes = (int) ((GameState.time - remainingSeconds) / 60);
       int seconds = (GameState.time - remainingSeconds) % 60;
       // Format and set the ending message based on the selected ending.
