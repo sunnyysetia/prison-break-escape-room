@@ -1132,6 +1132,7 @@ public class EscapeRoomController {
     System.out.println("Circuit clicked");
     circuitGroup.setDisable(false);
     circuitGroup.setVisible(true);
+    GameState.torchIsOn.setValue(false);
     startMemoryRecallGame();
   }
 
