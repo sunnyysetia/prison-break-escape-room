@@ -69,86 +69,146 @@ public class EscapeRoomController {
 
   // This pane contains all the three panes below, we move this pane left and
   // right
-  @FXML private Pane roomCollectionPane;
+  @FXML
+  private Pane roomCollectionPane;
 
   // These three panes below are the individual rooms
-  @FXML private Pane prisonCellPane;
-  @FXML private Pane kitchenPane;
-  @FXML private Pane guardRoomPane;
+  @FXML
+  private Pane prisonCellPane;
+  @FXML
+  private Pane kitchenPane;
+  @FXML
+  private Pane guardRoomPane;
 
   // Shared FXML
-  @FXML private Group chatGroup;
-  @FXML private Group computerGroup;
-  @FXML private Label timerLabel;
-  @FXML private Label hintLabel;
-  @FXML private Rectangle dimScreen;
-  @FXML private ImageView leftButton;
-  @FXML private ImageView rightButton;
-  @FXML private Label phoneLabel;
-  @FXML private Circle notifCircle;
-  @FXML private ImageView torchButton;
-  @FXML private SVGPath uvLightEffect;
+  @FXML
+  private Group chatGroup;
+  @FXML
+  private Group computerGroup;
+  @FXML
+  private Label timerLabel;
+  @FXML
+  private Label hintLabel;
+  @FXML
+  private Rectangle dimScreen;
+  @FXML
+  private ImageView leftButton;
+  @FXML
+  private ImageView rightButton;
+  @FXML
+  private Label phoneLabel;
+  @FXML
+  private Circle notifCircle;
+  @FXML
+  private ImageView torchButton;
+  @FXML
+  private SVGPath uvLightEffect;
 
   // Kitchen FXML
-  @FXML private Rectangle cuttingboard;
-  @FXML private Rectangle oven;
-  @FXML private Rectangle plates;
-  @FXML private Rectangle extinguisher;
-  @FXML private Rectangle kettle;
-  @FXML private Rectangle clock;
-  @FXML private Rectangle toaster;
-  @FXML private Group torchGetGroup;
+  @FXML
+  private Rectangle cuttingboard;
+  @FXML
+  private Rectangle oven;
+  @FXML
+  private Rectangle plates;
+  @FXML
+  private Rectangle extinguisher;
+  @FXML
+  private Rectangle kettle;
+  @FXML
+  private Rectangle clock;
+  @FXML
+  private Rectangle toaster;
+  @FXML
+  private Group torchGetGroup;
 
   // Cell FXML
-  @FXML private Text uvLightText;
+  @FXML
+  private Text uvLightText;
 
   // Guard's Room FXML
-  @FXML private Rectangle circuit;
-  @FXML private Rectangle computer;
-  @FXML private Button computerCloseButton;
-  @FXML private Rectangle computerDimScreen;
-  @FXML private TextField computerPasswordField;
-  @FXML private TextArea computerConsoleTextArea;
-  @FXML private Button computerLoginButton;
-  @FXML private AnchorPane endingControlAnchorPane;
-  @FXML private AnchorPane computerConsoleAnchorPane;
+  @FXML
+  private Rectangle circuit;
+  @FXML
+  private Rectangle computer;
+  @FXML
+  private Button computerCloseButton;
+  @FXML
+  private Rectangle computerDimScreen;
+  @FXML
+  private TextField computerPasswordField;
+  @FXML
+  private TextArea computerConsoleTextArea;
+  @FXML
+  private Button computerLoginButton;
+  @FXML
+  private AnchorPane endingControlAnchorPane;
+  @FXML
+  private AnchorPane computerConsoleAnchorPane;
 
-  @FXML private AnchorPane finsihedGamePane;
-  @FXML private Group endPhoneGroup;
-  @FXML private TextArea endGameTextArea;
-  @FXML private TextArea clickContinueTextArea;
-  @FXML private Label endPhoneTitle;
-  @FXML private Label endPhoneMessage;
-  @FXML private ImageView endGameImage;
-  @FXML private AnchorPane gameEndPane;
-  @FXML private ImageView guardRoomDarkness;
-  @FXML private Group circuitGroup;
-  @FXML private Label memoryCountdownLabel;
-  @FXML private Button goBackMemory;
-  @FXML private Button checkGuessMemory;
-  @FXML private Rectangle a1;
-  @FXML private Rectangle b1;
-  @FXML private Rectangle c1;
-  @FXML private Rectangle a2;
-  @FXML private Rectangle b2;
-  @FXML private Rectangle c2;
-  @FXML private Rectangle a3;
-  @FXML private Rectangle b3;
-  @FXML private Rectangle c3;
-  @FXML private Rectangle a4;
-  @FXML private Rectangle b4;
-  @FXML private Rectangle c4;
-  @FXML private Rectangle a5;
-  @FXML private Rectangle b5;
-  @FXML private Rectangle c5;
+  @FXML
+  private AnchorPane finsihedGamePane;
+  @FXML
+  private Group endPhoneGroup;
+  @FXML
+  private TextArea endGameTextArea;
+  @FXML
+  private TextArea clickContinueTextArea;
+  @FXML
+  private Label endPhoneTitle;
+  @FXML
+  private Label endPhoneMessage;
+  @FXML
+  private ImageView endGameImage;
+  @FXML
+  private AnchorPane gameEndPane;
+  @FXML
+  private ImageView guardRoomDarkness;
+  @FXML
+  private Group circuitGroup;
+  @FXML
+  private Label memoryCountdownLabel;
+  @FXML
+  private Button goBackMemory;
+  @FXML
+  private Button checkGuessMemory;
+  @FXML
+  private Rectangle a1;
+  @FXML
+  private Rectangle b1;
+  @FXML
+  private Rectangle c1;
+  @FXML
+  private Rectangle a2;
+  @FXML
+  private Rectangle b2;
+  @FXML
+  private Rectangle c2;
+  @FXML
+  private Rectangle a3;
+  @FXML
+  private Rectangle b3;
+  @FXML
+  private Rectangle c3;
+  @FXML
+  private Rectangle a4;
+  @FXML
+  private Rectangle b4;
+  @FXML
+  private Rectangle c4;
+  @FXML
+  private Rectangle a5;
+  @FXML
+  private Rectangle b5;
+  @FXML
+  private Rectangle c5;
 
   private SoundUtils soundUtils = new SoundUtils();
 
-  private List<String> allSwitches =
-      new ArrayList<>(
-          List.of(
-              "a1", "b1", "c1", "a2", "b2", "c2", "a3", "b3", "c3", "a4", "b4", "c4", "a5", "b5",
-              "c5"));
+  private List<String> allSwitches = new ArrayList<>(
+      List.of(
+          "a1", "b1", "c1", "a2", "b2", "c2", "a3", "b3", "c3", "a4", "b4", "c4", "a5", "b5",
+          "c5"));
 
   private List<String> switchesToRecall = new ArrayList<>();
   private List<String> playerChoices = new ArrayList<>();
@@ -156,42 +216,47 @@ public class EscapeRoomController {
   // " 1. Unlock all prison cell doors"
   // " 2. Explode all walls"
   // " 3. Retrieve new uniform"
-  private HashMap<String, String> endingMap =
-      new HashMap<>() {
-        {
-          put(
-              "1",
-              "On %s %sth, a shocking incident unfolded at The Prison as a"
-                  + " software malfunction inadvertently unlocked all prison cell doors."
-                  + " Pandemonium ensued as prisoners took advantage of this unexpected opportunity"
-                  + " to escape their confinement. Authorities are working diligently to regain"
-                  + " control and investigate the software glitch responsible for this"
-                  + " unprecedented breach of security.");
-          put(
-              "2",
-              "On %s %sth, chaos erupted at The Prison as a series of"
-                  + " explosions caused prison walls to crumble, granting inmates an unexpected"
-                  + " route to freedom. Inmates wasted no time seizing the opportunity, fleeing the"
-                  + " facility in a frantic rush. Authorities are now in pursuit of the escapees,"
-                  + " while an investigation is underway to determine the cause of the explosive"
-                  + " breach in the prison's perimeter.");
-          put(
-              "3",
-              "On %s %sth, a surprising incident occurred at The Prison. One"
-                  + " prisoner had disappeared, leaving an empty cell behind, and a prison guard"
-                  + " uniform was missing. It appeared that the inmate had managed to escape by"
-                  + " impersonating a guard. Authorities are now actively searching for the"
-                  + " escapee, while questions regarding the security lapse loom large.");
-        }
-      };
+  private HashMap<String, String> endingMap = new HashMap<>() {
+    {
+      put(
+          "1",
+          "On %s %sth, a shocking incident unfolded at The Prison as a"
+              + " software malfunction inadvertently unlocked all prison cell doors."
+              + " Pandemonium ensued as prisoners took advantage of this unexpected opportunity"
+              + " to escape their confinement. Authorities are working diligently to regain"
+              + " control and investigate the software glitch responsible for this"
+              + " unprecedented breach of security.");
+      put(
+          "2",
+          "On %s %sth, chaos erupted at The Prison as a series of"
+              + " explosions caused prison walls to crumble, granting inmates an unexpected"
+              + " route to freedom. Inmates wasted no time seizing the opportunity, fleeing the"
+              + " facility in a frantic rush. Authorities are now in pursuit of the escapees,"
+              + " while an investigation is underway to determine the cause of the explosive"
+              + " breach in the prison's perimeter.");
+      put(
+          "3",
+          "On %s %sth, a surprising incident occurred at The Prison. One"
+              + " prisoner had disappeared, leaving an empty cell behind, and a prison guard"
+              + " uniform was missing. It appeared that the inmate had managed to escape by"
+              + " impersonating a guard. Authorities are now actively searching for the"
+              + " escapee, while questions regarding the security lapse loom large.");
+    }
+  };
 
   // Chat fxml
-  @FXML private Button sendButton;
-  @FXML private TextField messagesTextField;
-  @FXML private VBox messagesVertBox;
-  @FXML private ScrollPane chatScrollPane;
-  @FXML private Label phoneNameLabel;
-  @FXML private ImageView typingImage;
+  @FXML
+  private Button sendButton;
+  @FXML
+  private TextField messagesTextField;
+  @FXML
+  private VBox messagesVertBox;
+  @FXML
+  private ScrollPane chatScrollPane;
+  @FXML
+  private Label phoneNameLabel;
+  @FXML
+  private ImageView typingImage;
 
   // Shared
   private int remainingSeconds = 120;
@@ -203,19 +268,18 @@ public class EscapeRoomController {
   private ChatCompletionRequest chatCompletionRequest;
 
   // UV code
-  private HashMap<Integer, int[]> uvCodeLocations =
-      new HashMap<Integer, int[]>() {
-        {
-          put(-45, new int[] {733, 300});
-          put(-30, new int[] {734, 187});
-          put(30, new int[] {233, 623});
-          put(31, new int[] {33, 221});
-          put(66, new int[] {558, 374});
-          put(19, new int[] {361, 623});
-          put(32, new int[] {362, 148});
-          put(-23, new int[] {809, 136});
-        }
-      };
+  private HashMap<Integer, int[]> uvCodeLocations = new HashMap<Integer, int[]>() {
+    {
+      put(-45, new int[] { 733, 300 });
+      put(-30, new int[] { 734, 187 });
+      put(30, new int[] { 233, 623 });
+      put(31, new int[] { 33, 221 });
+      put(66, new int[] { 558, 374 });
+      put(19, new int[] { 361, 623 });
+      put(32, new int[] { 362, 148 });
+      put(-23, new int[] { 809, 136 });
+    }
+  };
 
   private Tooltip currentTooltip; // Maintain a reference to the current tooltip
 
@@ -284,90 +348,85 @@ public class EscapeRoomController {
             });
 
     computerLoginButton.setOnAction(
-        (EventHandler<ActionEvent>)
-            event -> {
-              if (computerPasswordField.getText().isEmpty()) {
-                return;
-              }
-              String userInput = computerPasswordField.getText();
-              computerPasswordField.clear();
-              computerConsoleTextArea.setText(
-                  computerConsoleTextArea.getText() + "\nC:\\PrisonPC\\>" + userInput);
+        (EventHandler<ActionEvent>) event -> {
+          if (computerPasswordField.getText().isEmpty()) {
+            return;
+          }
+          String userInput = computerPasswordField.getText();
+          computerPasswordField.clear();
+          computerConsoleTextArea.setText(
+              computerConsoleTextArea.getText() + "\nC:\\PrisonPC\\>" + userInput);
 
-              if (!GameState.computerLoggedIn) {
-                if (userInput.equals(GameState.uvPassword + "")) {
-                  GameState.computerLoggedIn = true;
-                  Thread writerThread =
-                      new Thread(
-                          () -> {
-                            typeWrite(
-                                computerConsoleTextArea,
-                                "\nSystem:>Login Successful!\n"
-                                    + "System:>Welcome back Prison Guard!\n"
-                                    + "System:>Here is a list of admin functions you have access"
-                                    + " to:\n\n",
-                                10);
-                            typeWrite(
-                                computerConsoleTextArea,
-                                "  1. Unlock all prison cell doors\n"
-                                    + "  2. Explode all walls\n"
-                                    + "  3. Retrieve new uniform\n"
-                                    + "\n Choose a function by typing the corresponding number\n"
-                                    + "System:>Choose an Option:",
-                                6);
-                          });
-                  writerThread.setDaemon(true);
-                  writerThread.start();
-                } else {
-                  Thread writerThread =
-                      new Thread(
-                          () -> {
-                            typeWrite(
-                                computerConsoleTextArea,
-                                "\n" + "System:>Incorrect Password!\n" + "System:>Enter Password:",
-                                15);
-                          });
-                  writerThread.setDaemon(true);
-                  writerThread.start();
+          if (!GameState.computerLoggedIn) {
+            if (userInput.equals(GameState.uvPassword + "")) {
+              GameState.computerLoggedIn = true;
+              Thread writerThread = new Thread(
+                  () -> {
+                    typeWrite(
+                        computerConsoleTextArea,
+                        "\nSystem:>Login Successful!\n"
+                            + "System:>Welcome back Prison Guard!\n"
+                            + "System:>Here is a list of admin functions you have access"
+                            + " to:\n\n",
+                        10);
+                    typeWrite(
+                        computerConsoleTextArea,
+                        "  1. Unlock all prison cell doors\n"
+                            + "  2. Explode all walls\n"
+                            + "  3. Retrieve new uniform\n"
+                            + "\n Choose a function by typing the corresponding number\n"
+                            + "System:>Choose an Option:",
+                        6);
+                  });
+              writerThread.setDaemon(true);
+              writerThread.start();
+            } else {
+              Thread writerThread = new Thread(
+                  () -> {
+                    typeWrite(
+                        computerConsoleTextArea,
+                        "\n" + "System:>Incorrect Password!\n" + "System:>Enter Password:",
+                        15);
+                  });
+              writerThread.setDaemon(true);
+              writerThread.start();
+            }
+          } else {
+            // Runs after the user logins correctly
+            if (userInput.trim().equals("1")
+                || userInput.trim().equals("2")
+                || userInput.trim().equals("3")) {
+              // call the end game method
+              System.out.println("User chose option: " + userInput.trim());
+              endGame(userInput.trim());
+            } else {
+              Thread writerThread = new Thread(
+                  () -> {
+                    typeWrite(
+                        computerConsoleTextArea,
+                        "\n" + "System:>Invalid Option!\n" + "System:>Choose an Option:",
+                        15);
+                  });
+              writerThread.setDaemon(true);
+              writerThread.start();
+            }
+          }
+          // Use to auto scroll the pane to the bottom
+          Thread scrollThread = new Thread(
+              () -> {
+                try {
+                  Thread.sleep(100);
+                } catch (InterruptedException e) {
+                  e.printStackTrace();
                 }
-              } else {
-                // Runs after the user logins correctly
-                if (userInput.trim().equals("1")
-                    || userInput.trim().equals("2")
-                    || userInput.trim().equals("3")) {
-                  // call the end game method
-                  System.out.println("User chose option: " + userInput.trim());
-                  endGame(userInput.trim());
-                } else {
-                  Thread writerThread =
-                      new Thread(
-                          () -> {
-                            typeWrite(
-                                computerConsoleTextArea,
-                                "\n" + "System:>Invalid Option!\n" + "System:>Choose an Option:",
-                                15);
-                          });
-                  writerThread.setDaemon(true);
-                  writerThread.start();
-                }
-              }
-              // Use to auto scroll the pane to the bottom
-              Thread scrollThread =
-                  new Thread(
-                      () -> {
-                        try {
-                          Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                          e.printStackTrace();
-                        }
-                        Platform.runLater(
-                            () -> {
-                              computerConsoleTextArea.setScrollTop(Double.MAX_VALUE);
-                            });
-                      });
-              scrollThread.setDaemon(true);
-              scrollThread.start();
-            });
+                Platform.runLater(
+                    () -> {
+                      computerConsoleTextArea.setScrollTop(Double.MAX_VALUE);
+                    });
+              });
+          scrollThread.setDaemon(true);
+          scrollThread.start();
+        });
 
     phoneNameLabel
         .textProperty()
@@ -387,76 +446,73 @@ public class EscapeRoomController {
                 GameState.gptThinking));
 
     computer.setOnMouseClicked(
-        (EventHandler<MouseEvent>)
-            event -> {
-              if (GameState.togglingComputer) {
-                return;
-              } else {
-                toggleComputer();
-              }
-            });
+        (EventHandler<MouseEvent>) event -> {
+          if (GameState.togglingComputer) {
+            return;
+          } else {
+            toggleComputer();
+          }
+        });
 
     computerCloseButton.setOnAction(
-        (EventHandler<ActionEvent>)
-            event -> {
-              if (GameState.togglingComputer) {
-                return;
-              } else {
-                toggleComputer();
-              }
-            });
+        (EventHandler<ActionEvent>) event -> {
+          if (GameState.togglingComputer) {
+            return;
+          } else {
+            toggleComputer();
+          }
+        });
 
     // On send message
     sendButton.setOnAction(
-        (EventHandler<ActionEvent>)
-            new EventHandler<ActionEvent>() {
-              @Override
-              public void handle(ActionEvent event) {
-                // Print a message to indicate that the Send Button was clicked.
-                System.out.println("Send Button clicked");
-                soundUtils.playSound("outgoingText.mp3");
+        (EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+          @Override
+          public void handle(ActionEvent event) {
+            // Print a message to indicate that the Send Button was clicked.
+            System.out.println("Send Button clicked");
+            soundUtils.playSound("outgoingText.mp3");
 
-                // Get the message from the messagesTextField.
-                String message = messagesTextField.getText();
+            // Get the message from the messagesTextField.
+            String message = messagesTextField.getText();
 
-                // Check if the message is not empty and GPT is not currently generating a
-                // response.
-                if (!message.isEmpty() && !GameState.gptThinking.getValue()) {
-                  // Create an HBox for the message display and configure its properties.
-                  HBox horiBox = new HBox();
-                  horiBox.setAlignment(Pos.CENTER_RIGHT);
-                  horiBox.setPadding(new Insets(5, 5, 5, 10));
+            // Check if the message is not empty and GPT is not currently generating a
+            // response.
+            if (!message.isEmpty() && !GameState.gptThinking.getValue()) {
+              // Create an HBox for the message display and configure its properties.
+              HBox horiBox = new HBox();
+              horiBox.setAlignment(Pos.CENTER_RIGHT);
+              horiBox.setPadding(new Insets(5, 5, 5, 10));
 
-                  // Create a Text element to display the message.
-                  Text text = new Text(message);
+              // Create a Text element to display the message.
+              Text text = new Text(message);
 
-                  // Create a TextFlow to display the text message with styling.
-                  TextFlow textFlow = new TextFlow(text);
-                  textFlow.setStyle(
-                      "-fx-color: rgb(239,242,255); "
-                          + "-fx-background-color: rgb(15,125,242); "
-                          + "-fx-background-radius: 10px; ");
-                  textFlow.setPadding(new Insets(5, 10, 5, 10));
-                  text.setFill(Color.color(0.934, 0.945, 0.996));
+              // Create a TextFlow to display the text message with styling.
+              TextFlow textFlow = new TextFlow(text);
+              textFlow.setStyle(
+                  "-fx-color: rgb(239,242,255); "
+                      + "-fx-background-color: rgb(15,125,242); "
+                      + "-fx-background-radius: 10px; ");
+              textFlow.setPadding(new Insets(5, 10, 5, 10));
+              text.setFill(Color.color(0.934, 0.945, 0.996));
 
-                  // Add the TextFlow to the HBox.
-                  horiBox.getChildren().add(textFlow);
+              // Add the TextFlow to the HBox.
+              horiBox.getChildren().add(textFlow);
 
-                  // Add the HBox to the messagesVertBox to display the message.
-                  messagesVertBox.getChildren().add(horiBox);
+              // Add the HBox to the messagesVertBox to display the message.
+              messagesVertBox.getChildren().add(horiBox);
 
-                  // Clear the messagesTextField to prepare for the next message.
-                  messagesTextField.clear();
+              // Clear the messagesTextField to prepare for the next message.
+              messagesTextField.clear();
 
-                  try {
-                    // Send the user's message to the GPT for a response.
-                    runGpt(new ChatMessage("user", message));
-                  } catch (ApiProxyException e) {
-                    e.printStackTrace();
-                  }
-                }
+              try {
+                // Send the user's message to the GPT for a response.
+                runGpt(new ChatMessage("user", message));
+              } catch (ApiProxyException e) {
+                e.printStackTrace();
               }
-            });
+            }
+          }
+        });
 
     torchButton.setOnMouseClicked(
         event -> {
@@ -467,8 +523,7 @@ public class EscapeRoomController {
     uvLightEffect.visibleProperty().bind(GameState.torchIsOn);
 
     // Configure settings for the riddle's chat completion request.
-    chatCompletionRequest =
-        new ChatCompletionRequest().setN(1).setTemperature(0.3).setTopP(0.5).setMaxTokens(200);
+    chatCompletionRequest = new ChatCompletionRequest().setN(1).setTemperature(0.3).setTopP(0.5).setMaxTokens(200);
 
     // Run a GPT-based instruction for the introduction.
     runGpt(new ChatMessage("user", GptPromptEngineering.getIntroInstruction(GameState.difficulty)));
@@ -500,21 +555,19 @@ public class EscapeRoomController {
     phoneTransition.setNode(endPhoneGroup);
     phoneTransition.setByY(550);
     phoneTransition.setDuration(Duration.millis(500));
-    Thread backgroundAnimThread =
-        new Thread(
-            () -> {
-              backgroundTransition.play();
-            });
-    Thread phoneAnimThread =
-        new Thread(
-            () -> {
-              try {
-                Thread.sleep(750);
-              } catch (InterruptedException e) {
-                e.printStackTrace();
-              }
-              phoneTransition.play();
-            });
+    Thread backgroundAnimThread = new Thread(
+        () -> {
+          backgroundTransition.play();
+        });
+    Thread phoneAnimThread = new Thread(
+        () -> {
+          try {
+            Thread.sleep(750);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+          phoneTransition.play();
+        });
     phoneAnimThread.setDaemon(true);
     backgroundAnimThread.setDaemon(true);
     phoneAnimThread.start();
@@ -540,23 +593,21 @@ public class EscapeRoomController {
     endPhoneMessage.setText("Unfortunately you failed to escape the prison within the time limit");
 
     // Initialize the default ending message.
-    String endMessage =
-        "As the tension in the air thickens and your heart races, you push your luck to the limit"
-            + " in a daring attempt to break free from your prison confines. But alas, as the"
-            + " clock's relentless ticking echoes in your ears, your every move becomes more"
-            + " desperate. Time slips through your fingers like sand, and despite your best"
-            + " efforts, the guards' footsteps draw nearer. With a heavy heart, you realize that"
-            + " your window of opportunity has closed. You failed to escape, and the prison's"
-            + " unforgiving walls will continue to confine you. Try again, for the path to freedom"
-            + " is as elusive as ever.";
+    String endMessage = "As the tension in the air thickens and your heart races, you push your luck to the limit"
+        + " in a daring attempt to break free from your prison confines. But alas, as the"
+        + " clock's relentless ticking echoes in your ears, your every move becomes more"
+        + " desperate. Time slips through your fingers like sand, and despite your best"
+        + " efforts, the guards' footsteps draw nearer. With a heavy heart, you realize that"
+        + " your window of opportunity has closed. You failed to escape, and the prison's"
+        + " unforgiving walls will continue to confine you. Try again, for the path to freedom"
+        + " is as elusive as ever.";
 
     // Check if the game ending is not the default ending ("0").
     if (!ending.equals("0")) {
       int minutes = (int) ((GameState.time - remainingSeconds) / 60);
       int seconds = (GameState.time - remainingSeconds) % 60;
       // Format and set the ending message based on the selected ending.
-      endMessage =
-          String.format(endingMap.get(ending), new DateFormatSymbols().getMonths()[month - 1], day);
+      endMessage = String.format(endingMap.get(ending), new DateFormatSymbols().getMonths()[month - 1], day);
       // Update the phone UI to display a congratulatory message.
       endPhoneTitle.setText("Congratulations!");
       endPhoneMessage.setText(
@@ -584,49 +635,47 @@ public class EscapeRoomController {
         .set(new Image(App.class.getResourceAsStream("/images/ending" + ending + ".png")));
 
     // Create a thread to handle the animation of the game ending UI.
-    Thread animationThread =
-        new Thread(
-            () -> {
-              TranslateTransition endSlide = new TranslateTransition();
-              endSlide.setNode(gameEndPane);
-              endSlide.setDuration(Duration.millis(500));
-              endSlide.setByY(720);
-              FadeTransition endFade = new FadeTransition();
-              endFade.setNode(gameEndPane);
-              endFade.setDuration(Duration.millis(1000));
-              endFade.setFromValue(0);
-              endFade.setToValue(1);
-              endFade.play();
-              endSlide.play();
-            });
+    Thread animationThread = new Thread(
+        () -> {
+          TranslateTransition endSlide = new TranslateTransition();
+          endSlide.setNode(gameEndPane);
+          endSlide.setDuration(Duration.millis(500));
+          endSlide.setByY(720);
+          FadeTransition endFade = new FadeTransition();
+          endFade.setNode(gameEndPane);
+          endFade.setDuration(Duration.millis(1000));
+          endFade.setFromValue(0);
+          endFade.setToValue(1);
+          endFade.play();
+          endSlide.play();
+        });
 
     // Set the animation thread as a daemon thread and start it.
     animationThread.setDaemon(true);
     animationThread.start();
 
     // Create a thread to handle the text typing animation.
-    Thread textThread =
-        new Thread(
-            () -> {
-              try {
-                Thread.sleep(1250); // Wait for 1.25 seconds before typing the ending message.
-              } catch (InterruptedException e) {
-                e.printStackTrace();
-              }
-              typeWrite(endGameTextArea, finalEndMessage, 15); // Type the final ending message.
-              System.out.println("finished typing ending message");
-              try {
-                Thread.sleep(2000); // Wait for 2 seconds after typing the ending message.
-              } catch (InterruptedException e) {
-                e.printStackTrace();
-              }
-              System.out.println("Finished waiting for 3 seconds");
-              typeWrite(
-                  clickContinueTextArea,
-                  "Click anywhere to continue",
-                  15); // Display a click-to-continue message.
-              GameState.continueEnabled = true; // Enable the click-to-continue functionality.
-            });
+    Thread textThread = new Thread(
+        () -> {
+          try {
+            Thread.sleep(1250); // Wait for 1.25 seconds before typing the ending message.
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+          typeWrite(endGameTextArea, finalEndMessage, 15); // Type the final ending message.
+          System.out.println("finished typing ending message");
+          try {
+            Thread.sleep(2000); // Wait for 2 seconds after typing the ending message.
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+          System.out.println("Finished waiting for 3 seconds");
+          typeWrite(
+              clickContinueTextArea,
+              "Click anywhere to continue",
+              15); // Display a click-to-continue message.
+          GameState.continueEnabled = true; // Enable the click-to-continue functionality.
+        });
 
     // Set the text animation thread as a daemon thread and start it.
     textThread.setDaemon(true);
@@ -906,33 +955,32 @@ public class EscapeRoomController {
   // Timer
   private void startTimer() {
     // Create a Timeline for the timer with a 1-second interval.
-    timer =
-        new Timeline(
-            new KeyFrame(
-                Duration.seconds(1),
-                event -> {
-                  // Check if there are remaining seconds.
-                  if (remainingSeconds > 0) {
-                    remainingSeconds--;
-                    updateTimerLabel(); // Update the timer label to display the remaining time.
+    timer = new Timeline(
+        new KeyFrame(
+            Duration.seconds(1),
+            event -> {
+              // Check if there are remaining seconds.
+              if (remainingSeconds > 0) {
+                remainingSeconds--;
+                updateTimerLabel(); // Update the timer label to display the remaining time.
 
-                    // Notify the user when a minute has passed.
-                    if (remainingSeconds % 60 == 0 && remainingSeconds != 0) {
-                      String plural = (remainingSeconds == 60) ? "" : "s";
-                      textToSpeech(
-                          "You have "
-                              + (remainingSeconds / 60)
-                              + " minute"
-                              + plural
-                              + " remaining");
-                    }
-                  } else {
-                    // If no remaining seconds, stop the timer and handle the timer expiration.
-                    timer.stop();
-                    // handleTimerExpired();
-                    endGame("0");
-                  }
-                }));
+                // Notify the user when a minute has passed.
+                if (remainingSeconds % 60 == 0 && remainingSeconds != 0) {
+                  String plural = (remainingSeconds == 60) ? "" : "s";
+                  textToSpeech(
+                      "You have "
+                          + (remainingSeconds / 60)
+                          + " minute"
+                          + plural
+                          + " remaining");
+                }
+              } else {
+                // If no remaining seconds, stop the timer and handle the timer expiration.
+                timer.stop();
+                // handleTimerExpired();
+                endGame("0");
+              }
+            }));
 
     // Set the cycle count to INDEFINITE, meaning the timer will run continuously.
     timer.setCycleCount(Animation.INDEFINITE);
@@ -956,12 +1004,14 @@ public class EscapeRoomController {
 
   // Key Presses
   /**
-   * Handles the key pressed event in the input text field. If the Enter key is pressed and the
+   * Handles the key pressed event in the input text field. If the Enter key is
+   * pressed and the
    * input is not blank, triggers the onSendMessage function.
    *
    * @param event the key event
-   * @throws ApiProxyException if there is an error communicating with the API proxy
-   * @throws IOException if there is an I/O error
+   * @throws ApiProxyException if there is an error communicating with the API
+   *                           proxy
+   * @throws IOException       if there is an I/O error
    */
   @FXML
   private void onKeyPressed(KeyEvent event) {
@@ -980,19 +1030,18 @@ public class EscapeRoomController {
   // TTS
   private void textToSpeech(String message) {
     // Create a task to handle text-to-speech processing in a background thread.
-    Task<Void> speechTask =
-        new Task<Void>() {
-          @Override
-          public Void call() throws Exception {
-            // Create a TextToSpeech object to convert text to speech.
-            TextToSpeech textToSpeech = new TextToSpeech();
+    Task<Void> speechTask = new Task<Void>() {
+      @Override
+      public Void call() throws Exception {
+        // Create a TextToSpeech object to convert text to speech.
+        TextToSpeech textToSpeech = new TextToSpeech();
 
-            // Use the TextToSpeech object to speak the provided message.
-            textToSpeech.speak(message);
+        // Use the TextToSpeech object to speak the provided message.
+        textToSpeech.speak(message);
 
-            return null;
-          }
-        };
+        return null;
+      }
+    };
 
     // Create a new thread and start the text-to-speech task in the background.
     new Thread(speechTask).start();
@@ -1070,48 +1119,46 @@ public class EscapeRoomController {
       issueInstruction(GptPromptEngineering.getRiddleSolvedInstruction(GameState.difficulty));
 
       // Insert an animation to show the torch being retrieved.
-      Thread animationThread =
-          new Thread(
-              () -> {
-                TranslateTransition torchGet = new TranslateTransition();
-                torchGet.setNode(torchGetGroup);
-                torchGet.setDuration(Duration.millis(500));
-                torchGet.setByY(600);
+      Thread animationThread = new Thread(
+          () -> {
+            TranslateTransition torchGet = new TranslateTransition();
+            torchGet.setNode(torchGetGroup);
+            torchGet.setDuration(Duration.millis(500));
+            torchGet.setByY(600);
 
-                FadeTransition torchFade = new FadeTransition();
-                torchFade.setNode(torchGetGroup);
-                torchFade.setDuration(Duration.millis(1000));
-                torchFade.setFromValue(0);
-                torchFade.setToValue(1);
+            FadeTransition torchFade = new FadeTransition();
+            torchFade.setNode(torchGetGroup);
+            torchFade.setDuration(Duration.millis(1000));
+            torchFade.setFromValue(0);
+            torchFade.setToValue(1);
 
-                torchFade.play();
-                torchGet.play();
-              });
+            torchFade.play();
+            torchGet.play();
+          });
 
       // Create a thread to make the torch disappear after a certain time period.
-      Thread disappearThread =
-          new Thread(
-              () -> {
-                try {
-                  Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                  e.printStackTrace();
-                }
+      Thread disappearThread = new Thread(
+          () -> {
+            try {
+              Thread.sleep(5000);
+            } catch (InterruptedException e) {
+              e.printStackTrace();
+            }
 
-                TranslateTransition torchGet = new TranslateTransition();
-                torchGet.setNode(torchGetGroup);
-                torchGet.setDuration(Duration.millis(500));
-                torchGet.setByY(600);
+            TranslateTransition torchGet = new TranslateTransition();
+            torchGet.setNode(torchGetGroup);
+            torchGet.setDuration(Duration.millis(500));
+            torchGet.setByY(600);
 
-                FadeTransition torchFade = new FadeTransition();
-                torchFade.setNode(torchGetGroup);
-                torchFade.setDuration(Duration.millis(500));
-                torchFade.setFromValue(1);
-                torchFade.setToValue(0);
+            FadeTransition torchFade = new FadeTransition();
+            torchFade.setNode(torchGetGroup);
+            torchFade.setDuration(Duration.millis(500));
+            torchFade.setFromValue(1);
+            torchFade.setToValue(0);
 
-                torchFade.play();
-                torchGet.play();
-              });
+            torchFade.play();
+            torchGet.play();
+          });
 
       // Set both animation threads as daemon threads and start them.
       animationThread.setDaemon(true);
@@ -1277,48 +1324,47 @@ public class EscapeRoomController {
     // Countdown Label
     int countdownSeconds = 5;
 
-    countdownThread =
-        new Thread(
-            () -> {
-              for (int i = countdownSeconds; i >= 0; i--) {
-                final int remainingTime = i;
-                Platform.runLater(
-                    () -> {
-                      if (remainingTime != 1) {
-                        memoryCountdownLabel.setText(
-                            "You have " + remainingTime + " seconds to remember");
-                      } else {
-                        memoryCountdownLabel.setText(
-                            "You have " + remainingTime + " second to remember");
-                      }
-                    });
-
-                try {
-                  // Check for interruption and break out of the loop
-                  if (Thread.currentThread().isInterrupted()) {
-                    return;
+    countdownThread = new Thread(
+        () -> {
+          for (int i = countdownSeconds; i >= 0; i--) {
+            final int remainingTime = i;
+            Platform.runLater(
+                () -> {
+                  if (remainingTime != 1) {
+                    memoryCountdownLabel.setText(
+                        "You have " + remainingTime + " seconds to remember");
+                  } else {
+                    memoryCountdownLabel.setText(
+                        "You have " + remainingTime + " second to remember");
                   }
-                  Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                  // Handle the InterruptedException here if needed
-                  // In this case, just return without rethrowing or printing the exception
-                  return;
-                }
-              }
+                });
 
-              // Execute code after countdown
-              Platform.runLater(
-                  () -> {
-                    memoryCountdownLabel.setVisible(false);
-                    for (String fxid : allSwitches) {
-                      setSwitchToRed(fxid);
-                    }
-                    goBackMemory.setLayoutX(403);
-                    goBackMemory.setLayoutY(528);
-                    checkGuessMemory.setVisible(true);
-                    disableAllSwitches(false);
-                  });
-            });
+            try {
+              // Check for interruption and break out of the loop
+              if (Thread.currentThread().isInterrupted()) {
+                return;
+              }
+              Thread.sleep(1000);
+            } catch (InterruptedException e) {
+              // Handle the InterruptedException here if needed
+              // In this case, just return without rethrowing or printing the exception
+              return;
+            }
+          }
+
+          // Execute code after countdown
+          Platform.runLater(
+              () -> {
+                memoryCountdownLabel.setVisible(false);
+                for (String fxid : allSwitches) {
+                  setSwitchToRed(fxid);
+                }
+                goBackMemory.setLayoutX(403);
+                goBackMemory.setLayoutY(528);
+                checkGuessMemory.setVisible(true);
+                disableAllSwitches(false);
+              });
+        });
 
     countdownThread.start(); // Start the thread after creating it
   }
@@ -1340,25 +1386,24 @@ public class EscapeRoomController {
     chatCompletionRequest.addMessage(msg);
 
     // Create a task for GPT processing.
-    Task<ChatMessage> gptTask =
-        new Task<ChatMessage>() {
-          @Override
-          protected ChatMessage call() throws Exception {
-            try {
-              // Execute the chat completion request.
-              ChatCompletionResult chatCompletionResult = chatCompletionRequest.execute();
-              // Get the first choice from the result.
-              Choice result = chatCompletionResult.getChoices().iterator().next();
-              // Add the result message to the chat completion request.
-              chatCompletionRequest.addMessage(result.getChatMessage());
-              // Return the GPT-generated response message.
-              return result.getChatMessage();
-            } catch (ApiProxyException e) {
-              e.printStackTrace();
-              return null;
-            }
-          }
-        };
+    Task<ChatMessage> gptTask = new Task<ChatMessage>() {
+      @Override
+      protected ChatMessage call() throws Exception {
+        try {
+          // Execute the chat completion request.
+          ChatCompletionResult chatCompletionResult = chatCompletionRequest.execute();
+          // Get the first choice from the result.
+          Choice result = chatCompletionResult.getChoices().iterator().next();
+          // Add the result message to the chat completion request.
+          chatCompletionRequest.addMessage(result.getChatMessage());
+          // Return the GPT-generated response message.
+          return result.getChatMessage();
+        } catch (ApiProxyException e) {
+          e.printStackTrace();
+          return null;
+        }
+      }
+    };
 
     // Define actions to be performed when the task succeeds.
     gptTask.setOnSucceeded(
@@ -1408,11 +1453,10 @@ public class EscapeRoomController {
             }
           } else {
             // When an error occurs, print a message suggesting fixes to the user.
-            String apology =
-                "Sorry, it seems like you cannot receive messages at this time. Maybe try to check"
-                    + " your internet connection or your apiproxy.config file in order to see what"
-                    + " is causing this problem, and then restart the application when you are"
-                    + " ready to retry. You cannot escape from this facility without assistance.";
+            String apology = "Sorry, it seems like you cannot receive messages at this time. Maybe try to check"
+                + " your internet connection or your apiproxy.config file in order to see what"
+                + " is causing this problem, and then restart the application when you are"
+                + " ready to retry. You cannot escape from this facility without assistance.";
             wait(
                 3500,
                 () -> {
@@ -1421,8 +1465,9 @@ public class EscapeRoomController {
                     notifCircle.setVisible(true);
                     heartbeatAnimation.play();
                   }
-                  // gptThinking is kept as true to prevent future messages from processing, so the 
-                  // texter label and gif are unbound. 
+                  // gptThinking is kept as true to prevent future messages from processing, so
+                  // the
+                  // texter label and gif are unbound.
                   phoneNameLabel.textProperty().unbind();
                   phoneNameLabel.setText("Prison Guard");
                   typingImage.setVisible(false);
@@ -1446,26 +1491,25 @@ public class EscapeRoomController {
   /**
    * Waits for the specified amount of time before executing a task.
    *
-   * @param time The amount of time in milliseconds to wait for.
+   * @param time    The amount of time in milliseconds to wait for.
    * @param process The process to be completed afterwards.
    */
   private void wait(int time, Runnable process) {
     // Create a new thread for waiting and processing.
-    Thread waitThread =
-        new Thread(
-            () -> {
-              try {
-                // Pause the thread for the specified time (in milliseconds).
-                Thread.sleep(time);
-              } catch (InterruptedException e) {
-                e.printStackTrace();
-              }
+    Thread waitThread = new Thread(
+        () -> {
+          try {
+            // Pause the thread for the specified time (in milliseconds).
+            Thread.sleep(time);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
 
-              // Use Platform.runLater to execute the provided process on the JavaFX
-              // application
-              // thread.
-              Platform.runLater(process);
-            });
+          // Use Platform.runLater to execute the provided process on the JavaFX
+          // application
+          // thread.
+          Platform.runLater(process);
+        });
 
     // Set the waitThread as a daemon thread, which won't prevent the application
     // from exiting.
@@ -1476,7 +1520,8 @@ public class EscapeRoomController {
   }
 
   /**
-   * Issues an instruction to GPT, waiting for the previous instruction to complete if it has not
+   * Issues an instruction to GPT, waiting for the previous instruction to
+   * complete if it has not
    * completed yet.
    *
    * @param message the message to be used.
