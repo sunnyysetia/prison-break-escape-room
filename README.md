@@ -32,5 +32,8 @@ accessToken: “YOUR_KEY”`
 
 ## Attributions
 
-Stencil font: https://fonts.adobe.com/fonts/stencil#about-section
-Metropolis font: https://www.1001fonts.com/metropolis-font.html#license
+- Stencil font: https://fonts.adobe.com/fonts/stencil#about-section
+- Metropolis font: https://www.1001fonts.com/metropolis-font.html#license
+- Background Images generated using ai: https://www.freepik.com/ai-images-editor
+- Notification SFX: https://www.youtube.com/watch?v=hBJ5NvMj21M&ab_channel=LOFITUNES
+- Typing animation GIF: https://tenor.com/en-GB/search/iphone-typing-gif-gifs
