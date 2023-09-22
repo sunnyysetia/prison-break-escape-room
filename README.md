@@ -38,3 +38,13 @@ accessToken: “YOUR_KEY”`
 - Background Images generated using ai: https://www.freepik.com/ai-images-editor
 - Notification SFX: https://www.youtube.com/watch?v=hBJ5NvMj21M&ab_channel=LOFITUNES
 - Typing animation GIF: https://tenor.com/en-GB/search/iphone-typing-gif-gifs
+
+- banging on metal door - sound effect: https://www.youtube.com/watch?v=pR_r4CSCZ2o
+- Heavy Metal Door Opening and Closing: https://www.youtube.com/watch?v=c90uCjVbW_g
+- Light Flicker Sound Effect: https://www.youtube.com/watch?v=oVvrIcJbRMQ
+- Crowd running sound effect (no copyright): https://www.youtube.com/watch?v=PJQpMyr-mZA
+- Building Collapses Sound Efffect | High Quality Sound| NCS Effects | Royalty Free: https://www.youtube.com/watch?v=LONYbhRyDuA
+- WIN sound effect no copyright: https://www.youtube.com/watch?v=rr5CMS2GtCY
+- GAME OVER!!No Copyright Sound Effect Music: https://www.youtube.com/watch?v=VeG31i04Cb8
+- @zariimusic spy music, spy music no copyright, undercover agent action scenes music, spy themes, NO WAY - ZARII: https://www.youtube.com/watch?v=Rx17xiAU5_4
+- Typing Sound Effect (no copyright): https://www.youtube.com/watch?v=OJhWtBBJw10
