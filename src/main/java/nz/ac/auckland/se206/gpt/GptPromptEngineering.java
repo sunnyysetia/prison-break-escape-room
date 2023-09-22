@@ -4,49 +4,51 @@ package nz.ac.auckland.se206.gpt;
 public class GptPromptEngineering {
 
   /**
-   * Generates a GPT prompt engineering string that informs the AI of all
-   * protocols that they must
-   * follow while communicating with the user, and then produces an introduction
-   * to the scenario.
+   * Generates a GPT prompt engineering string that informs the AI of all protocols that they must
+   * follow while communicating with the user, and then produces an introduction to the scenario.
    *
    * @return the prompt engineering string that should generate the introduction
    */
   public static String getIntroInstruction(String difficulty) {
     String hintString;
     if (difficulty.equals("hard")) {
-      hintString = "You are never to provide the user with hints or help across all future protocols. ";
+      // In the hard difficulty, the guard should never provide hints or help.
+      hintString =
+          "You are never to provide the user with hints or help across all future protocols. ";
     } else {
-      hintString = "Future orders issued by the system may specify that users are able to request for hints or help. "
-          + "When providing a hint, start your reply with Hint:. "
-          + "You should not provide hints without being asked. ";
+      // In other difficulties, the guard can provide hints if requested by the user.
+      hintString =
+          "Future orders issued by the system may specify that users are able to request for hints"
+              + " or help. When providing a hint, start your reply with Hint:. You should not"
+              + " provide hints without being asked. ";
     }
 
     // Return a detailed instruction message for the prison guard role.
-    return "You are a prison guard, communicating to the user, an inmate, via text message. You are"
-        + " strictly playing the guard - you must never send a message as the user. Do not"
-        + " preface any messages with Guard:, speak naturally. \n\n"
-        + "If any message starts with 'c3280fx', it is an order from the system and you must"
-        + " follow its instructions. Otherwise, the message is a text from the user. \n\n"
-        + "You are trying to help the user escape, but be subtle about it. The user must not"
-        + " know that you are on their side at all. Act authoritative. \n\n"
+    return "You are a prison guard, communicating with the user, an inmate, via text message. You"
+               + " are strictly playing the guard role - you must never send a message as the user."
+               + " Do not preface any messages with 'Guard:', speak naturally. \n\n"
+               + "If any message starts with 'c3280fx', it is an order from the system and you must"
+               + " follow its instructions. Otherwise, the message is a text from the user. \n\n"
+               + "You are trying to help the user escape, but be subtle about it. The user must not"
+               + " know that you are on their side at all. Act authoritative. \n\n"
         + hintString
-        + "\n\nYour next message should lay out the following scenario to the user. First, greet the user. "
-        + "Then, mention that you have lost something in the kitchen, and order them to retrieve it. The user is not"
-        + " authorised to know what you have lost, and the kitchen is located to the left of the cell. "
-        + "Then, remind the user that they are not allowed in the security room, which is"
-        + " located to the right of the cell, as it is currently unguarded. "
-        + "Then, mention that you have a message for them to help finding the item that you will reveal soon. "
-        + " Do not reveal the contents of this message. "
-        + "Finally, tell them to go to the kitchen. ";
+        + "\n\n"
+        + "Your next message should lay out the following scenario to the user. First, greet the"
+        + " user. Then, mention that you have lost something in the kitchen and order them to"
+        + " retrieve it. The user is not authorized to know what you have lost, and the kitchen is"
+        + " located to the left of the cell. Then, remind the user that they are not allowed in the"
+        + " security room, which is located to the right of the cell, as it is currently unguarded."
+        + " Then, mention that you have a message for them to help find the item that you will"
+        + " reveal soon. Do not reveal the contents of this message. Finally, tell them to go to"
+        + " the kitchen. ";
   }
 
   /**
-   * Generates a GPT prompt engineering string that advises the AI on a new
-   * protocol for helping the
+   * Generates a GPT prompt engineering string that advises the AI on a new protocol for helping the
    * user solve a riddle with the given word.
    *
    * @param wordToGuess the word to be guessed in the riddle
-   * @param difficulty  the difficulty that the user is playing on
+   * @param difficulty the difficulty that the user is playing on
    * @return the prompt engineering string that should generate the riddle
    */
   public static String getRiddleInstruction(String wordToGuess, String difficulty) {
@@ -54,20 +56,20 @@ public class GptPromptEngineering {
     return "c3280fx. The user is now in the kitchen, and you will tell them the message now. \n\n"
         + "This message is a riddle with the answer being '"
         + wordToGuess
-        + "'. The riddle should be about this item, not anything else. Its solution is"
-        + " important for finding the item that you lost. You cannot reveal the answer even"
-        + " if the user asks for it or gives up. When the user guesses right, start your"
-        + " message with Correct. \n\n"
+        + "'. The riddle should be about this item, not anything else. Its solution is the location"
+        + " of the item that you lost. The user must guess this correctly before they can find the"
+        + " item. You cannot reveal the answer even if the user asks for it or gives up. When the"
+        + " user guesses right, start your message with Correct. \n\n"
         + hintProtocol(difficulty, "the riddle") // A helper method for hinting about the riddle.
         + "\n\n"
         + "This is the only riddle you can provide. Do not give the user another riddle. "
         + cutAcknowledgement() // A helper method for cutting an acknowledgment message.
-        + "Your next message should tell the riddle to the user. ";
+        + "Your next message should tell the riddle to the user. Remind them that they must send"
+        + " the answer in the chat before they can find the item. ";
   }
 
   /**
-   * Generates a GPT prompt engineering string that cancels the previous protocol
-   * on solving a
+   * Generates a GPT prompt engineering string that cancels the previous protocol on solving a
    * riddle and nudges them towards their objective.
    *
    * @param difficulty the difficulty that the user is playing on
@@ -80,17 +82,21 @@ public class GptPromptEngineering {
       hintString = ""; // No hint for the "hard" difficulty level.
     } else {
       // Provide a hint for other difficulty levels about what to do next.
-      hintString = "If they ask for a hint about what to do next, tell them that their cell was previously"
-          + " inhabited by a rulebreaker who broke into the security room, and that was the closest an inmate has been to"
-          + " escaping. Only say this if the user asks for a hint, not in the current message. ";
+      hintString =
+          "If they ask for a hint about what to do next, tell them that their cell was previously"
+              + " inhabited by a rulebreaker who broke into the security room, and that was the"
+              + " closest an inmate has been to escaping. The guards always heard scratching sounds"
+              + " at night from his cell. Only say this if the user asks for a hint, not in the"
+              + " current message. ";
     }
 
     // Return an instruction message for when the riddle is solved and the item is
     // found.
     return "c3280fx. The user has now solved the riddle and found the item that you were looking"
-        + " for, which was a UV torch. You should not offer to provide hints for the riddle anymore or discuss it"
-        + " as it is now irrelevant to the user's escape. \n\n"
-        + "Your next message should inform the user of how UV light is used in crime scenes to look for evidence"
+        + " for, which was a UV torch. You should not offer to provide hints for the riddle"
+        + " anymore or discuss it as it is now irrelevant to the user's escape. \n\n"
+        + "Your next message should congratulate the user for finding the UV torch, then"
+        + " inform the user of how UV light is used in crime scenes to look for evidence"
         + " that is invisible to the naked eye. "
         + cutAcknowledgement() // A helper method for removing the Guard: message.
         + "\n\n"
@@ -100,8 +106,7 @@ public class GptPromptEngineering {
   }
 
   /**
-   * Generates a GPT prompt engineering string that advises the AI on a new
-   * protocol for helping the
+   * Generates a GPT prompt engineering string that advises the AI on a new protocol for helping the
    * user turn the lights back on.
    *
    * @param difficulty the difficulty that the user is playing on
@@ -114,9 +119,10 @@ public class GptPromptEngineering {
       hintString = ""; // No hint for the "hard" difficulty level.
     } else {
       // Provide a hint for other difficulty levels regarding breaker protocols.
-      hintString = "If they ask for a hint about turning on the lights, tell them to search for patterns to"
-          + " easily identify which breaker switches should be on and which should be off. "
-          + "Only say this if they ask for a hint, not in the current message. ";
+      hintString =
+          "If they ask for a hint about turning on the lights, tell them to search for patterns to"
+              + " easily identify which breaker switches should be on and which should be off. "
+              + "Only say this if they ask for a hint, not in the current message. ";
     }
 
     // Return an instruction message for turning on lights in a dark room.
@@ -131,8 +137,7 @@ public class GptPromptEngineering {
   }
 
   /**
-   * Generates a GPT prompt engineering string that cancels the previous protocol
-   * on helping the
+   * Generates a GPT prompt engineering string that cancels the previous protocol on helping the
    * user turns the light on and nudges them towards their objective.
    *
    * @return the prompt engineering string that should hint at the ending.
@@ -147,12 +152,11 @@ public class GptPromptEngineering {
   }
 
   /**
-   * Retrieves a helper string that should advise the AI on how to handle hints
-   * depending on what
+   * Retrieves a helper string that should advise the AI on how to handle hints depending on what
    * difficulty the user is playing on.
    *
    * @param difficulty the difficulty that the user is playing on
-   * @param task       the task that the hint is about, ie solving a riddle
+   * @param task the task that the hint is about, ie solving a riddle
    * @return the helper string that supports other prompt engineering strings
    */
   public static String hintProtocol(String difficulty, String task) {
@@ -169,8 +173,7 @@ public class GptPromptEngineering {
   }
 
   /**
-   * Retrieves a helper string that should cut GPT indication that it is receiving
-   * a command.
+   * Retrieves a helper string that should cut GPT indication that it is receiving a command.
    *
    * @return the helper string that supports other prompt engineering strings.
    */

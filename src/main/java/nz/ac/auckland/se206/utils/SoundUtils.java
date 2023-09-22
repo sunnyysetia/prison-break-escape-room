@@ -58,11 +58,4 @@ public class SoundUtils {
       e.printStackTrace();
     }
   }
-
-  public static void stopSound() {
-    if (currentMediaPlayer != null) {
-      currentMediaPlayer.stop();
-      currentMediaPlayer = null;
-    }
-  }
 }
