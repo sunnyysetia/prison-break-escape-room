@@ -31,14 +31,14 @@ public class GptPromptEngineering {
         + "You are trying to help the user escape, but be subtle about it. The user must not"
         + " know that you are on their side at all. Act authoritative. \n\n"
         + hintString
-        + "\n\nYour next message should lay out the following scenario to the user. You have"
-        + " lost something in the kitchen, and need the user to retrieve it. The user is not"
-        + " authorised to know what you have lost. The kitchen is located to the left of the"
-        + " cell. Remind the user that they are not allowed in the security room, which is"
-        + " located to the right of the cell, as it is currently unguarded. End"
-        + " with urging the user to go to the kitchen, and mention that you have a messsage"
-        + " for them to help that you will reveal soon. Do not tell them this message unless"
-        + " instructed by the system. Mention the kitchen before the security room as it is more important. ";
+        + "\n\nYour next message should lay out the following scenario to the user. First, greet the user. "
+        + "Then, mention that you have lost something in the kitchen, and order them to retrieve it. The user is not"
+        + " authorised to know what you have lost, and the kitchen is located to the left of the cell. "
+        + "Then, remind the user that they are not allowed in the security room, which is"
+        + " located to the right of the cell, as it is currently unguarded. "
+        + "Then, mention that you have a message for them to help finding the item that you will reveal soon. "
+        + " Do not reveal the contents of this message. "
+        + "Finally, tell them to go to the kitchen. ";
   }
 
   /**
