@@ -52,6 +52,7 @@ public class App extends Application {
     SceneManager.addUi(SceneManager.AppUi.WAITING_LOBBY, App.loadFxml("waitinglobby"));
     Parent root = SceneManager.getUi(AppUi.WAITING_LOBBY);
 
+    stage.setTitle("Escape Prison");
     stage.setOnCloseRequest(
         (event) -> {
           TextToSpeech textToSpeech = new TextToSpeech();
