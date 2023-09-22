@@ -27,12 +27,12 @@
          <font>
             <Font name="Stencil" size="27.0" />
          </font></Label>
-      <Label layoutX="15.0" layoutY="19.0" prefHeight="30.0" prefWidth="123.0" styleClass="stencilText" stylesheets="@../css/font.css" text="Hints :" textAlignment="CENTER" textFill="WHITE">
+      <Label layoutX="15.0" layoutY="19.0" prefHeight="30.0" prefWidth="123.0" styleClass="stencilText" stylesheets="@../css/font.css" text="Hints:" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Stencil" size="27.0" />
          </font>
       </Label>
-      <Label fx:id="hintLabel" layoutX="100.0" layoutY="15.0" prefHeight="41.0" prefWidth="65.0" styleClass="stencilText" stylesheets="@../css/font.css" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="hintLabel" layoutX="110.0" layoutY="15.0" prefHeight="41.0" prefWidth="65.0" styleClass="stencilText" stylesheets="@../css/font.css" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Stencil" size="27.0" />
          </font>
