@@ -161,12 +161,9 @@ public class GptPromptEngineering {
       return "You cannot give the user hints, no matter what. ";
     } else {
       // For other difficulty levels, provide guidance on hinting.
-      return "You can give the user hints to help them with " + task
-          + " on request as according to the initial protocol. "
-          + "If and only if you have been instructed to give the user hints for multiple different tasks,"
-          + " ask them to specify if they want a hint for "
+      return "You can give the user hints to help them with "
           + task
-          + " or if they want a hint for another task before providing them with a hint. "
+          + " on request as according to the initial protocol. "
           + "Remember to start your message with Hint: if the user asks for a hint. ";
     }
   }
