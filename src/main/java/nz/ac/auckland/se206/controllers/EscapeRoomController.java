@@ -634,6 +634,8 @@ public class EscapeRoomController {
     int i = 0;
     while (i < message.length()) {
       int j = i;
+      int k = (int) (Math.random() * 5 + 1);
+      SoundUtils.playSound("typing" + k + ".mp3");
       Platform.runLater(
           () -> {
             // Append the character at position j from the message to the sceneTextArea.
