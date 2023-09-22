@@ -65,6 +65,7 @@ import nz.ac.auckland.se206.gpt.openai.ChatCompletionRequest;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 import nz.ac.auckland.se206.speech.TextToSpeech;
+import nz.ac.auckland.se206.utils.SoundUtils;
 
 /** Controller class for the room view. */
 public class EscapeRoomController {
@@ -331,7 +332,7 @@ public class EscapeRoomController {
     uvLightText.xProperty().setValue(uvCodeLocation[0]);
     uvLightText.yProperty().setValue(uvCodeLocation[1]);
 
-    GameState.uvPassword = (int) (Math.random() * 100000000);
+    GameState.uvPassword = (int) (Math.random() * 100000);
     uvLightText.setText(Integer.toString(GameState.uvPassword));
     System.out.println("uvPassword: " + GameState.uvPassword);
 
@@ -470,7 +471,7 @@ public class EscapeRoomController {
           public void handle(ActionEvent event) {
             // Print a message to indicate that the Send Button was clicked.
             System.out.println("Send Button clicked");
-            playSound("outgoingText.mp3");
+            SoundUtils.playSound("outgoingText.mp3");
 
             // Get the message from the messagesTextField.
             String message = messagesTextField.getText();
@@ -610,6 +611,7 @@ public class EscapeRoomController {
               + "!");
     }
     String finalEndMessage = endMessage;
+    SoundUtils.playSound("ending" + ending + ".mp3");
     endGameImage
         .imageProperty()
         .set(new Image(App.class.getResourceAsStream("/images/ending" + ending + ".png")));
@@ -682,6 +684,9 @@ public class EscapeRoomController {
   private void addLabel(String messageFromGpt, VBox vbox) {
     // Print a message to indicate that GPT sent a message to the user.
     System.out.println("GPT sent user a message");
+
+    // Play incoming sound effect
+    SoundUtils.playSound("incomingText.mp3");
 
     // Create an HBox for displaying the GPT message and configure its properties.
     HBox horiBox = new HBox();
@@ -982,7 +987,7 @@ public class EscapeRoomController {
       // Prevent the Enter key event from propagating further
       if (GameState.phoneIsOpen) {
         sendButton.fire();
-        playSound("outgoingText.mp3");
+        SoundUtils.playSound("outgoingText.mp3");
       }
       if (GameState.computerIsOpen) {
         computerLoginButton.fire();
@@ -1402,7 +1407,6 @@ public class EscapeRoomController {
             }
 
             if (!GameState.phoneIsOpen) {
-              playSound("incomingText.mp3");
 
               notifCircle.setVisible(true);
               heartbeatAnimation.play();
@@ -1426,7 +1430,6 @@ public class EscapeRoomController {
                 () -> {
                   addLabel(apology, messagesVertBox);
                   if (!GameState.phoneIsOpen) {
-                    playSound("incomingText.mp3");
                     notifCircle.setVisible(true);
                     heartbeatAnimation.play();
                   }
@@ -1501,26 +1504,6 @@ public class EscapeRoomController {
       } catch (ApiProxyException e) {
         e.printStackTrace();
       }
-    }
-  }
-
-  private void playSound(String fileName) {
-    try {
-      // Build the resource path to the sound file
-      String resourcePath = "/sounds/" + fileName;
-
-      // Create a Media object with the resource path
-      Media sound = new Media(getClass().getResource(resourcePath).toString());
-
-      // Create a MediaPlayer with the Media object
-      MediaPlayer mediaPlayer = new MediaPlayer(sound);
-      mediaPlayer.setVolume(0.1);
-
-      // Play the sound effect
-      mediaPlayer.play();
-    } catch (Exception e) {
-      // Handle any exceptions that may occur (e.g., file not found)
-      e.printStackTrace();
     }
   }
 

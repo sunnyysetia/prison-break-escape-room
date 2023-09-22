@@ -32,6 +32,7 @@ accessToken: “YOUR_KEY”`
 
 ## Attributions
 
+- Eraser font: https://www.1001fonts.com/eraser-font.html
 - Stencil font: https://fonts.adobe.com/fonts/stencil#about-section
 - Metropolis font: https://www.1001fonts.com/metropolis-font.html#license
 - Background Images generated using ai: https://www.freepik.com/ai-images-editor

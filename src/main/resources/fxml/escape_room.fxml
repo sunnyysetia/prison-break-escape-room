@@ -71,14 +71,14 @@
                   <Rectangle fx:id="circuit" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="142.0" layoutX="38.0" layoutY="295.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#openCircuit" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="63.0" />
                </children>
             </Pane>
-            <Pane fx:id="prisonCellPane" layoutX="-3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1022.0">
+            <Pane fx:id="prisonCellPane" layoutX="-3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1022.0" stylesheets="@../css/font3.css">
                <children>
                   <ImageView fitHeight="580.0" layoutX="6.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/cell.png" />
                      </image>
                   </ImageView>
-                  <Text fx:id="uvLightText" disable="true" fill="#81fdfd" strokeType="OUTSIDE" text="uvCode" visible="false" wrappingWidth="200.0">
+                  <Text fx:id="uvLightText" disable="true" fill="#81fdfd" strokeType="OUTSIDE" styleClass="eraserText" text="uvCode" visible="false" wrappingWidth="200.0">
                      <font>
                         <Font size="35.0" />
                      </font>
