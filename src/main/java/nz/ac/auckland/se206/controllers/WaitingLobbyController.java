@@ -24,24 +24,29 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
+import nz.ac.auckland.se206.uils.SoundUtils;
 
 public class WaitingLobbyController {
 
-  @FXML private Group phoneGroup;
-  @FXML private Button onBeginGameButton;
-  @FXML private ToggleGroup tgDifficulty;
-  @FXML private ToggleGroup tgTime;
-  @FXML private Rectangle lightDim;
+  @FXML
+  private Group phoneGroup;
+  @FXML
+  private Button onBeginGameButton;
+  @FXML
+  private ToggleGroup tgDifficulty;
+  @FXML
+  private ToggleGroup tgTime;
+  @FXML
+  private Rectangle lightDim;
 
   private BooleanProperty lightsOn = new SimpleBooleanProperty();
   // Create a completely random timeline to simulate lights flickering
   private Timeline timeline = new Timeline();
   private int keyFrames = 15;
 
-  private ArrayList<String> kitchenItems =
-      new ArrayList<>(
-          Arrays.asList(
-              "cuttingboard", "oven", "plates", "extinguisher", "kettle", "clock", "toaster"));
+  private ArrayList<String> kitchenItems = new ArrayList<>(
+      Arrays.asList(
+          "cuttingboard", "oven", "plates", "extinguisher", "kettle", "clock", "toaster"));
 
   @FXML
   public void initialize() {
@@ -80,44 +85,50 @@ public class WaitingLobbyController {
     phoneTransition.setDuration(javafx.util.Duration.millis(500));
     phoneTransition.setByY(-550);
 
+    Thread soundThread = new Thread(
+        () -> {
+          // Play bang on metal door sound effect.
+          SoundUtils.playSound("bangOnMetalDoor.mp3");
+        });
+
     // Create a thread to play the phone transition animation.
-    Thread animationThread =
-        new Thread(
-            () -> {
-              phoneTransition.play();
-            });
+    Thread animationThread = new Thread(
+        () -> {
+          phoneTransition.play();
+        });
 
     // Create a thread to change the scene after a delay.
-    Thread changeSceneThread =
-        new Thread(
-            () -> {
-              try {
-                Thread.sleep(500);
-              } catch (InterruptedException e) {
-                e.printStackTrace();
-              }
+    Thread changeSceneThread = new Thread(
+        () -> {
+          try {
+            Thread.sleep(500);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
 
-              // Stop the timeline.
-              timeline.stop();
+          // Stop the timeline.
+          timeline.stop();
 
-              // Use Platform.runLater to safely change the scene UI elements.
-              Platform.runLater(
-                  () -> {
-                    try {
-                      // Load and set the ROOM scene UI using SceneManager and App.
-                      SceneManager.addUi(SceneManager.AppUi.ROOM, App.loadFxml("escape_room"));
-                    } catch (IOException e) {
-                      e.printStackTrace();
-                    }
+          // Use Platform.runLater to safely change the scene UI elements.
+          Platform.runLater(
+              () -> {
+                try {
+                  // Load and set the ROOM scene UI using SceneManager and App.
+                  SceneManager.addUi(SceneManager.AppUi.ROOM, App.loadFxml("escape_room"));
+                } catch (IOException e) {
+                  e.printStackTrace();
+                }
 
-                    // Set the UI to the ROOM scene.
-                    App.setUi(AppUi.ROOM);
-                  });
-            });
+                // Set the UI to the ROOM scene.
+                App.setUi(AppUi.ROOM);
+              });
+        });
 
     // Set both animation threads as daemon threads and start them.
     animationThread.setDaemon(true);
     animationThread.start();
+    soundThread.setDaemon(true);
+    soundThread.start();
     changeSceneThread.start();
 
     // Reset all game state variables to their default values.
