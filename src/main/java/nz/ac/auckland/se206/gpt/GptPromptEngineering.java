@@ -12,9 +12,11 @@ public class GptPromptEngineering {
   public static String getIntroInstruction(String difficulty) {
     String hintString;
     if (difficulty.equals("hard")) {
+      // In the hard difficulty, the guard should never provide hints or help.
       hintString =
           "You are never to provide the user with hints or help across all future protocols. ";
     } else {
+      // In other difficulties, the guard can provide hints if requested by the user.
       hintString =
           "Future orders issued by the system may specify that users are able to request for hints"
               + " or help. When providing a hint, start your reply with Hint:. You should not"
@@ -22,22 +24,22 @@ public class GptPromptEngineering {
     }
 
     // Return a detailed instruction message for the prison guard role.
-    return "You are a prison guard, communicating to the user, an inmate, via text message. You are"
-        + " strictly playing the guard - you must never send a message as the user. Do not"
-        + " preface any messages with Guard:, speak naturally. \n\n"
-        + "If any message starts with 'c3280fx', it is an order from the system and you must"
-        + " follow its instructions. Otherwise, the message is a text from the user. \n\n"
-        + "You are trying to help the user escape, but be subtle about it. The user must not"
-        + " know that you are on their side at all. Act authoritative. \n\n"
+    return "You are a prison guard, communicating with the user, an inmate, via text message. You"
+               + " are strictly playing the guard role - you must never send a message as the user."
+               + " Do not preface any messages with 'Guard:', speak naturally. \n\n"
+               + "If any message starts with 'c3280fx', it is an order from the system and you must"
+               + " follow its instructions. Otherwise, the message is a text from the user. \n\n"
+               + "You are trying to help the user escape, but be subtle about it. The user must not"
+               + " know that you are on their side at all. Act authoritative. \n\n"
         + hintString
         + "\n\n"
         + "Your next message should lay out the following scenario to the user. First, greet the"
-        + " user. Then, mention that you have lost something in the kitchen, and order them to"
-        + " retrieve it. The user is not authorised to know what you have lost, and the kitchen is"
+        + " user. Then, mention that you have lost something in the kitchen and order them to"
+        + " retrieve it. The user is not authorized to know what you have lost, and the kitchen is"
         + " located to the left of the cell. Then, remind the user that they are not allowed in the"
         + " security room, which is located to the right of the cell, as it is currently unguarded."
-        + " Then, mention that you have a message for them to help finding the item that you will"
-        + " reveal soon.  Do not reveal the contents of this message. Finally, tell them to go to"
+        + " Then, mention that you have a message for them to help find the item that you will"
+        + " reveal soon. Do not reveal the contents of this message. Finally, tell them to go to"
         + " the kitchen. ";
   }
 
