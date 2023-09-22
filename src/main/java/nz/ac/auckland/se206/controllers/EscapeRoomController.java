@@ -1441,6 +1441,7 @@ public class EscapeRoomController {
 
     // Create a new thread for running the GPT task.
     Thread gptThread = new Thread(gptTask, "Gpt Thread");
+    gptThread.setDaemon(true);
     gptThread.start();
 
     // Return null for now (the actual return value is not used).
