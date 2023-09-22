@@ -1,12 +1,26 @@
 package nz.ac.auckland.se206.utils;
 
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 public class SoundUtils {
   private static MediaPlayer currentMediaPlayer;
 
-  public static void playSound(String fileName) {
+  public void playAudio(String fileName, int cycleCount) {
+    try {
+      String resourcePath = "/sounds/" + fileName;
+      AudioClip audioClip = new AudioClip(SoundUtils.class.getResource(resourcePath).toString());
+      audioClip.setVolume(0.1);
+      audioClip.cycleCountProperty().setValue(cycleCount);
+      audioClip.play();
+    } catch (Exception e) {
+      // Handle any exceptions that may occur (e.g., file not found)
+      e.printStackTrace();
+    }
+  }
+
+  public void playSound(String fileName) {
     try {
       // Build the resource path to the sound file
       String resourcePath = "/sounds/" + fileName;
