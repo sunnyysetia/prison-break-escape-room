@@ -55,4 +55,6 @@ public class GameState {
   public static boolean torchFound = false;
 
   public static boolean continueEnabled = false;
+
+  public static boolean gameWon = false;
 }

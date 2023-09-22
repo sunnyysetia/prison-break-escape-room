@@ -19,6 +19,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.media.AudioClip;
 import javafx.scene.shape.Rectangle;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
@@ -35,6 +36,7 @@ public class WaitingLobbyController {
   @FXML private Rectangle lightDim;
 
   private SoundUtils soundUtils = new SoundUtils();
+  private SoundUtils flickerSound = new SoundUtils();
 
   private BooleanProperty lightsOn = new SimpleBooleanProperty();
   // Create a completely random timeline to simulate lights flickering
@@ -48,6 +50,7 @@ public class WaitingLobbyController {
 
   @FXML
   public void initialize() {
+    flickerSound.playAudio("lightFlicker.m4a", AudioClip.INDEFINITE);
     for (int i = 0; i < keyFrames; i++) {
       boolean onCheck = (i % 2 == 0);
 
@@ -119,7 +122,7 @@ public class WaitingLobbyController {
                     } catch (IOException e) {
                       e.printStackTrace();
                     }
-
+                    flickerSound.stopAudio();
                     // Set the UI to the ROOM scene.
                     App.setUi(AppUi.ROOM);
                   });
@@ -150,6 +153,7 @@ public class WaitingLobbyController {
     GameState.computerLoggedIn = false;
     GameState.torchFound = false;
     GameState.continueEnabled = false;
+    GameState.gameWon = false;
 
     // Get the selected radio buttons (difficulty and time).
     RadioButton selectedDifficultyButton = (RadioButton) tgDifficulty.getSelectedToggle();

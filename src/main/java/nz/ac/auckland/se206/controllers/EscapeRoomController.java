@@ -103,6 +103,8 @@ public class EscapeRoomController {
   private ImageView torchButton;
   @FXML
   private SVGPath uvLightEffect;
+  @FXML 
+  private SVGPath uvTorchEffect;
 
   // Kitchen FXML
   @FXML
@@ -517,10 +519,12 @@ public class EscapeRoomController {
     torchButton.setOnMouseClicked(
         event -> {
           GameState.torchIsOn.setValue(!GameState.torchIsOn.getValue());
+          soundUtils.playAudio("typing1.mp3", 1);
         });
     uvLightText.visibleProperty().bind(GameState.torchIsOn);
 
     uvLightEffect.visibleProperty().bind(GameState.torchIsOn);
+    uvTorchEffect.visibleProperty().bind(GameState.torchIsOn);
 
     // Configure settings for the riddle's chat completion request.
     chatCompletionRequest = new ChatCompletionRequest().setN(1).setTemperature(0.3).setTopP(0.5).setMaxTokens(200);
@@ -547,6 +551,17 @@ public class EscapeRoomController {
       return;
     }
     GameState.continueEnabled = false; // prevent spam
+    Thread audioThread =
+        new Thread(
+            () -> {
+              SoundUtils gameEndSoundUtils = new SoundUtils();
+              if (GameState.gameWon) {
+                gameEndSoundUtils.playAudio("win.m4a", 1);
+              } else {
+                gameEndSoundUtils.playAudio("lose.m4a", 1);
+              }
+            });
+
     TranslateTransition backgroundTransition = new TranslateTransition();
     backgroundTransition.setNode(finsihedGamePane);
     backgroundTransition.setByY(720);
@@ -555,6 +570,7 @@ public class EscapeRoomController {
     phoneTransition.setNode(endPhoneGroup);
     phoneTransition.setByY(550);
     phoneTransition.setDuration(Duration.millis(500));
+
     Thread backgroundAnimThread = new Thread(
         () -> {
           backgroundTransition.play();
@@ -568,8 +584,11 @@ public class EscapeRoomController {
           }
           phoneTransition.play();
         });
+
+    audioThread.setDaemon(true);
     phoneAnimThread.setDaemon(true);
     backgroundAnimThread.setDaemon(true);
+    audioThread.start();
     phoneAnimThread.start();
     backgroundAnimThread.start();
   }
@@ -604,6 +623,7 @@ public class EscapeRoomController {
 
     // Check if the game ending is not the default ending ("0").
     if (!ending.equals("0")) {
+      GameState.gameWon = true;
       int minutes = (int) ((GameState.time - remainingSeconds) / 60);
       int seconds = (GameState.time - remainingSeconds) % 60;
       // Format and set the ending message based on the selected ending.
@@ -626,9 +646,15 @@ public class EscapeRoomController {
     String finalEndMessage = endMessage;
 
     // Play a sound based on the selected ending.
-    SoundUtils endingSoundUtils = new SoundUtils();
-    endingSoundUtils.playSound("ending" + ending + ".mp3");
+    Thread soundThread =
+        new Thread(
+            () -> {
+              SoundUtils endingSoundUtils = new SoundUtils();
+              endingSoundUtils.playAudio("ending" + ending + ".mp3", 1);
+            });
 
+    soundThread.setDaemon(true);
+    soundThread.start();
     // Set the game ending image.
     endGameImage
         .imageProperty()
@@ -688,7 +714,7 @@ public class EscapeRoomController {
     while (i < message.length()) {
       int j = i;
       int k = (int) (Math.random() * 5 + 1);
-      typingSoundUtils.playAudio("typing" + k + ".mp3", 1);
+      typingSoundUtils.playSound("typing" + k + ".mp3");
       Platform.runLater(
           () -> {
             // Append the character at position j from the message to the sceneTextArea.
@@ -1117,6 +1143,11 @@ public class EscapeRoomController {
       torchButton.setVisible(true);
 
       issueInstruction(GptPromptEngineering.getRiddleSolvedInstruction(GameState.difficulty));
+      Thread audioThread =
+          new Thread(
+              () -> {
+                soundUtils.playAudio("torchGot.mp3", 1);
+              });
 
       // Insert an animation to show the torch being retrieved.
       Thread animationThread = new Thread(
@@ -1163,8 +1194,10 @@ public class EscapeRoomController {
       // Set both animation threads as daemon threads and start them.
       animationThread.setDaemon(true);
       disappearThread.setDaemon(true);
+      audioThread.setDaemon(true);
       animationThread.start();
       disappearThread.start();
+      audioThread.start();
     }
   }
 
