@@ -262,6 +262,7 @@ public class EscapeRoomController {
   private int remainingSeconds = 120;
   private Timeline timer;
   private ScaleTransition heartbeatAnimation;
+  private int hintsRemaining = 5;
 
   // Chat
   private ChatCompletionRequest chatCompletionRequest;
@@ -1365,10 +1366,34 @@ public class EscapeRoomController {
         e -> {
           ChatMessage resultMessage = gptTask.getValue();
           if (resultMessage != null) {
-            // Append the GPT response message to the chat.
-            for (String paragraph : resultMessage.getContent().split("\n\n")) {
-              addLabel(paragraph, messagesVertBox);
+            // This field is used to skip the GPT message if it must be intercepted by a
+            // hard coded message.
+            boolean messageSent = false;
+
+            if (resultMessage.getRole().equals("assistant")
+                && resultMessage.getContent().startsWith("Hint")
+                && GameState.difficulty.equals("medium")) {
+              // If the AI attempts to give a hint while they are supposed to be out of hints,
+              // intercept with a hard coded message.
+              if (hintsRemaining == 0) {
+                addLabel(
+                    "Inmate, you do not have any more hint allowances. "
+                        + "You must find out how to proceed on your own.",
+                    messagesVertBox);
+                messageSent = true;
+              } else {
+                hintsRemaining--;
+                hintLabel.setText(hintsRemaining + "/5");
+              }
             }
+
+            // Append the GPT response message to the chat.
+            if (!messageSent) {
+              for (String paragraph : resultMessage.getContent().split("\n\n")) {
+                addLabel(paragraph, messagesVertBox);
+              }
+            }
+
             if (!GameState.phoneIsOpen) {
               playSound("incomingText.mp3");
 
@@ -1382,15 +1407,6 @@ public class EscapeRoomController {
                 && resultMessage.getContent().startsWith("Correct")
                 && !GameState.riddleSolved) {
               GameState.riddleSolved = true;
-            }
-            if (resultMessage.getContent().startsWith("Hint") && GameState.difficulty.equals("medium")) {
-              try {
-                int hint = Integer.parseInt("" + hintLabel.getText().charAt(0));
-                hint--;
-                hintLabel.setText(hint + "/5");
-              } catch (NumberFormatException ex) {
-                hintLabel.setText("Error");
-              }
             }
           } else {
             // When an error occurs, print a message suggesting fixes to the user.
@@ -1407,6 +1423,8 @@ public class EscapeRoomController {
                     notifCircle.setVisible(true);
                     heartbeatAnimation.play();
                   }
+                  // gptThinking is kept as true to prevent future messages, so the texter label
+                  // is unbound from "Typing..."
                   phoneNameLabel.textProperty().unbind();
                   phoneNameLabel.setText("Prison Guard");
                 });
