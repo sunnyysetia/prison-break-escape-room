@@ -457,6 +457,9 @@ public class EscapeRoomController {
     // Print a message to indicate that GPT sent a message to the user.
     System.out.println("GPT sent user a message");
 
+    // Play incoming sound effect
+    playSound("incomingText.mp3");
+
     // Create an HBox for displaying the GPT message and configure its properties.
     HBox horiBox = new HBox();
     horiBox.setAlignment(Pos.CENTER_LEFT);
@@ -1168,7 +1171,6 @@ public class EscapeRoomController {
               addLabel(paragraph, messagesVertBox);
             }
             if (!GameState.phoneIsOpen) {
-              playSound("incomingText.mp3");
 
               notifCircle.setVisible(true);
               heartbeatAnimation.play();
@@ -1201,7 +1203,6 @@ public class EscapeRoomController {
                 () -> {
                   addLabel(apology, messagesVertBox);
                   if (!GameState.phoneIsOpen) {
-                    playSound("incomingText.mp3");
                     notifCircle.setVisible(true);
                     heartbeatAnimation.play();
                   }
