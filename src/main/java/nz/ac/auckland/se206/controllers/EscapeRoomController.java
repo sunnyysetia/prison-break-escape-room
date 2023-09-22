@@ -303,8 +303,14 @@ public class EscapeRoomController {
     // Binds send button so that it is disabled while gpt is writing a message.
     sendButton.disableProperty().bind(GameState.gptThinking);
 
-    // Set the hint label to display 0 hints.
-    hintLabel.setText("0");
+    // Set the hint label to display hints remaining.
+    if (GameState.difficulty.equals("hard")) {
+      hintLabel.setText("0");
+    } else if (GameState.difficulty.equals("medium")) {
+      hintLabel.setText("5/5");
+    } else {
+      hintLabel.setText("∞");
+    }
 
     // Initialise notification heartbeat animation
     heartbeatAnimation = new ScaleTransition(Duration.seconds(1), notifCircle);
@@ -1377,11 +1383,11 @@ public class EscapeRoomController {
                 && !GameState.riddleSolved) {
               GameState.riddleSolved = true;
             }
-            if (resultMessage.getContent().contains("hint")) {
+            if (resultMessage.getContent().startsWith("Hint") && GameState.difficulty.equals("medium")) {
               try {
-                int hint = Integer.parseInt(hintLabel.getText());
-                hint++;
-                hintLabel.setText("" + hint);
+                int hint = Integer.parseInt("" + hintLabel.getText().charAt(0));
+                hint--;
+                hintLabel.setText(hint + "/5");
               } catch (NumberFormatException ex) {
                 hintLabel.setText("Error");
               }
