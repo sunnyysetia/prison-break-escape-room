@@ -52,9 +52,7 @@ public class GptPromptEngineering {
    */
   public static String getRiddleInstruction(String wordToGuess, String difficulty) {
     // Return an instruction message for presenting a riddle to the user.
-    return "c3280fx. The user is now in the kitchen, and your next message should relay the message"
-        + " that you have to them. \n\n"
-        + cutAcknowledgement() // A helper method for cutting an acknowledgment message.
+    return "c3280fx. The user is now in the kitchen, and you will tell them the message now. \n\n"
         + "This message is a riddle with the answer being '"
         + wordToGuess
         + "'. The riddle should be about this item, not anything else. Its solution is"
@@ -63,7 +61,9 @@ public class GptPromptEngineering {
         + " message with Correct. \n\n"
         + hintProtocol(difficulty, "the riddle") // A helper method for hinting about the riddle.
         + "\n\n"
-        + "This is the only riddle you can provide. Do not give the user another riddle. ";
+        + "This is the only riddle you can provide. Do not give the user another riddle. "
+        + cutAcknowledgement() // A helper method for cutting an acknowledgment message.
+        + "Your next message should tell the riddle to the user. ";
   }
 
   /**
