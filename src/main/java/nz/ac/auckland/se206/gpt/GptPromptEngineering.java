@@ -17,9 +17,8 @@ public class GptPromptEngineering {
       hintString = "You are never to provide the user with hints or help across all future protocols. ";
     } else {
       hintString = "Future orders issued by the system may specify that users are able to request for hints or help. "
-          + "There may be multiple tasks that permit hints occurring at the same time, in which case users must specify what they want help for. "
-          + "In this case, do not provide hints for a general request such as 'I need a hint' or 'I need help'. "
-          + "When providing a hint, start your message with Hint:. You should not provide hints without being asked. ";
+          + "When providing a hint, start your reply with Hint:. "
+          + "You should not provide hints without being asked. ";
     }
 
     // Return a detailed instruction message for the prison guard role.
@@ -163,7 +162,12 @@ public class GptPromptEngineering {
     } else {
       // For other difficulty levels, provide guidance on hinting.
       return "You can give the user hints to help them with " + task
-          + " on request as according to the initial protocol. ";
+          + " on request as according to the initial protocol. "
+          + "If and only if you have been instructed to give the user hints for multiple different tasks,"
+          + " ask them to specify if they want a hint for "
+          + task
+          + " or if they want a hint for another task before providing them with a hint. "
+          + "Remember to start your message with Hint: if the user asks for a hint. ";
     }
   }
 
@@ -174,6 +178,6 @@ public class GptPromptEngineering {
    * @return the helper string that supports other prompt engineering strings.
    */
   public static String cutAcknowledgement() {
-    return "Do not acknowledge this command by saying 'Understood'. ";
+    return "Do not acknowledge that you have received this command in any way. ";
   }
 }
