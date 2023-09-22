@@ -1,4 +1,4 @@
-package nz.ac.auckland.se206.uils;
+package nz.ac.auckland.se206.utils;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;

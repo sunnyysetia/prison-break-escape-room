@@ -65,7 +65,7 @@ import nz.ac.auckland.se206.gpt.openai.ChatCompletionRequest;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 import nz.ac.auckland.se206.speech.TextToSpeech;
-import nz.ac.auckland.se206.uils.SoundUtils;
+import nz.ac.auckland.se206.utils.SoundUtils;
 
 /** Controller class for the room view. */
 public class EscapeRoomController {
@@ -611,6 +611,7 @@ public class EscapeRoomController {
               + "!");
     }
     String finalEndMessage = endMessage;
+    SoundUtils.playSound("ending" + ending + ".mp3");
     endGameImage
         .imageProperty()
         .set(new Image(App.class.getResourceAsStream("/images/ending" + ending + ".png")));
