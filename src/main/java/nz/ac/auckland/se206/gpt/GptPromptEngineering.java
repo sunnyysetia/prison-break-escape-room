@@ -62,7 +62,8 @@ public class GptPromptEngineering {
         + "\n\n"
         + "This is the only riddle you can provide. Do not give the user another riddle. "
         + cutAcknowledgement() // A helper method for cutting an acknowledgment message.
-        + "Your next message should tell the riddle to the user. ";
+        + "Your next message should tell the riddle to the user. Remind them that they must send"
+        + " the answer in the chat before they can find the item. ";
   }
 
   /**
