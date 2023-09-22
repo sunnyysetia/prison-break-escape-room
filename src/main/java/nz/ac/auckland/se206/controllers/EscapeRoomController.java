@@ -575,9 +575,15 @@ public class EscapeRoomController {
     String finalEndMessage = endMessage;
 
     // Play a sound based on the selected ending.
-    SoundUtils endingSoundUtils = new SoundUtils();
-    endingSoundUtils.playSound("ending" + ending + ".mp3");
+    Thread soundThread =
+        new Thread(
+            () -> {
+              SoundUtils endingSoundUtils = new SoundUtils();
+              endingSoundUtils.playAudio("ending" + ending + ".mp3", 1);
+            });
 
+    soundThread.setDaemon(true);
+    soundThread.start();
     // Set the game ending image.
     endGameImage
         .imageProperty()
@@ -639,7 +645,7 @@ public class EscapeRoomController {
     while (i < message.length()) {
       int j = i;
       int k = (int) (Math.random() * 5 + 1);
-      typingSoundUtils.playAudio("typing" + k + ".mp3", 1);
+      typingSoundUtils.playSound("typing" + k + ".mp3");
       Platform.runLater(
           () -> {
             // Append the character at position j from the message to the sceneTextArea.

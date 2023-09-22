@@ -7,17 +7,23 @@ import javafx.scene.media.MediaPlayer;
 public class SoundUtils {
   private static MediaPlayer currentMediaPlayer;
 
+  private static AudioClip audioClip;
+
   public void playAudio(String fileName, int cycleCount) {
     try {
       String resourcePath = "/sounds/" + fileName;
-      AudioClip audioClip = new AudioClip(SoundUtils.class.getResource(resourcePath).toString());
+      audioClip = new AudioClip(SoundUtils.class.getResource(resourcePath).toString());
       audioClip.setVolume(0.1);
-      audioClip.cycleCountProperty().setValue(cycleCount);
+      audioClip.setCycleCount(cycleCount);
       audioClip.play();
     } catch (Exception e) {
       // Handle any exceptions that may occur (e.g., file not found)
       e.printStackTrace();
     }
+  }
+
+  public void stopAudio() {
+    audioClip.stop();
   }
 
   public void playSound(String fileName) {
