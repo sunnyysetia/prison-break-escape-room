@@ -103,7 +103,7 @@ public class EscapeRoomController {
   private ImageView torchButton;
   @FXML
   private SVGPath uvLightEffect;
-  @FXML 
+  @FXML
   private SVGPath uvTorchEffect;
 
   // Kitchen FXML
@@ -551,16 +551,15 @@ public class EscapeRoomController {
       return;
     }
     GameState.continueEnabled = false; // prevent spam
-    Thread audioThread =
-        new Thread(
-            () -> {
-              SoundUtils gameEndSoundUtils = new SoundUtils();
-              if (GameState.gameWon) {
-                gameEndSoundUtils.playAudio("win.m4a", 1);
-              } else {
-                gameEndSoundUtils.playAudio("lose.m4a", 1);
-              }
-            });
+    Thread audioThread = new Thread(
+        () -> {
+          SoundUtils gameEndSoundUtils = new SoundUtils();
+          if (GameState.gameWon) {
+            gameEndSoundUtils.playAudio("win.m4a", 1);
+          } else {
+            gameEndSoundUtils.playAudio("lose.m4a", 1);
+          }
+        });
 
     TranslateTransition backgroundTransition = new TranslateTransition();
     backgroundTransition.setNode(finsihedGamePane);
@@ -646,12 +645,11 @@ public class EscapeRoomController {
     String finalEndMessage = endMessage;
 
     // Play a sound based on the selected ending.
-    Thread soundThread =
-        new Thread(
-            () -> {
-              SoundUtils endingSoundUtils = new SoundUtils();
-              endingSoundUtils.playAudio("ending" + ending + ".mp3", 1);
-            });
+    Thread soundThread = new Thread(
+        () -> {
+          SoundUtils endingSoundUtils = new SoundUtils();
+          endingSoundUtils.playAudio("ending" + ending + ".mp3", 1);
+        });
 
     soundThread.setDaemon(true);
     soundThread.start();
@@ -1143,11 +1141,10 @@ public class EscapeRoomController {
       torchButton.setVisible(true);
 
       issueInstruction(GptPromptEngineering.getRiddleSolvedInstruction(GameState.difficulty));
-      Thread audioThread =
-          new Thread(
-              () -> {
-                soundUtils.playAudio("torchGot.mp3", 1);
-              });
+      Thread audioThread = new Thread(
+          () -> {
+            soundUtils.playAudio("torchGot.mp3", 1);
+          });
 
       // Insert an animation to show the torch being retrieved.
       Thread animationThread = new Thread(
