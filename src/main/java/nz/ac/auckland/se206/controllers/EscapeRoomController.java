@@ -1415,10 +1415,11 @@ public class EscapeRoomController {
                     notifCircle.setVisible(true);
                     heartbeatAnimation.play();
                   }
-                  // gptThinking is kept as true to prevent future messages, so the texter label
-                  // is unbound from "Typing..."
+                  // gptThinking is kept as true to prevent future messages from processing, so the 
+                  // texter label and gif are unbound. 
                   phoneNameLabel.textProperty().unbind();
                   phoneNameLabel.setText("Prison Guard");
+                  typingImage.setVisible(false);
                 });
           }
         });
