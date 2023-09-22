@@ -332,7 +332,7 @@ public class EscapeRoomController {
     uvLightText.xProperty().setValue(uvCodeLocation[0]);
     uvLightText.yProperty().setValue(uvCodeLocation[1]);
 
-    GameState.uvPassword = (int) (Math.random() * 100000000);
+    GameState.uvPassword = (int) (Math.random() * 100000);
     uvLightText.setText(Integer.toString(GameState.uvPassword));
     System.out.println("uvPassword: " + GameState.uvPassword);
 

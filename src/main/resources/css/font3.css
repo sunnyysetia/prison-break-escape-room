@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Eraser';
+    src: url('../fonts/eraser.ttf');
+}
+
+.eraserText {
+    -fx-font-family: 'Eraser';
+}
