@@ -35,6 +35,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -125,6 +126,12 @@ public class EscapeRoomController {
   private Rectangle toaster;
   @FXML
   private Group torchGetGroup;
+  @FXML
+  private Group batteryGroup;
+  @FXML
+  private Label powerPercentLabel;
+  @FXML
+  private Rectangle batteryDimScreen;
 
   // Cell FXML
   @FXML
@@ -550,11 +557,14 @@ public class EscapeRoomController {
 
     torchButton.setOnMouseClicked(
         event -> {
-          GameState.torchIsOn.setValue(!GameState.torchIsOn.getValue());
-          soundUtils.playAudio("typing1.mp3", 1, 0.1);
+          if (GameState.batteryForeverClosed) {
+            GameState.torchIsOn.setValue(!GameState.torchIsOn.getValue());
+            soundUtils.playAudio("typing1.mp3", 1, 0.1);
+          } else {
+            clickBatteryScreen();
+          }
         });
     uvLightText.visibleProperty().bind(GameState.torchIsOn);
-
     uvLightEffect.visibleProperty().bind(GameState.torchIsOn);
     uvTorchEffect.visibleProperty().bind(GameState.torchIsOn);
 
@@ -863,6 +873,70 @@ public class EscapeRoomController {
 
     // Play the phone switch animation.
     phoneSwitch.play();
+  }
+
+  @FXML
+  public void tempBatteryCharger(MouseEvent event) {
+    chargeBattery();
+  }
+
+  private void chargeBattery() {
+    GameState.batteryPercent = GameState.batteryPercent + 25;
+    if (GameState.batteryPercent >= 100) {
+      GameState.batteryGameSolved = true;
+    }
+    Platform.runLater(
+        () -> {
+          powerPercentLabel.setText(GameState.batteryPercent + "%");
+          powerPercentLabel.setTextFill(Color.rgb(0, 255, 0));
+          powerPercentLabel.setEffect(new Glow(0.5));
+        });
+  }
+
+  private void clickBatteryScreen() {
+    System.out.println("Torch clicked, trying to toggle battery screen");
+    if (GameState.togglingBattery) {
+      return;
+    } else {
+      toggleBatteryScreen();
+    }
+  }
+
+  private void toggleBatteryScreen() {
+    System.out.println("toggling battery screen");
+    GameState.togglingBattery = true;
+    wait(
+        500,
+        () -> {
+          GameState.togglingBattery = false;
+        });
+
+    final TranslateTransition batterySwitch = new TranslateTransition();
+    batterySwitch.setNode(batteryGroup);
+    batterySwitch.setDuration(Duration.millis(500));
+    if (GameState.batteryIsOpen) {
+      batterySwitch.setByY(-700);
+      GameState.batteryIsOpen = false;
+      // Disable and hide the dim screen overlay.
+      // dimScreen.setDisable(true);
+      // dimScreen.setVisible(false);
+      // Disable and hide the computer dim screen overlay.
+      batteryDimScreen.setDisable(true);
+      batteryDimScreen.setVisible(false);
+    } else {
+      batterySwitch.setByY(700);
+      GameState.batteryIsOpen = true;
+      // Enable and show the dim screen overlay.
+      // dimScreen.setDisable(false);
+      // dimScreen.setVisible(true);
+      // Enable and show the computer dim screen overlay.
+      batteryDimScreen.setDisable(false);
+      batteryDimScreen.setVisible(true);
+    }
+    if (GameState.batteryGameSolved) {
+      GameState.batteryForeverClosed = true;
+    }
+    batterySwitch.play();
   }
 
   private void toggleComputer() {
