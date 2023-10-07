@@ -1552,7 +1552,8 @@ public class EscapeRoomController {
           if (resultMessage != null) {
             // This field is used to skip the GPT message if it must be intercepted by a
             // hard coded message.
-            // Append the GPT response message to the chat.
+            boolean messageSent = false;
+
             for (String paragraph : resultMessage.getContent().split("\n\n")) {
               if (resultMessage.getRole().equals("assistant")
                   && paragraph.startsWith("Hint")
@@ -1564,15 +1565,20 @@ public class EscapeRoomController {
                       "Inmate, you do not have any more hint allowances. "
                           + "You must find out how to proceed on your own.",
                       messagesVertBox);
+                  messageSent = true;
                 } else {
                   hintsRemaining--;
                   hintLabel.setText(hintsRemaining + "/5");
                 }
               }
-
-              addLabel(paragraph, messagesVertBox);
             }
 
+            // Append the GPT response message to the chat.
+            if (!messageSent) {
+              appendTexts(resultMessage.getContent());
+            }
+
+            // Alert the user to check the phone.
             if (!GameState.phoneIsOpen) {
               notifCircle.setVisible(true);
               heartbeatAnimation.play();
@@ -1587,14 +1593,15 @@ public class EscapeRoomController {
             }
           } else {
             // When an error occurs, print a message suggesting fixes to the user.
-            String apology = "Sorry, it seems like you cannot receive messages at this time. Maybe try to check"
-                + " your internet connection or your apiproxy.config file in order to see what"
-                + " is causing this problem, and then restart the application when you are"
-                + " ready to retry. You cannot escape from this facility without assistance.";
+            String apology = "Sorry, it seems like you cannot receive messages at this time. \n\n"
+                + "Maybe try to check your internet connection or your apiproxy.config file in order"
+                + " to see what is causing this problem, and then restart the application when you are"
+                + " ready to retry. \n\n"
+                + "You cannot escape from this facility without assistance.";
             wait(
                 3500,
                 () -> {
-                  addLabel(apology, messagesVertBox);
+                  appendTexts(apology);
                   if (!GameState.phoneIsOpen) {
                     notifCircle.setVisible(true);
                     heartbeatAnimation.play();
@@ -1677,6 +1684,18 @@ public class EscapeRoomController {
       } catch (ApiProxyException e) {
         e.printStackTrace();
       }
+    }
+  }
+
+  /**
+   * Appends messages to the chat box that are separated into separate texts by
+   * line breaks.
+   * 
+   * @param message
+   */
+  private void appendTexts(String message) {
+    for (String paragraph : message.split("\n\n")) {
+      addLabel(paragraph, messagesVertBox);
     }
   }
 }
