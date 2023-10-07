@@ -1478,34 +1478,28 @@ public class EscapeRoomController {
           if (resultMessage != null) {
             // This field is used to skip the GPT message if it must be intercepted by a
             // hard coded message.
-            boolean messageSent = false;
-
-            if (resultMessage.getRole().equals("assistant")
-                && resultMessage.getContent().startsWith("Hint")
-                && GameState.difficulty.equals("medium")) {
-              // If the AI attempts to give a hint while they are supposed to be out of hints,
-              // intercept with a hard coded message.
-              if (hintsRemaining == 0) {
-                addLabel(
-                    "Inmate, you do not have any more hint allowances. "
-                        + "You must find out how to proceed on your own.",
-                    messagesVertBox);
-                messageSent = true;
-              } else {
-                hintsRemaining--;
-                hintLabel.setText(hintsRemaining + "/5");
-              }
-            }
-
             // Append the GPT response message to the chat.
-            if (!messageSent) {
-              for (String paragraph : resultMessage.getContent().split("\n\n")) {
-                addLabel(paragraph, messagesVertBox);
+            for (String paragraph : resultMessage.getContent().split("\n\n")) {
+              if (resultMessage.getRole().equals("assistant")
+                  && paragraph.startsWith("Hint")
+                  && GameState.difficulty.equals("medium")) {
+                // If the AI attempts to give a hint while they are supposed to be out of hints,
+                // intercept with a hard coded message.
+                if (hintsRemaining == 0) {
+                  addLabel(
+                      "Inmate, you do not have any more hint allowances. "
+                          + "You must find out how to proceed on your own.",
+                      messagesVertBox);
+                } else {
+                  hintsRemaining--;
+                  hintLabel.setText(hintsRemaining + "/5");
+                }
               }
+
+              addLabel(paragraph, messagesVertBox);
             }
 
             if (!GameState.phoneIsOpen) {
-
               notifCircle.setVisible(true);
               heartbeatAnimation.play();
             }
