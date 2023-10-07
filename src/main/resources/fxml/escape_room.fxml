@@ -307,7 +307,7 @@
                   </ImageView>
                   <AnchorPane layoutX="-40.0" layoutY="35.0" prefHeight="320.0" prefWidth="630.0" styleClass="stencilText">
                      <children>
-                        <Label fx:id="endPhoneMessage" alignment="CENTER" layoutX="12.0" layoutY="102.0" prefHeight="96.0" prefWidth="606.0" style="-fx-font-size: 18;" styleClass="stencilText" stylesheets="@../css/font.css" text="Unfortunately you failed to escape the prison within the time limit" wrapText="true">
+                        <Label fx:id="endPhoneMessage" alignment="CENTER" layoutX="12.0" layoutY="102.0" prefHeight="96.0" prefWidth="606.0" style="-fx-font-size: 18;" styleClass="stencilText" stylesheets="@../css/font.css" text="Unfortunately you failed to escape the prison within the time limit" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font name="Stencil" size="18.0" />
                            </font>
