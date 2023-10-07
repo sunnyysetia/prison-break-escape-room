@@ -1493,10 +1493,12 @@ public class EscapeRoomController {
                 } else {
                   hintsRemaining--;
                   hintLabel.setText(hintsRemaining + "/5");
+                  addLabel(paragraph, messagesVertBox);
                 }
+              } else {
+                addLabel(paragraph, messagesVertBox);
               }
 
-              addLabel(paragraph, messagesVertBox);
             }
 
             if (!GameState.phoneIsOpen) {
