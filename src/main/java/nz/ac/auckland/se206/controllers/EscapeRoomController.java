@@ -92,9 +92,9 @@ public class EscapeRoomController {
   @FXML
   private Rectangle dimScreen;
   @FXML
-  private ImageView leftButton;
+  private Label leftButton;
   @FXML
-  private ImageView rightButton;
+  private Label rightButton;
   @FXML
   private Label phoneLabel;
   @FXML
@@ -699,7 +699,7 @@ public class EscapeRoomController {
           } catch (InterruptedException e) {
             e.printStackTrace();
           }
-          typeWrite(endGameTextArea, finalEndMessage, 15); // Type the final ending message.
+          typeWrite(endGameTextArea, finalEndMessage, 10); // Type the final ending message.
           System.out.println("finished typing ending message");
           try {
             Thread.sleep(2000); // Wait for 2 seconds after typing the ending message.
