@@ -3,6 +3,7 @@ package nz.ac.auckland.se206.utils;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import nz.ac.auckland.se206.GameState;
 
 public class SoundUtils {
   private static MediaPlayer currentMediaPlayer;
@@ -10,6 +11,9 @@ public class SoundUtils {
   private static AudioClip audioClip;
 
   public void playAudio(String fileName, int cycleCount) {
+    if (GameState.muted.get()) {
+      return;
+    }
     try {
       String resourcePath = "/sounds/" + fileName;
       audioClip = new AudioClip(SoundUtils.class.getResource(resourcePath).toString());
@@ -27,6 +31,9 @@ public class SoundUtils {
   }
 
   public void playSound(String fileName) {
+    if (GameState.muted.get()) {
+      return;
+    }
     try {
       // Build the resource path to the sound file
       String resourcePath = "/sounds/" + fileName;

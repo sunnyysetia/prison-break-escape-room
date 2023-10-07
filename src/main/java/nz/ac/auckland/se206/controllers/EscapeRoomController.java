@@ -82,6 +82,8 @@ public class EscapeRoomController {
 
   // Shared FXML
   @FXML
+  private ImageView volume;
+  @FXML
   private Group chatGroup;
   @FXML
   private Group computerGroup;
@@ -308,6 +310,11 @@ public class EscapeRoomController {
     // Configure the timer length based on what the user selected.
     remainingSeconds = GameState.time;
 
+    volume
+        .imageProperty()
+        .set(new Image(
+            App.class.getResourceAsStream("/images/volume" + ((GameState.muted.getValue()) ? "Off" : "On") + ".png")));
+
     // Start a timer for the game.
     startTimer();
 
@@ -526,6 +533,16 @@ public class EscapeRoomController {
             }
           }
         });
+
+    volume.setOnMouseClicked(event -> {
+      GameState.muted.setValue(!GameState.muted.getValue());
+      System.out.println("volume button clicked");
+      volume
+          .imageProperty()
+          .set(new Image(
+              App.class
+                  .getResourceAsStream("/images/volume" + ((GameState.muted.getValue()) ? "Off" : "On") + ".png")));
+    });
 
     torchButton.setOnMouseClicked(
         event -> {

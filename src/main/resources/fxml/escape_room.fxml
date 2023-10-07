@@ -90,7 +90,12 @@
             </Pane>
          </children>
       </Pane>
-      <Pane fx:id="UIPane" layoutY="660.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="1280.0">
+      <ImageView fx:id="volume" fitHeight="200.0" fitWidth="45.0" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" pickOnBounds="true" preserveRatio="true" x="855.0" y="10.0">
+         <image>
+            <Image url="@../images/volumeOn.png" />
+         </image>
+      </ImageView>
+      <Pane fx:id="UIPane" layoutY="660.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="1022.0">
          <children>
             <Label fx:id="leftButton" layoutX="10.0" layoutY="10.0" onMouseClicked="#leftPane" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="31.0" prefWidth="86.0" styleClass="stencilText" stylesheets="@../css/font.css" text="Left" textFill="WHITE">
                <font>
