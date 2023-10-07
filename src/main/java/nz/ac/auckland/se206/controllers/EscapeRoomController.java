@@ -542,6 +542,10 @@ public class EscapeRoomController {
           .set(new Image(
               App.class
                   .getResourceAsStream("/images/volume" + ((GameState.muted.getValue()) ? "Off" : "On") + ".png")));
+      if (GameState.muted.getValue()) {
+        soundUtils.stopSound();
+        soundUtils.stopAudio();
+      }
     });
 
     torchButton.setOnMouseClicked(

@@ -30,6 +30,12 @@ public class SoundUtils {
     audioClip.stop();
   }
 
+  public void stopSound() {
+    if (currentMediaPlayer != null) {
+      currentMediaPlayer.stop();
+    }
+  }
+
   public void playSound(String fileName, double volume) {
     if (GameState.muted.get()) {
       return;
