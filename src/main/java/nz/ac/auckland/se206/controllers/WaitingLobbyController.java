@@ -29,11 +29,18 @@ import nz.ac.auckland.se206.utils.SoundUtils;
 
 public class WaitingLobbyController {
 
-  @FXML private Group phoneGroup;
-  @FXML private Button onBeginGameButton;
-  @FXML private ToggleGroup tgDifficulty;
-  @FXML private ToggleGroup tgTime;
-  @FXML private Rectangle lightDim;
+  @FXML
+  private Group phoneGroup;
+  @FXML
+  private Button onBeginGameButton;
+  @FXML
+  private ToggleGroup tgDifficulty;
+  @FXML
+  private ToggleGroup tgTime;
+  @FXML
+  private Rectangle lightDim;
+  @FXML
+  private Rectangle lights;
 
   private SoundUtils soundUtils = new SoundUtils();
   private SoundUtils flickerSound = new SoundUtils();
@@ -43,14 +50,13 @@ public class WaitingLobbyController {
   private Timeline timeline = new Timeline();
   private int keyFrames = 15;
 
-  private ArrayList<String> kitchenItems =
-      new ArrayList<>(
-          Arrays.asList(
-              "cuttingboard", "oven", "plates", "extinguisher", "kettle", "clock", "toaster"));
+  private ArrayList<String> kitchenItems = new ArrayList<>(
+      Arrays.asList(
+          "cuttingboard", "oven", "plates", "extinguisher", "kettle", "clock", "toaster"));
 
   @FXML
   public void initialize() {
-    flickerSound.playAudio("lightFlicker.m4a", AudioClip.INDEFINITE);
+    flickerSound.playAudio("lightFlicker.m4a", AudioClip.INDEFINITE, 0.1);
     for (int i = 0; i < keyFrames; i++) {
       boolean onCheck = (i % 2 == 0);
 
@@ -74,6 +80,7 @@ public class WaitingLobbyController {
       e.printStackTrace();
     }
     lightDim.visibleProperty().bind(Bindings.when(lightsOn).then(true).otherwise(false));
+    lights.visibleProperty().bind(Bindings.when(lightsOn).then(true).otherwise(false));
     timeline.setCycleCount(Animation.INDEFINITE);
     timeline.play();
   }
@@ -86,47 +93,44 @@ public class WaitingLobbyController {
     phoneTransition.setDuration(javafx.util.Duration.millis(500));
     phoneTransition.setByY(-550);
 
-    Thread soundThread =
-        new Thread(
-            () -> {
-              // Play bang on metal door sound effect.
-              soundUtils.playSound("bangOnMetalDoor.mp3");
-            });
+    Thread soundThread = new Thread(
+        () -> {
+          // Play bang on metal door sound effect.
+          soundUtils.playSound("bangOnMetalDoor.mp3", 0.1);
+        });
 
     // Create a thread to play the phone transition animation.
-    Thread animationThread =
-        new Thread(
-            () -> {
-              phoneTransition.play();
-            });
+    Thread animationThread = new Thread(
+        () -> {
+          phoneTransition.play();
+        });
 
     // Create a thread to change the scene after a delay.
-    Thread changeSceneThread =
-        new Thread(
-            () -> {
-              try {
-                Thread.sleep(500);
-              } catch (InterruptedException e) {
-                e.printStackTrace();
-              }
+    Thread changeSceneThread = new Thread(
+        () -> {
+          try {
+            Thread.sleep(500);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
 
-              // Stop the timeline.
-              timeline.stop();
+          // Stop the timeline.
+          timeline.stop();
 
-              // Use Platform.runLater to safely change the scene UI elements.
-              Platform.runLater(
-                  () -> {
-                    try {
-                      // Load and set the ROOM scene UI using SceneManager and App.
-                      SceneManager.addUi(SceneManager.AppUi.ROOM, App.loadFxml("escape_room"));
-                    } catch (IOException e) {
-                      e.printStackTrace();
-                    }
-                    flickerSound.stopAudio();
-                    // Set the UI to the ROOM scene.
-                    App.setUi(AppUi.ROOM);
-                  });
-            });
+          // Use Platform.runLater to safely change the scene UI elements.
+          Platform.runLater(
+              () -> {
+                try {
+                  // Load and set the ROOM scene UI using SceneManager and App.
+                  SceneManager.addUi(SceneManager.AppUi.ROOM, App.loadFxml("escape_room"));
+                } catch (IOException e) {
+                  e.printStackTrace();
+                }
+                flickerSound.stopAudio();
+                // Set the UI to the ROOM scene.
+                App.setUi(AppUi.ROOM);
+              });
+        });
 
     // Set both animation threads as daemon threads and start them.
     animationThread.setDaemon(true);
@@ -154,6 +158,7 @@ public class WaitingLobbyController {
     GameState.torchFound = false;
     GameState.continueEnabled = false;
     GameState.gameWon = false;
+    // GameState.muted.set(false);
 
     // Get the selected radio buttons (difficulty and time).
     RadioButton selectedDifficultyButton = (RadioButton) tgDifficulty.getSelectedToggle();

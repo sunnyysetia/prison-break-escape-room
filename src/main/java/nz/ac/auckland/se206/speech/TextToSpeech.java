@@ -6,6 +6,8 @@ import javax.speech.EngineException;
 import javax.speech.synthesis.Synthesizer;
 import javax.speech.synthesis.SynthesizerModeDesc;
 
+import nz.ac.auckland.se206.GameState;
+
 /** Text-to-speech API using the JavaX speech library. */
 public class TextToSpeech {
   /** Custom unchecked exception for Text-to-speech issues. */
@@ -35,7 +37,8 @@ public class TextToSpeech {
   private final Synthesizer synthesizer;
 
   /**
-   * Constructs the TextToSpeech object creating and allocating the speech synthesizer. English
+   * Constructs the TextToSpeech object creating and allocating the speech
+   * synthesizer. English
    * voice: com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory
    */
   public TextToSpeech() {
@@ -58,6 +61,9 @@ public class TextToSpeech {
    * @param sentences A sequence of strings to speak.
    */
   public void speak(final String... sentences) {
+    if (GameState.muted.get()) {
+      return;
+    }
     boolean isFirst = true;
 
     for (final String sentence : sentences) {
@@ -78,6 +84,9 @@ public class TextToSpeech {
    * @param sentence A string to speak.
    */
   public void speak(final String sentence) {
+    if (GameState.muted.get()) {
+      return;
+    }
     if (sentence == null) {
       throw new IllegalArgumentException("Text cannot be null.");
     }
@@ -101,7 +110,8 @@ public class TextToSpeech {
   }
 
   /**
-   * It deallocates the speech synthesizer. If you are experiencing an IllegalThreadStateException,
+   * It deallocates the speech synthesizer. If you are experiencing an
+   * IllegalThreadStateException,
    * avoid using this method and run the speak method without terminating.
    */
   public void terminate() {

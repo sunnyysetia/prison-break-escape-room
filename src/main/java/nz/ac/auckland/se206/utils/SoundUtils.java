@@ -3,17 +3,21 @@ package nz.ac.auckland.se206.utils;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import nz.ac.auckland.se206.GameState;
 
 public class SoundUtils {
   private static MediaPlayer currentMediaPlayer;
 
   private static AudioClip audioClip;
 
-  public void playAudio(String fileName, int cycleCount) {
+  public void playAudio(String fileName, int cycleCount, double volume) {
+    if (GameState.muted.get()) {
+      return;
+    }
     try {
       String resourcePath = "/sounds/" + fileName;
       audioClip = new AudioClip(SoundUtils.class.getResource(resourcePath).toString());
-      audioClip.setVolume(0.1);
+      audioClip.setVolume(volume);
       audioClip.setCycleCount(cycleCount);
       audioClip.play();
     } catch (Exception e) {
@@ -26,7 +30,16 @@ public class SoundUtils {
     audioClip.stop();
   }
 
-  public void playSound(String fileName) {
+  public void stopSound() {
+    if (currentMediaPlayer != null) {
+      currentMediaPlayer.stop();
+    }
+  }
+
+  public void playSound(String fileName, double volume) {
+    if (GameState.muted.get()) {
+      return;
+    }
     try {
       // Build the resource path to the sound file
       String resourcePath = "/sounds/" + fileName;
@@ -36,7 +49,7 @@ public class SoundUtils {
 
       // Create a new MediaPlayer with the Media object
       MediaPlayer newMediaPlayer = new MediaPlayer(sound);
-      newMediaPlayer.setVolume(0.1);
+      newMediaPlayer.setVolume(volume);
 
       // Check if there is a currently playing sound
       if (currentMediaPlayer != null

@@ -57,4 +57,6 @@ public class GameState {
   public static boolean continueEnabled = false;
 
   public static boolean gameWon = false;
+
+  public static SimpleBooleanProperty muted = new SimpleBooleanProperty(false);
 }
