@@ -634,7 +634,7 @@ public class EscapeRoomController {
     int month = localDate.getMonthValue();
     int day = localDate.getDayOfMonth();
 
-    String dayAdjusted = day + ((dateGrammarMap.keySet().contains(day + "")) ? dateGrammarMap.get(day + "") : "rd");
+    String dayAdjusted = day + ((dateGrammarMap.keySet().contains(day + "")) ? dateGrammarMap.get(day + "") : "th");
 
     // Disable mouse interactions with certain UI elements.
     endGameTextArea.setMouseTransparent(true);
