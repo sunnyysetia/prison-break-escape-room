@@ -59,4 +59,14 @@ public class GameState {
   public static boolean gameWon = false;
 
   public static SimpleBooleanProperty muted = new SimpleBooleanProperty(false);
+
+  public static boolean togglingBattery = false;
+
+  public static boolean batteryIsOpen = false;
+
+  public static boolean batteryGameSolved = false;
+
+  public static int batteryPercent = 0;
+
+  public static boolean batteryForeverClosed = false;
 }
