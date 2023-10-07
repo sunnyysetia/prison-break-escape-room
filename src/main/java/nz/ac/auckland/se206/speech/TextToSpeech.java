@@ -84,6 +84,9 @@ public class TextToSpeech {
    * @param sentence A string to speak.
    */
   public void speak(final String sentence) {
+    if (GameState.muted.get()) {
+      return;
+    }
     if (sentence == null) {
       throw new IllegalArgumentException("Text cannot be null.");
     }
