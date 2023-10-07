@@ -490,7 +490,7 @@ public class EscapeRoomController {
           public void handle(ActionEvent event) {
             // Print a message to indicate that the Send Button was clicked.
             System.out.println("Send Button clicked");
-            soundUtils.playSound("outgoingText.mp3");
+            soundUtils.playSound("outgoingText.mp3", 0.08);
 
             // Get the message from the messagesTextField.
             String message = messagesTextField.getText();
@@ -547,7 +547,7 @@ public class EscapeRoomController {
     torchButton.setOnMouseClicked(
         event -> {
           GameState.torchIsOn.setValue(!GameState.torchIsOn.getValue());
-          soundUtils.playAudio("typing1.mp3", 1);
+          soundUtils.playAudio("typing1.mp3", 1, 0.1);
         });
     uvLightText.visibleProperty().bind(GameState.torchIsOn);
 
@@ -583,9 +583,9 @@ public class EscapeRoomController {
         () -> {
           SoundUtils gameEndSoundUtils = new SoundUtils();
           if (GameState.gameWon) {
-            gameEndSoundUtils.playAudio("win.m4a", 1);
+            gameEndSoundUtils.playAudio("win.m4a", 1, 0.08);
           } else {
-            gameEndSoundUtils.playAudio("lose.m4a", 1);
+            gameEndSoundUtils.playAudio("lose.m4a", 1, 0.08);
           }
         });
 
@@ -678,7 +678,7 @@ public class EscapeRoomController {
     Thread soundThread = new Thread(
         () -> {
           SoundUtils endingSoundUtils = new SoundUtils();
-          endingSoundUtils.playAudio("ending" + ending + ".mp3", 1);
+          endingSoundUtils.playAudio("ending" + ending + ".mp3", 1, 0.1);
         });
 
     soundThread.setDaemon(true);
@@ -742,7 +742,7 @@ public class EscapeRoomController {
     while (i < message.length()) {
       int j = i;
       int k = (int) (Math.random() * 5 + 1);
-      typingSoundUtils.playSound("typing" + k + ".mp3");
+      typingSoundUtils.playSound("typing" + k + ".mp3", 0.04);
       Platform.runLater(
           () -> {
             // Append the character at position j from the message to the sceneTextArea.
@@ -772,7 +772,7 @@ public class EscapeRoomController {
     System.out.println("GPT sent user a message");
 
     // Play incoming sound effect
-    soundUtils.playSound("incomingText.mp3");
+    soundUtils.playSound("incomingText.mp3", 0.08);
 
     // Create an HBox for displaying the GPT message and configure its properties.
     HBox horiBox = new HBox();
@@ -1073,7 +1073,7 @@ public class EscapeRoomController {
       // Prevent the Enter key event from propagating further
       if (GameState.phoneIsOpen) {
         sendButton.fire();
-        soundUtils.playSound("outgoingText.mp3");
+        soundUtils.playSound("outgoingText.mp3", 0.08);
       }
       if (GameState.computerIsOpen) {
         computerLoginButton.fire();
@@ -1158,6 +1158,7 @@ public class EscapeRoomController {
     Rectangle clickedRectangle = (Rectangle) event.getSource();
     String rectangleId = clickedRectangle.getId();
     System.out.println("Object clicked: " + rectangleId);
+    soundUtils.playAudio("typing4.mp3", 1, 0.1);
     System.out.println("Riddle solved: " + GameState.riddleSolved);
 
     // Check if the riddle is solved, the clicked object matches the riddle answer,
@@ -1173,7 +1174,7 @@ public class EscapeRoomController {
       issueInstruction(GptPromptEngineering.getRiddleSolvedInstruction(GameState.difficulty));
       Thread audioThread = new Thread(
           () -> {
-            soundUtils.playAudio("torchGot.mp3", 1);
+            soundUtils.playAudio("torchGot.mp3", 1, 0.03);
           });
 
       // Insert an animation to show the torch being retrieved.
@@ -1237,6 +1238,7 @@ public class EscapeRoomController {
     circuitGroup.setDisable(false);
     circuitGroup.setVisible(true);
     GameState.torchIsOn.setValue(false);
+    soundUtils.playAudio("typing1.mp3", 1, 0.1);
     startMemoryRecallGame();
   }
 
@@ -1245,7 +1247,7 @@ public class EscapeRoomController {
     System.out.println("Circuit clicked");
     circuitGroup.setDisable(true);
     circuitGroup.setVisible(false);
-
+    soundUtils.playAudio("typing4.mp3", 1, 0.1);
     // Check if the countdown thread is running and interrupt it
     if (countdownThread != null && countdownThread.isAlive()) {
       countdownThread.interrupt();
@@ -1259,7 +1261,7 @@ public class EscapeRoomController {
     Rectangle clickedRectangle = (Rectangle) event.getSource();
     String rectangleId = clickedRectangle.getId();
     System.out.println("Object clicked: " + rectangleId);
-
+    soundUtils.playAudio("typing3.mp3", 1, 0.1);
     // Toggle the switch
     toggleSwitch(rectangleId);
   }

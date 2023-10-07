@@ -56,7 +56,7 @@ public class WaitingLobbyController {
 
   @FXML
   public void initialize() {
-    flickerSound.playAudio("lightFlicker.m4a", AudioClip.INDEFINITE);
+    flickerSound.playAudio("lightFlicker.m4a", AudioClip.INDEFINITE, 0.1);
     for (int i = 0; i < keyFrames; i++) {
       boolean onCheck = (i % 2 == 0);
 
@@ -96,7 +96,7 @@ public class WaitingLobbyController {
     Thread soundThread = new Thread(
         () -> {
           // Play bang on metal door sound effect.
-          soundUtils.playSound("bangOnMetalDoor.mp3");
+          soundUtils.playSound("bangOnMetalDoor.mp3", 0.1);
         });
 
     // Create a thread to play the phone transition animation.
