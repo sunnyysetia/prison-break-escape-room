@@ -71,4 +71,6 @@ public class GameState {
   public static boolean batteryForeverClosed = false;
 
   public static boolean memoryGameSolved = false;
+  
+  public static boolean lastMessageFromGPT = true;
 }

@@ -534,7 +534,7 @@ public class EscapeRoomController {
 
               // Clear the messagesTextField to prepare for the next message.
               messagesTextField.clear();
-
+              GameState.lastMessageFromGPT = false;
               try {
                 // Send the user's message to the GPT for a response.
                 runGpt(new ChatMessage("user", message));
@@ -1737,8 +1737,24 @@ public class EscapeRoomController {
    * @param message
    */
   private void appendTexts(String message) {
+    if (GameState.lastMessageFromGPT) {
+      Platform.runLater(
+          () -> {
+            HBox horiBox = new HBox();
+            horiBox.setAlignment(Pos.CENTER);
+            Text text = new Text(timerLabel.getText());
+            TextFlow textFlow = new TextFlow(text);
+            textFlow.setStyle("-fx-background-color: rgb(143,143,143); " + "-fx-color: rgb(255,255,255);");
+            textFlow.setPadding(new Insets(2, 5, 2, 5));
+            textFlow.setMaxWidth(90);
+            textFlow.setMaxHeight(18);
+            horiBox.getChildren().add(textFlow);
+            messagesVertBox.getChildren().add(horiBox);
+          });
+    }
     for (String paragraph : message.split("\n\n")) {
       addLabel(paragraph, messagesVertBox);
     }
+    GameState.lastMessageFromGPT = true;
   }
 }
