@@ -161,7 +161,7 @@
          </children>
       </Pane>
       <Rectangle fx:id="batteryDimScreen" arcHeight="5.0" arcWidth="5.0" disable="true" height="720.0" opacity="0.6" stroke="BLACK" strokeType="INSIDE" visible="false" width="1022.0" />
-      <ImageView fx:id="torchButton" fitHeight="50.0" fitWidth="71.0" layoutX="880.0" layoutY="660.0" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" pickOnBounds="true" preserveRatio="true" visible="false">
+      <ImageView fx:id="torchButton" fitHeight="50.0" fitWidth="71.0" layoutX="872.0" layoutY="660.0" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/torch.png" />
          </image>
