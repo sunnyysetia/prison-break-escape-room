@@ -22,7 +22,7 @@
          </image>
       </ImageView>
       <Rectangle fx:id="lightDim" arcHeight="5.0" arcWidth="5.0" height="720.0" opacity="0.6" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1022.0" />
-      <Rectangle fx:id="lights" arcHeight="5.0" arcWidth="5.0" height="81.0" layoutX="373.0" layoutY="27.0" rotate="6.3" stroke="BLACK" strokeType="INSIDE" width="276.0">
+      <Rectangle fx:id="lights" arcHeight="5.0" arcWidth="5.0" height="175.0" layoutX="214.0" layoutY="27.0" rotate="6.3" stroke="BLACK" strokeType="INSIDE" width="567.0">
          <rotationAxis>
             <Point3D x="1.0" />
          </rotationAxis>

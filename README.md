@@ -49,3 +49,4 @@ accessToken: “YOUR_KEY”`
 - @zariimusic spy music, spy music no copyright, undercover agent action scenes music, spy themes, NO WAY - ZARII: https://www.youtube.com/watch?v=Rx17xiAU5_4
 - Typing Sound Effect (no copyright): https://www.youtube.com/watch?v=OJhWtBBJw10
 - Volume icon: https://www.iconsdb.com/white-icons/volume-up-4-icon.html
+- spot light sfx: https://www.youtube.com/watch?v=YWz9WzzeJwI

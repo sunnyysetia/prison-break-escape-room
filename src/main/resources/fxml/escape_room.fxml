@@ -8,7 +8,9 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.effect.GaussianBlur?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -68,6 +70,11 @@
                         <Image url="@../images/darknessGuardRoom.png" />
                      </image>
                   </ImageView>
+                  <Rectangle fx:id="guardRoomDark2" arcHeight="5.0" arcWidth="5.0" disable="true" height="116.0" layoutX="199.0" layoutY="83.0" stroke="BLACK" strokeType="INSIDE" width="630.0">
+                     <effect>
+                        <BoxBlur height="40.75" width="136.07" />
+                     </effect>
+                  </Rectangle>
                   <Rectangle fx:id="circuit" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="142.0" layoutX="38.0" layoutY="295.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#openCircuit" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="63.0" />
                </children>
             </Pane>
@@ -90,25 +97,25 @@
             </Pane>
          </children>
       </Pane>
-      <ImageView fx:id="volume" fitHeight="200.0" fitWidth="45.0" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" pickOnBounds="true" preserveRatio="true" x="875.0" y="10.0">
+      <ImageView fx:id="volume" fitHeight="200.0" fitWidth="40.0" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" pickOnBounds="true" preserveRatio="true" x="875.0" y="12.5">
          <image>
             <Image url="@../images/volumeOn.png" />
          </image>
       </ImageView>
       <Pane fx:id="UIPane" layoutY="660.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="1022.0">
          <children>
-            <Label fx:id="leftButton" layoutX="10.0" layoutY="10.0" onMouseClicked="#leftPane" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="31.0" prefWidth="86.0" styleClass="stencilText" stylesheets="@../css/font.css" text="Left" textFill="WHITE">
+            <Label fx:id="leftButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" onMouseClicked="#leftPane" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="31.0" prefWidth="63.0" style="-fx-border-color: white;" styleClass="stencilText" stylesheets="@../css/font.css" text="Left" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font></Label>
-            <Label fx:id="rightButton" layoutX="935.0" layoutY="10.0" onMouseClicked="#rightPane" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="31.0" prefWidth="86.0" styleClass="stencilText" stylesheets="@../css/font.css" text="Right" textFill="WHITE">
+            <Label fx:id="rightButton" alignment="CENTER" layoutX="930.0" layoutY="10.0" onMouseClicked="#rightPane" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="31.0" prefWidth="80.0" style="-fx-border-color: white;" styleClass="stencilText" stylesheets="@../css/font.css" text="Right" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font></Label>
          </children>
       </Pane>
       <Rectangle fx:id="dimScreen" arcHeight="5.0" arcWidth="5.0" disable="true" height="720.0" opacity="0.6" stroke="BLACK" strokeType="INSIDE" visible="false" width="1022.0" />
-      <SVGPath fx:id="uvTorchEffect" content="M 0 100 Q 400 0 800 100 L 500 600 L 300 600 L 0 100 " disable="true" fill="#4636f7" layoutX="528.0" layoutY="338.0" opacity="0.4" rotate="45.0" scaleX="0.05" scaleY="0.05" scaleZ="0.05" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" visible="false">
+      <SVGPath fx:id="uvTorchEffect" content="M 0 100 Q 400 0 800 100 L 500 600 L 300 600 L 0 100 " disable="true" fill="#4636f7" layoutX="518.0" layoutY="338.0" opacity="0.4" rotate="45.0" scaleX="0.05" scaleY="0.05" scaleZ="0.05" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" visible="false">
          <effect>
             <GaussianBlur radius="12.0" />
          </effect>
@@ -137,7 +144,7 @@
             </AnchorPane>
          </children>
       </Group>
-      <Pane fx:id="phonePane" layoutX="75.0" layoutY="617.0" prefHeight="118.0" prefWidth="175.0" scaleX="0.7" scaleY="0.7" scaleZ="0.7">
+      <Pane fx:id="phonePane" layoutX="100.0" layoutY="617.0" prefHeight="118.0" prefWidth="175.0" scaleX="0.7" scaleY="0.7" scaleZ="0.7">
          <children>
             <Rectangle arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="70.0" layoutX="-35.0" layoutY="40.0" stroke="BLACK" strokeType="INSIDE" width="145.0" />
             <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#openPhone" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
@@ -153,7 +160,21 @@
             <Circle fx:id="notifCircle" fill="#f40000" layoutX="110.0" layoutY="40.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
          </children>
       </Pane>
-      <Group fx:id="circuitGroup" disable="true" visible="false">
+      <Rectangle fx:id="batteryDimScreen" arcHeight="5.0" arcWidth="5.0" disable="true" height="720.0" opacity="0.6" stroke="BLACK" strokeType="INSIDE" visible="false" width="1022.0" />
+      <ImageView fx:id="torchButton" fitHeight="50.0" fitWidth="71.0" layoutX="880.0" layoutY="660.0" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/torch.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="torchButtonCover" fitHeight="50.0" fitWidth="71.0" layoutX="880.0" layoutY="660.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/torch.png" />
+         </image>
+         <effect>
+            <InnerShadow choke="1.0" />
+         </effect>
+      </ImageView>
+      <Group fx:id="circuitGroup" disable="true" opacity="0.0" visible="false">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" height="720.0" opacity="0.6" stroke="BLACK" strokeType="INSIDE" width="1022.0" />
             <ImageView fitHeight="529.0" fitWidth="796.0" layoutX="102.0" layoutY="90.0">
@@ -223,12 +244,6 @@
             </AnchorPane>
          </children>
       </Group>
-      <Rectangle fx:id="batteryDimScreen" arcHeight="5.0" arcWidth="5.0" disable="true" height="720.0" opacity="0.6" stroke="BLACK" strokeType="INSIDE" visible="false" width="1022.0" />
-      <ImageView fx:id="torchButton" fitHeight="50.0" fitWidth="71.0" layoutX="880.0" layoutY="660.0" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" pickOnBounds="true" preserveRatio="true" visible="false">
-         <image>
-            <Image url="@../images/torch.png" />
-         </image>
-      </ImageView>
       <Rectangle fx:id="computerDimScreen" arcHeight="5.0" arcWidth="5.0" disable="true" height="720.0" opacity="0.6" stroke="BLACK" strokeType="INSIDE" visible="false" width="1022.0" />
       <Group fx:id="batteryGroup" layoutX="150.0" layoutY="-600.0">
          <children>
