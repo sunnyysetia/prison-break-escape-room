@@ -164,6 +164,7 @@ public class WaitingLobbyController {
     GameState.batteryGameSolved = false;
     GameState.batteryPercent = 0;
     GameState.batteryForeverClosed = false;
+    GameState.memoryGameSolved = false;
     GameState.lastMessageFromGPT = true;
 
     // Get the selected radio buttons (difficulty and time).

@@ -83,6 +83,8 @@ public class EscapeRoomController {
 
   // Shared FXML
   @FXML
+  private ImageView torchButtonCover;
+  @FXML
   private ImageView volume;
   @FXML
   private Group chatGroup;
@@ -156,6 +158,8 @@ public class EscapeRoomController {
   private AnchorPane endingControlAnchorPane;
   @FXML
   private AnchorPane computerConsoleAnchorPane;
+  @FXML
+  private Rectangle guardRoomDark2;
 
   @FXML
   private AnchorPane finsihedGamePane;
@@ -853,6 +857,9 @@ public class EscapeRoomController {
       // Disable and hide the dim screen overlay.
       dimScreen.setDisable(true);
       dimScreen.setVisible(false);
+      if (GameState.torchFound) {
+        torchButtonCover.setVisible(false);
+      }
     } else {
       // Update phone label
       phoneLabel.setLayoutX(-3);
@@ -869,6 +876,9 @@ public class EscapeRoomController {
       // Hide the notification circle.
       notifCircle.setVisible(false);
       heartbeatAnimation.stop();
+      if (GameState.torchFound) {
+        torchButtonCover.setVisible(true);
+      }
     }
 
     // Play the phone switch animation.
@@ -1316,16 +1326,46 @@ public class EscapeRoomController {
     circuitGroup.setDisable(false);
     circuitGroup.setVisible(true);
     GameState.torchIsOn.setValue(false);
+    Thread animationThread = new Thread(() -> {
+      FadeTransition endFade = new FadeTransition();
+      endFade.setNode(circuitGroup);
+      endFade.setDuration(Duration.millis(1000));
+      endFade.setFromValue(0);
+      endFade.setToValue(1);
+      endFade.play();
+    });
+
+    wait(250, () -> {
+      startMemoryRecallGame(); // add a pause before starting the game
+    });
     soundUtils.playAudio("typing1.mp3", 1, 0.1);
-    startMemoryRecallGame();
+    animationThread.setDaemon(true);
+    animationThread.start();
   }
 
   @FXML
   private void closeCircuit(MouseEvent event) {
-    System.out.println("Circuit clicked");
+    disableAllSwitches(true);
+    System.out.println("Circuit closed");
+    if (!GameState.memoryGameSolved) {
+      soundUtils.playAudio("typing4.mp3", 1, 0.1);
+    }
+    Thread animationThread = new Thread(() -> {
+      FadeTransition endFade = new FadeTransition();
+      endFade.setNode(circuitGroup);
+      endFade.setDuration(Duration.millis(500));
+      endFade.setFromValue(1);
+      endFade.setToValue(0);
+      endFade.play();
+    });
+
+    animationThread.setDaemon(true);
+    animationThread.start();
+    wait(500, () -> {
+      circuitGroup.setVisible(false);
+    });
     circuitGroup.setDisable(true);
-    circuitGroup.setVisible(false);
-    soundUtils.playAudio("typing4.mp3", 1, 0.1);
+
     // Check if the countdown thread is running and interrupt it
     if (countdownThread != null && countdownThread.isAlive()) {
       countdownThread.interrupt();
@@ -1444,9 +1484,12 @@ public class EscapeRoomController {
     System.out.println("Are equal: " + areEqual);
 
     if (areEqual) {
+      GameState.memoryGameSolved = true;
       closeCircuit(null);
       circuit.setDisable(true);
       guardRoomDarkness.setVisible(false);
+      guardRoomDark2.setVisible(false);
+      soundUtils.playAudio("spotlight.m4a", 1, 0.3);
       issueInstruction(GptPromptEngineering.getLightsOnInstruction());
     } else {
       // initialiseMemoryGame();
