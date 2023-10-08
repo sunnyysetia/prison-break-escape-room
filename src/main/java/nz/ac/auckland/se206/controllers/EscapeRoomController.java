@@ -925,7 +925,7 @@ public class EscapeRoomController {
     batterySwitch.setNode(batteryGroup);
     batterySwitch.setDuration(Duration.millis(500));
     if (GameState.batteryIsOpen) {
-      batterySwitch.setByY(-700);
+      batterySwitch.setByY(-660);
       GameState.batteryIsOpen = false;
       // Disable and hide the dim screen overlay.
       // dimScreen.setDisable(true);
@@ -934,7 +934,7 @@ public class EscapeRoomController {
       batteryDimScreen.setDisable(true);
       batteryDimScreen.setVisible(false);
     } else {
-      batterySwitch.setByY(700);
+      batterySwitch.setByY(660);
       GameState.batteryIsOpen = true;
       // Enable and show the dim screen overlay.
       // dimScreen.setDisable(false);
