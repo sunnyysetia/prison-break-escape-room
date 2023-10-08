@@ -23,11 +23,11 @@
 <Pane fx:id="room" focusTraversable="true" onKeyPressed="#onKeyPressed" prefHeight="720.0" prefWidth="1022.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.EscapeRoomController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="720.0" opacity="0.6" stroke="BLACK" strokeType="INSIDE" width="1022.0" />
-      <Label fx:id="timerLabel" layoutX="910.0" layoutY="15.0" prefHeight="41.0" prefWidth="102.0" styleClass="stencilText" stylesheets="@../css/font.css" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="timerLabel" layoutX="932.0" layoutY="12.0" prefHeight="41.0" prefWidth="102.0" styleClass="stencilText" stylesheets="@../css/font.css" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Stencil" size="27.0" />
          </font></Label>
-      <Label layoutX="15.0" layoutY="19.0" prefHeight="30.0" prefWidth="123.0" styleClass="stencilText" stylesheets="@../css/font.css" text="Hints:" textAlignment="CENTER" textFill="WHITE">
+      <Label layoutX="15.0" layoutY="18.0" prefHeight="30.0" prefWidth="123.0" styleClass="stencilText" stylesheets="@../css/font.css" text="Hints:" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Stencil" size="27.0" />
          </font>
@@ -90,7 +90,7 @@
             </Pane>
          </children>
       </Pane>
-      <ImageView fx:id="volume" fitHeight="200.0" fitWidth="45.0" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" pickOnBounds="true" preserveRatio="true" x="855.0" y="10.0">
+      <ImageView fx:id="volume" fitHeight="200.0" fitWidth="45.0" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" pickOnBounds="true" preserveRatio="true" x="875.0" y="10.0">
          <image>
             <Image url="@../images/volumeOn.png" />
          </image>
@@ -186,7 +186,7 @@
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="goBackMemory" focusTraversable="false" layoutX="469.0" layoutY="528.0" mnemonicParsing="false" onMouseClicked="#closeCircuit" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="35.0" prefWidth="75.0" text="Go Back">
+            <Button fx:id="goBackMemory" focusTraversable="false" layoutX="469.0" layoutY="528.0" mnemonicParsing="false" onMouseClicked="#closeCircuit" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="35.0" prefWidth="75.0" text="Back">
                <font>
                   <Font size="15.0" />
                </font>
@@ -305,9 +305,9 @@
                         <Image url="@../images/myPhone.png" />
                      </image>
                   </ImageView>
-                  <AnchorPane layoutX="-40.0" layoutY="35.0" prefHeight="320.0" prefWidth="630.0" styleClass="stencilText">
+                  <AnchorPane layoutX="-40.0" layoutY="35.0" prefHeight="320.0" prefWidth="640.0" styleClass="stencilText">
                      <children>
-                        <Label fx:id="endPhoneMessage" alignment="CENTER" layoutX="12.0" layoutY="102.0" prefHeight="96.0" prefWidth="606.0" style="-fx-font-size: 18;" styleClass="stencilText" stylesheets="@../css/font.css" text="Unfortunately you failed to escape the prison within the time limit" wrapText="true">
+                        <Label fx:id="endPhoneMessage" alignment="CENTER" layoutX="12.0" layoutY="102.0" prefHeight="96.0" prefWidth="606.0" style="-fx-font-size: 18;" styleClass="stencilText" stylesheets="@../css/font.css" text="Unfortunately you failed to escape the prison within the time limit" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font name="Stencil" size="18.0" />
                            </font>
