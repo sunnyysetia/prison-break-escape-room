@@ -69,4 +69,6 @@ public class GameState {
   public static int batteryPercent = 0;
 
   public static boolean batteryForeverClosed = false;
+
+  public static boolean lastMessageFromGPT = true;
 }
