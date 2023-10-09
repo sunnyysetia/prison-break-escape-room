@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.function.UnaryOperator;
+
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
@@ -34,7 +36,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -110,6 +114,10 @@ public class EscapeRoomController {
   private SVGPath uvLightEffect;
   @FXML
   private SVGPath uvTorchEffect;
+  @FXML
+  private Label questionLabel;
+  @FXML
+  private TextArea answerTextArea;
 
   // Kitchen FXML
   @FXML
@@ -307,6 +315,8 @@ public class EscapeRoomController {
     }
   };
 
+  private int currentQuestionType;
+
   private Tooltip currentTooltip; // Maintain a reference to the current tooltip
 
   ///////////////
@@ -320,6 +330,34 @@ public class EscapeRoomController {
   public void initialize() throws ApiProxyException {
     // Configure the timer length based on what the user selected.
     remainingSeconds = GameState.time;
+
+    generateQuestion();
+
+    UnaryOperator<Change> modifyChange = change -> {
+      if (change.isContentChange()) {
+        int newLength = change.getControlNewText().length();
+        if (newLength > 3) {
+          String previousText = change.getControlNewText().substring(0, 3);
+          change.setText(previousText);
+          int previousLength = change.getControlText().length();
+          change.setRange(0, previousLength);
+        }
+        if (!change.getControlNewText().matches("[0-9]*")) {
+          change.setText(change.getControlText());
+        }
+        if (change.getControlNewText().contains("\n")) {
+          System.out.println("return pressed");
+          change.setText(change.getControlText());
+        }
+        if (change.getControlNewText().contains("c") || change.getControlNewText().contains("C")) {
+          change.setText(change.getControlText());
+          System.out.println("c pressed");
+          answerTextArea.clear();
+        }
+      }
+      return change;
+    };
+    answerTextArea.setTextFormatter(new TextFormatter<>(modifyChange));
 
     volume
         .imageProperty()
@@ -577,6 +615,83 @@ public class EscapeRoomController {
 
     // Run a GPT-based instruction for the introduction.
     runGpt(new ChatMessage("user", GptPromptEngineering.getIntroInstruction(GameState.difficulty)));
+  }
+
+  private void generateQuestion() {
+    answerTextArea.clear();
+    Random rand = new Random();
+    int num1, num2;
+    currentQuestionType = rand.nextInt(3) + 1;
+    switch (currentQuestionType) {
+      case 1: // Addition
+        num1 = rand.nextInt(100);
+        num2 = rand.nextInt(100);
+        questionLabel.setText(num1 + " + " + num2);
+        break;
+      case 2: // Subtraction
+        num1 = rand.nextInt(100);
+        num2 = rand.nextInt(num1);
+        questionLabel.setText(num1 + " - " + num2);
+        break;
+      case 3: // Multiplication
+        num1 = rand.nextInt(13);
+        num2 = rand.nextInt(13);
+        questionLabel.setText(num1 + " x " + num2);
+        break;
+    }
+  }
+
+  private void submitAnswer() {
+    if (answerTextArea.getText().isEmpty()) {
+      return; // do nothing if answer area is empty
+    }
+    checkAnswer();
+    answerTextArea.clear();
+    generateQuestion();
+  }
+
+  @FXML
+  public void keypadPressed(MouseEvent event) {
+    Rectangle clickedRectangle = (Rectangle) event.getSource();
+    String rectangleId = clickedRectangle.getId();
+    System.out.println("KeyPad clicked: " + rectangleId);
+    //
+    //
+    //
+    // WHEN THE KEYPAD IS PRESSED, MAKE IT BLINK TO INDICATE USER PRESSED
+    //
+    //
+    //
+    if (rectangleId.equals("calculatorSubmit")) {
+      submitAnswer();
+    } else if (rectangleId.equals("calculatorClear")) {
+      answerTextArea.clear();
+    } else {
+      answerTextArea.appendText(clickedRectangle.getId().split("calculator")[1]);
+    }
+  }
+
+  private void checkAnswer() {
+    int userAnswer = Integer.parseInt(answerTextArea.getText());
+    int correctAnswer = 0;
+
+    switch (currentQuestionType) {
+      case 1: // Addition
+        correctAnswer = Integer.parseInt(questionLabel.getText().split(" ")[0]) +
+            Integer.parseInt(questionLabel.getText().split(" ")[2]);
+        break;
+      case 2: // Subtraction
+        correctAnswer = Integer.parseInt(questionLabel.getText().split(" ")[0]) -
+            Integer.parseInt(questionLabel.getText().split(" ")[2]);
+        break;
+      case 3: // Multiplication
+        correctAnswer = Integer.parseInt(questionLabel.getText().split(" ")[0]) *
+            Integer.parseInt(questionLabel.getText().split(" ")[2]);
+        break;
+    }
+    if (userAnswer == correctAnswer) {
+      chargeBattery();
+    }
   }
 
   @FXML
@@ -885,11 +1000,6 @@ public class EscapeRoomController {
     phoneSwitch.play();
   }
 
-  @FXML
-  public void tempBatteryCharger(MouseEvent event) {
-    chargeBattery();
-  }
-
   private void chargeBattery() {
     GameState.batteryPercent = GameState.batteryPercent + 25;
     if (GameState.batteryPercent >= 100) {
@@ -921,25 +1031,20 @@ public class EscapeRoomController {
           GameState.togglingBattery = false;
         });
 
+    System.out.println("current battery screen status: " + GameState.batteryIsOpen);
     final TranslateTransition batterySwitch = new TranslateTransition();
     batterySwitch.setNode(batteryGroup);
     batterySwitch.setDuration(Duration.millis(500));
     if (GameState.batteryIsOpen) {
-      batterySwitch.setByY(-660);
+      batterySwitch.setByY(-760);
       GameState.batteryIsOpen = false;
-      // Disable and hide the dim screen overlay.
-      // dimScreen.setDisable(true);
-      // dimScreen.setVisible(false);
-      // Disable and hide the computer dim screen overlay.
       batteryDimScreen.setDisable(true);
       batteryDimScreen.setVisible(false);
     } else {
-      batterySwitch.setByY(660);
+      batterySwitch.setByY(760);
       GameState.batteryIsOpen = true;
-      // Enable and show the dim screen overlay.
-      // dimScreen.setDisable(false);
-      // dimScreen.setVisible(true);
-      // Enable and show the computer dim screen overlay.
+      // answerTextArea.requestFocus();
+      batteryGroup.requestFocus();
       batteryDimScreen.setDisable(false);
       batteryDimScreen.setVisible(true);
     }
@@ -947,6 +1052,7 @@ public class EscapeRoomController {
       GameState.batteryForeverClosed = true;
     }
     batterySwitch.play();
+    System.out.println("new battery screen status: " + GameState.batteryIsOpen);
   }
 
   private void toggleComputer() {
@@ -1157,6 +1263,7 @@ public class EscapeRoomController {
    */
   @FXML
   private void onKeyPressed(KeyEvent event) {
+    // System.out.println("key pressed: " + event.getCode());
     if (event.getCode() == KeyCode.ENTER) {
       // Prevent the Enter key event from propagating further
       if (GameState.phoneIsOpen) {
@@ -1165,6 +1272,25 @@ public class EscapeRoomController {
       }
       if (GameState.computerIsOpen) {
         computerLoginButton.fire();
+      }
+      if (GameState.batteryIsOpen) {
+        submitAnswer();
+      }
+    }
+    if (GameState.batteryIsOpen) {
+      if (event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.DELETE) {
+        answerTextArea.setText(answerTextArea.getText().substring(0, answerTextArea.getText().length() - 1));
+      } else {
+        // System.out.println("user pressed: " + event.getCode());
+        try {
+          if (event.getText().equals("C") || event.getText().equals("c")) {
+            answerTextArea.clear();
+          }
+          answerTextArea.appendText(event.getText());
+        } catch (Exception e) {
+          // do nothing, only happens when user presses some key like del or insert
+          System.out.println(e);
+        }
       }
     }
   }
