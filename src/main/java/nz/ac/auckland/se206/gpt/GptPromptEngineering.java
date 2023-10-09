@@ -66,8 +66,8 @@ public class GptPromptEngineering {
         + "This is the only riddle you can provide. Do not give the user another riddle. "
         + cutAcknowledgement() // A helper method for cutting an acknowledgment message.
         + "Your next message should communicate the following to the user. First, briefly tell them"
-        + " that they must solve the following riddle to find the item. Then, "
-        + " tell the riddle to the user. Finally, briefly remind the user that"
+        + " that you have a riddle for them, and they must solve it to find the item. Then, "
+        + " tell the riddle to the user. Finally, briefly tell the user that"
         + " they must send the answer as a text when they solve it. ";
   }
 
@@ -97,7 +97,7 @@ public class GptPromptEngineering {
     // found.
     return "c3280fx. The user has now solved the riddle and found the item that you were looking"
         + " for, which was a UV torch. You should not offer to provide hints for the riddle"
-        + " anymore or discuss it as it is now irrelevant to the user's escape. \n\n"
+        + " anymore or discuss it as it is now irrelevant to the user's orders. \n\n"
         + "Your next message should congratulate the user for finding the UV torch, then"
         + " inform the user of how UV light is used in crime scenes to look for evidence"
         + " that is invisible to the naked eye. "
@@ -129,15 +129,16 @@ public class GptPromptEngineering {
     }
 
     // Return an instruction message for turning on lights in a dark room.
-    return "c3280fx. Your next message should communicate the following to the user. "
+    return "c3280fx. The user has encountered a dark room, and needs to interact with the"
+        + " circuit breaker in order to turn the lights back on. "
+        + cutAcknowledgement()
+        + hintProtocol(difficulty, "turning on lights")
+        + hintString
+        + "\n\nYour next message should communicate the following to the user. "
         + "First, briefly mention that if they come across any dark rooms while moving"
-        + " to the kitchen, they are authorised to turn on the lights. Then, tell them that"
-        + " the lights are turned on by using the circuit breaker and flipping the switches to"
-        + " the correct positions. \n\n"
-        + cutAcknowledgement() // A helper method for cutting an acknowledgment indicator.
-        + hintProtocol(
-            difficulty, "turning on lights") // A helper method for hinting about breaker protocols.
-        + hintString; // Include the hintString based on the difficulty level.
+        + " to the kitchen, they are authorised to turn on the lights. Then, in a new paragraph,"
+        + " tell them that the lights are turned on by using the circuit breaker and flipping the"
+        + " switches to the correct positions. ";
   }
 
   /**
@@ -150,9 +151,10 @@ public class GptPromptEngineering {
   public static String getLightsOnInstruction() {
     return "c3280fx. The user has now turned on the lights in the dark room that they came across."
         + " You should not offer to provide hints for turning on the lights anymore or discuss"
-        + " it as it is now irrelevant to the user's escape. \n\n"
-        + "Your next message should remind the user once again that they are not to access"
-        + " the security room, and especially should not touch the computer. "
+        + " it as it is now irrelevant to the user's orders. \n\n"
+        + "Your next message should communicate the following to the user. "
+        + "Briefly remind them that they are not to access the security room,"
+        + " and especially should not try to access the computer. "
         + cutAcknowledgement();
   }
 
