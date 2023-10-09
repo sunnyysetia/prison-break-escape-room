@@ -50,3 +50,7 @@ accessToken: “YOUR_KEY”`
 - Typing Sound Effect (no copyright): https://www.youtube.com/watch?v=OJhWtBBJw10
 - Volume icon: https://www.iconsdb.com/white-icons/volume-up-4-icon.html
 - spot light sfx: https://www.youtube.com/watch?v=YWz9WzzeJwI
+- paper scroll image: https://www.freepik.com/free-vector/old-parchment-papers_6905535.htm#query=paper%20scroll&position=1&from_view=search&track=ais
+  segment 7 font: https://www.fontspace.com/segment7-font-f19825
+- electricity sfx: https://www.youtube.com/watch?v=HoGCY1f-pOI
+- incorrect sfx: https://www.youtube.com/watch?v=FwVRkhy5G04

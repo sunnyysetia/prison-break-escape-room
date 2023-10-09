@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Segment7';
+    src: url('../fonts/Segment7-4Gml.ttf');
+}
+
+.Segment7Text {
+    -fx-font-family: 'Segment7';
+}
