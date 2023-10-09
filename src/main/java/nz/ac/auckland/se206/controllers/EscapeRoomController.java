@@ -1390,11 +1390,14 @@ public class EscapeRoomController {
     Node source = (Node) event.getSource();
     source.getScene().setCursor(Cursor.HAND);
     if (source instanceof Rectangle) {
-      String rectangleName = ((Rectangle) source).getId();
+      Rectangle rectangleObject = (Rectangle) source;
+      String rectangleName = (rectangleObject).getId();
       Tooltip tooltip = new Tooltip(rectangleName);
 
       // Set a shorter tooltip delay (in milliseconds)
       tooltip.setShowDelay(Duration.millis(100));
+
+      rectangleObject.setOpacity(1);
 
       Tooltip.install(source, tooltip);
 
