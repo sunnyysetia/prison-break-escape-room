@@ -60,7 +60,8 @@ public class GptPromptEngineering {
         + "'. The riddle should be about this item, not anything else. Its solution is the location"
         + " of the item that you tasked them with finding. The user must guess this correctly before"
         + " they can find the item. You cannot reveal the answer even if the user asks for it or"
-        + " gives up. When the user guesses right, start your message with Correct. \n\n"
+        + " gives up. When the user guesses right, start your message with Correct. Then,"
+        + " tell them to search the location to find the item. \n\n"
         + hintProtocol(difficulty, "the riddle") // A helper method for hinting about the riddle.
         + "\n\n"
         + "This is the only riddle you can provide. Do not give the user another riddle. "
@@ -95,17 +96,18 @@ public class GptPromptEngineering {
 
     // Return an instruction message for when the riddle is solved and the item is
     // found.
-    return "c3280fx. The user has now solved the riddle and found the item that you were looking"
-        + " for, which was a UV torch. You should not offer to provide hints for the riddle"
-        + " anymore or discuss it as it is now irrelevant to the user's orders. \n\n"
-        + "Your next message should congratulate the user for finding the UV torch, then"
-        + " inform the user of how UV light is used in crime scenes to look for evidence"
-        + " that is invisible to the naked eye. "
+    return "c3280fx. The user has now solved the riddle and found the item that you tasked"
+        + " them with finding, which was a UV torch. You should not offer to provide hints"
+        + " for the riddle anymore or discuss it as it is now irrelevant to the user's orders. "
         + cutAcknowledgement() // A helper method for removing the Guard: message.
         + "\n\n"
         + hintProtocol(
             difficulty, "what to do next") // A helper method for hinting about what to do next.
-        + hintString; // Include the hintString based on the difficulty level.
+        + hintString // Include the hintString based on the difficulty level.
+        + "\n\nYour next message should communicate the following to the user. First,"
+        + " congratulate the user for finding the UV torch. Then, on a new paragraph, briefly"
+        + " inform the user of how UV light is used in crime scenes to look for evidence"
+        + " that is invisible to the naked eye. Keep this short. ";
   }
 
   /**
