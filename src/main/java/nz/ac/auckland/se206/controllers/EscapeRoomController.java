@@ -357,6 +357,12 @@ public class EscapeRoomController {
           System.out.println("return pressed");
           change.setText(change.getControlText());
         }
+        if (change.getControlNewText().contains("=")) {
+          change.setText(change.getControlText());
+          System.out.println("= pressed");
+          submitAnswer();
+          answerTextArea.clear();
+        }
         if (change.getControlNewText().contains("c") || change.getControlNewText().contains("C")) {
           change.setText(change.getControlText());
           System.out.println("c pressed");
@@ -656,6 +662,7 @@ public class EscapeRoomController {
     if (checkAnswer()) {
       generateQuestion();
     } else {
+      soundUtils.playAudio("error.m4a", 1, 0.08);
       wait(1000, () -> {
         generateQuestion();
       });
@@ -674,6 +681,8 @@ public class EscapeRoomController {
     //
     //
     //
+    int k = (int) (Math.random() * 5 + 1);
+    soundUtils.playAudio("typing" + k + ".mp3", 1, 0.08);
     if (rectangleId.equals("calculatorSubmit")) {
       submitAnswer();
     } else if (rectangleId.equals("calculatorClear")) {
@@ -1043,6 +1052,8 @@ public class EscapeRoomController {
       batteryFade.setFromValue(0);
       batteryFade.setToValue(1);
       batteryFade.play();
+      String audioString = "electric" + ((GameState.batteryPercent >= 100) ? "1" : "2") + ".m4a";
+      soundUtils.playAudio(audioString, 1, 0.08);
     });
     fadeThread.setDaemon(true);
     fadeThread.start();
@@ -1319,6 +1330,8 @@ public class EscapeRoomController {
       }
     }
     if (GameState.batteryIsOpen) {
+      int k = (int) (Math.random() * 5 + 1);
+      soundUtils.playAudio("typing" + k + ".mp3", 1, 0.1);
       if (event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.DELETE) {
         answerTextArea.setText(answerTextArea.getText().substring(0, answerTextArea.getText().length() - 1));
       } else {
@@ -1326,6 +1339,10 @@ public class EscapeRoomController {
         try {
           if (event.getText().equals("C") || event.getText().equals("c")) {
             answerTextArea.clear();
+          }
+          if (event.getText().equals("=")) {
+            submitAnswer();
+            return;
           }
           answerTextArea.appendText(event.getText());
         } catch (Exception e) {
