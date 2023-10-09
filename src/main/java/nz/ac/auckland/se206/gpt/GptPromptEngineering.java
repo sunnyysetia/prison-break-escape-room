@@ -35,9 +35,9 @@ public class GptPromptEngineering {
         + hintString
         + "\n\n"
         + "Your next message should lay out the following scenario to the user. First, briefly greet the"
-        + " user. Then, on a new paragraph, briefly order the user to retrieve something from the kitchen. "
-        + "The user is not authorized to know what the item is, and the kitchen is located to the left"
-        + " of the cell. Mention that you have further instructions waiting for them when they enter the"
+        + " user. Then, on a new paragraph, briefly order the user to get something from the kitchen,"
+        + " which is located to the left of the cell. The user is not authorized to know what the item is. "
+        + "Mention that you have further instructions waiting for them when they enter the"
         + " kitchen. You are not to tell the user these instructions until the system instructs you to. "
         + "Then, on a new paragraph, briefly remind the user that they are not allowed in the"
         + " security room, which is located to the right of the cell, as it is currently unguarded.";
@@ -58,15 +58,17 @@ public class GptPromptEngineering {
         + "This message is a riddle with the answer being '"
         + wordToGuess
         + "'. The riddle should be about this item, not anything else. Its solution is the location"
-        + " of the item that you lost. The user must guess this correctly before they can find the"
-        + " item. You cannot reveal the answer even if the user asks for it or gives up. When the"
-        + " user guesses right, start your message with Correct. \n\n"
+        + " of the item that you tasked them with finding. The user must guess this correctly before"
+        + " they can find the item. You cannot reveal the answer even if the user asks for it or"
+        + " gives up. When the user guesses right, start your message with Correct. \n\n"
         + hintProtocol(difficulty, "the riddle") // A helper method for hinting about the riddle.
         + "\n\n"
         + "This is the only riddle you can provide. Do not give the user another riddle. "
         + cutAcknowledgement() // A helper method for cutting an acknowledgment message.
-        + "Your next message should tell the riddle to the user. Remind them that they must send"
-        + " the answer in the chat before they can find the item. ";
+        + "Your next message should communicate the following to the user. First, briefly tell them"
+        + " that they must solve the following riddle to find the item. Then, "
+        + " tell the riddle to the user. Finally, briefly remind the user that"
+        + " they must send the answer as a text when they solve it. ";
   }
 
   /**
