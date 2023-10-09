@@ -268,7 +268,7 @@
                   <Image url="@../images/paper.png" />
                </image>
             </ImageView>
-            <TextArea disable="true" editable="false" focusTraversable="false" layoutX="27.0" layoutY="130.0" prefHeight="374.0" prefWidth="277.0" style="-fx-opacity: 1.0; -fx-font-size: 22;" styleClass="eraserText" text="Charge the batteries by performing the correct operations on the Battery Charger Calculator 3000&#10;&#10;&#10;Press C to clear&#10;Press = to submit" wrapText="true">
+            <TextArea disable="true" editable="false" focusTraversable="false" layoutX="27.0" layoutY="130.0" prefHeight="374.0" prefWidth="277.0" style="-fx-opacity: 1.0; -fx-font-size: 22;" styleClass="eraserText" text="To use the UV light torch, you must charge the batteries, charge the batteries by operating the Battery Charger Calculator 3000&#10;&#10;Note:&#10;Press C to clear&#10;Press = to submit" wrapText="true">
                <font>
                   <Font size="22.0" />
                </font>
