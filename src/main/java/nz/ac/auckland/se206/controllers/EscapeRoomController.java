@@ -126,6 +126,32 @@ public class EscapeRoomController {
   private Rectangle batteryPower3;
   @FXML
   private Rectangle batteryPower4;
+  @FXML
+  private Rectangle calculator0;
+  @FXML
+  private Rectangle calculator1;
+  @FXML
+  private Rectangle calculator2;
+  @FXML
+  private Rectangle calculator3;
+  @FXML
+  private Rectangle calculator4;
+  @FXML
+  private Rectangle calculator5;
+  @FXML
+  private Rectangle calculator6;
+  @FXML
+  private Rectangle calculator7;
+  @FXML
+  private Rectangle calculator8;
+  @FXML
+  private Rectangle calculator9;
+  @FXML
+  private Rectangle calculatorClear;
+  @FXML
+  private Rectangle calculatorSubmit;
+
+  private Rectangle lastCalculatorButtonHovered;
 
   // Kitchen FXML
   @FXML
@@ -1510,6 +1536,24 @@ public class EscapeRoomController {
       disappearThread.start();
       audioThread.start();
     }
+  }
+
+  @FXML
+  private void addGlowToCalculatorKey(MouseEvent event) {
+    Node source = (Node) event.getSource();
+    source.getScene().setCursor(Cursor.HAND);
+    if (source instanceof Rectangle) {
+      Rectangle rectangleKey = (Rectangle) source;
+      // String rectangleName = (rectangleKey).getId();
+      rectangleKey.setOpacity(1);
+      lastCalculatorButtonHovered = rectangleKey;
+
+    }
+  }
+
+  @FXML
+  private void removeGlowFromCalculatorKey(MouseEvent event) {
+    lastCalculatorButtonHovered.setOpacity(0);
   }
 
   ///////////////
