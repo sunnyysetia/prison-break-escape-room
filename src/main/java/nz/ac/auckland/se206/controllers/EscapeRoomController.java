@@ -286,6 +286,8 @@ public class EscapeRoomController {
 
   // Shared
   private int remainingSeconds = 120;
+  private int sentMessageFlag = 0;
+  private int timeout = 12;
   private Timeline timer;
   private ScaleTransition heartbeatAnimation;
   private int hintsRemaining = 5;
@@ -1116,6 +1118,12 @@ public class EscapeRoomController {
                           + plural
                           + " remaining");
                 }
+
+                // If a certain amount of seconds have elapsed, assume that the API is not
+                // working.
+                if (remainingSeconds <= (sentMessageFlag - timeout)) {
+                  handleError();
+                }
               } else {
                 // If no remaining seconds, stop the timer and handle the timer expiration.
                 timer.stop();
@@ -1566,6 +1574,7 @@ public class EscapeRoomController {
   private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
     // Add the input message to the chat completion request.
     GameState.gptThinking.setValue(true);
+    sentMessageFlag = remainingSeconds;
     chatCompletionRequest.addMessage(msg);
 
     // Create a task for GPT processing.
@@ -1626,6 +1635,7 @@ public class EscapeRoomController {
               notifCircle.setVisible(true);
               heartbeatAnimation.play();
             }
+            sentMessageFlag = 0;
             GameState.gptThinking.setValue(false);
 
             // Check if the response indicates a correct riddle answer.
@@ -1635,27 +1645,8 @@ public class EscapeRoomController {
               GameState.riddleSolved = true;
             }
           } else {
-            // When an error occurs, print a message suggesting fixes to the user.
-            String apology = "Sorry, it seems like you cannot receive messages at this time. \n\n"
-                + "Maybe try to check your internet connection or your apiproxy.config file in order"
-                + " to see what is causing this problem, and then restart the application when you are"
-                + " ready to retry. \n\n"
-                + "You cannot escape from this facility without assistance.";
-            wait(
-                3500,
-                () -> {
-                  appendTexts(apology);
-                  if (!GameState.phoneIsOpen) {
-                    notifCircle.setVisible(true);
-                    heartbeatAnimation.play();
-                  }
-                  // gptThinking is kept as true to prevent future messages from processing, so
-                  // the
-                  // texter label and gif are unbound.
-                  phoneNameLabel.textProperty().unbind();
-                  phoneNameLabel.setText("Prison Guard");
-                  typingImage.setVisible(false);
-                });
+            // If the message is null, it is likely that an api proxy error has occurred.
+            handleError();
           }
         });
 
@@ -1756,5 +1747,34 @@ public class EscapeRoomController {
       addLabel(paragraph, messagesVertBox);
     }
     GameState.lastMessageFromGPT = true;
+  }
+
+  /**
+   * Handles the case that GPT stops working correctly by informing the user of
+   * what they can do.
+   */
+  private void handleError() {
+    // When an error occurs, print a message suggesting fixes to the user.
+    String apology = "Sorry, it seems like you cannot receive messages at this time. \n\n"
+        + "Maybe try to check your internet connection or your apiproxy.config file in order"
+        + " to see what is causing this problem, and then restart the application when you are"
+        + " ready to retry. \n\n"
+        + "You cannot escape from this facility without assistance.";
+    wait(
+        3500,
+        () -> {
+          appendTexts(apology);
+          if (!GameState.phoneIsOpen) {
+            notifCircle.setVisible(true);
+            heartbeatAnimation.play();
+          }
+          sentMessageFlag = 0;
+          // gptThinking is kept as true to prevent future messages from processing, so
+          // the texter label and gif are unbound.
+          phoneNameLabel.textProperty().unbind();
+          phoneNameLabel.setText("Prison Guard");
+          typingImage.setVisible(false);
+        });
+
   }
 }
