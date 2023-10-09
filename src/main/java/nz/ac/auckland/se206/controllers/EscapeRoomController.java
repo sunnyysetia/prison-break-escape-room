@@ -118,6 +118,14 @@ public class EscapeRoomController {
   private Label questionLabel;
   @FXML
   private TextArea answerTextArea;
+  @FXML
+  private Rectangle batteryPower1;
+  @FXML
+  private Rectangle batteryPower2;
+  @FXML
+  private Rectangle batteryPower3;
+  @FXML
+  private Rectangle batteryPower4;
 
   // Kitchen FXML
   @FXML
@@ -645,9 +653,13 @@ public class EscapeRoomController {
     if (answerTextArea.getText().isEmpty()) {
       return; // do nothing if answer area is empty
     }
-    checkAnswer();
-    answerTextArea.clear();
-    generateQuestion();
+    if (checkAnswer()) {
+      generateQuestion();
+    } else {
+      wait(1000, () -> {
+        generateQuestion();
+      });
+    }
   }
 
   @FXML
@@ -671,10 +683,10 @@ public class EscapeRoomController {
     }
   }
 
-  private void checkAnswer() {
+  private boolean checkAnswer() {
     int userAnswer = Integer.parseInt(answerTextArea.getText());
     int correctAnswer = 0;
-
+    answerTextArea.clear();
     switch (currentQuestionType) {
       case 1: // Addition
         correctAnswer = Integer.parseInt(questionLabel.getText().split(" ")[0]) +
@@ -691,6 +703,12 @@ public class EscapeRoomController {
     }
     if (userAnswer == correctAnswer) {
       chargeBattery();
+      return true;
+    } else {
+      Platform.runLater(() -> {
+        questionLabel.setText("wrong Ans");
+      });
+      return false;
     }
   }
 
@@ -1001,10 +1019,33 @@ public class EscapeRoomController {
   }
 
   private void chargeBattery() {
-    GameState.batteryPercent = GameState.batteryPercent + 25;
+    GameState.batteryPercent += 25;
     if (GameState.batteryPercent >= 100) {
       GameState.batteryGameSolved = true;
     }
+    Thread fadeThread = new Thread(() -> {
+      FadeTransition batteryFade = new FadeTransition();
+      switch (GameState.batteryPercent) {
+        case 25:
+          batteryFade.setNode(batteryPower1);
+          break;
+        case 50:
+          batteryFade.setNode(batteryPower2);
+          break;
+        case 75:
+          batteryFade.setNode(batteryPower3);
+          break;
+        case 100:
+          batteryFade.setNode(batteryPower4);
+          break;
+      }
+      batteryFade.setDuration(Duration.millis(400));
+      batteryFade.setFromValue(0);
+      batteryFade.setToValue(1);
+      batteryFade.play();
+    });
+    fadeThread.setDaemon(true);
+    fadeThread.start();
     Platform.runLater(
         () -> {
           powerPercentLabel.setText(GameState.batteryPercent + "%");

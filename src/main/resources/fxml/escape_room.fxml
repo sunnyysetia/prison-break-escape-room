@@ -131,16 +131,31 @@
             <AnchorPane layoutX="261.0" layoutY="210.0" prefHeight="300.0" prefWidth="500.0">
                <children>
                   <Rectangle fill="#767676" height="300.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="500.0" />
-                  <Label layoutX="62.0" layoutY="14.0" prefHeight="134.0" prefWidth="376.0" style="-fx-font-size: 45;" styleClass="stencilText" stylesheets="@../css/font.css" text="You Unlocked: UV light Torch" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Label layoutX="10.0" layoutY="8.0" prefHeight="134.0" prefWidth="480.0" style="-fx-font-size: 34; -fx-opacity: 1.0;" styleClass="stencilText" stylesheets="@../css/font.css" text="You Unlocked: UV light Torch, Battery Charger, and empty Batteries" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <font>
-                        <Font name="Stencil" size="45.0" />
+                        <Font name="Stencil" size="34.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="175.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/torch.png" />
                      </image>
                   </ImageView>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="174.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/generator.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="134.0" fitWidth="63.0" layoutX="372.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true" rotate="-25.0">
+                     <image>
+                        <Image url="@../images/battery.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="336.0" layoutY="218.0" prefHeight="68.0" prefWidth="53.0" style="-fx-font-size: 34; -fx-opacity: 1.0;" styleClass="stencilText" stylesheets="@../css/font.css" text="x4" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="Stencil" size="34.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </children>
@@ -298,9 +313,64 @@
                   <Rectangle fx:id="calculator9" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="40.0" layoutX="255.0" layoutY="286.0" onMouseClicked="#keypadPressed" stroke="BLACK" strokeType="INSIDE" width="38.0" />
                   <Rectangle fx:id="calculator0" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="42.0" layoutX="208.0" layoutY="337.0" onMouseClicked="#keypadPressed" stroke="BLACK" strokeType="INSIDE" width="38.0" />
                   <Rectangle fx:id="calculatorClear" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="42.0" layoutX="160.0" layoutY="337.0" onMouseClicked="#keypadPressed" stroke="BLACK" strokeType="INSIDE" width="38.0" />
+                  <Label fx:id="powerPercentLabel" layoutX="212.0" layoutY="151.0" style="-fx-font-size: 20;" styleClass="metropolisText" stylesheets="@../css/font2.css" text="0%" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Rectangle fx:id="batteryPower1" arcHeight="5.0" arcWidth="5.0" fill="#2bff06" height="136.0" layoutX="446.0" layoutY="43.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="75.0">
+                     <effect>
+                        <Glow />
+                     </effect>
+                  </Rectangle>
+                  <Rectangle fx:id="batteryPower2" arcHeight="5.0" arcWidth="5.0" fill="#2bff06" height="136.0" layoutX="543.0" layoutY="43.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="75.0">
+                     <effect>
+                        <Glow />
+                     </effect>
+                  </Rectangle>
+                  <Rectangle fx:id="batteryPower3" arcHeight="5.0" arcWidth="5.0" fill="#2bff06" height="136.0" layoutX="446.0" layoutY="231.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="75.0">
+                     <effect>
+                        <Glow />
+                     </effect>
+                  </Rectangle>
+                  <Rectangle fx:id="batteryPower4" arcHeight="5.0" arcWidth="5.0" fill="#2bff06" height="136.0" layoutX="543.0" layoutY="231.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="75.0">
+                     <effect>
+                        <Glow />
+                     </effect>
+                  </Rectangle>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="446.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/battery.png" />
+                     </image>
+                     <effect>
+                        <Glow level="0.4" />
+                     </effect></ImageView>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="543.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/battery.png" />
+                     </image>
+                     <effect>
+                        <Glow level="0.4" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="446.0" layoutY="221.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/battery.png" />
+                     </image>
+                     <effect>
+                        <Glow level="0.4" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="543.0" layoutY="221.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/battery.png" />
+                     </image>
+                     <effect>
+                        <Glow level="0.4" />
+                     </effect>
+                  </ImageView>
                </children>
             </Group>
-            <Label fx:id="powerPercentLabel" layoutX="829.0" layoutY="250.0" text="0%" textFill="WHITE" />
          </children>
       </Group>
       <Group fx:id="computerGroup" layoutX="221.0" layoutY="-500.0">
