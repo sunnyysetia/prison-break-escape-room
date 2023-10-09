@@ -129,10 +129,11 @@ public class GptPromptEngineering {
     }
 
     // Return an instruction message for turning on lights in a dark room.
-    return "c3280fx. Your next message should instruct users on protocols for turning on lights if"
-        + " they come across a dark room while doing their tasks. A circuit breaker"
-        + " will be visible, and they are authorized to interact with it to turn the lights"
-        + " back on. \n\n"
+    return "c3280fx. Your next message should communicate the following to the user. "
+        + "First, briefly mention that if they come across any dark rooms while moving"
+        + " to the kitchen, they are authorised to turn on the lights. Then, tell them that"
+        + " the lights are turned on by using the circuit breaker and flipping the switches to"
+        + " the correct positions. \n\n"
         + cutAcknowledgement() // A helper method for cutting an acknowledgment indicator.
         + hintProtocol(
             difficulty, "turning on lights") // A helper method for hinting about breaker protocols.
