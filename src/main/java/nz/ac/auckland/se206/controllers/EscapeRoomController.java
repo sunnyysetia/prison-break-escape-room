@@ -1608,6 +1608,7 @@ public class EscapeRoomController {
       dissappearFade.play();
 
     }
+  }
 
   private void onToiletEnter(MouseEvent event) {
     toilet.setOpacity(1);
