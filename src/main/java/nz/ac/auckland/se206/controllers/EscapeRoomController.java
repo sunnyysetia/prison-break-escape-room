@@ -15,6 +15,7 @@ import java.util.function.UnaryOperator;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
@@ -126,6 +127,34 @@ public class EscapeRoomController {
   private Rectangle batteryPower3;
   @FXML
   private Rectangle batteryPower4;
+  @FXML
+  private Group calculatorKeysGroup;
+  @FXML
+  private Rectangle calculator0;
+  @FXML
+  private Rectangle calculator1;
+  @FXML
+  private Rectangle calculator2;
+  @FXML
+  private Rectangle calculator3;
+  @FXML
+  private Rectangle calculator4;
+  @FXML
+  private Rectangle calculator5;
+  @FXML
+  private Rectangle calculator6;
+  @FXML
+  private Rectangle calculator7;
+  @FXML
+  private Rectangle calculator8;
+  @FXML
+  private Rectangle calculator9;
+  @FXML
+  private Rectangle calculatorClear;
+  @FXML
+  private Rectangle calculatorSubmit;
+
+  private Rectangle lastCalculatorButtonHovered;
 
   // Kitchen FXML
   @FXML
@@ -671,6 +700,38 @@ public class EscapeRoomController {
     }
   }
 
+  // Function to show a clicked stroke on a rectangle
+  public void showKeyClicked(String fxid) {
+    // Find the rectangle by fxid
+    Node node = calculatorKeysGroup.lookup("#" + fxid);
+
+    if (node instanceof Rectangle) {
+      Rectangle rectangle = (Rectangle) node;
+
+      // Set opacity to 1 and stroke width to 3
+      rectangle.setOpacity(1);
+      rectangle.setStrokeWidth(3);
+
+      // Create a timeline for the animation
+      Timeline timeline = new Timeline();
+      timeline.setCycleCount(1);
+
+      // Define keyframes for opacity and stroke width changes
+      KeyFrame startKeyFrame = new KeyFrame(Duration.ZERO,
+          new KeyValue(rectangle.opacityProperty(), 1),
+          new KeyValue(rectangle.strokeWidthProperty(), 3));
+
+      KeyFrame endKeyFrame = new KeyFrame(Duration.seconds(1),
+          new KeyValue(rectangle.opacityProperty(), 0),
+          new KeyValue(rectangle.strokeWidthProperty(), 0));
+
+      timeline.getKeyFrames().addAll(startKeyFrame, endKeyFrame);
+      timeline.play();
+      int k = (int) (Math.random() * 5 + 1);
+      soundUtils.playAudio("typing" + k + ".mp3", 1, 0.08);
+    }
+  }
+
   @FXML
   public void keypadPressed(MouseEvent event) {
     Rectangle clickedRectangle = (Rectangle) event.getSource();
@@ -680,11 +741,11 @@ public class EscapeRoomController {
     //
     //
     // WHEN THE KEYPAD IS PRESSED, MAKE IT BLINK TO INDICATE USER PRESSED
+    showKeyClicked(rectangleId);
     //
     //
     //
-    int k = (int) (Math.random() * 5 + 1);
-    soundUtils.playAudio("typing" + k + ".mp3", 1, 0.08);
+
     if (rectangleId.equals("calculatorSubmit")) {
       submitAnswer();
     } else if (rectangleId.equals("calculatorClear")) {
@@ -1346,12 +1407,16 @@ public class EscapeRoomController {
         // System.out.println("user pressed: " + event.getCode());
         try {
           if (event.getText().equals("C") || event.getText().equals("c")) {
+            showKeyClicked("calculatorClear");
             answerTextArea.clear();
           }
           if (event.getText().equals("=")) {
+            showKeyClicked("calculatorSubmit");
             submitAnswer();
             return;
           }
+          System.out.println("user pressed: " + event.getText());
+          showKeyClicked("calculator" + event.getText());
           answerTextArea.appendText(event.getText());
         } catch (Exception e) {
           // do nothing, only happens when user presses some key like del or insert
@@ -1510,6 +1575,24 @@ public class EscapeRoomController {
       disappearThread.start();
       audioThread.start();
     }
+  }
+
+  @FXML
+  private void addGlowToCalculatorKey(MouseEvent event) {
+    Node source = (Node) event.getSource();
+    source.getScene().setCursor(Cursor.HAND);
+    if (source instanceof Rectangle) {
+      Rectangle rectangleKey = (Rectangle) source;
+      // String rectangleName = (rectangleKey).getId();
+      rectangleKey.setOpacity(1);
+      lastCalculatorButtonHovered = rectangleKey;
+
+    }
+  }
+
+  @FXML
+  private void removeGlowFromCalculatorKey(MouseEvent event) {
+    lastCalculatorButtonHovered.setOpacity(0);
   }
 
   ///////////////
