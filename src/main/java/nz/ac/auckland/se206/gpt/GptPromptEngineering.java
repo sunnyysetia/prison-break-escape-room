@@ -152,6 +152,7 @@ public class GptPromptEngineering {
    * @return the prompt engineering string that should hint at the ending.
    */
   public static String getLightsOnInstruction() {
+    // Return an instruction message for when the lights are turned on.
     return "c3280fx. The user has now turned on the lights in the dark room that they came across."
         + " You should not offer to provide hints for turning on the lights anymore or discuss"
         + " it as it is now irrelevant to the user's orders. \n\n"
