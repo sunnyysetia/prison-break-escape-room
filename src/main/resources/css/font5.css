@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Digital dream Fat Narrow';
+    src: url('../fonts/DIGITALDREAMFATNARROW.ttf');
+}
+
+.digitalDreamText {
+    -fx-font-family: 'Digital dream Fat Narrow';
+}

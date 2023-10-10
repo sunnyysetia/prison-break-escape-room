@@ -54,3 +54,4 @@ accessToken: “YOUR_KEY”`
   segment 7 font: https://www.fontspace.com/segment7-font-f19825
 - electricity sfx: https://www.youtube.com/watch?v=HoGCY1f-pOI
 - incorrect sfx: https://www.youtube.com/watch?v=FwVRkhy5G04
+- digital dream font: https://www.1001fonts.com/digital-dream-font.html
