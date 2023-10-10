@@ -688,6 +688,8 @@ public class EscapeRoomController {
   }
 
   private void submitAnswer() {
+    showKeyClicked("calculatorSubmit");
+
     if (answerTextArea.getText().isEmpty()) {
       return; // do nothing if answer area is empty
     }
@@ -1423,7 +1425,6 @@ public class EscapeRoomController {
             answerTextArea.clear();
           }
           if (event.getText().equals("=")) {
-            showKeyClicked("calculatorSubmit");
             submitAnswer();
             return;
           }
