@@ -1721,7 +1721,13 @@ public class EscapeRoomController {
     if (source instanceof Polygon) {
       Polygon polygonObject = (Polygon) source;
 
-      polygonObject.setOpacity(0);
+      FadeTransition dissappearFade = new FadeTransition();
+      dissappearFade.setNode(polygonObject);
+      dissappearFade.setDuration(Duration.millis(500));
+      dissappearFade.setFromValue(1);
+      dissappearFade.setToValue(0);
+
+      dissappearFade.play();
 
     }
     resetCursor(event);
