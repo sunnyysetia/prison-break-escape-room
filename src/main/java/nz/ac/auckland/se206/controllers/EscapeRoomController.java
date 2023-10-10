@@ -195,7 +195,7 @@ public class EscapeRoomController {
 
   // Guard's Room FXML
   @FXML
-  private Rectangle circuit;
+  private Polygon circuit;
   @FXML
   private Rectangle computer;
   @FXML
@@ -1856,14 +1856,33 @@ public class EscapeRoomController {
     }
   }
 
-  private void onToiletEnter(MouseEvent event) {
-    toilet.setOpacity(1);
+  @FXML
+  private void onPolygonEnter(MouseEvent event) {
+    Node source = (Node) event.getSource();
+    if (source instanceof Polygon) {
+      Polygon polygonObject = (Polygon) source;
+
+      polygonObject.setOpacity(1);
+
+    }
     changeCursorToHand(event);
   }
 
   @FXML
-  private void onToiletExit(MouseEvent event) {
-    toilet.setOpacity(0);
+  private void onPolygonExit(MouseEvent event) {
+    Node source = (Node) event.getSource();
+    if (source instanceof Polygon) {
+      Polygon polygonObject = (Polygon) source;
+
+      FadeTransition dissappearFade = new FadeTransition();
+      dissappearFade.setNode(polygonObject);
+      dissappearFade.setDuration(Duration.millis(500));
+      dissappearFade.setFromValue(1);
+      dissappearFade.setToValue(0);
+
+      dissappearFade.play();
+
+    }
     resetCursor(event);
   }
 
