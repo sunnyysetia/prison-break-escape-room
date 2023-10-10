@@ -1110,6 +1110,7 @@ public class EscapeRoomController {
   }
 
   private void finishBatteryGame() {
+    torchButtonCover.setVisible(true);
     FadeTransition paperImageFade = new FadeTransition();
     paperImageFade.setNode(scrollPaperImage);
     paperImageFade.setDuration(Duration.millis(400));
@@ -1245,6 +1246,7 @@ public class EscapeRoomController {
     wait(3000, () -> {
       // toggle the battery game screen
       toggleBatteryScreen();
+      torchButtonCover.setVisible(false);
     });
   }
 
