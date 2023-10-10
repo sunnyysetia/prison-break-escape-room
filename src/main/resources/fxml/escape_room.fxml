@@ -98,11 +98,6 @@
                         <BoxBlur height="40.75" width="136.07" />
                      </effect>
                   </Rectangle>
-                  <ImageView fx:id="volume" fitHeight="200.0" fitWidth="40.0" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" pickOnBounds="true" preserveRatio="true" x="875.0" y="12.5">
-                     <image>
-                        <Image url="@../images/volumeOn.png" />
-                     </image>
-                  </ImageView>
                   <Polygon fx:id="circuit" fill="#ffffff33" layoutX="101.0" layoutY="370.0" onMouseEntered="#onPolygonEnter" onMouseExited="#onPolygonExit" onMousePressed="#openCircuit" opacity="0.0" points="-57.7786865234375, -68.74685668945312, -57.7786865234375, -38.180877685546875, -46.9532470703125, -38.180877685546875, -46.9532470703125, -15.25640869140625, -63.0, -15.25640869140625, -63.0, 62.7862548828125, -38.8175048828125, 62.7862548828125, -6.1986083984375, 52.15570068359375, -6.1986083984375, -68.74685668945312" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="2.0" />
                </children>
             </Pane>
@@ -126,6 +121,11 @@
             </Pane>
          </children>
       </Pane>
+      <ImageView fx:id="volume" fitHeight="200.0" fitWidth="40.0" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" pickOnBounds="true" preserveRatio="true" x="875.0" y="12.5">
+         <image>
+            <Image url="@../images/volumeOn.png" />
+         </image>
+      </ImageView>
       <Pane fx:id="UIPane" layoutY="660.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="1022.0">
          <children>
             <Label fx:id="leftButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" onMouseClicked="#leftPane" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="31.0" prefWidth="63.0" style="-fx-border-color: white;" styleClass="stencilText" stylesheets="@../css/font.css" text="Left" textFill="WHITE">
