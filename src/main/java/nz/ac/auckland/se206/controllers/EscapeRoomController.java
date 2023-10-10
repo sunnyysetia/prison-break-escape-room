@@ -663,6 +663,7 @@ public class EscapeRoomController {
   }
 
   private void generateQuestion() {
+    GameState.mathGameWrongAns = false;
     answerTextArea.clear();
     Random rand = new Random();
     int num1, num2;
@@ -734,6 +735,9 @@ public class EscapeRoomController {
 
   @FXML
   public void keypadPressed(MouseEvent event) {
+    if (GameState.mathGameWrongAns) {
+      return;
+    }
     Rectangle clickedRectangle = (Rectangle) event.getSource();
     String rectangleId = clickedRectangle.getId();
     System.out.println("KeyPad clicked: " + rectangleId);
@@ -774,9 +778,12 @@ public class EscapeRoomController {
         break;
     }
     if (userAnswer == correctAnswer) {
-      chargeBattery();
+      if (!GameState.batteryGameSolved) {
+        chargeBattery();
+      }
       return true;
     } else {
+      GameState.mathGameWrongAns = true;
       Platform.runLater(() -> {
         questionLabel.setText("wrong Ans");
       });
@@ -1401,10 +1408,15 @@ public class EscapeRoomController {
     if (GameState.batteryIsOpen) {
       int k = (int) (Math.random() * 5 + 1);
       soundUtils.playAudio("typing" + k + ".mp3", 1, 0.1);
+      if (GameState.mathGameWrongAns) {
+        return;
+      }
       if (event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.DELETE) {
+        if (answerTextArea.getText().isEmpty()) {
+          return;
+        }
         answerTextArea.setText(answerTextArea.getText().substring(0, answerTextArea.getText().length() - 1));
       } else {
-        // System.out.println("user pressed: " + event.getCode());
         try {
           if (event.getText().equals("C") || event.getText().equals("c")) {
             showKeyClicked("calculatorClear");
@@ -1463,6 +1475,13 @@ public class EscapeRoomController {
       tooltip.setShowDelay(Duration.millis(100));
 
       rectangleObject.setOpacity(1);
+      FadeTransition dissappearFade = new FadeTransition();
+      dissappearFade.setNode(rectangleObject);
+      dissappearFade.setDuration(Duration.millis(4000));
+      dissappearFade.setFromValue(1);
+      dissappearFade.setToValue(0);
+
+      dissappearFade.play();
 
       Tooltip.install(source, tooltip);
 
