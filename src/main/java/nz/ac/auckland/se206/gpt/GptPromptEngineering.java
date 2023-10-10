@@ -102,12 +102,13 @@ public class GptPromptEngineering {
         + cutAcknowledgement() // A helper method for removing the Guard: message.
         + "\n\n"
         + hintProtocol(
-            difficulty, "what to do next") // A helper method for hinting about what to do next.
+            difficulty, "what to do with the UV torch") // A helper method for hinting about what to do next.
         + hintString // Include the hintString based on the difficulty level.
         + "\n\nYour next message should communicate the following to the user. First,"
         + " congratulate the user for finding the UV torch. Then, on a new paragraph, briefly"
         + " inform the user of how UV light is used in crime scenes to look for evidence"
-        + " that is invisible to the naked eye. Keep this short. ";
+        + " that is invisible to the naked eye. Keep this short. "
+        + "Remember, if the user ever asks for a hint, start your answer with 'Hint:'.";
   }
 
   /**
