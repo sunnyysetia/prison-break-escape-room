@@ -301,7 +301,7 @@
                   <Glow />
                </effect>
             </TextArea>
-            <Group layoutX="292.0" layoutY="77.0">
+            <Group fx:id="calculatorKeysGroup" layoutX="292.0" layoutY="77.0">
                <children>
                   <ImageView fitHeight="693.0" fitWidth="747.0" layoutX="-148.0" layoutY="-164.0" pickOnBounds="true" preserveRatio="true" scaleX="0.95" scaleY="0.95">
                      <image>
@@ -322,19 +322,19 @@
                         <Font size="28.0" />
                      </font>
                   </Label>
-                  <Rectangle fx:id="calculatorSubmit" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="42.0" layoutX="255.0" layoutY="337.0" onMouseClicked="#keypadPressed" stroke="BLACK" strokeType="INSIDE" width="38.0" />
-                  <Rectangle fx:id="calculator1" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="40.0" layoutX="160.0" layoutY="182.0" onMouseClicked="#keypadPressed" stroke="BLACK" strokeType="INSIDE" width="38.0" />
-                  <Rectangle fx:id="calculator2" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="40.0" layoutX="208.0" layoutY="182.0" onMouseClicked="#keypadPressed" stroke="BLACK" strokeType="INSIDE" width="38.0" />
-                  <Rectangle fx:id="calculator3" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="40.0" layoutX="255.0" layoutY="182.0" onMouseClicked="#keypadPressed" stroke="BLACK" strokeType="INSIDE" width="38.0" />
-                  <Rectangle fx:id="calculator4" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="40.0" layoutX="160.0" layoutY="237.0" onMouseClicked="#keypadPressed" stroke="BLACK" strokeType="INSIDE" width="38.0" />
-                  <Rectangle fx:id="calculator5" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="40.0" layoutX="208.0" layoutY="237.0" onMouseClicked="#keypadPressed" stroke="BLACK" strokeType="INSIDE" width="38.0" />
-                  <Rectangle fx:id="calculator6" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="40.0" layoutX="255.0" layoutY="237.0" onMouseClicked="#keypadPressed" stroke="BLACK" strokeType="INSIDE" width="38.0" />
-                  <Rectangle fx:id="calculator7" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="40.0" layoutX="160.0" layoutY="286.0" onMouseClicked="#keypadPressed" stroke="BLACK" strokeType="INSIDE" width="38.0" />
-                  <Rectangle fx:id="calculator8" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="40.0" layoutX="208.0" layoutY="286.0" onMouseClicked="#keypadPressed" stroke="BLACK" strokeType="INSIDE" width="38.0" />
-                  <Rectangle fx:id="calculator9" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="40.0" layoutX="255.0" layoutY="286.0" onMouseClicked="#keypadPressed" stroke="BLACK" strokeType="INSIDE" width="38.0" />
-                  <Rectangle fx:id="calculator0" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="42.0" layoutX="208.0" layoutY="337.0" onMouseClicked="#keypadPressed" stroke="BLACK" strokeType="INSIDE" width="38.0" />
-                  <Rectangle fx:id="calculatorClear" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="42.0" layoutX="160.0" layoutY="337.0" onMouseClicked="#keypadPressed" stroke="BLACK" strokeType="INSIDE" width="38.0" />
-                  <Label fx:id="powerPercentLabel" alignment="CENTER" layoutX="197.0" layoutY="150.0" prefHeight="22.0" prefWidth="60.0" style="-fx-font-size: 20;" styleClass="metropolisText" stylesheets="@../css/font2.css" text="0%" textAlignment="CENTER" textFill="WHITE">
+                  <Rectangle fx:id="calculatorSubmit" arcHeight="5.0" arcWidth="5.0" fill="#00ff0029" height="42.0" layoutX="255.0" layoutY="336.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="36.0" />
+                  <Rectangle fx:id="calculator1" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="39.0" layoutX="160.0" layoutY="183.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="36.0" />
+                  <Rectangle fx:id="calculator2" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="39.0" layoutX="210.0" layoutY="183.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
+                  <Rectangle fx:id="calculator3" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="39.0" layoutX="257.0" layoutY="183.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
+                  <Rectangle fx:id="calculator4" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="36.0" layoutX="162.0" layoutY="239.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
+                  <Rectangle fx:id="calculator5" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="36.0" layoutX="210.0" layoutY="238.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="33.0" />
+                  <Rectangle fx:id="calculator6" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="38.0" layoutX="257.0" layoutY="237.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
+                  <Rectangle fx:id="calculator7" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="38.0" layoutX="163.0" layoutY="287.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
+                  <Rectangle fx:id="calculator8" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="40.0" layoutX="210.0" layoutY="287.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="33.0" />
+                  <Rectangle fx:id="calculator9" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="38.0" layoutX="257.0" layoutY="287.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="33.0" />
+                  <Rectangle fx:id="calculator0" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="40.0" layoutX="210.0" layoutY="337.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
+                  <Rectangle fx:id="calculatorClear" arcHeight="5.0" arcWidth="5.0" fill="#ff00003b" height="43.0" layoutX="162.0" layoutY="335.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="35.0" />
+                  <Label fx:id="powerPercentLabel" layoutX="212.0" layoutY="151.0" style="-fx-font-size: 20;" styleClass="metropolisText" stylesheets="@../css/font2.css" text="0%" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
