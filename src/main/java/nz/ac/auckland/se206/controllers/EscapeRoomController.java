@@ -52,6 +52,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
@@ -183,6 +184,8 @@ public class EscapeRoomController {
   // Cell FXML
   @FXML
   private Text uvLightText;
+  @FXML
+  private Polygon toilet;
 
   // Guard's Room FXML
   @FXML
@@ -1594,6 +1597,24 @@ public class EscapeRoomController {
       disappearThread.start();
       audioThread.start();
     }
+  }
+
+  @FXML
+  private void onToiletEnter(MouseEvent event) {
+    toilet.setOpacity(1);
+    changeCursorToHand(event);
+  }
+
+  @FXML
+  private void onToiletExit(MouseEvent event) {
+    toilet.setOpacity(0);
+    resetCursor(event);
+  }
+
+  @FXML
+  private void onToiletClick(MouseEvent event) {
+    System.out.println("Toilet clicked");
+    // Add flush sound effect
   }
 
   @FXML
