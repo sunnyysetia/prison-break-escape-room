@@ -1154,46 +1154,57 @@ public class EscapeRoomController {
     phoneSwitch.play();
   }
 
-
+  /**
+   * Finishes the battery game by animating various elements and transitioning to
+   * the next screen.
+   */
   private void finishBatteryGame() {
+    // Make the torch button cover visible
     torchButtonCover.setVisible(true);
+
+    // Create fade transitions for paper image
     FadeTransition paperImageFade = new FadeTransition();
     paperImageFade.setNode(scrollPaperImage);
     paperImageFade.setDuration(Duration.millis(400));
     paperImageFade.setFromValue(1.0);
     paperImageFade.setToValue(0);
 
+    // Create fade transitions for paper text
     FadeTransition paperTextFade = new FadeTransition();
     paperTextFade.setNode(scrollPaperText);
     paperTextFade.setDuration(Duration.millis(400));
     paperTextFade.setFromValue(1.0);
     paperTextFade.setToValue(0);
 
+    // Create fade transitions for calculator keys
     FadeTransition calculatorFade = new FadeTransition();
     calculatorFade.setNode(calculatorKeysGroup);
     calculatorFade.setDuration(Duration.millis(400));
     calculatorFade.setFromValue(1.0);
     calculatorFade.setToValue(0);
 
+    // Create translate transitions for paper image
     TranslateTransition paperImageMove = new TranslateTransition();
     paperImageMove.setNode(scrollPaperImage);
     paperImageMove.setDuration(Duration.millis(500));
     paperImageMove.setByY(200);
 
+    // Create translate transitions for paper text
     TranslateTransition paperTextMove = new TranslateTransition();
     paperTextMove.setNode(scrollPaperText);
     paperTextMove.setDuration(Duration.millis(500));
     paperTextMove.setByY(200);
 
+    // Create translate transitions for calculator keys
     TranslateTransition calculatorMove = new TranslateTransition();
     calculatorMove.setNode(calculatorKeysGroup);
     calculatorMove.setDuration(Duration.millis(500));
     calculatorMove.setByY(200);
 
+    // Create translate transitions for battery
     TranslateTransition batteryMove = new TranslateTransition();
     batteryMove.setNode(batteriesGroup);
     batteryMove.setDuration(Duration.millis(180));
-    // -351 for center
     batteryMove.setByX(-400);
 
     TranslateTransition batteryMoveBack = new TranslateTransition();
@@ -1211,20 +1222,26 @@ public class EscapeRoomController {
     batteryMoveDown.setDuration(Duration.millis(90));
     batteryMoveDown.setByY(50);
 
+    // Wait for specified durations and play animations
     wait(1000, () -> {
+      // Play fade transitions for paper image, paper text, and calculator keys
       paperImageFade.play();
       paperTextFade.play();
       calculatorFade.play();
+
+      // Play translate transitions for paper image, paper text, and calculator keys
       paperImageMove.play();
       paperTextMove.play();
       calculatorMove.play();
     });
 
     wait(1200, () -> {
+      // Play the translate transition for the battery
       batteryMove.play();
     });
 
     wait(1400, () -> {
+      // Play translate transitions for paper image, paper text, and calculator keys
       batteryMoveBack.play();
       scrollPaperImage.setDisable(true);
       scrollPaperImage.setVisible(false);
@@ -1235,62 +1252,38 @@ public class EscapeRoomController {
     });
 
     wait(1500, () -> {
-      wait(100, new Runnable() {
-        @Override
-        public void run() {
-          batteryMoveUp.play();
-        }
+      wait(100, () -> {
+        batteryMoveUp.play();
       });
-      wait(200, new Runnable() {
-        @Override
-        public void run() {
-          batteryMoveDown.play();
-        }
+      wait(200, () -> {
+        batteryMoveDown.play();
       });
-      wait(800, new Runnable() {
-        @Override
-        public void run() {
-          batteryMoveUp.play();
-        }
+      wait(800, () -> {
+        batteryMoveUp.play();
       });
-      wait(900, new Runnable() {
-        @Override
-        public void run() {
-          batteryMoveDown.play();
-        }
+      wait(900, () -> {
+        batteryMoveDown.play();
       });
     });
 
     wait(1500, () -> {
-      wait(200, new Runnable() {
-        @Override
-        public void run() {
-          batteryPower1.setEffect(new Glow(1.0));
-        }
+      wait(200, () -> {
+        batteryPower1.setEffect(new Glow(1.0));
       });
-      wait(400, new Runnable() {
-        @Override
-        public void run() {
-          batteryPower2.setEffect(new Glow(1.0));
-        }
+      wait(400, () -> {
+        batteryPower2.setEffect(new Glow(1.0));
       });
-      wait(600, new Runnable() {
-        @Override
-        public void run() {
-          batteryPower3.setEffect(new Glow(1.0));
-        }
+      wait(600, () -> {
+        batteryPower3.setEffect(new Glow(1.0));
       });
-      wait(800, new Runnable() {
-        @Override
-        public void run() {
-          batteryPower4.setEffect(new Glow(1.0));
-        }
+      wait(800, () -> {
+        batteryPower4.setEffect(new Glow(1.0));
       });
       soundUtils.playAudio("electric1.m4a", 2, 0.1);
     });
 
     wait(3000, () -> {
-      // toggle the battery game screen
+      // Toggle the battery game screen and hide the torch button cover
       toggleBatteryScreen();
       torchButtonCover.setVisible(false);
     });
@@ -1338,7 +1331,7 @@ public class EscapeRoomController {
 
       // Play the battery charging animation
       batteryFade.play();
-      
+
       // Play the electric charging sound
       soundUtils.playAudio("electric2.m4a", 1, 0.08);
     });
@@ -1858,31 +1851,44 @@ public class EscapeRoomController {
 
   @FXML
   private void onPolygonEnter(MouseEvent event) {
+    // Get the source node from the event
     Node source = (Node) event.getSource();
+
+    // Check if the source is a Polygon
     if (source instanceof Polygon) {
+      // Cast the source to a Polygon object
       Polygon polygonObject = (Polygon) source;
 
+      // Set the opacity of the polygon to fully visible
       polygonObject.setOpacity(1);
-
     }
+
+    // Change the cursor to a hand icon to indicate interactivity
     changeCursorToHand(event);
   }
 
   @FXML
   private void onPolygonExit(MouseEvent event) {
+    // Get the source node from the event
     Node source = (Node) event.getSource();
+
+    // Check if the source is a Polygon
     if (source instanceof Polygon) {
+      // Cast the source to a Polygon object
       Polygon polygonObject = (Polygon) source;
 
-      FadeTransition dissappearFade = new FadeTransition();
-      dissappearFade.setNode(polygonObject);
-      dissappearFade.setDuration(Duration.millis(500));
-      dissappearFade.setFromValue(1);
-      dissappearFade.setToValue(0);
+      // Create a fade transition for the polygon to make it disappear
+      FadeTransition disappearFade = new FadeTransition();
+      disappearFade.setNode(polygonObject);
+      disappearFade.setDuration(Duration.millis(500));
+      disappearFade.setFromValue(1);
+      disappearFade.setToValue(0);
 
-      dissappearFade.play();
-
+      // Play the fade-out animation
+      disappearFade.play();
     }
+
+    // Reset the cursor to its default state
     resetCursor(event);
   }
 
