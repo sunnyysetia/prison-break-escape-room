@@ -282,7 +282,7 @@
          </children>
       </Group>
       <Rectangle fx:id="computerDimScreen" arcHeight="5.0" arcWidth="5.0" disable="true" height="720.0" opacity="0.6" stroke="BLACK" strokeType="INSIDE" visible="false" width="1022.0" />
-      <Group fx:id="batteryGroup" focusTraversable="true" layoutX="61.0" layoutY="70.0">
+      <Group fx:id="batteryGroup" focusTraversable="true" layoutX="61.0" layoutY="-700.0">
          <children>
             <ImageView fitHeight="607.0" fitWidth="531.0" layoutX="-106.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
                <image>

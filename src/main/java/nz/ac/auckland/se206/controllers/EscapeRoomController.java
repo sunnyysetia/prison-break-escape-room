@@ -701,7 +701,7 @@ public class EscapeRoomController {
   }
 
   // Function to show a clicked stroke on a rectangle
-  public void showKeyClickedStroke(String fxid) {
+  public void showKeyClicked(String fxid) {
     // Find the rectangle by fxid
     Node node = calculatorKeysGroup.lookup("#" + fxid);
 
@@ -727,6 +727,8 @@ public class EscapeRoomController {
 
       timeline.getKeyFrames().addAll(startKeyFrame, endKeyFrame);
       timeline.play();
+      int k = (int) (Math.random() * 5 + 1);
+      soundUtils.playAudio("typing" + k + ".mp3", 1, 0.08);
     }
   }
 
@@ -739,12 +741,11 @@ public class EscapeRoomController {
     //
     //
     // WHEN THE KEYPAD IS PRESSED, MAKE IT BLINK TO INDICATE USER PRESSED
-    showKeyClickedStroke(rectangleId);
+    showKeyClicked(rectangleId);
     //
     //
     //
-    int k = (int) (Math.random() * 5 + 1);
-    soundUtils.playAudio("typing" + k + ".mp3", 1, 0.08);
+
     if (rectangleId.equals("calculatorSubmit")) {
       submitAnswer();
     } else if (rectangleId.equals("calculatorClear")) {
@@ -1406,12 +1407,16 @@ public class EscapeRoomController {
         // System.out.println("user pressed: " + event.getCode());
         try {
           if (event.getText().equals("C") || event.getText().equals("c")) {
+            showKeyClicked("calculatorClear");
             answerTextArea.clear();
           }
           if (event.getText().equals("=")) {
+            showKeyClicked("calculatorSubmit");
             submitAnswer();
             return;
           }
+          System.out.println("user pressed: " + event.getText());
+          showKeyClicked("calculator" + event.getText());
           answerTextArea.appendText(event.getText());
         } catch (Exception e) {
           // do nothing, only happens when user presses some key like del or insert
