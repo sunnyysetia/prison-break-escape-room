@@ -1612,6 +1612,8 @@ public class EscapeRoomController {
 
   @FXML
   private void removeGlowFromCalculatorKey(MouseEvent event) {
+    Node source = (Node) event.getSource();
+    source.getScene().setCursor(null);
     lastCalculatorButtonHovered.setOpacity(0);
   }
 
