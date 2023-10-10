@@ -1154,7 +1154,6 @@ public class EscapeRoomController {
     phoneSwitch.play();
   }
 
-
   private void finishBatteryGame() {
     torchButtonCover.setVisible(true);
     FadeTransition paperImageFade = new FadeTransition();
@@ -1338,7 +1337,7 @@ public class EscapeRoomController {
 
       // Play the battery charging animation
       batteryFade.play();
-      
+
       // Play the electric charging sound
       soundUtils.playAudio("electric2.m4a", 1, 0.08);
     });
@@ -1888,8 +1887,17 @@ public class EscapeRoomController {
 
   @FXML
   private void onToiletClick(MouseEvent event) {
+    if (GameState.toiletPressed) {
+      return;
+    }
+    GameState.toiletPressed = true;
     System.out.println("Toilet clicked");
-    // TODO: Add flush sound effect
+    String toiletString = "toilet" + Math.round(Math.random() * 2 + 1) + ".m4a";
+    System.out.println("Playing: " + toiletString);
+    soundUtils.playAudio(toiletString, 1, 0.1);
+    wait(4000, () -> {
+      GameState.toiletPressed = false;
+    });
   }
 
   @FXML

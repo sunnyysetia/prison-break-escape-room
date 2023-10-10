@@ -158,7 +158,6 @@ public class WaitingLobbyController {
     GameState.torchFound = false;
     GameState.continueEnabled = false;
     GameState.gameWon = false;
-    // GameState.muted.set(false);
     GameState.togglingBattery = false;
     GameState.batteryIsOpen = false;
     GameState.batteryGameSolved = false;
@@ -166,6 +165,7 @@ public class WaitingLobbyController {
     GameState.batteryForeverClosed = false;
     GameState.memoryGameSolved = false;
     GameState.lastMessageFromGPT = true;
+    GameState.toiletPressed = false;
 
     // Get the selected radio buttons (difficulty and time).
     RadioButton selectedDifficultyButton = (RadioButton) tgDifficulty.getSelectedToggle();
