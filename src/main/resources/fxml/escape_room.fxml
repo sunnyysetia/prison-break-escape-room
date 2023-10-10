@@ -203,7 +203,7 @@
             <Image url="@../images/torch.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="torchButtonCover" fitHeight="50.0" fitWidth="71.0" layoutX="880.0" layoutY="660.0" pickOnBounds="true" preserveRatio="true" visible="false">
+      <ImageView fx:id="torchButtonCover" fitHeight="50.0" fitWidth="71.0" layoutX="872.0" layoutY="660.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/torch.png" />
          </image>
@@ -284,12 +284,12 @@
       <Rectangle fx:id="computerDimScreen" arcHeight="5.0" arcWidth="5.0" disable="true" height="720.0" opacity="0.6" stroke="BLACK" strokeType="INSIDE" visible="false" width="1022.0" />
       <Group fx:id="batteryGroup" focusTraversable="true" layoutX="61.0" layoutY="-700.0">
          <children>
-            <ImageView fitHeight="607.0" fitWidth="531.0" layoutX="-106.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
+            <ImageView fx:id="scrollPaperImage" fitHeight="607.0" fitWidth="531.0" layoutX="-106.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
                <image>
                   <Image url="@../images/paper.png" />
                </image>
             </ImageView>
-            <TextArea disable="true" editable="false" focusTraversable="false" layoutX="27.0" layoutY="130.0" prefHeight="374.0" prefWidth="277.0" style="-fx-opacity: 1.0; -fx-font-size: 20;" styleClass="eraserText" text="To use the UV light torch, you must charge the batteries, charge the batteries by operating the Battery Charger Calculator 3000&#10;&#10;Note:&#10;Press C to clear&#10;Press = to submit" wrapText="true">
+            <TextArea fx:id="scrollPaperText" disable="true" editable="false" focusTraversable="false" layoutX="27.0" layoutY="130.0" prefHeight="374.0" prefWidth="277.0" style="-fx-opacity: 1.0; -fx-font-size: 20;" styleClass="eraserText" text="To use the UV light torch, you must charge the batteries, charge the batteries by operating the Battery Charger Calculator 3000&#10;&#10;Note:&#10;Press C to clear&#10;Press = to submit" wrapText="true">
                <font>
                   <Font size="20.0" />
                </font>
@@ -301,64 +301,12 @@
                   <Glow />
                </effect>
             </TextArea>
-            <Group fx:id="calculatorKeysGroup" layoutX="292.0" layoutY="77.0">
+            <Group fx:id="batteriesGroup" layoutX="290.0" layoutY="77.0">
                <children>
-                  <ImageView fitHeight="693.0" fitWidth="747.0" layoutX="-148.0" layoutY="-164.0" pickOnBounds="true" preserveRatio="true" scaleX="0.95" scaleY="0.95">
-                     <image>
-                        <Image url="@../images/generator.png" />
-                     </image>
-                  </ImageView>
-                  <TextArea fx:id="answerTextArea" disable="true" editable="false" layoutX="203.0" layoutY="76.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="116.0" style="-fx-text-alignment: right; -fx-font-size: 28; -fx-opacity: 1.0;" styleClass="Segment7Text" text="198">
-                     <stylesheets>
-                        <URL value="@../css/clearTextArea.css" />
-                        <URL value="@../css/font4.css" />
-                     </stylesheets>
-                     <font>
-                        <Font size="28.0" />
-                     </font>
-                  </TextArea>
-                  <Label fx:id="questionLabel" layoutX="140.0" layoutY="15.0" prefHeight="68.0" prefWidth="169.0" style="-fx-font-size: 28; -fx-opacity: 1.0;" styleClass="Segment7Text" stylesheets="@../css/font4.css" text="99 + 99 = ">
-                     <font>
-                        <Font size="28.0" />
-                     </font>
-                  </Label>
-                  <Rectangle fx:id="calculatorSubmit" arcHeight="5.0" arcWidth="5.0" fill="#00ff0029" height="42.0" layoutX="255.0" layoutY="336.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="36.0" />
-                  <Rectangle fx:id="calculator1" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="39.0" layoutX="160.0" layoutY="183.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="36.0" />
-                  <Rectangle fx:id="calculator2" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="39.0" layoutX="210.0" layoutY="183.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
-                  <Rectangle fx:id="calculator3" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="39.0" layoutX="257.0" layoutY="183.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
-                  <Rectangle fx:id="calculator4" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="36.0" layoutX="162.0" layoutY="239.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
-                  <Rectangle fx:id="calculator5" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="36.0" layoutX="210.0" layoutY="238.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="33.0" />
-                  <Rectangle fx:id="calculator6" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="38.0" layoutX="257.0" layoutY="237.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
-                  <Rectangle fx:id="calculator7" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="38.0" layoutX="163.0" layoutY="287.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
-                  <Rectangle fx:id="calculator8" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="40.0" layoutX="210.0" layoutY="287.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="33.0" />
-                  <Rectangle fx:id="calculator9" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="38.0" layoutX="257.0" layoutY="287.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="33.0" />
-                  <Rectangle fx:id="calculator0" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="40.0" layoutX="210.0" layoutY="337.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
-                  <Rectangle fx:id="calculatorClear" arcHeight="5.0" arcWidth="5.0" fill="#ff00003b" height="43.0" layoutX="162.0" layoutY="335.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="35.0" />
-                  <Label fx:id="powerPercentLabel" layoutX="212.0" layoutY="151.0" style="-fx-font-size: 20;" styleClass="metropolisText" stylesheets="@../css/font2.css" text="0%" textFill="WHITE">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <Rectangle fx:id="batteryPower1" arcHeight="5.0" arcWidth="5.0" fill="#2bff06" height="136.0" layoutX="447.0" layoutY="46.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="74.0">
-                     <effect>
-                        <Glow level="1.0" />
-                     </effect>
-                  </Rectangle>
-                  <Rectangle fx:id="batteryPower2" arcHeight="5.0" arcWidth="5.0" fill="#2bff06" height="136.0" layoutX="543.0" layoutY="46.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="74.0">
-                     <effect>
-                        <Glow level="1.0" />
-                     </effect>
-                  </Rectangle>
-                  <Rectangle fx:id="batteryPower3" arcHeight="5.0" arcWidth="5.0" fill="#2bff06" height="136.0" layoutX="447.0" layoutY="233.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="74.0">
-                     <effect>
-                        <Glow level="1.0" />
-                     </effect>
-                  </Rectangle>
-                  <Rectangle fx:id="batteryPower4" arcHeight="5.0" arcWidth="5.0" fill="#2bff06" height="136.0" layoutX="543.0" layoutY="233.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="74.0">
-                     <effect>
-                        <Glow level="1.0" />
-                     </effect>
-                  </Rectangle>
+                  <Rectangle fx:id="batteryPower1" arcHeight="5.0" arcWidth="5.0" fill="#2bff06" height="136.0" layoutX="447.0" layoutY="46.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="74.0" />
+                  <Rectangle fx:id="batteryPower2" arcHeight="5.0" arcWidth="5.0" fill="#2bff06" height="136.0" layoutX="543.0" layoutY="46.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="74.0" />
+                  <Rectangle fx:id="batteryPower3" arcHeight="5.0" arcWidth="5.0" fill="#2bff06" height="136.0" layoutX="446.0" layoutY="233.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="74.0" />
+                  <Rectangle fx:id="batteryPower4" arcHeight="5.0" arcWidth="5.0" fill="#2bff06" height="136.0" layoutX="543.0" layoutY="233.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="74.0" />
                   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="446.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/battery.png" />
@@ -390,6 +338,46 @@
                         <Glow level="0.4" />
                      </effect>
                   </ImageView>
+               </children>
+            </Group>
+            <Group fx:id="calculatorKeysGroup" layoutX="292.0" layoutY="77.0">
+               <children>
+                  <ImageView fitHeight="693.0" fitWidth="747.0" layoutX="-148.0" layoutY="-164.0" pickOnBounds="true" preserveRatio="true" scaleX="0.95" scaleY="0.95">
+                     <image>
+                        <Image url="@../images/generator.png" />
+                     </image>
+                  </ImageView>
+                  <TextArea fx:id="answerTextArea" disable="true" editable="false" layoutX="203.0" layoutY="76.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="116.0" style="-fx-text-alignment: right; -fx-font-size: 24; -fx-opacity: 1.0;" styleClass="digitalDreamText" text="198">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <stylesheets>
+                        <URL value="@../css/clearTextArea.css" />
+                        <URL value="@../css/font5.css" />
+                     </stylesheets>
+                  </TextArea>
+                  <Label fx:id="questionLabel" layoutX="141.0" layoutY="15.0" prefHeight="68.0" prefWidth="169.0" style="-fx-font-size: 24; -fx-opacity: 1.0;" styleClass="digitalDreamText" stylesheets="@../css/font5.css" text="99 + 99 = ">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Rectangle fx:id="calculatorSubmit" arcHeight="5.0" arcWidth="5.0" fill="#00ff0029" height="42.0" layoutX="255.0" layoutY="336.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="36.0" />
+                  <Rectangle fx:id="calculator1" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="39.0" layoutX="160.0" layoutY="183.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="36.0" />
+                  <Rectangle fx:id="calculator2" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="39.0" layoutX="210.0" layoutY="183.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
+                  <Rectangle fx:id="calculator3" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="39.0" layoutX="257.0" layoutY="183.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
+                  <Rectangle fx:id="calculator4" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="36.0" layoutX="162.0" layoutY="239.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
+                  <Rectangle fx:id="calculator5" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="36.0" layoutX="210.0" layoutY="238.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="33.0" />
+                  <Rectangle fx:id="calculator6" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="38.0" layoutX="257.0" layoutY="237.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
+                  <Rectangle fx:id="calculator7" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="38.0" layoutX="163.0" layoutY="287.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
+                  <Rectangle fx:id="calculator8" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="40.0" layoutX="210.0" layoutY="287.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="33.0" />
+                  <Rectangle fx:id="calculator9" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="38.0" layoutX="257.0" layoutY="287.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="33.0" />
+                  <Rectangle fx:id="calculator0" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="40.0" layoutX="210.0" layoutY="337.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
+                  <Rectangle fx:id="calculatorClear" arcHeight="5.0" arcWidth="5.0" fill="#ff00003b" height="43.0" layoutX="162.0" layoutY="335.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="35.0" />
+                  <Label fx:id="powerPercentLabel" layoutX="212.0" layoutY="151.0" style="-fx-font-size: 20;" styleClass="metropolisText" stylesheets="@../css/font2.css" text="0%" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
                </children>
             </Group>
          </children>

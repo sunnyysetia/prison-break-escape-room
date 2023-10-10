@@ -179,6 +179,12 @@ public class EscapeRoomController {
   private Label powerPercentLabel;
   @FXML
   private Rectangle batteryDimScreen;
+  @FXML
+  private Group batteriesGroup;
+  @FXML
+  private ImageView scrollPaperImage;
+  @FXML
+  private TextArea scrollPaperText;
 
   // Cell FXML
   @FXML
@@ -663,6 +669,12 @@ public class EscapeRoomController {
   }
 
   private void generateQuestion() {
+    if (GameState.batteryGameSolved) {
+      Platform.runLater(() -> {
+        questionLabel.setText("full charge");
+      });
+      return;
+    }
     GameState.mathGameWrongAns = false;
     answerTextArea.clear();
     Random rand = new Random();
@@ -672,17 +684,17 @@ public class EscapeRoomController {
       case 1: // Addition
         num1 = rand.nextInt(100);
         num2 = rand.nextInt(100);
-        questionLabel.setText(num1 + " + " + num2);
+        questionLabel.setText(num1 + " + " + num2 + " =");
         break;
       case 2: // Subtraction
         num1 = rand.nextInt(100);
         num2 = rand.nextInt(num1);
-        questionLabel.setText(num1 + " - " + num2);
+        questionLabel.setText(num1 + " - " + num2 + " =");
         break;
       case 3: // Multiplication
         num1 = rand.nextInt(13);
         num2 = rand.nextInt(13);
-        questionLabel.setText(num1 + " x " + num2);
+        questionLabel.setText(num1 + " x " + num2 + " =");
         break;
     }
   }
@@ -1097,10 +1109,150 @@ public class EscapeRoomController {
     phoneSwitch.play();
   }
 
+  private void finishBatteryGame() {
+    FadeTransition paperImageFade = new FadeTransition();
+    paperImageFade.setNode(scrollPaperImage);
+    paperImageFade.setDuration(Duration.millis(400));
+    paperImageFade.setFromValue(1.0);
+    paperImageFade.setToValue(0);
+
+    FadeTransition paperTextFade = new FadeTransition();
+    paperTextFade.setNode(scrollPaperText);
+    paperTextFade.setDuration(Duration.millis(400));
+    paperTextFade.setFromValue(1.0);
+    paperTextFade.setToValue(0);
+
+    FadeTransition calculatorFade = new FadeTransition();
+    calculatorFade.setNode(calculatorKeysGroup);
+    calculatorFade.setDuration(Duration.millis(400));
+    calculatorFade.setFromValue(1.0);
+    calculatorFade.setToValue(0);
+
+    TranslateTransition paperImageMove = new TranslateTransition();
+    paperImageMove.setNode(scrollPaperImage);
+    paperImageMove.setDuration(Duration.millis(500));
+    paperImageMove.setByY(200);
+
+    TranslateTransition paperTextMove = new TranslateTransition();
+    paperTextMove.setNode(scrollPaperText);
+    paperTextMove.setDuration(Duration.millis(500));
+    paperTextMove.setByY(200);
+
+    TranslateTransition calculatorMove = new TranslateTransition();
+    calculatorMove.setNode(calculatorKeysGroup);
+    calculatorMove.setDuration(Duration.millis(500));
+    calculatorMove.setByY(200);
+
+    TranslateTransition batteryMove = new TranslateTransition();
+    batteryMove.setNode(batteriesGroup);
+    batteryMove.setDuration(Duration.millis(180));
+    // -351 for center
+    batteryMove.setByX(-400);
+
+    TranslateTransition batteryMoveBack = new TranslateTransition();
+    batteryMoveBack.setNode(batteriesGroup);
+    batteryMoveBack.setDuration(Duration.millis(90));
+    batteryMoveBack.setByX(49);
+
+    TranslateTransition batteryMoveUp = new TranslateTransition();
+    batteryMoveUp.setNode(batteriesGroup);
+    batteryMoveUp.setDuration(Duration.millis(90));
+    batteryMoveUp.setByY(-50);
+
+    TranslateTransition batteryMoveDown = new TranslateTransition();
+    batteryMoveDown.setNode(batteriesGroup);
+    batteryMoveDown.setDuration(Duration.millis(90));
+    batteryMoveDown.setByY(50);
+
+    wait(1000, () -> {
+      paperImageFade.play();
+      paperTextFade.play();
+      calculatorFade.play();
+      paperImageMove.play();
+      paperTextMove.play();
+      calculatorMove.play();
+    });
+
+    wait(1200, () -> {
+      batteryMove.play();
+    });
+
+    wait(1400, () -> {
+      batteryMoveBack.play();
+      scrollPaperImage.setDisable(true);
+      scrollPaperImage.setVisible(false);
+      scrollPaperText.setDisable(true);
+      scrollPaperText.setVisible(false);
+      calculatorKeysGroup.setDisable(true);
+      calculatorKeysGroup.setVisible(false);
+    });
+
+    wait(1500, () -> {
+      wait(100, new Runnable() {
+        @Override
+        public void run() {
+          batteryMoveUp.play();
+        }
+      });
+      wait(200, new Runnable() {
+        @Override
+        public void run() {
+          batteryMoveDown.play();
+        }
+      });
+      wait(800, new Runnable() {
+        @Override
+        public void run() {
+          batteryMoveUp.play();
+        }
+      });
+      wait(900, new Runnable() {
+        @Override
+        public void run() {
+          batteryMoveDown.play();
+        }
+      });
+    });
+
+    wait(1500, () -> {
+      wait(200, new Runnable() {
+        @Override
+        public void run() {
+          batteryPower1.setEffect(new Glow(1.0));
+        }
+      });
+      wait(400, new Runnable() {
+        @Override
+        public void run() {
+          batteryPower2.setEffect(new Glow(1.0));
+        }
+      });
+      wait(600, new Runnable() {
+        @Override
+        public void run() {
+          batteryPower3.setEffect(new Glow(1.0));
+        }
+      });
+      wait(800, new Runnable() {
+        @Override
+        public void run() {
+          batteryPower4.setEffect(new Glow(1.0));
+        }
+      });
+      soundUtils.playAudio("electric1.m4a", 2, 0.1);
+    });
+
+    wait(3000, () -> {
+      // toggle the battery game screen
+      toggleBatteryScreen();
+    });
+  }
+
   private void chargeBattery() {
     GameState.batteryPercent += 25;
     if (GameState.batteryPercent >= 100) {
       GameState.batteryGameSolved = true;
+      finishBatteryGame();
     }
     Thread fadeThread = new Thread(() -> {
       FadeTransition batteryFade = new FadeTransition();
@@ -1122,8 +1274,9 @@ public class EscapeRoomController {
       batteryFade.setFromValue(0);
       batteryFade.setToValue(1);
       batteryFade.play();
-      String audioString = "electric" + ((GameState.batteryPercent >= 100) ? "1" : "2") + ".m4a";
-      soundUtils.playAudio(audioString, 1, 0.08);
+      // String audioString = "electric" + ((GameState.batteryPercent >= 100) ? "1" :
+      // "2") + ".m4a";
+      soundUtils.playAudio("electric2.m4a", 1, 0.08);
     });
     fadeThread.setDaemon(true);
     fadeThread.start();
