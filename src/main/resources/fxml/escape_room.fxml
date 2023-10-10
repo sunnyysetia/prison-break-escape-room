@@ -469,7 +469,7 @@
                               <Font name="Stencil" size="24.0" />
                            </font>
                         </Button>
-                        <Label fx:id="endPhoneTitle" layoutX="70.0" layoutY="14.0" prefHeight="64.0" prefWidth="556.0" style="-fx-font-family: Stencil; -fx-text-alignment: justify;" styleClass="stencilText" stylesheets="@../css/font.css" text="Good Luck Next Time">
+                        <Label fx:id="endPhoneTitle" layoutX="105.0" layoutY="14.0" prefHeight="64.0" prefWidth="555.0" style="-fx-font-family: Stencil; -fx-text-alignment: justify;" styleClass="stencilText" stylesheets="@../css/font.css" text="Good Luck Next Time">
                            <font>
                               <Font name="Arial" size="45.0" />
                            </font>
