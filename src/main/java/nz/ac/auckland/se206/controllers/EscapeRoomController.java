@@ -1475,13 +1475,6 @@ public class EscapeRoomController {
       tooltip.setShowDelay(Duration.millis(100));
 
       rectangleObject.setOpacity(1);
-      FadeTransition dissappearFade = new FadeTransition();
-      dissappearFade.setNode(rectangleObject);
-      dissappearFade.setDuration(Duration.millis(4000));
-      dissappearFade.setFromValue(1);
-      dissappearFade.setToValue(0);
-
-      dissappearFade.play();
 
       Tooltip.install(source, tooltip);
 
@@ -1593,6 +1586,23 @@ public class EscapeRoomController {
       animationThread.start();
       disappearThread.start();
       audioThread.start();
+    }
+  }
+
+  @FXML
+  private void onKitchenMouseExit(MouseEvent event) {
+    resetCursor(event);
+    Node source = (Node) event.getSource();
+    if (source instanceof Rectangle) {
+      Rectangle rectangleObject = (Rectangle) source;
+      FadeTransition dissappearFade = new FadeTransition();
+      dissappearFade.setNode(rectangleObject);
+      dissappearFade.setDuration(Duration.millis(500));
+      dissappearFade.setFromValue(1);
+      dissappearFade.setToValue(0);
+
+      dissappearFade.play();
+
     }
   }
 

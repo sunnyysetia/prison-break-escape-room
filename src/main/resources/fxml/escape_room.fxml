@@ -49,31 +49,31 @@
                         <Image url="@../images/kitchen.png" />
                      </image>
                   </ImageView>
-                  <Rectangle fx:id="cuttingboard" arcHeight="5.0" arcWidth="5.0" fill="#fccf190d" height="86.0" layoutX="44.0" layoutY="335.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="#fdd017" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" width="77.0">
+                  <Rectangle fx:id="cuttingboard" arcHeight="5.0" arcWidth="5.0" fill="#fccf190d" height="86.0" layoutX="44.0" layoutY="335.0" onMouseEntered="#showObjectName" onMouseExited="#onKitchenMouseExit" onMousePressed="#clickObject" opacity="0.0" stroke="#fdd017" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" width="77.0">
                      <effect>
                         <Glow level="1.0" />
                      </effect></Rectangle>
-                  <Rectangle fx:id="oven" arcHeight="5.0" arcWidth="5.0" fill="#fccf190d" height="86.0" layoutX="247.0" layoutY="445.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="#fdd017" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" width="156.0">
+                  <Rectangle fx:id="oven" arcHeight="5.0" arcWidth="5.0" fill="#fccf190d" height="86.0" layoutX="247.0" layoutY="445.0" onMouseEntered="#showObjectName" onMouseExited="#onKitchenMouseExit" onMousePressed="#clickObject" opacity="0.0" stroke="#fdd017" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" width="156.0">
                      <effect>
                         <Glow level="1.0" />
                      </effect></Rectangle>
-                  <Rectangle fx:id="plates" arcHeight="5.0" arcWidth="5.0" fill="#fccf190d" height="61.0" layoutX="469.0" layoutY="306.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="#fdd017" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" width="107.0">
+                  <Rectangle fx:id="plates" arcHeight="5.0" arcWidth="5.0" fill="#fccf190d" height="61.0" layoutX="469.0" layoutY="306.0" onMouseEntered="#showObjectName" onMouseExited="#onKitchenMouseExit" onMousePressed="#clickObject" opacity="0.0" stroke="#fdd017" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" width="107.0">
                      <effect>
                         <Glow level="1.0" />
                      </effect></Rectangle>
-                  <Rectangle fx:id="extinguisher" arcHeight="5.0" arcWidth="5.0" fill="#fccf190d" height="134.0" layoutX="835.0" layoutY="243.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="#fdd017" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" width="38.0">
+                  <Rectangle fx:id="extinguisher" arcHeight="5.0" arcWidth="5.0" fill="#fccf190d" height="134.0" layoutX="835.0" layoutY="243.0" onMouseEntered="#showObjectName" onMouseExited="#onKitchenMouseExit" onMousePressed="#clickObject" opacity="0.0" stroke="#fdd017" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" width="38.0">
                      <effect>
                         <Glow level="1.0" />
                      </effect></Rectangle>
-                  <Rectangle fx:id="kettle" arcHeight="5.0" arcWidth="5.0" fill="#fccf190d" height="62.0" layoutX="919.0" layoutY="378.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="#fdd017" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" width="68.0">
+                  <Rectangle fx:id="kettle" arcHeight="5.0" arcWidth="5.0" fill="#fccf190d" height="62.0" layoutX="919.0" layoutY="378.0" onMouseEntered="#showObjectName" onMouseExited="#onKitchenMouseExit" onMousePressed="#clickObject" opacity="0.0" stroke="#fdd017" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" width="68.0">
                      <effect>
                         <Glow level="1.0" />
                      </effect></Rectangle>
-                  <Rectangle fx:id="clock" arcHeight="5.0" arcWidth="5.0" fill="#fccf190d" height="41.0" layoutX="190.0" layoutY="238.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="#fdd017" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" width="41.0">
+                  <Rectangle fx:id="clock" arcHeight="5.0" arcWidth="5.0" fill="#fccf190d" height="41.0" layoutX="190.0" layoutY="238.0" onMouseEntered="#showObjectName" onMouseExited="#onKitchenMouseExit" onMousePressed="#clickObject" opacity="0.0" stroke="#fdd017" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" width="41.0">
                      <effect>
                         <Glow level="1.0" />
                      </effect></Rectangle>
-                  <Rectangle fx:id="toaster" arcHeight="5.0" arcWidth="5.0" fill="#fccf190d" height="33.0" layoutX="576.0" layoutY="376.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="#fdd017" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" width="74.0">
+                  <Rectangle fx:id="toaster" arcHeight="5.0" arcWidth="5.0" fill="#fccf190d" height="33.0" layoutX="576.0" layoutY="376.0" onMouseEntered="#showObjectName" onMouseExited="#onKitchenMouseExit" onMousePressed="#clickObject" opacity="0.0" stroke="#fdd017" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" width="74.0">
                      <effect>
                         <Glow level="1.0" />
                      </effect></Rectangle>
