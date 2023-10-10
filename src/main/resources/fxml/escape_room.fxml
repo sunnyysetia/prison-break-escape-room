@@ -289,9 +289,9 @@
                   <Image url="@../images/paper.png" />
                </image>
             </ImageView>
-            <TextArea disable="true" editable="false" focusTraversable="false" layoutX="27.0" layoutY="130.0" prefHeight="374.0" prefWidth="277.0" style="-fx-opacity: 1.0; -fx-font-size: 22;" styleClass="eraserText" text="To use the UV light torch, you must charge the batteries, charge the batteries by operating the Battery Charger Calculator 3000&#10;&#10;Note:&#10;Press C to clear&#10;Press = to submit" wrapText="true">
+            <TextArea disable="true" editable="false" focusTraversable="false" layoutX="27.0" layoutY="130.0" prefHeight="374.0" prefWidth="277.0" style="-fx-opacity: 1.0; -fx-font-size: 20;" styleClass="eraserText" text="To use the UV light torch, you must charge the batteries, charge the batteries by operating the Battery Charger Calculator 3000&#10;&#10;Note:&#10;Press C to clear&#10;Press = to submit" wrapText="true">
                <font>
-                  <Font size="22.0" />
+                  <Font size="20.0" />
                </font>
                <stylesheets>
                   <URL value="@../css/clearTextArea.css" />
@@ -334,29 +334,29 @@
                   <Rectangle fx:id="calculator9" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="40.0" layoutX="255.0" layoutY="286.0" onMouseClicked="#keypadPressed" stroke="BLACK" strokeType="INSIDE" width="38.0" />
                   <Rectangle fx:id="calculator0" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="42.0" layoutX="208.0" layoutY="337.0" onMouseClicked="#keypadPressed" stroke="BLACK" strokeType="INSIDE" width="38.0" />
                   <Rectangle fx:id="calculatorClear" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="42.0" layoutX="160.0" layoutY="337.0" onMouseClicked="#keypadPressed" stroke="BLACK" strokeType="INSIDE" width="38.0" />
-                  <Label fx:id="powerPercentLabel" layoutX="212.0" layoutY="151.0" style="-fx-font-size: 20;" styleClass="metropolisText" stylesheets="@../css/font2.css" text="0%" textFill="WHITE">
+                  <Label fx:id="powerPercentLabel" alignment="CENTER" layoutX="197.0" layoutY="150.0" prefHeight="22.0" prefWidth="60.0" style="-fx-font-size: 20;" styleClass="metropolisText" stylesheets="@../css/font2.css" text="0%" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Rectangle fx:id="batteryPower1" arcHeight="5.0" arcWidth="5.0" fill="#2bff06" height="136.0" layoutX="446.0" layoutY="43.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="75.0">
+                  <Rectangle fx:id="batteryPower1" arcHeight="5.0" arcWidth="5.0" fill="#2bff06" height="136.0" layoutX="447.0" layoutY="46.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="74.0">
                      <effect>
-                        <Glow />
+                        <Glow level="1.0" />
                      </effect>
                   </Rectangle>
-                  <Rectangle fx:id="batteryPower2" arcHeight="5.0" arcWidth="5.0" fill="#2bff06" height="136.0" layoutX="543.0" layoutY="43.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="75.0">
+                  <Rectangle fx:id="batteryPower2" arcHeight="5.0" arcWidth="5.0" fill="#2bff06" height="136.0" layoutX="543.0" layoutY="46.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="74.0">
                      <effect>
-                        <Glow />
+                        <Glow level="1.0" />
                      </effect>
                   </Rectangle>
-                  <Rectangle fx:id="batteryPower3" arcHeight="5.0" arcWidth="5.0" fill="#2bff06" height="136.0" layoutX="446.0" layoutY="231.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="75.0">
+                  <Rectangle fx:id="batteryPower3" arcHeight="5.0" arcWidth="5.0" fill="#2bff06" height="136.0" layoutX="447.0" layoutY="233.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="74.0">
                      <effect>
-                        <Glow />
+                        <Glow level="1.0" />
                      </effect>
                   </Rectangle>
-                  <Rectangle fx:id="batteryPower4" arcHeight="5.0" arcWidth="5.0" fill="#2bff06" height="136.0" layoutX="543.0" layoutY="231.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="75.0">
+                  <Rectangle fx:id="batteryPower4" arcHeight="5.0" arcWidth="5.0" fill="#2bff06" height="136.0" layoutX="543.0" layoutY="233.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="74.0">
                      <effect>
-                        <Glow />
+                        <Glow level="1.0" />
                      </effect>
                   </Rectangle>
                   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="446.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
