@@ -52,6 +52,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
@@ -183,6 +184,8 @@ public class EscapeRoomController {
   // Cell FXML
   @FXML
   private Text uvLightText;
+  @FXML
+  private Polygon toilet;
 
   // Guard's Room FXML
   @FXML
@@ -688,6 +691,8 @@ public class EscapeRoomController {
   }
 
   private void submitAnswer() {
+    showKeyClicked("calculatorSubmit");
+
     if (answerTextArea.getText().isEmpty()) {
       return; // do nothing if answer area is empty
     }
@@ -1423,7 +1428,6 @@ public class EscapeRoomController {
             answerTextArea.clear();
           }
           if (event.getText().equals("=")) {
-            showKeyClicked("calculatorSubmit");
             submitAnswer();
             return;
           }
@@ -1604,6 +1608,22 @@ public class EscapeRoomController {
       dissappearFade.play();
 
     }
+
+  private void onToiletEnter(MouseEvent event) {
+    toilet.setOpacity(1);
+    changeCursorToHand(event);
+  }
+
+  @FXML
+  private void onToiletExit(MouseEvent event) {
+    toilet.setOpacity(0);
+    resetCursor(event);
+  }
+
+  @FXML
+  private void onToiletClick(MouseEvent event) {
+    System.out.println("Toilet clicked");
+    // TODO: Add flush sound effect
   }
 
   @FXML
@@ -1621,6 +1641,8 @@ public class EscapeRoomController {
 
   @FXML
   private void removeGlowFromCalculatorKey(MouseEvent event) {
+    Node source = (Node) event.getSource();
+    source.getScene().setCursor(null);
     lastCalculatorButtonHovered.setOpacity(0);
   }
 

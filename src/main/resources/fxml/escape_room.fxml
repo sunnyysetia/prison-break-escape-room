@@ -18,6 +18,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
@@ -115,6 +116,7 @@
                         <Point3D y="1.0" z="1.0" />
                      </rotationAxis>
                   </Text>
+                  <Polygon fx:id="toilet" fill="#ffffff32" layoutX="185.0" layoutY="516.0" onMouseClicked="#onToiletClick" onMouseEntered="#onToiletEnter" onMouseExited="#onToiletExit" opacity="0.0" points="-47.09330749511719, 20.17303466796875, -53.95588684082031, 33.898193359375, -3.6302947998046875, 52.65594482421875, 35.257659912109375, 45.7933349609375, 27.937576293945312, 8.73541259765625, 41.66273498535156, 1.87286376953125, 46.78266906738281, -23.7474365234375, 41.6627197265625, -32.341461181640625, 22.41229248046875, -37.015106201171875, 2.3172760009765625, -37.015106201171875, 10.094863891601562, -101.52334594726562, 14.243148803710938, -101.52334594726562, 10.094863891601562, -113.41848754882812, -80.03368377685547, -104.26840209960938, -80.03368377685547, -94.6607666015625, -75.9161376953125, -94.6607666015625, -69.96856689453125, -23.7474365234375, -53.95588684082031, -23.7474365234375, -49.99998474121094, 1.87286376953125" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="2.0" />
                </children>
             </Pane>
          </children>
@@ -323,7 +325,7 @@
                      </font>
                   </Label>
                   <Rectangle fx:id="calculatorSubmit" arcHeight="5.0" arcWidth="5.0" fill="#00ff0029" height="42.0" layoutX="255.0" layoutY="336.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="36.0" />
-                  <Rectangle fx:id="calculator1" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="39.0" layoutX="160.0" layoutY="183.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="36.0" />
+                  <Rectangle fx:id="calculator1" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf033" height="39.0" layoutX="160.0" layoutY="183.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="36.0" />
                   <Rectangle fx:id="calculator2" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="39.0" layoutX="210.0" layoutY="183.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
                   <Rectangle fx:id="calculator3" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="39.0" layoutX="257.0" layoutY="183.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
                   <Rectangle fx:id="calculator4" arcHeight="5.0" arcWidth="5.0" fill="#4dcaf032" height="36.0" layoutX="162.0" layoutY="239.0" onMouseClicked="#keypadPressed" onMouseEntered="#addGlowToCalculatorKey" onMouseExited="#removeGlowFromCalculatorKey" opacity="0.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="34.0" />
