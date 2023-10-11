@@ -25,6 +25,7 @@ public class App extends Application {
     Font.loadFont(App.class.getResourceAsStream("/fonts/eraser.ttf"), 16);
     Font.loadFont(App.class.getResourceAsStream("/fonts/Segment7-4Gml.ttf"), 28);
     Font.loadFont(App.class.getResourceAsStream("/fonts/DIGITALDREAMFATNARROW.ttf"), 28);
+    Font.loadFont(App.class.getResourceAsStream("/fonts/autoradiographic-rg.ttf"), 60);
     launch();
   }
 

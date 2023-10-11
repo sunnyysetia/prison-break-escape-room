@@ -8,7 +8,7 @@
 <Pane fx:id="accessWarning" prefHeight="720.0" prefWidth="1022.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.AccessWarningController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="720.0" onMouseClicked="#enterGame" stroke="BLACK" strokeType="INSIDE" width="1022.0" />
-      <Label layoutX="369.0" layoutY="152.0" prefHeight="86.0" prefWidth="285.0" text="WARNING" textAlignment="CENTER" textFill="RED">
+      <Label layoutX="369.0" layoutY="152.0" prefHeight="86.0" prefWidth="285.0" style="-fx-font-size: 60;" styleClass="autoradiographicText" stylesheets="@../css/font6.css" text="WARNING" textAlignment="CENTER" textFill="RED">
          <font>
             <Font size="60.0" />
          </font>
