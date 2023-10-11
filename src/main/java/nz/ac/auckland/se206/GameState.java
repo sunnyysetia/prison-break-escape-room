@@ -66,4 +66,5 @@ public class GameState {
   public static boolean togglingComputer = false;
   public static boolean togglingBattery = false;
   public static boolean mathGameWrongAns = false;
+  public static boolean toiletPressed = false;
 }
