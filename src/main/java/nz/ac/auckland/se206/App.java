@@ -25,6 +25,7 @@ public class App extends Application {
     Font.loadFont(App.class.getResourceAsStream("/fonts/eraser.ttf"), 16);
     Font.loadFont(App.class.getResourceAsStream("/fonts/Segment7-4Gml.ttf"), 28);
     Font.loadFont(App.class.getResourceAsStream("/fonts/DIGITALDREAMFATNARROW.ttf"), 28);
+    Font.loadFont(App.class.getResourceAsStream("/fonts/autoradiographic-rg.ttf"), 60);
     launch();
   }
 
@@ -55,8 +56,8 @@ public class App extends Application {
    */
   @Override
   public void start(final Stage stage) throws IOException {
-    SceneManager.addUi(SceneManager.AppUi.WAITING_LOBBY, App.loadFxml("waitinglobby"));
-    Parent root = SceneManager.getUi(AppUi.WAITING_LOBBY);
+    SceneManager.addUi(SceneManager.AppUi.SEIZURE_WARNING, App.loadFxml("accesswarning"));
+    Parent root = SceneManager.getUi(AppUi.SEIZURE_WARNING);
 
     stage.setTitle("Escape Prison");
     stage.setOnCloseRequest(
