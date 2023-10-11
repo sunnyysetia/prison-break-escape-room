@@ -54,3 +54,7 @@ accessToken: “YOUR_KEY”`
   segment 7 font: https://www.fontspace.com/segment7-font-f19825
 - electricity sfx: https://www.youtube.com/watch?v=HoGCY1f-pOI
 - incorrect sfx: https://www.youtube.com/watch?v=FwVRkhy5G04
+- digital dream font: https://www.1001fonts.com/digital-dream-font.html
+- toilet sfx 1: https://www.youtube.com/watch?v=cWiAOc10jrs
+- toilet sfx 2: https://www.youtube.com/watch?v=-t8_xO9OMBY
+- toilet sfx 3: https://www.youtube.com/watch?v=BhsVpvM2ZrM

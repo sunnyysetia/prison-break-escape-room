@@ -15,6 +15,7 @@ import java.util.function.UnaryOperator;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
@@ -37,8 +38,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import javafx.scene.control.Tooltip;
 import javafx.scene.control.TextFormatter.Change;
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -51,6 +52,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
@@ -126,6 +128,34 @@ public class EscapeRoomController {
   private Rectangle batteryPower3;
   @FXML
   private Rectangle batteryPower4;
+  @FXML
+  private Group calculatorKeysGroup;
+  @FXML
+  private Rectangle calculator0;
+  @FXML
+  private Rectangle calculator1;
+  @FXML
+  private Rectangle calculator2;
+  @FXML
+  private Rectangle calculator3;
+  @FXML
+  private Rectangle calculator4;
+  @FXML
+  private Rectangle calculator5;
+  @FXML
+  private Rectangle calculator6;
+  @FXML
+  private Rectangle calculator7;
+  @FXML
+  private Rectangle calculator8;
+  @FXML
+  private Rectangle calculator9;
+  @FXML
+  private Rectangle calculatorClear;
+  @FXML
+  private Rectangle calculatorSubmit;
+
+  private Rectangle lastCalculatorButtonHovered;
 
   // Kitchen FXML
   @FXML
@@ -150,14 +180,22 @@ public class EscapeRoomController {
   private Label powerPercentLabel;
   @FXML
   private Rectangle batteryDimScreen;
+  @FXML
+  private Group batteriesGroup;
+  @FXML
+  private ImageView scrollPaperImage;
+  @FXML
+  private TextArea scrollPaperText;
 
   // Cell FXML
   @FXML
   private Text uvLightText;
+  @FXML
+  private Polygon toilet;
 
   // Guard's Room FXML
   @FXML
-  private Rectangle circuit;
+  private Polygon circuit;
   @FXML
   private Rectangle computer;
   @FXML
@@ -633,31 +671,58 @@ public class EscapeRoomController {
     runGpt(new ChatMessage("user", GptPromptEngineering.getIntroInstruction(GameState.difficulty)));
   }
 
+  /**
+   * Generates a random math question and sets it in the user interface.
+   */
   private void generateQuestion() {
+    if (GameState.batteryGameSolved) {
+      Platform.runLater(() -> {
+        questionLabel.setText("full charge");
+      });
+      return;
+    }
+
+    // Reset the flag for a wrong math game answer
+    GameState.mathGameWrongAns = false;
+
+    // Clear the answer text area for the new question
     answerTextArea.clear();
+
+    // Create a random number generator
     Random rand = new Random();
     int num1, num2;
+
+    // Determine the current question type (addition, subtraction, or
+    // multiplication)
     currentQuestionType = rand.nextInt(3) + 1;
+
+    // Generate and set the math question based on the current question type
     switch (currentQuestionType) {
-      case 1: // Addition
+      case 1:
+        // Addition: Generate two random numbers between 0 and 99
         num1 = rand.nextInt(100);
         num2 = rand.nextInt(100);
-        questionLabel.setText(num1 + " + " + num2);
+        questionLabel.setText(num1 + " + " + num2 + " =");
         break;
-      case 2: // Subtraction
+      case 2:
+        // Subtraction: Generate two random numbers, where the second number is less
+        // than the first
         num1 = rand.nextInt(100);
         num2 = rand.nextInt(num1);
-        questionLabel.setText(num1 + " - " + num2);
+        questionLabel.setText(num1 + " - " + num2 + " =");
         break;
-      case 3: // Multiplication
+      case 3:
+        // Multiplication: Generate two random numbers between 0 and 12
         num1 = rand.nextInt(13);
         num2 = rand.nextInt(13);
-        questionLabel.setText(num1 + " x " + num2);
+        questionLabel.setText(num1 + " x " + num2 + " =");
         break;
     }
   }
 
   private void submitAnswer() {
+    showKeyClicked("calculatorSubmit");
+
     if (answerTextArea.getText().isEmpty()) {
       return; // do nothing if answer area is empty
     }
@@ -671,8 +736,43 @@ public class EscapeRoomController {
     }
   }
 
+  // Function to show a clicked stroke on a rectangle
+  public void showKeyClicked(String fxid) {
+    // Find the rectangle by fxid
+    Node node = calculatorKeysGroup.lookup("#" + fxid);
+
+    if (node instanceof Rectangle) {
+      Rectangle rectangle = (Rectangle) node;
+
+      // Set opacity to 1 and stroke width to 3
+      rectangle.setOpacity(1);
+      rectangle.setStrokeWidth(3);
+
+      // Create a timeline for the animation
+      Timeline timeline = new Timeline();
+      timeline.setCycleCount(1);
+
+      // Define keyframes for opacity and stroke width changes
+      KeyFrame startKeyFrame = new KeyFrame(Duration.ZERO,
+          new KeyValue(rectangle.opacityProperty(), 1),
+          new KeyValue(rectangle.strokeWidthProperty(), 3));
+
+      KeyFrame endKeyFrame = new KeyFrame(Duration.seconds(1),
+          new KeyValue(rectangle.opacityProperty(), 0),
+          new KeyValue(rectangle.strokeWidthProperty(), 0));
+
+      timeline.getKeyFrames().addAll(startKeyFrame, endKeyFrame);
+      timeline.play();
+      int k = (int) (Math.random() * 5 + 1);
+      soundUtils.playAudio("typing" + k + ".mp3", 1, 0.08);
+    }
+  }
+
   @FXML
   public void keypadPressed(MouseEvent event) {
+    if (GameState.mathGameWrongAns) {
+      return;
+    }
     Rectangle clickedRectangle = (Rectangle) event.getSource();
     String rectangleId = clickedRectangle.getId();
     System.out.println("KeyPad clicked: " + rectangleId);
@@ -680,11 +780,11 @@ public class EscapeRoomController {
     //
     //
     // WHEN THE KEYPAD IS PRESSED, MAKE IT BLINK TO INDICATE USER PRESSED
+    showKeyClicked(rectangleId);
     //
     //
     //
-    int k = (int) (Math.random() * 5 + 1);
-    soundUtils.playAudio("typing" + k + ".mp3", 1, 0.08);
+
     if (rectangleId.equals("calculatorSubmit")) {
       submitAnswer();
     } else if (rectangleId.equals("calculatorClear")) {
@@ -694,31 +794,56 @@ public class EscapeRoomController {
     }
   }
 
+  /**
+   * Checks if the user's answer to a math question is correct.
+   *
+   * @return true if the user's answer is correct, false otherwise.
+   */
   private boolean checkAnswer() {
+    // Parse the user's answer from the text area
     int userAnswer = Integer.parseInt(answerTextArea.getText());
+
+    // Initialize the correct answer variable
     int correctAnswer = 0;
+
+    // Clear the answer text area for the next question
     answerTextArea.clear();
+
+    // Determine the correct answer based on the current question type
     switch (currentQuestionType) {
-      case 1: // Addition
+      case 1:
+        // Addition: Parse and calculate the correct answer
         correctAnswer = Integer.parseInt(questionLabel.getText().split(" ")[0]) +
             Integer.parseInt(questionLabel.getText().split(" ")[2]);
         break;
-      case 2: // Subtraction
+      case 2:
+        // Subtraction: Parse and calculate the correct answer
         correctAnswer = Integer.parseInt(questionLabel.getText().split(" ")[0]) -
             Integer.parseInt(questionLabel.getText().split(" ")[2]);
         break;
-      case 3: // Multiplication
+      case 3:
+        // Multiplication: Parse and calculate the correct answer
         correctAnswer = Integer.parseInt(questionLabel.getText().split(" ")[0]) *
             Integer.parseInt(questionLabel.getText().split(" ")[2]);
         break;
     }
+
+    // Check if the user's answer matches the correct answer
     if (userAnswer == correctAnswer) {
-      chargeBattery();
+      // If the battery game is not solved, charge the battery
+      if (!GameState.batteryGameSolved) {
+        chargeBattery();
+      }
       return true;
     } else {
+      // Set a flag to indicate that the user's answer was wrong
+      GameState.mathGameWrongAns = true;
+
+      // Update the question label to indicate a wrong answer
       Platform.runLater(() -> {
         questionLabel.setText("wrong Ans");
       });
+
       return false;
     }
   }
@@ -1029,13 +1154,161 @@ public class EscapeRoomController {
     phoneSwitch.play();
   }
 
+  /**
+   * Finishes the battery game by animating various elements and transitioning to
+   * the next screen.
+   */
+  private void finishBatteryGame() {
+    // Make the torch button cover visible
+    torchButtonCover.setVisible(true);
+
+    // Create fade transitions for paper image
+    FadeTransition paperImageFade = new FadeTransition();
+    paperImageFade.setNode(scrollPaperImage);
+    paperImageFade.setDuration(Duration.millis(400));
+    paperImageFade.setFromValue(1.0);
+    paperImageFade.setToValue(0);
+
+    // Create fade transitions for paper text
+    FadeTransition paperTextFade = new FadeTransition();
+    paperTextFade.setNode(scrollPaperText);
+    paperTextFade.setDuration(Duration.millis(400));
+    paperTextFade.setFromValue(1.0);
+    paperTextFade.setToValue(0);
+
+    // Create fade transitions for calculator keys
+    FadeTransition calculatorFade = new FadeTransition();
+    calculatorFade.setNode(calculatorKeysGroup);
+    calculatorFade.setDuration(Duration.millis(400));
+    calculatorFade.setFromValue(1.0);
+    calculatorFade.setToValue(0);
+
+    // Create translate transitions for paper image
+    TranslateTransition paperImageMove = new TranslateTransition();
+    paperImageMove.setNode(scrollPaperImage);
+    paperImageMove.setDuration(Duration.millis(500));
+    paperImageMove.setByY(200);
+
+    // Create translate transitions for paper text
+    TranslateTransition paperTextMove = new TranslateTransition();
+    paperTextMove.setNode(scrollPaperText);
+    paperTextMove.setDuration(Duration.millis(500));
+    paperTextMove.setByY(200);
+
+    // Create translate transitions for calculator keys
+    TranslateTransition calculatorMove = new TranslateTransition();
+    calculatorMove.setNode(calculatorKeysGroup);
+    calculatorMove.setDuration(Duration.millis(500));
+    calculatorMove.setByY(200);
+
+    // Create translate transitions for battery
+    TranslateTransition batteryMove = new TranslateTransition();
+    batteryMove.setNode(batteriesGroup);
+    batteryMove.setDuration(Duration.millis(180));
+    batteryMove.setByX(-400);
+
+    TranslateTransition batteryMoveBack = new TranslateTransition();
+    batteryMoveBack.setNode(batteriesGroup);
+    batteryMoveBack.setDuration(Duration.millis(90));
+    batteryMoveBack.setByX(49);
+
+    TranslateTransition batteryMoveUp = new TranslateTransition();
+    batteryMoveUp.setNode(batteriesGroup);
+    batteryMoveUp.setDuration(Duration.millis(90));
+    batteryMoveUp.setByY(-50);
+
+    TranslateTransition batteryMoveDown = new TranslateTransition();
+    batteryMoveDown.setNode(batteriesGroup);
+    batteryMoveDown.setDuration(Duration.millis(90));
+    batteryMoveDown.setByY(50);
+
+    // Wait for specified durations and play animations
+    wait(1000, () -> {
+      // Play fade transitions for paper image, paper text, and calculator keys
+      paperImageFade.play();
+      paperTextFade.play();
+      calculatorFade.play();
+
+      // Play translate transitions for paper image, paper text, and calculator keys
+      paperImageMove.play();
+      paperTextMove.play();
+      calculatorMove.play();
+    });
+
+    wait(1200, () -> {
+      // Play the translate transition for the battery
+      batteryMove.play();
+    });
+
+    wait(1400, () -> {
+      // Play translate transitions for paper image, paper text, and calculator keys
+      batteryMoveBack.play();
+      scrollPaperImage.setDisable(true);
+      scrollPaperImage.setVisible(false);
+      scrollPaperText.setDisable(true);
+      scrollPaperText.setVisible(false);
+      calculatorKeysGroup.setDisable(true);
+      calculatorKeysGroup.setVisible(false);
+    });
+
+    wait(1500, () -> {
+      wait(100, () -> {
+        batteryMoveUp.play();
+      });
+      wait(200, () -> {
+        batteryMoveDown.play();
+      });
+      wait(800, () -> {
+        batteryMoveUp.play();
+      });
+      wait(900, () -> {
+        batteryMoveDown.play();
+      });
+    });
+
+    wait(1500, () -> {
+      wait(200, () -> {
+        batteryPower1.setEffect(new Glow(1.0));
+      });
+      wait(400, () -> {
+        batteryPower2.setEffect(new Glow(1.0));
+      });
+      wait(600, () -> {
+        batteryPower3.setEffect(new Glow(1.0));
+      });
+      wait(800, () -> {
+        batteryPower4.setEffect(new Glow(1.0));
+      });
+      soundUtils.playAudio("electric1.m4a", 2, 0.1);
+    });
+
+    wait(3000, () -> {
+      // Toggle the battery game screen and hide the torch button cover
+      toggleBatteryScreen();
+      torchButtonCover.setVisible(false);
+    });
+  }
+
+  /**
+   * Increases the battery percentage, plays a charging animation, and updates the
+   * UI.
+   */
   private void chargeBattery() {
+    // Increase the battery percentage by 25%
     GameState.batteryPercent += 25;
+
+    // Check if the battery is fully charged
     if (GameState.batteryPercent >= 100) {
       GameState.batteryGameSolved = true;
+      finishBatteryGame();
     }
+
+    // Create a new thread for the fade animation and sound effects
     Thread fadeThread = new Thread(() -> {
+      // Create a fade transition for the battery icon
       FadeTransition batteryFade = new FadeTransition();
+
+      // Determine which battery power icon to target based on battery percentage
       switch (GameState.batteryPercent) {
         case 25:
           batteryFade.setNode(batteryPower1);
@@ -1050,21 +1323,34 @@ public class EscapeRoomController {
           batteryFade.setNode(batteryPower4);
           break;
       }
+
+      // Configure the fade transition
       batteryFade.setDuration(Duration.millis(400));
       batteryFade.setFromValue(0);
       batteryFade.setToValue(1);
+
+      // Play the battery charging animation
       batteryFade.play();
-      String audioString = "electric" + ((GameState.batteryPercent >= 100) ? "1" : "2") + ".m4a";
-      soundUtils.playAudio(audioString, 1, 0.08);
+
+      // Play the electric charging sound
+      soundUtils.playAudio("electric2.m4a", 1, 0.08);
     });
+
+    // Set the fadeThread as a daemon thread and start it
     fadeThread.setDaemon(true);
     fadeThread.start();
-    Platform.runLater(
-        () -> {
-          powerPercentLabel.setText(GameState.batteryPercent + "%");
-          powerPercentLabel.setTextFill(Color.rgb(0, 255, 0));
-          powerPercentLabel.setEffect(new Glow(0.5));
-        });
+
+    // Update the UI on the JavaFX application thread
+    Platform.runLater(() -> {
+      // Update the battery percentage label text
+      powerPercentLabel.setText(GameState.batteryPercent + "%");
+
+      // Set the text color to green to indicate charging
+      powerPercentLabel.setTextFill(Color.rgb(0, 255, 0));
+
+      // Apply a glow effect to the battery percentage label
+      powerPercentLabel.setEffect(new Glow(0.5));
+    });
   }
 
   private void clickBatteryScreen() {
@@ -1076,37 +1362,63 @@ public class EscapeRoomController {
     }
   }
 
+  /**
+   * Toggles the battery screen's visibility and updates the game state
+   * accordingly.
+   */
   private void toggleBatteryScreen() {
-    System.out.println("toggling battery screen");
-    GameState.togglingBattery = true;
-    wait(
-        500,
-        () -> {
-          GameState.togglingBattery = false;
-        });
+    // Print a message to indicate that the battery screen is being toggled
+    System.out.println("Toggling battery screen");
 
-    System.out.println("current battery screen status: " + GameState.batteryIsOpen);
+    // Set the flag to indicate that the battery screen is in the process of being
+    // toggled
+    GameState.togglingBattery = true;
+
+    // Wait for a short duration and then set the flag to indicate that the toggle
+    // is complete
+    wait(500, () -> {
+      GameState.togglingBattery = false;
+    });
+
+    // Print the current battery screen status
+    System.out.println("Current battery screen status: " + GameState.batteryIsOpen);
+
+    // Create a translate transition for the battery screen
     final TranslateTransition batterySwitch = new TranslateTransition();
     batterySwitch.setNode(batteryGroup);
     batterySwitch.setDuration(Duration.millis(500));
+
     if (GameState.batteryIsOpen) {
+      // Close the battery screen by moving it upwards
       batterySwitch.setByY(-760);
       GameState.batteryIsOpen = false;
+
+      // Disable and hide the dimmed screen behind the battery
       batteryDimScreen.setDisable(true);
       batteryDimScreen.setVisible(false);
     } else {
+      // Open the battery screen by moving it downwards
       batterySwitch.setByY(760);
       GameState.batteryIsOpen = true;
-      // answerTextArea.requestFocus();
+
+      // Set focus to the battery group (for keyboard input, if needed)
       batteryGroup.requestFocus();
+
+      // Enable and show the dimmed screen behind the battery
       batteryDimScreen.setDisable(false);
       batteryDimScreen.setVisible(true);
     }
+
+    // Check if the battery game has been solved and set the corresponding flag
     if (GameState.batteryGameSolved) {
       GameState.batteryForeverClosed = true;
     }
+
+    // Play the battery screen transition
     batterySwitch.play();
-    System.out.println("new battery screen status: " + GameState.batteryIsOpen);
+
+    // Print the new battery screen status
+    System.out.println("New battery screen status: " + GameState.batteryIsOpen);
   }
 
   private void toggleComputer() {
@@ -1340,18 +1652,26 @@ public class EscapeRoomController {
     if (GameState.batteryIsOpen) {
       int k = (int) (Math.random() * 5 + 1);
       soundUtils.playAudio("typing" + k + ".mp3", 1, 0.1);
+      if (GameState.mathGameWrongAns) {
+        return;
+      }
       if (event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.DELETE) {
+        if (answerTextArea.getText().isEmpty()) {
+          return;
+        }
         answerTextArea.setText(answerTextArea.getText().substring(0, answerTextArea.getText().length() - 1));
       } else {
-        // System.out.println("user pressed: " + event.getCode());
         try {
           if (event.getText().equals("C") || event.getText().equals("c")) {
+            showKeyClicked("calculatorClear");
             answerTextArea.clear();
           }
           if (event.getText().equals("=")) {
             submitAnswer();
             return;
           }
+          System.out.println("user pressed: " + event.getText());
+          showKeyClicked("calculator" + event.getText());
           answerTextArea.appendText(event.getText());
         } catch (Exception e) {
           // do nothing, only happens when user presses some key like del or insert
@@ -1512,6 +1832,101 @@ public class EscapeRoomController {
     }
   }
 
+  @FXML
+  private void onKitchenMouseExit(MouseEvent event) {
+    resetCursor(event);
+    Node source = (Node) event.getSource();
+    if (source instanceof Rectangle) {
+      Rectangle rectangleObject = (Rectangle) source;
+      FadeTransition dissappearFade = new FadeTransition();
+      dissappearFade.setNode(rectangleObject);
+      dissappearFade.setDuration(Duration.millis(500));
+      dissappearFade.setFromValue(1);
+      dissappearFade.setToValue(0);
+
+      dissappearFade.play();
+
+    }
+  }
+
+  @FXML
+  private void onPolygonEnter(MouseEvent event) {
+    // Get the source node from the event
+    Node source = (Node) event.getSource();
+
+    // Check if the source is a Polygon
+    if (source instanceof Polygon) {
+      // Cast the source to a Polygon object
+      Polygon polygonObject = (Polygon) source;
+
+      // Set the opacity of the polygon to fully visible
+      polygonObject.setOpacity(1);
+    }
+
+    // Change the cursor to a hand icon to indicate interactivity
+    changeCursorToHand(event);
+  }
+
+  @FXML
+  private void onPolygonExit(MouseEvent event) {
+    // Get the source node from the event
+    Node source = (Node) event.getSource();
+
+    // Check if the source is a Polygon
+    if (source instanceof Polygon) {
+      // Cast the source to a Polygon object
+      Polygon polygonObject = (Polygon) source;
+
+      // Create a fade transition for the polygon to make it disappear
+      FadeTransition disappearFade = new FadeTransition();
+      disappearFade.setNode(polygonObject);
+      disappearFade.setDuration(Duration.millis(500));
+      disappearFade.setFromValue(1);
+      disappearFade.setToValue(0);
+
+      // Play the fade-out animation
+      disappearFade.play();
+    }
+
+    // Reset the cursor to its default state
+    resetCursor(event);
+  }
+
+  @FXML
+  private void onToiletClick(MouseEvent event) {
+    if (GameState.toiletPressed) {
+      return;
+    }
+    GameState.toiletPressed = true;
+    System.out.println("Toilet clicked");
+    String toiletString = "toilet" + Math.round(Math.random() * 2 + 1) + ".m4a";
+    System.out.println("Playing: " + toiletString);
+    soundUtils.playAudio(toiletString, 1, 0.1);
+    wait(4000, () -> {
+      GameState.toiletPressed = false;
+    });
+  }
+
+  @FXML
+  private void addGlowToCalculatorKey(MouseEvent event) {
+    Node source = (Node) event.getSource();
+    source.getScene().setCursor(Cursor.HAND);
+    if (source instanceof Rectangle) {
+      Rectangle rectangleKey = (Rectangle) source;
+      // String rectangleName = (rectangleKey).getId();
+      rectangleKey.setOpacity(1);
+      lastCalculatorButtonHovered = rectangleKey;
+
+    }
+  }
+
+  @FXML
+  private void removeGlowFromCalculatorKey(MouseEvent event) {
+    Node source = (Node) event.getSource();
+    source.getScene().setCursor(null);
+    lastCalculatorButtonHovered.setOpacity(0);
+  }
+
   ///////////////
   // Guard's Room
   ///////////////
@@ -1538,14 +1953,27 @@ public class EscapeRoomController {
     animationThread.start();
   }
 
+  /**
+   * Handles the closing of the electrical circuit.
+   *
+   * @param event The MouseEvent that triggered the circuit closing.
+   */
   @FXML
   private void closeCircuit(MouseEvent event) {
+    // Disable all switches to prevent further interactions
     disableAllSwitches(true);
+
+    // Print a message indicating that the circuit has been closed
     System.out.println("Circuit closed");
+
+    // Play a typing sound effect if the memory game is not solved
     if (!GameState.memoryGameSolved) {
       soundUtils.playAudio("typing4.mp3", 1, 0.1);
     }
+
+    // Create a new thread for the closing animation
     Thread animationThread = new Thread(() -> {
+      // Create a fade transition for the circuit group
       FadeTransition endFade = new FadeTransition();
       endFade.setNode(circuitGroup);
       endFade.setDuration(Duration.millis(500));
@@ -1554,11 +1982,16 @@ public class EscapeRoomController {
       endFade.play();
     });
 
+    // Set the animationThread as a daemon thread and start it
     animationThread.setDaemon(true);
     animationThread.start();
+
+    // Wait for a short duration and then hide the circuit group
     wait(500, () -> {
       circuitGroup.setVisible(false);
     });
+
+    // Disable the circuit group to prevent further interactions
     circuitGroup.setDisable(true);
 
     // Check if the countdown thread is running and interrupt it
@@ -1909,30 +2342,48 @@ public class EscapeRoomController {
   }
 
   /**
-   * Appends messages to the chat box that are separated into separate texts by
-   * line breaks.
-   * 
-   * @param message
+   * Appends a message to the user interface, formatting it appropriately.
+   *
+   * @param message The message to be appended, possibly containing paragraphs
+   *                separated by "\n\n".
    */
   private void appendTexts(String message) {
+    // Check if the last message came from the GPT model
     if (GameState.lastMessageFromGPT) {
-      Platform.runLater(
-          () -> {
-            HBox horiBox = new HBox();
-            horiBox.setAlignment(Pos.CENTER);
-            Text text = new Text(timerLabel.getText());
-            TextFlow textFlow = new TextFlow(text);
-            textFlow.setStyle("-fx-background-color: rgb(143,143,143); " + "-fx-color: rgb(255,255,255);");
-            textFlow.setPadding(new Insets(2, 5, 2, 5));
-            textFlow.setMaxWidth(90);
-            textFlow.setMaxHeight(18);
-            horiBox.getChildren().add(textFlow);
-            messagesVertBox.getChildren().add(horiBox);
-          });
+      // Run the following code on the JavaFX application thread
+      Platform.runLater(() -> {
+        // Create a horizontal box for layout
+        HBox horiBox = new HBox();
+        horiBox.setAlignment(Pos.CENTER);
+
+        // Create a Text element with the timer label text
+        Text text = new Text(timerLabel.getText());
+
+        // Create a TextFlow to display the text
+        TextFlow textFlow = new TextFlow(text);
+
+        // Style the TextFlow with background color and text color
+        textFlow.setStyle("-fx-background-color: rgb(143,143,143); " + "-fx-color: rgb(255,255,255);");
+
+        // Set padding and size constraints for the TextFlow
+        textFlow.setPadding(new Insets(2, 5, 2, 5));
+        textFlow.setMaxWidth(90);
+        textFlow.setMaxHeight(18);
+
+        // Add the TextFlow to the horizontal box
+        horiBox.getChildren().add(textFlow);
+
+        // Add the horizontal box to the vertical message container
+        messagesVertBox.getChildren().add(horiBox);
+      });
     }
+
+    // Split the message into paragraphs and add them to the user interface
     for (String paragraph : message.split("\n\n")) {
       addLabel(paragraph, messagesVertBox);
     }
+
+    // Update the flag to indicate that the last message came from the GPT model
     GameState.lastMessageFromGPT = true;
   }
 
