@@ -54,8 +54,8 @@ public class App extends Application {
    */
   @Override
   public void start(final Stage stage) throws IOException {
-    SceneManager.addUi(SceneManager.AppUi.WAITING_LOBBY, App.loadFxml("waitinglobby"));
-    Parent root = SceneManager.getUi(AppUi.WAITING_LOBBY);
+    SceneManager.addUi(SceneManager.AppUi.SEIZURE_WARNING, App.loadFxml("accesswarning"));
+    Parent root = SceneManager.getUi(AppUi.SEIZURE_WARNING);
 
     stage.setTitle("Escape Prison");
     stage.setOnCloseRequest(
