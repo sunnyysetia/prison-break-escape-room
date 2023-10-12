@@ -55,6 +55,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.SVGPath;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
@@ -154,6 +155,12 @@ public class EscapeRoomController {
   private Rectangle calculatorClear;
   @FXML
   private Rectangle calculatorSubmit;
+  @FXML
+  private Polygon redArrowPhone;
+  @FXML
+  private Polygon redArrowTorch;
+  @FXML
+  private Polygon redArrowComputer;
 
   private Rectangle lastCalculatorButtonHovered;
 
@@ -197,7 +204,7 @@ public class EscapeRoomController {
   @FXML
   private Polygon circuit;
   @FXML
-  private Rectangle computer;
+  private Polygon computer;
   @FXML
   private Button computerCloseButton;
   @FXML
@@ -378,7 +385,9 @@ public class EscapeRoomController {
   public void initialize() throws ApiProxyException {
     // Configure the timer length based on what the user selected.
     remainingSeconds = GameState.time;
-
+    Platform.runLater(() -> {
+      redArrowGuidance(redArrowPhone);
+    });
     generateQuestion();
 
     UnaryOperator<Change> modifyChange = change -> {
@@ -669,6 +678,71 @@ public class EscapeRoomController {
 
     // Run a GPT-based instruction for the introduction.
     runGpt(new ChatMessage("user", GptPromptEngineering.getIntroInstruction(GameState.difficulty)));
+  }
+
+  private void redArrowGuidance(Polygon arrow) {
+    FadeTransition arrowIn = new FadeTransition();
+    arrowIn.setNode(arrow);
+    arrowIn.setDuration(Duration.millis(100));
+    arrowIn.setFromValue(0);
+    arrowIn.setToValue(1.0);
+
+    FadeTransition arrowOut = new FadeTransition();
+    arrowOut.setNode(arrow);
+    arrowOut.setDuration(Duration.millis(100));
+    arrowOut.setFromValue(1.0);
+    arrowOut.setToValue(0);
+
+    TranslateTransition arrowUP = new TranslateTransition();
+    arrowUP.setNode(arrow);
+    arrowUP.setDuration(Duration.millis(350));
+    arrowUP.setByY(-50);
+
+    TranslateTransition arrowDown = new TranslateTransition();
+    arrowDown.setNode(arrow);
+    arrowDown.setDuration(Duration.millis(350));
+    arrowDown.setByY(50);
+
+    wait(1000, () -> {
+      arrowIn.play();
+    });
+
+    wait(1050, () -> {
+      arrowUP.play();
+    });
+
+    wait(1400, () -> {
+      arrowDown.play();
+    });
+
+    wait(1750, () -> {
+      arrowUP.play();
+    });
+
+    wait(2100, () -> {
+      arrowDown.play();
+    });
+
+    wait(2450, () -> {
+      arrowUP.play();
+    });
+
+    wait(2800, () -> {
+      arrowDown.play();
+    });
+
+    wait(3150, () -> {
+      arrowUP.play();
+    });
+
+    wait(3500, () -> {
+      arrowDown.play();
+    });
+
+    wait(3850, () -> {
+      arrowUP.play();
+      arrowOut.play();
+    });
   }
 
   /**
@@ -1758,7 +1832,7 @@ public class EscapeRoomController {
   @FXML
   private void clickObject(MouseEvent event) {
     // Find which object was clicked.
-    Rectangle clickedRectangle = (Rectangle) event.getSource();
+    Shape clickedRectangle = (Shape) event.getSource();
     String rectangleId = clickedRectangle.getId();
     System.out.println("Object clicked: " + rectangleId);
     soundUtils.playAudio("typing4.mp3", 1, 0.1);
@@ -1796,6 +1870,9 @@ public class EscapeRoomController {
 
             torchFade.play();
             torchGet.play();
+            Platform.runLater(() -> {
+              redArrowGuidance(redArrowTorch);
+            });
           });
 
       // Create a thread to make the torch disappear after a certain time period.
@@ -1820,6 +1897,7 @@ public class EscapeRoomController {
 
             torchFade.play();
             torchGet.play();
+
           });
 
       // Set both animation threads as daemon threads and start them.
@@ -2119,8 +2197,10 @@ public class EscapeRoomController {
       guardRoomDark2.setVisible(false);
       soundUtils.playAudio("spotlight.m4a", 1, 0.3);
       issueInstruction(GptPromptEngineering.getLightsOnInstruction());
+      Platform.runLater(() -> {
+        redArrowGuidance(redArrowComputer);
+      });
     } else {
-      // initialiseMemoryGame();
       startMemoryRecallGame();
     }
   }
