@@ -194,6 +194,18 @@ public class EscapeRoomController {
   @FXML
   private TextArea scrollPaperText;
 
+  private HashMap<Rectangle, FadeTransition> hoverFadeMap = new HashMap<>() {
+    {
+      put(cuttingboard, new FadeTransition());
+      put(oven, new FadeTransition());
+      put(plates, new FadeTransition());
+      put(extinguisher, new FadeTransition());
+      put(kettle, new FadeTransition());
+      put(clock, new FadeTransition());
+      put(toaster, new FadeTransition());
+    }
+  };
+
   // Cell FXML
   @FXML
   private Text uvLightText;
@@ -1788,11 +1800,14 @@ public class EscapeRoomController {
       String rectangleName = (rectangleObject).getId();
       Tooltip tooltip = new Tooltip(rectangleName);
 
+      // Make the object light up and cancel any existing fade animation
+      rectangleObject.setOpacity(1);
+      if (hoverFadeMap.get(rectangleObject) != null) {
+        hoverFadeMap.get(rectangleObject).stop();
+      }
+
       // Set a shorter tooltip delay (in milliseconds)
       tooltip.setShowDelay(Duration.millis(100));
-
-      rectangleObject.setOpacity(1);
-
       Tooltip.install(source, tooltip);
 
       // Add mouse move listener to update tooltip position
@@ -1922,7 +1937,8 @@ public class EscapeRoomController {
       dissappearFade.setFromValue(1);
       dissappearFade.setToValue(0);
 
-      dissappearFade.play();
+      hoverFadeMap.put(rectangleObject, dissappearFade);
+      hoverFadeMap.get(rectangleObject).play();
 
     }
   }
