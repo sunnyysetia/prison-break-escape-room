@@ -194,6 +194,18 @@ public class EscapeRoomController {
   @FXML
   private TextArea scrollPaperText;
 
+  private HashMap<Rectangle, FadeTransition> kitchenHoverFadeMap = new HashMap<>() {
+    {
+      put(cuttingboard, new FadeTransition());
+      put(oven, new FadeTransition());
+      put(plates, new FadeTransition());
+      put(extinguisher, new FadeTransition());
+      put(kettle, new FadeTransition());
+      put(clock, new FadeTransition());
+      put(toaster, new FadeTransition());
+    }
+  };
+
   // Cell FXML
   @FXML
   private Text uvLightText;
@@ -221,6 +233,14 @@ public class EscapeRoomController {
   private AnchorPane computerConsoleAnchorPane;
   @FXML
   private Rectangle guardRoomDark2;
+
+  private HashMap<Polygon, FadeTransition> miscHoverFadeMap = new HashMap<>() {
+    {
+      put(toilet, new FadeTransition());
+      put(circuit, new FadeTransition());
+      put(computer, new FadeTransition());
+    }
+  };
 
   @FXML
   private AnchorPane finsihedGamePane;
@@ -1788,11 +1808,14 @@ public class EscapeRoomController {
       String rectangleName = (rectangleObject).getId();
       Tooltip tooltip = new Tooltip(rectangleName);
 
+      // Make the object light up and cancel any existing fade animation
+      rectangleObject.setOpacity(1);
+      if (kitchenHoverFadeMap.get(rectangleObject) != null) {
+        kitchenHoverFadeMap.get(rectangleObject).stop();
+      }
+
       // Set a shorter tooltip delay (in milliseconds)
       tooltip.setShowDelay(Duration.millis(100));
-
-      rectangleObject.setOpacity(1);
-
       Tooltip.install(source, tooltip);
 
       // Add mouse move listener to update tooltip position
@@ -1916,13 +1939,14 @@ public class EscapeRoomController {
     Node source = (Node) event.getSource();
     if (source instanceof Rectangle) {
       Rectangle rectangleObject = (Rectangle) source;
-      FadeTransition dissappearFade = new FadeTransition();
-      dissappearFade.setNode(rectangleObject);
-      dissappearFade.setDuration(Duration.millis(500));
-      dissappearFade.setFromValue(1);
-      dissappearFade.setToValue(0);
+      FadeTransition disappearFade = new FadeTransition();
+      disappearFade.setNode(rectangleObject);
+      disappearFade.setDuration(Duration.millis(500));
+      disappearFade.setFromValue(1);
+      disappearFade.setToValue(0);
 
-      dissappearFade.play();
+      kitchenHoverFadeMap.put(rectangleObject, disappearFade);
+      kitchenHoverFadeMap.get(rectangleObject).play();
 
     }
   }
@@ -1937,7 +1961,11 @@ public class EscapeRoomController {
       // Cast the source to a Polygon object
       Polygon polygonObject = (Polygon) source;
 
-      // Set the opacity of the polygon to fully visible
+      // Set the opacity of the polygon to fully visible, and
+      // stop the fade animation if it is playing.
+      if (miscHoverFadeMap.get(polygonObject) != null) {
+        miscHoverFadeMap.get(polygonObject).stop();
+      }
       polygonObject.setOpacity(1);
     }
 
@@ -1963,7 +1991,8 @@ public class EscapeRoomController {
       disappearFade.setToValue(0);
 
       // Play the fade-out animation
-      disappearFade.play();
+      miscHoverFadeMap.put(polygonObject, disappearFade);
+      miscHoverFadeMap.get(polygonObject).play();
     }
 
     // Reset the cursor to its default state
