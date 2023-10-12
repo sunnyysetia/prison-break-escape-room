@@ -8,22 +8,22 @@
 <Pane fx:id="accessWarning" prefHeight="720.0" prefWidth="1022.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.AccessWarningController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="720.0" onMouseClicked="#enterGame" stroke="BLACK" strokeType="INSIDE" width="1022.0" />
-      <Label layoutX="369.0" layoutY="152.0" prefHeight="86.0" prefWidth="285.0" style="-fx-font-size: 60;" styleClass="autoradiographicText" stylesheets="@../css/font6.css" text="WARNING" textAlignment="CENTER" textFill="RED">
+      <Label alignment="CENTER" layoutX="369.0" layoutY="152.0" prefHeight="86.0" prefWidth="285.0" style="-fx-font-size: 60;" styleClass="autoradiographicText" stylesheets="@../css/font6.css" text="WARNING" textFill="RED">
          <font>
             <Font size="60.0" />
          </font>
       </Label>
-      <Label layoutX="212.0" layoutY="276.0" prefHeight="99.0" prefWidth="599.0" text="This game may potentially trigger seizures for people with photosensitive epilepsy." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+      <Label alignment="CENTER" layoutX="212.0" layoutY="276.0" prefHeight="99.0" prefWidth="599.0" styleClass="autoradiographicText" stylesheets="@../css/font6.css" text="This game may potentially trigger seizures for people with photosensitive epilepsy." textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
-      <Label layoutX="369.0" layoutY="414.0" prefHeight="50.0" prefWidth="285.0" text="Player discretion is advised." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+      <Label alignment="CENTER" layoutX="369.0" layoutY="414.0" prefHeight="50.0" prefWidth="285.0" styleClass="autoradiographicText" stylesheets="@../css/font6.css" text="Player discretion is advised." textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
-      <Label layoutX="61.0" layoutY="620.0" text="Click anywhere to continue..." textFill="WHITE">
+      <Label alignment="CENTER" layoutX="61.0" layoutY="620.0" styleClass="autoradiographicText" stylesheets="@../css/font6.css" text="Click anywhere to continue..." textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>

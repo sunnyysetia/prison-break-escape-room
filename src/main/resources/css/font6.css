@@ -1,8 +1,8 @@
 @font-face {
-    font-family: 'Autoradiographic';
+    font-family: 'Autoradiographic Rg';
     src: url('../fonts/autoradiographic-rg.ttf');
 }
 
 .autoradiographicText {
-    -fx-font-family: 'Autoradiographic';
+    -fx-font-family: 'Autoradiographic Rg';
 }
