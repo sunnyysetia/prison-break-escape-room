@@ -213,6 +213,7 @@
             <InnerShadow choke="1.0" />
          </effect>
       </ImageView>
+      <Polygon fx:id="redArrowComputer" disable="true" fill="RED" layoutX="512.0" layoutY="310.0" opacity="0.0" points="-27.20001220703125, 8.35345458984375, 24.79998779296875, 83.1534423828125, 80.79998779296875, 8.35345458984375, 50.0, 8.35345458984375, 50.0, -60.0, 0.0, -60.0, 1.0, 8.35345458984375" scaleX="0.5" scaleY="0.5" stroke="BLACK" strokeType="INSIDE" />
       <Group fx:id="circuitGroup" disable="true" opacity="0.0" visible="false">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" height="720.0" opacity="0.6" stroke="BLACK" strokeType="INSIDE" width="1022.0" />
@@ -481,6 +482,5 @@
          </children></AnchorPane>
       <Polygon fx:id="redArrowPhone" disable="true" fill="RED" layoutX="125.0" layoutY="620.0" opacity="0.0" points="-27.20001220703125, 8.35345458984375, 24.79998779296875, 83.1534423828125, 80.79998779296875, 8.35345458984375, 50.0, 8.35345458984375, 50.0, -60.0, 0.0, -60.0, 1.0, 8.35345458984375" scaleX="0.5" scaleY="0.5" stroke="BLACK" strokeType="INSIDE" />
       <Polygon fx:id="redArrowTorch" disable="true" fill="RED" layoutX="880.0" layoutY="620.0" opacity="0.0" points="-27.20001220703125, 8.35345458984375, 24.79998779296875, 83.1534423828125, 80.79998779296875, 8.35345458984375, 50.0, 8.35345458984375, 50.0, -60.0, 0.0, -60.0, 1.0, 8.35345458984375" scaleX="0.5" scaleY="0.5" stroke="BLACK" strokeType="INSIDE" />
-      <Polygon fx:id="redArrowComputer" disable="true" fill="RED" layoutX="512.0" layoutY="310.0" opacity="0.0" points="-27.20001220703125, 8.35345458984375, 24.79998779296875, 83.1534423828125, 80.79998779296875, 8.35345458984375, 50.0, 8.35345458984375, 50.0, -60.0, 0.0, -60.0, 1.0, 8.35345458984375" scaleX="0.5" scaleY="0.5" stroke="BLACK" strokeType="INSIDE" />
    </children>
 </Pane>
