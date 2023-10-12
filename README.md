@@ -35,10 +35,16 @@ accessToken: “YOUR_KEY”`
 - Eraser font: https://www.1001fonts.com/eraser-font.html
 - Stencil font: https://fonts.adobe.com/fonts/stencil#about-section
 - Metropolis font: https://www.1001fonts.com/metropolis-font.html#license
-- Background Images generated using ai: https://www.freepik.com/ai-images-editor
-- Notification SFX: https://www.youtube.com/watch?v=hBJ5NvMj21M&ab_channel=LOFITUNES
-- Typing animation GIF: https://tenor.com/en-GB/search/iphone-typing-gif-gifs
+- Segment 7 font: https://www.fontspace.com/segment7-font-f19825
+- Digital Dream font: https://www.1001fonts.com/digital-dream-font.html
+- Autoradiographic font: https://www.1001fonts.com/autoradiographic-font.html 
 
+- Background Images generated using ai: https://www.freepik.com/ai-images-editor
+- Typing animation GIF: https://tenor.com/en-GB/search/iphone-typing-gif-gifs
+- Volume icon: https://www.iconsdb.com/white-icons/volume-up-4-icon.html
+- paper scroll image: https://www.freepik.com/free-vector/old-parchment-papers_6905535.htm#query=paper%20scroll&position=1&from_view=search&track=ais
+
+- Notification SFX: https://www.youtube.com/watch?v=hBJ5NvMj21M&ab_channel=LOFITUNES
 - banging on metal door - sound effect: https://www.youtube.com/watch?v=pR_r4CSCZ2o
 - Heavy Metal Door Opening and Closing: https://www.youtube.com/watch?v=c90uCjVbW_g
 - Light Flicker Sound Effect: https://www.youtube.com/watch?v=oVvrIcJbRMQ
@@ -48,13 +54,9 @@ accessToken: “YOUR_KEY”`
 - GAME OVER!!No Copyright Sound Effect Music: https://www.youtube.com/watch?v=VeG31i04Cb8
 - @zariimusic spy music, spy music no copyright, undercover agent action scenes music, spy themes, NO WAY - ZARII: https://www.youtube.com/watch?v=Rx17xiAU5_4
 - Typing Sound Effect (no copyright): https://www.youtube.com/watch?v=OJhWtBBJw10
-- Volume icon: https://www.iconsdb.com/white-icons/volume-up-4-icon.html
 - spot light sfx: https://www.youtube.com/watch?v=YWz9WzzeJwI
-- paper scroll image: https://www.freepik.com/free-vector/old-parchment-papers_6905535.htm#query=paper%20scroll&position=1&from_view=search&track=ais
-  segment 7 font: https://www.fontspace.com/segment7-font-f19825
 - electricity sfx: https://www.youtube.com/watch?v=HoGCY1f-pOI
 - incorrect sfx: https://www.youtube.com/watch?v=FwVRkhy5G04
-- digital dream font: https://www.1001fonts.com/digital-dream-font.html
 - toilet sfx 1: https://www.youtube.com/watch?v=cWiAOc10jrs
 - toilet sfx 2: https://www.youtube.com/watch?v=-t8_xO9OMBY
 - toilet sfx 3: https://www.youtube.com/watch?v=BhsVpvM2ZrM
