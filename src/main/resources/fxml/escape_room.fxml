@@ -87,7 +87,7 @@
                         <Image url="@../images/guardRoom.png" />
                      </image>
                   </ImageView>
-                  <Rectangle fx:id="computer" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="96.0" layoutX="451.0" layoutY="334.0" onMouseEntered="#showObjectName" onMouseExited="#resetCursor" onMousePressed="#clickObject" opacity="0.0" stroke="TRANSPARENT" strokeType="INSIDE" width="187.0" />
+                  <Polygon fx:id="computer" fill="#ffffff33" layoutX="451.0" layoutY="334.0" onMouseEntered="#onPolygonEnter" onMouseExited="#onPolygonExit" onMousePressed="#clickObject" opacity="0.0" points="16.0, 96.00003051757812, 173.60009765625, 96.00003051757812, 180.0, 1.753448486328125, 8.800048828125, 1.753448486328125" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="2.0" />
                   <ImageView fx:id="guardRoomDarkness" fitHeight="580.0" layoutX="6.0" layoutY="65.0" opacity="0.9" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/darknessGuardRoom.png" />
@@ -479,5 +479,8 @@
                </children>
             </Group>
          </children></AnchorPane>
+      <Polygon fx:id="redArrowPhone" disable="true" fill="RED" layoutX="125.0" layoutY="620.0" opacity="0.0" points="-27.20001220703125, 8.35345458984375, 24.79998779296875, 83.1534423828125, 80.79998779296875, 8.35345458984375, 50.0, 8.35345458984375, 50.0, -60.0, 0.0, -60.0, 1.0, 8.35345458984375" scaleX="0.5" scaleY="0.5" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="redArrowTorch" disable="true" fill="RED" layoutX="880.0" layoutY="620.0" opacity="0.0" points="-27.20001220703125, 8.35345458984375, 24.79998779296875, 83.1534423828125, 80.79998779296875, 8.35345458984375, 50.0, 8.35345458984375, 50.0, -60.0, 0.0, -60.0, 1.0, 8.35345458984375" scaleX="0.5" scaleY="0.5" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fx:id="redArrowComputer" disable="true" fill="RED" layoutX="512.0" layoutY="310.0" opacity="0.0" points="-27.20001220703125, 8.35345458984375, 24.79998779296875, 83.1534423828125, 80.79998779296875, 8.35345458984375, 50.0, 8.35345458984375, 50.0, -60.0, 0.0, -60.0, 1.0, 8.35345458984375" scaleX="0.5" scaleY="0.5" stroke="BLACK" strokeType="INSIDE" />
    </children>
 </Pane>
