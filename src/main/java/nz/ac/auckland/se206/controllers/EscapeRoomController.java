@@ -243,7 +243,7 @@ public class EscapeRoomController {
   };
 
   @FXML
-  private AnchorPane finsihedGamePane;
+  private AnchorPane finishedGamePane;
   @FXML
   private Group endPhoneGroup;
   @FXML
@@ -971,7 +971,7 @@ public class EscapeRoomController {
         });
 
     TranslateTransition backgroundTransition = new TranslateTransition();
-    backgroundTransition.setNode(finsihedGamePane);
+    backgroundTransition.setNode(finishedGamePane);
     backgroundTransition.setByY(720);
     backgroundTransition.setDuration(Duration.millis(500));
     TranslateTransition phoneTransition = new TranslateTransition();
