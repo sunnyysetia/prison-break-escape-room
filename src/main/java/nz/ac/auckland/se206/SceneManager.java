@@ -25,7 +25,7 @@ public class SceneManager {
 
   /**
    * Deletes a UI from the scene map and reports it to the console.
-   * 
+   *
    * @param appUi the UI that is to be deleted.
    */
   public static void delUi(AppUi appUi) {

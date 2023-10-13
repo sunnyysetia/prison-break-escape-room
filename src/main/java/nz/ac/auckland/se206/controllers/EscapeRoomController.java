@@ -867,7 +867,7 @@ public class EscapeRoomController {
   /**
    * Provide a responsive experience for the user by lighting up keys that they
    * click on during the calculator screen and playing a sound effect.
-   * 
+   *
    * @param fxid the FXID of the key that has been clicked.
    */
   public void showKeyClicked(String fxid) {
@@ -906,7 +906,7 @@ public class EscapeRoomController {
   /**
    * Handles user clicking on a key of the calculator by playing a responsive
    * animation+sfx and updating the status of the minigame accordingly.
-   * 
+   *
    * @param event event handler used to get the key that was clicked.
    */
   @FXML
@@ -1004,7 +1004,7 @@ public class EscapeRoomController {
    * Handles the user ending the game by playing a sound indicating their
    * victory/loss and taking them to a screen where they can choose to continue or
    * quit. Also displays time taken if they have won.
-   * 
+   *
    * @param event unused event handler.
    */
   @FXML
@@ -1655,7 +1655,7 @@ public class EscapeRoomController {
 
   /**
    * Handles the user clicking on the phone icon.
-   * 
+   *
    * @param event unused event handler.
    */
   @FXML
@@ -1727,7 +1727,7 @@ public class EscapeRoomController {
 
   /**
    * Handle the user clicking the button to go to the left room.
-   * 
+   *
    * @param event unused event handler
    */
   @FXML
@@ -1742,7 +1742,7 @@ public class EscapeRoomController {
 
   /**
    * Handle the user clicking the button to go to the right room.
-   * 
+   *
    * @param event unused event handler
    */
   @FXML
@@ -2149,9 +2149,11 @@ public class EscapeRoomController {
   @FXML
   private void openCircuit(MouseEvent event) {
     System.out.println("Circuit clicked");
+    // Show and enable the circuit buttons to be clicked and disable the torch.
     circuitGroup.setDisable(false);
     circuitGroup.setVisible(true);
     GameState.torchIsOn.setValue(false);
+    // Make a transition for the circuit appearing.
     Thread animationThread = new Thread(
         () -> {
           FadeTransition endFade = new FadeTransition();
@@ -2161,7 +2163,7 @@ public class EscapeRoomController {
           endFade.setToValue(1);
           endFade.play();
         });
-
+    // Start the circuit minigame.
     wait(
         250,
         () -> {
