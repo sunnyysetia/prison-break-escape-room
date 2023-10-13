@@ -27,6 +27,7 @@ import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.utils.SoundUtils;
 
+/** Controller class for the pre-game screen. */
 public class WaitingLobbyController {
 
   @FXML
@@ -54,6 +55,10 @@ public class WaitingLobbyController {
       Arrays.asList(
           "cuttingboard", "oven", "plates", "extinguisher", "kettle", "clock", "toaster"));
 
+  /**
+   * Initialise the lobby controller. This entails setting up the light flickering
+   * SFX and animation and resetting the UI of the game.
+   */
   @FXML
   public void initialize() {
     flickerSound.playAudio("lightFlicker.m4a", AudioClip.INDEFINITE, 0.1);
