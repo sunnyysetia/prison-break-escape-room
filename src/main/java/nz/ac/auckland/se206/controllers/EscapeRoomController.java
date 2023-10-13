@@ -710,23 +710,27 @@ public class EscapeRoomController {
   }
 
   private void showGuideArrow(Polygon arrow) {
+    // Establish a transition for the arrow appearing to the user.
     FadeTransition arrowIn = new FadeTransition();
     arrowIn.setNode(arrow);
     arrowIn.setDuration(Duration.millis(100));
     arrowIn.setFromValue(0);
     arrowIn.setToValue(1.0);
 
+    // Establish a transition for the arrow disappearing from the user.
     FadeTransition arrowOut = new FadeTransition();
     arrowOut.setNode(arrow);
     arrowOut.setDuration(Duration.millis(100));
     arrowOut.setFromValue(1.0);
     arrowOut.setToValue(0);
 
+    // Establish a transition for the arrow's upward trajectory.
     TranslateTransition arrowUp = new TranslateTransition();
     arrowUp.setNode(arrow);
     arrowUp.setDuration(Duration.millis(350));
     arrowUp.setByY(-50);
 
+    // Establish a transition for the arrow's downward trajectory.
     TranslateTransition arrowDown = new TranslateTransition();
     arrowDown.setNode(arrow);
     arrowDown.setDuration(Duration.millis(350));
@@ -735,62 +739,62 @@ public class EscapeRoomController {
     wait(
         1000,
         () -> {
-          arrowIn.play();
+          arrowIn.play(); // Fade the arrow in.
         });
 
     wait(
         1050,
         () -> {
-          arrowUp.play();
+          arrowUp.play(); // Bob the arrow up.
         });
 
     wait(
         1400,
         () -> {
-          arrowDown.play();
+          arrowDown.play(); // Bob the arrow back down.
         });
 
     wait(
         1750,
         () -> {
-          arrowUp.play();
+          arrowUp.play(); // Bob the arrow up.
         });
 
     wait(
         2100,
         () -> {
-          arrowDown.play();
+          arrowDown.play(); // Bob the arrow back down.
         });
 
     wait(
         2450,
         () -> {
-          arrowUp.play();
+          arrowUp.play(); // Did I ever tell you the definition of insanity?
         });
 
     wait(
         2800,
         () -> {
-          arrowDown.play();
+          arrowDown.play(); // Bob the arrow back down.
         });
 
     wait(
         3150,
         () -> {
-          arrowUp.play();
+          arrowUp.play(); // Bob the arrow up.
         });
 
     wait(
         3500,
         () -> {
-          arrowDown.play();
+          arrowDown.play(); // Bob the arrow back down.
         });
 
     wait(
         3850,
         () -> {
           arrowUp.play();
-          arrowOut.play();
+          arrowOut.play(); // Kill the arrow.
         });
   }
 
@@ -2005,13 +2009,17 @@ public class EscapeRoomController {
     resetCursor(event);
     Node source = (Node) event.getSource();
     if (source instanceof Rectangle) {
+      // Find the object that the mouse just exited.
       Rectangle rectangleObject = (Rectangle) source;
+      // Establish an animation that causes the highlight of the object to slowly fade
+      // out.
       FadeTransition disappearFade = new FadeTransition();
       disappearFade.setNode(rectangleObject);
       disappearFade.setDuration(Duration.millis(500));
       disappearFade.setFromValue(1);
       disappearFade.setToValue(0);
 
+      // Store the animation so that it can be cancelled if need arises and play it.
       kitchenHoverFadeMap.put(rectangleObject, disappearFade);
       kitchenHoverFadeMap.get(rectangleObject).play();
     }
@@ -2067,14 +2075,17 @@ public class EscapeRoomController {
 
   @FXML
   private void onToiletClick(MouseEvent event) {
+    // Prevent spamming of the toilet sound effect.
     if (GameState.toiletPressed) {
       return;
     }
     GameState.toiletPressed = true;
     System.out.println("Toilet clicked");
+    // Play a random toilet sound effect from 3 possible options.
     String toiletString = "toilet" + Math.round(Math.random() * 2 + 1) + ".m4a";
     System.out.println("Playing: " + toiletString);
     soundUtils.playAudio(toiletString, 1, 0.1);
+    // The sound effect must fully play out before the toilet is clickable again.
     wait(
         4000,
         () -> {
