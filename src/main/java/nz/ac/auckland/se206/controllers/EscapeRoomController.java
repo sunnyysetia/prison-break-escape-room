@@ -408,7 +408,7 @@ public class EscapeRoomController {
     remainingSeconds = GameState.time;
     Platform.runLater(
         () -> {
-          redArrowGuidance(redArrowPhone);
+          showGuideArrow(redArrowPhone);
         });
     generateQuestion();
 
@@ -709,7 +709,7 @@ public class EscapeRoomController {
     runGpt(new ChatMessage("user", GptPromptEngineering.getIntroInstruction(GameState.difficulty)));
   }
 
-  private void redArrowGuidance(Polygon arrow) {
+  private void showGuideArrow(Polygon arrow) {
     FadeTransition arrowIn = new FadeTransition();
     arrowIn.setNode(arrow);
     arrowIn.setDuration(Duration.millis(100));
@@ -722,10 +722,10 @@ public class EscapeRoomController {
     arrowOut.setFromValue(1.0);
     arrowOut.setToValue(0);
 
-    TranslateTransition arrowUP = new TranslateTransition();
-    arrowUP.setNode(arrow);
-    arrowUP.setDuration(Duration.millis(350));
-    arrowUP.setByY(-50);
+    TranslateTransition arrowUp = new TranslateTransition();
+    arrowUp.setNode(arrow);
+    arrowUp.setDuration(Duration.millis(350));
+    arrowUp.setByY(-50);
 
     TranslateTransition arrowDown = new TranslateTransition();
     arrowDown.setNode(arrow);
@@ -741,7 +741,7 @@ public class EscapeRoomController {
     wait(
         1050,
         () -> {
-          arrowUP.play();
+          arrowUp.play();
         });
 
     wait(
@@ -753,7 +753,7 @@ public class EscapeRoomController {
     wait(
         1750,
         () -> {
-          arrowUP.play();
+          arrowUp.play();
         });
 
     wait(
@@ -765,7 +765,7 @@ public class EscapeRoomController {
     wait(
         2450,
         () -> {
-          arrowUP.play();
+          arrowUp.play();
         });
 
     wait(
@@ -777,7 +777,7 @@ public class EscapeRoomController {
     wait(
         3150,
         () -> {
-          arrowUP.play();
+          arrowUp.play();
         });
 
     wait(
@@ -789,7 +789,7 @@ public class EscapeRoomController {
     wait(
         3850,
         () -> {
-          arrowUP.play();
+          arrowUp.play();
           arrowOut.play();
         });
   }
@@ -1962,7 +1962,7 @@ public class EscapeRoomController {
             torchGet.play();
             Platform.runLater(
                 () -> {
-                  redArrowGuidance(redArrowTorch);
+                  showGuideArrow(redArrowTorch);
                 });
           });
 
@@ -2301,7 +2301,7 @@ public class EscapeRoomController {
       issueInstruction(GptPromptEngineering.getLightsOnInstruction());
       Platform.runLater(
           () -> {
-            redArrowGuidance(redArrowComputer);
+            showGuideArrow(redArrowComputer);
           });
     } else {
       startMemoryRecallGame();
