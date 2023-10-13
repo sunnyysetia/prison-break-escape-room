@@ -8,6 +8,7 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 
+/** Controller class for the health and safety warning on launch. */
 public class AccessWarningController {
 
     @FXML

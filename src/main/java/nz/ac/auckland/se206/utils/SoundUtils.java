@@ -5,11 +5,19 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import nz.ac.auckland.se206.GameState;
 
+/** Handles sound effects and music that is played throughout the game. */
 public class SoundUtils {
   private static MediaPlayer currentMediaPlayer;
 
   private static AudioClip audioClip;
 
+  /**
+   * Plays a provided audio clip to the user.
+   * 
+   * @param fileName   the file that is to be played.
+   * @param cycleCount the amount of times that it should be played.
+   * @param volume     the volume level that it is to be played at.
+   */
   public void playAudio(String fileName, int cycleCount, double volume) {
     if (GameState.muted.get()) {
       return;
@@ -26,16 +34,24 @@ public class SoundUtils {
     }
   }
 
+  /** Cuts the current audio clip that is playing. */
   public void stopAudio() {
     audioClip.stop();
   }
 
+  /** Cut the current media file that is playing. */
   public void stopSound() {
     if (currentMediaPlayer != null) {
       currentMediaPlayer.stop();
     }
   }
 
+  /**
+   * Plays a provided media to the user.
+   * 
+   * @param fileName the file that is to be played.
+   * @param volume   the volume level that it is to be played at.
+   */
   public void playSound(String fileName, double volume) {
     if (GameState.muted.get()) {
       return;
