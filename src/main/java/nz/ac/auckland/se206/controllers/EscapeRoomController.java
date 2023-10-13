@@ -11,7 +11,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.function.UnaryOperator;
-
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
@@ -322,14 +321,16 @@ public class EscapeRoomController {
               + " to escape their confinement. Authorities are working diligently to regain"
               + " control and investigate the software glitch responsible for this"
               + " unprecedented breach of security.");
-      put("2",
+      put(
+          "2",
           "On %s %s, chaos erupted at The Prison as a series of"
               + " explosions caused prison walls to crumble, granting inmates an unexpected"
               + " route to freedom. Inmates wasted no time seizing the opportunity, fleeing the"
               + " facility in a frantic rush. Authorities are now in pursuit of the escapees,"
               + " while an investigation is underway to determine the cause of the explosive"
               + " breach in the prison's perimeter.");
-      put("3",
+      put(
+          "3",
           "On %s %s, a surprising incident occurred at The Prison. One"
               + " prisoner had disappeared, leaving an empty cell behind, and a prison guard"
               + " uniform was missing. It appeared that the inmate had managed to escape by"
@@ -405,9 +406,10 @@ public class EscapeRoomController {
   public void initialize() throws ApiProxyException {
     // Configure the timer length based on what the user selected.
     remainingSeconds = GameState.time;
-    Platform.runLater(() -> {
-      redArrowGuidance(redArrowPhone);
-    });
+    Platform.runLater(
+        () -> {
+          redArrowGuidance(redArrowPhone);
+        });
     generateQuestion();
 
     UnaryOperator<Change> modifyChange = change -> {
@@ -432,7 +434,8 @@ public class EscapeRoomController {
           submitAnswer();
           answerTextArea.clear();
         }
-        if (change.getControlNewText().contains("c") || change.getControlNewText().contains("C")) {
+        if (change.getControlNewText().contains("c")
+            || change.getControlNewText().contains("C")) {
           change.setText(change.getControlText());
           System.out.println("c pressed");
           answerTextArea.clear();
@@ -444,8 +447,10 @@ public class EscapeRoomController {
 
     volume
         .imageProperty()
-        .set(new Image(
-            App.class.getResourceAsStream("/images/volume" + ((GameState.muted.getValue()) ? "Off" : "On") + ".png")));
+        .set(
+            new Image(
+                App.class.getResourceAsStream(
+                    "/images/volume" + ((GameState.muted.getValue()) ? "Off" : "On") + ".png")));
 
     // Start a timer for the game.
     startTimer();
@@ -666,19 +671,23 @@ public class EscapeRoomController {
           }
         });
 
-    volume.setOnMouseClicked(event -> {
-      GameState.muted.setValue(!GameState.muted.getValue());
-      System.out.println("volume button clicked");
-      volume
-          .imageProperty()
-          .set(new Image(
-              App.class
-                  .getResourceAsStream("/images/volume" + ((GameState.muted.getValue()) ? "Off" : "On") + ".png")));
-      if (GameState.muted.getValue()) {
-        soundUtils.stopSound();
-        soundUtils.stopAudio();
-      }
-    });
+    volume.setOnMouseClicked(
+        event -> {
+          GameState.muted.setValue(!GameState.muted.getValue());
+          System.out.println("volume button clicked");
+          volume
+              .imageProperty()
+              .set(
+                  new Image(
+                      App.class.getResourceAsStream(
+                          "/images/volume"
+                              + ((GameState.muted.getValue()) ? "Off" : "On")
+                              + ".png")));
+          if (GameState.muted.getValue()) {
+            soundUtils.stopSound();
+            soundUtils.stopAudio();
+          }
+        });
 
     torchButton.setOnMouseClicked(
         event -> {
@@ -723,56 +732,75 @@ public class EscapeRoomController {
     arrowDown.setDuration(Duration.millis(350));
     arrowDown.setByY(50);
 
-    wait(1000, () -> {
-      arrowIn.play();
-    });
+    wait(
+        1000,
+        () -> {
+          arrowIn.play();
+        });
 
-    wait(1050, () -> {
-      arrowUP.play();
-    });
+    wait(
+        1050,
+        () -> {
+          arrowUP.play();
+        });
 
-    wait(1400, () -> {
-      arrowDown.play();
-    });
+    wait(
+        1400,
+        () -> {
+          arrowDown.play();
+        });
 
-    wait(1750, () -> {
-      arrowUP.play();
-    });
+    wait(
+        1750,
+        () -> {
+          arrowUP.play();
+        });
 
-    wait(2100, () -> {
-      arrowDown.play();
-    });
+    wait(
+        2100,
+        () -> {
+          arrowDown.play();
+        });
 
-    wait(2450, () -> {
-      arrowUP.play();
-    });
+    wait(
+        2450,
+        () -> {
+          arrowUP.play();
+        });
 
-    wait(2800, () -> {
-      arrowDown.play();
-    });
+    wait(
+        2800,
+        () -> {
+          arrowDown.play();
+        });
 
-    wait(3150, () -> {
-      arrowUP.play();
-    });
+    wait(
+        3150,
+        () -> {
+          arrowUP.play();
+        });
 
-    wait(3500, () -> {
-      arrowDown.play();
-    });
+    wait(
+        3500,
+        () -> {
+          arrowDown.play();
+        });
 
-    wait(3850, () -> {
-      arrowUP.play();
-      arrowOut.play();
-    });
+    wait(
+        3850,
+        () -> {
+          arrowUP.play();
+          arrowOut.play();
+        });
   }
 
-  /**
-   * Generates a random math question and sets it in the user interface.
-   */
+  /** Generates a random math question and sets it in the user interface. */
   private void generateQuestion() {
     if (GameState.batteryGameSolved) {
-      Platform.runLater(() -> {
-        questionLabel.setText("full charge");
-      });
+      Platform.runLater(
+          () -> {
+            questionLabel.setText("full charge");
+          });
       return;
     }
 
@@ -824,9 +852,11 @@ public class EscapeRoomController {
       generateQuestion();
     } else {
       soundUtils.playAudio("error.m4a", 1, 0.08);
-      wait(1000, () -> {
-        generateQuestion();
-      });
+      wait(
+          1000,
+          () -> {
+            generateQuestion();
+          });
     }
   }
 
@@ -847,11 +877,13 @@ public class EscapeRoomController {
       timeline.setCycleCount(1);
 
       // Define keyframes for opacity and stroke width changes
-      KeyFrame startKeyFrame = new KeyFrame(Duration.ZERO,
+      KeyFrame startKeyFrame = new KeyFrame(
+          Duration.ZERO,
           new KeyValue(rectangle.opacityProperty(), 1),
           new KeyValue(rectangle.strokeWidthProperty(), 3));
 
-      KeyFrame endKeyFrame = new KeyFrame(Duration.seconds(1),
+      KeyFrame endKeyFrame = new KeyFrame(
+          Duration.seconds(1),
           new KeyValue(rectangle.opacityProperty(), 0),
           new KeyValue(rectangle.strokeWidthProperty(), 0));
 
@@ -907,18 +939,18 @@ public class EscapeRoomController {
     switch (currentQuestionType) {
       case 1:
         // Addition: Parse and calculate the correct answer
-        correctAnswer = Integer.parseInt(questionLabel.getText().split(" ")[0]) +
-            Integer.parseInt(questionLabel.getText().split(" ")[2]);
+        correctAnswer = Integer.parseInt(questionLabel.getText().split(" ")[0])
+            + Integer.parseInt(questionLabel.getText().split(" ")[2]);
         break;
       case 2:
         // Subtraction: Parse and calculate the correct answer
-        correctAnswer = Integer.parseInt(questionLabel.getText().split(" ")[0]) -
-            Integer.parseInt(questionLabel.getText().split(" ")[2]);
+        correctAnswer = Integer.parseInt(questionLabel.getText().split(" ")[0])
+            - Integer.parseInt(questionLabel.getText().split(" ")[2]);
         break;
       case 3:
         // Multiplication: Parse and calculate the correct answer
-        correctAnswer = Integer.parseInt(questionLabel.getText().split(" ")[0]) *
-            Integer.parseInt(questionLabel.getText().split(" ")[2]);
+        correctAnswer = Integer.parseInt(questionLabel.getText().split(" ")[0])
+            * Integer.parseInt(questionLabel.getText().split(" ")[2]);
         break;
     }
 
@@ -934,9 +966,10 @@ public class EscapeRoomController {
       GameState.mathGameWrongAns = true;
 
       // Update the question label to indicate a wrong answer
-      Platform.runLater(() -> {
-        questionLabel.setText("wrong Ans");
-      });
+      Platform.runLater(
+          () -> {
+            questionLabel.setText("wrong Ans");
+          });
 
       return false;
     }
@@ -1037,7 +1070,8 @@ public class EscapeRoomController {
       int minutes = (int) ((GameState.time - remainingSeconds) / 60);
       int seconds = (GameState.time - remainingSeconds) % 60;
       // Format and set the ending message based on the selected ending.
-      endMessage = String.format(endingMap.get(ending), new DateFormatSymbols().getMonths()[month - 1], dayAdjusted);
+      endMessage = String.format(
+          endingMap.get(ending), new DateFormatSymbols().getMonths()[month - 1], dayAdjusted);
       // Update the phone UI to display a congratulatory message.
       endPhoneTitle.setText("Congratulations!");
       endPhoneMessage.setText(
@@ -1317,70 +1351,98 @@ public class EscapeRoomController {
     batteryMoveDown.setByY(50);
 
     // Wait for specified durations and play animations
-    wait(1000, () -> {
-      // Play fade transitions for paper image, paper text, and calculator keys
-      paperImageFade.play();
-      paperTextFade.play();
-      calculatorFade.play();
+    wait(
+        1000,
+        () -> {
+          // Play fade transitions for paper image, paper text, and calculator keys
+          paperImageFade.play();
+          paperTextFade.play();
+          calculatorFade.play();
 
-      // Play translate transitions for paper image, paper text, and calculator keys
-      paperImageMove.play();
-      paperTextMove.play();
-      calculatorMove.play();
-    });
+          // Play translate transitions for paper image, paper text, and calculator keys
+          paperImageMove.play();
+          paperTextMove.play();
+          calculatorMove.play();
+        });
 
-    wait(1200, () -> {
-      // Play the translate transition for the battery
-      batteryMove.play();
-    });
+    wait(
+        1200,
+        () -> {
+          // Play the translate transition for the battery
+          batteryMove.play();
+        });
 
-    wait(1400, () -> {
-      // Play translate transitions for paper image, paper text, and calculator keys
-      batteryMoveBack.play();
-      scrollPaperImage.setDisable(true);
-      scrollPaperImage.setVisible(false);
-      scrollPaperText.setDisable(true);
-      scrollPaperText.setVisible(false);
-      calculatorKeysGroup.setDisable(true);
-      calculatorKeysGroup.setVisible(false);
-    });
+    wait(
+        1400,
+        () -> {
+          // Play translate transitions for paper image, paper text, and calculator keys
+          batteryMoveBack.play();
+          scrollPaperImage.setDisable(true);
+          scrollPaperImage.setVisible(false);
+          scrollPaperText.setDisable(true);
+          scrollPaperText.setVisible(false);
+          calculatorKeysGroup.setDisable(true);
+          calculatorKeysGroup.setVisible(false);
+        });
 
-    wait(1500, () -> {
-      wait(100, () -> {
-        batteryMoveUp.play();
-      });
-      wait(200, () -> {
-        batteryMoveDown.play();
-      });
-      wait(800, () -> {
-        batteryMoveUp.play();
-      });
-      wait(900, () -> {
-        batteryMoveDown.play();
-      });
-    });
+    wait(
+        1500,
+        () -> {
+          wait(
+              100,
+              () -> {
+                batteryMoveUp.play();
+              });
+          wait(
+              200,
+              () -> {
+                batteryMoveDown.play();
+              });
+          wait(
+              800,
+              () -> {
+                batteryMoveUp.play();
+              });
+          wait(
+              900,
+              () -> {
+                batteryMoveDown.play();
+              });
+        });
 
-    wait(1500, () -> {
-      wait(200, () -> {
-        batteryPower1.setEffect(new Glow(1.0));
-      });
-      wait(400, () -> {
-        batteryPower2.setEffect(new Glow(1.0));
-      });
-      wait(600, () -> {
-        batteryPower3.setEffect(new Glow(1.0));
-      });
-      wait(800, () -> {
-        batteryPower4.setEffect(new Glow(1.0));
-      });
-      soundUtils.playAudio("electric1.m4a", 2, 0.1);
-    });
+    wait(
+        1500,
+        () -> {
+          wait(
+              200,
+              () -> {
+                batteryPower1.setEffect(new Glow(1.0));
+              });
+          wait(
+              400,
+              () -> {
+                batteryPower2.setEffect(new Glow(1.0));
+              });
+          wait(
+              600,
+              () -> {
+                batteryPower3.setEffect(new Glow(1.0));
+              });
+          wait(
+              800,
+              () -> {
+                batteryPower4.setEffect(new Glow(1.0));
+              });
+          soundUtils.playAudio("electric1.m4a", 2, 0.1);
+        });
 
-    wait(3000, () -> {
-      // Toggle the battery game screen and hide the torch button cover
-      toggleBatteryScreen();
-      torchButtonCover.setVisible(false);
-    });
+    wait(
+        3000,
+        () -> {
+          // Toggle the battery game screen and hide the torch button cover
+          toggleBatteryScreen();
+          torchButtonCover.setVisible(false);
+        });
   }
 
   /**
@@ -1398,53 +1460,55 @@ public class EscapeRoomController {
     }
 
     // Create a new thread for the fade animation and sound effects
-    Thread fadeThread = new Thread(() -> {
-      // Create a fade transition for the battery icon
-      FadeTransition batteryFade = new FadeTransition();
+    Thread fadeThread = new Thread(
+        () -> {
+          // Create a fade transition for the battery icon
+          FadeTransition batteryFade = new FadeTransition();
 
-      // Determine which battery power icon to target based on battery percentage
-      switch (GameState.batteryPercent) {
-        case 25:
-          batteryFade.setNode(batteryPower1);
-          break;
-        case 50:
-          batteryFade.setNode(batteryPower2);
-          break;
-        case 75:
-          batteryFade.setNode(batteryPower3);
-          break;
-        case 100:
-          batteryFade.setNode(batteryPower4);
-          break;
-      }
+          // Determine which battery power icon to target based on battery percentage
+          switch (GameState.batteryPercent) {
+            case 25:
+              batteryFade.setNode(batteryPower1);
+              break;
+            case 50:
+              batteryFade.setNode(batteryPower2);
+              break;
+            case 75:
+              batteryFade.setNode(batteryPower3);
+              break;
+            case 100:
+              batteryFade.setNode(batteryPower4);
+              break;
+          }
 
-      // Configure the fade transition
-      batteryFade.setDuration(Duration.millis(400));
-      batteryFade.setFromValue(0);
-      batteryFade.setToValue(1);
+          // Configure the fade transition
+          batteryFade.setDuration(Duration.millis(400));
+          batteryFade.setFromValue(0);
+          batteryFade.setToValue(1);
 
-      // Play the battery charging animation
-      batteryFade.play();
+          // Play the battery charging animation
+          batteryFade.play();
 
-      // Play the electric charging sound
-      soundUtils.playAudio("electric2.m4a", 1, 0.08);
-    });
+          // Play the electric charging sound
+          soundUtils.playAudio("electric2.m4a", 1, 0.08);
+        });
 
     // Set the fadeThread as a daemon thread and start it
     fadeThread.setDaemon(true);
     fadeThread.start();
 
     // Update the UI on the JavaFX application thread
-    Platform.runLater(() -> {
-      // Update the battery percentage label text
-      powerPercentLabel.setText(GameState.batteryPercent + "%");
+    Platform.runLater(
+        () -> {
+          // Update the battery percentage label text
+          powerPercentLabel.setText(GameState.batteryPercent + "%");
 
-      // Set the text color to green to indicate charging
-      powerPercentLabel.setTextFill(Color.rgb(0, 255, 0));
+          // Set the text color to green to indicate charging
+          powerPercentLabel.setTextFill(Color.rgb(0, 255, 0));
 
-      // Apply a glow effect to the battery percentage label
-      powerPercentLabel.setEffect(new Glow(0.5));
-    });
+          // Apply a glow effect to the battery percentage label
+          powerPercentLabel.setEffect(new Glow(0.5));
+        });
   }
 
   private void clickBatteryScreen() {
@@ -1470,9 +1534,11 @@ public class EscapeRoomController {
 
     // Wait for a short duration and then set the flag to indicate that the toggle
     // is complete
-    wait(500, () -> {
-      GameState.togglingBattery = false;
-    });
+    wait(
+        500,
+        () -> {
+          GameState.togglingBattery = false;
+        });
 
     // Print the current battery screen status
     System.out.println("Current battery screen status: " + GameState.batteryIsOpen);
@@ -1753,7 +1819,8 @@ public class EscapeRoomController {
         if (answerTextArea.getText().isEmpty()) {
           return;
         }
-        answerTextArea.setText(answerTextArea.getText().substring(0, answerTextArea.getText().length() - 1));
+        answerTextArea.setText(
+            answerTextArea.getText().substring(0, answerTextArea.getText().length() - 1));
       } else {
         try {
           if (event.getText().equals("C") || event.getText().equals("c")) {
@@ -1893,9 +1960,10 @@ public class EscapeRoomController {
 
             torchFade.play();
             torchGet.play();
-            Platform.runLater(() -> {
-              redArrowGuidance(redArrowTorch);
-            });
+            Platform.runLater(
+                () -> {
+                  redArrowGuidance(redArrowTorch);
+                });
           });
 
       // Create a thread to make the torch disappear after a certain time period.
@@ -1920,7 +1988,6 @@ public class EscapeRoomController {
 
             torchFade.play();
             torchGet.play();
-
           });
 
       // Set both animation threads as daemon threads and start them.
@@ -1947,7 +2014,6 @@ public class EscapeRoomController {
 
       kitchenHoverFadeMap.put(rectangleObject, disappearFade);
       kitchenHoverFadeMap.get(rectangleObject).play();
-
     }
   }
 
@@ -2009,9 +2075,11 @@ public class EscapeRoomController {
     String toiletString = "toilet" + Math.round(Math.random() * 2 + 1) + ".m4a";
     System.out.println("Playing: " + toiletString);
     soundUtils.playAudio(toiletString, 1, 0.1);
-    wait(4000, () -> {
-      GameState.toiletPressed = false;
-    });
+    wait(
+        4000,
+        () -> {
+          GameState.toiletPressed = false;
+        });
   }
 
   @FXML
@@ -2023,7 +2091,6 @@ public class EscapeRoomController {
       // String rectangleName = (rectangleKey).getId();
       rectangleKey.setOpacity(1);
       lastCalculatorButtonHovered = rectangleKey;
-
     }
   }
 
@@ -2043,18 +2110,21 @@ public class EscapeRoomController {
     circuitGroup.setDisable(false);
     circuitGroup.setVisible(true);
     GameState.torchIsOn.setValue(false);
-    Thread animationThread = new Thread(() -> {
-      FadeTransition endFade = new FadeTransition();
-      endFade.setNode(circuitGroup);
-      endFade.setDuration(Duration.millis(1000));
-      endFade.setFromValue(0);
-      endFade.setToValue(1);
-      endFade.play();
-    });
+    Thread animationThread = new Thread(
+        () -> {
+          FadeTransition endFade = new FadeTransition();
+          endFade.setNode(circuitGroup);
+          endFade.setDuration(Duration.millis(1000));
+          endFade.setFromValue(0);
+          endFade.setToValue(1);
+          endFade.play();
+        });
 
-    wait(250, () -> {
-      startMemoryRecallGame(); // add a pause before starting the game
-    });
+    wait(
+        250,
+        () -> {
+          startMemoryRecallGame(); // add a pause before starting the game
+        });
     soundUtils.playAudio("typing1.mp3", 1, 0.1);
     animationThread.setDaemon(true);
     animationThread.start();
@@ -2079,24 +2149,27 @@ public class EscapeRoomController {
     }
 
     // Create a new thread for the closing animation
-    Thread animationThread = new Thread(() -> {
-      // Create a fade transition for the circuit group
-      FadeTransition endFade = new FadeTransition();
-      endFade.setNode(circuitGroup);
-      endFade.setDuration(Duration.millis(500));
-      endFade.setFromValue(1);
-      endFade.setToValue(0);
-      endFade.play();
-    });
+    Thread animationThread = new Thread(
+        () -> {
+          // Create a fade transition for the circuit group
+          FadeTransition endFade = new FadeTransition();
+          endFade.setNode(circuitGroup);
+          endFade.setDuration(Duration.millis(500));
+          endFade.setFromValue(1);
+          endFade.setToValue(0);
+          endFade.play();
+        });
 
     // Set the animationThread as a daemon thread and start it
     animationThread.setDaemon(true);
     animationThread.start();
 
     // Wait for a short duration and then hide the circuit group
-    wait(500, () -> {
-      circuitGroup.setVisible(false);
-    });
+    wait(
+        500,
+        () -> {
+          circuitGroup.setVisible(false);
+        });
 
     // Disable the circuit group to prevent further interactions
     circuitGroup.setDisable(true);
@@ -2226,9 +2299,10 @@ public class EscapeRoomController {
       guardRoomDark2.setVisible(false);
       soundUtils.playAudio("spotlight.m4a", 1, 0.3);
       issueInstruction(GptPromptEngineering.getLightsOnInstruction());
-      Platform.runLater(() -> {
-        redArrowGuidance(redArrowComputer);
-      });
+      Platform.runLater(
+          () -> {
+            redArrowGuidance(redArrowComputer);
+          });
     } else {
       startMemoryRecallGame();
     }
@@ -2460,31 +2534,33 @@ public class EscapeRoomController {
     // Check if the last message came from the GPT model
     if (GameState.lastMessageFromGPT) {
       // Run the following code on the JavaFX application thread
-      Platform.runLater(() -> {
-        // Create a horizontal box for layout
-        HBox horiBox = new HBox();
-        horiBox.setAlignment(Pos.CENTER);
+      Platform.runLater(
+          () -> {
+            // Create a horizontal box for layout
+            HBox horiBox = new HBox();
+            horiBox.setAlignment(Pos.CENTER);
 
-        // Create a Text element with the timer label text
-        Text text = new Text(timerLabel.getText());
+            // Create a Text element with the timer label text
+            Text text = new Text(timerLabel.getText());
 
-        // Create a TextFlow to display the text
-        TextFlow textFlow = new TextFlow(text);
+            // Create a TextFlow to display the text
+            TextFlow textFlow = new TextFlow(text);
 
-        // Style the TextFlow with background color and text color
-        textFlow.setStyle("-fx-background-color: rgb(143,143,143); " + "-fx-color: rgb(255,255,255);");
+            // Style the TextFlow with background color and text color
+            textFlow.setStyle(
+                "-fx-background-color: rgb(143,143,143); " + "-fx-color: rgb(255,255,255);");
 
-        // Set padding and size constraints for the TextFlow
-        textFlow.setPadding(new Insets(2, 5, 2, 5));
-        textFlow.setMaxWidth(90);
-        textFlow.setMaxHeight(18);
+            // Set padding and size constraints for the TextFlow
+            textFlow.setPadding(new Insets(2, 5, 2, 5));
+            textFlow.setMaxWidth(90);
+            textFlow.setMaxHeight(18);
 
-        // Add the TextFlow to the horizontal box
-        horiBox.getChildren().add(textFlow);
+            // Add the TextFlow to the horizontal box
+            horiBox.getChildren().add(textFlow);
 
-        // Add the horizontal box to the vertical message container
-        messagesVertBox.getChildren().add(horiBox);
-      });
+            // Add the horizontal box to the vertical message container
+            messagesVertBox.getChildren().add(horiBox);
+          });
     }
 
     // Split the message into paragraphs and add them to the user interface
@@ -2522,6 +2598,5 @@ public class EscapeRoomController {
           phoneNameLabel.setText("Prison Guard");
           typingImage.setVisible(false);
         });
-
   }
 }

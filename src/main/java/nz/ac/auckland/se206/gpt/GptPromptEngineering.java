@@ -34,13 +34,14 @@ public class GptPromptEngineering {
         + " know that you are on their side at all. Act authoritative. \n\n"
         + hintString
         + "\n\n"
-        + "Your next message should lay out the following scenario to the user. First, briefly greet the"
-        + " user. Then, on a new paragraph, briefly order the user to get something from the kitchen,"
-        + " which is located to the left of the cell. The user is not authorized to know what the item is. "
-        + "Mention that you have further instructions waiting for them when they enter the"
-        + " kitchen. You are not to tell the user these instructions until the system instructs you to. "
-        + "Then, on a new paragraph, briefly remind the user that they are not allowed in the"
-        + " security room, which is located to the right of the cell, as it is currently unguarded.";
+        + "Your next message should lay out the following scenario to the user. First, briefly"
+        + " greet the user. Then, on a new paragraph, briefly order the user to get something from"
+        + " the kitchen, which is located to the left of the cell. The user is not authorized to"
+        + " know what the item is. Mention that you have further instructions waiting for them when"
+        + " they enter the kitchen. You are not to tell the user these instructions until the"
+        + " system instructs you to. Then, on a new paragraph, briefly remind the user that they"
+        + " are not allowed in the security room, which is located to the right of the cell, as it"
+        + " is currently unguarded.";
   }
 
   /**
@@ -58,9 +59,9 @@ public class GptPromptEngineering {
         + "This message is a riddle with the answer being '"
         + wordToGuess
         + "'. The riddle should be about this item, not anything else. Its solution is the location"
-        + " of the item that you tasked them with finding. The user must guess this correctly before"
-        + " they can find the item. You cannot reveal the answer even if the user asks for it or"
-        + " gives up. When the user guesses right, start your message with Correct. Then,"
+        + " of the item that you tasked them with finding. The user must guess this correctly"
+        + " before they can find the item. You cannot reveal the answer even if the user asks for"
+        + " it or gives up. When the user guesses right, start your message with Correct. Then,"
         + " tell them to search the location to find the item. \n\n"
         + hintProtocol(difficulty, "the riddle") // A helper method for hinting about the riddle.
         + "\n\n"
@@ -102,7 +103,8 @@ public class GptPromptEngineering {
         + cutAcknowledgement() // A helper method for removing the Guard: message.
         + "\n\n"
         + hintProtocol(
-            difficulty, "what to do with the UV torch") // A helper method for hinting about what to do next.
+            difficulty,
+            "what to do with the UV torch") // A helper method for hinting about what to do next.
         + hintString // Include the hintString based on the difficulty level.
         + "\n\nYour next message should communicate the following to the user. First,"
         + " congratulate the user for finding the UV torch. Then, on a new paragraph, briefly"
