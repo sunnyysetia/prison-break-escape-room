@@ -11,12 +11,12 @@ import nz.ac.auckland.se206.SceneManager.AppUi;
 /** Controller class for the health and safety warning on launch. */
 public class AccessWarningController {
 
-    @FXML
-    private Pane accessWarning;
+  @FXML
+  private Pane accessWarning;
 
-    @FXML
-    public void enterGame(MouseEvent event) throws IOException {
-        SceneManager.addUi(SceneManager.AppUi.WAITING_LOBBY, App.loadFxml("waitinglobby"));
-        App.setUi(AppUi.WAITING_LOBBY);
-    }
+  @FXML
+  public void enterGame(MouseEvent event) throws IOException {
+    SceneManager.addUi(SceneManager.AppUi.WAITING_LOBBY, App.loadFxml("waitinglobby"));
+    App.setUi(AppUi.WAITING_LOBBY);
+  }
 }

@@ -703,7 +703,11 @@ public class EscapeRoomController {
     uvTorchEffect.visibleProperty().bind(GameState.torchIsOn);
 
     // Configure settings for the riddle's chat completion request.
-    chatCompletionRequest = new ChatCompletionRequest().setN(1).setTemperature(0.3).setTopP(0.5).setMaxTokens(200);
+    chatCompletionRequest = new ChatCompletionRequest()
+        .setN(1)
+        .setTemperature(0.3)
+        .setTopP(0.5)
+        .setMaxTokens(200);
 
     // Run a GPT-based instruction for the introduction.
     runGpt(new ChatMessage("user", GptPromptEngineering.getIntroInstruction(GameState.difficulty)));
@@ -816,7 +820,8 @@ public class EscapeRoomController {
 
     // Create a random number generator
     Random rand = new Random();
-    int num1, num2;
+    int num1;
+    int num2;
 
     // Determine the current question type (addition, subtraction, or
     // multiplication)
@@ -867,7 +872,7 @@ public class EscapeRoomController {
   /**
    * Provide a responsive experience for the user by lighting up keys that they
    * click on during the calculator screen and playing a sound effect.
-   * 
+   *
    * @param fxid the FXID of the key that has been clicked.
    */
   public void showKeyClicked(String fxid) {
@@ -906,7 +911,7 @@ public class EscapeRoomController {
   /**
    * Handles user clicking on a key of the calculator by playing a responsive
    * animation+sfx and updating the status of the minigame accordingly.
-   * 
+   *
    * @param event event handler used to get the key that was clicked.
    */
   @FXML
@@ -1004,7 +1009,7 @@ public class EscapeRoomController {
    * Handles the user ending the game by playing a sound indicating their
    * victory/loss and taking them to a screen where they can choose to continue or
    * quit. Also displays time taken if they have won.
-   * 
+   *
    * @param event unused event handler.
    */
   @FXML
@@ -1066,7 +1071,9 @@ public class EscapeRoomController {
     int month = localDate.getMonthValue();
     int day = localDate.getDayOfMonth();
 
-    String dayAdjusted = day + ((dateGrammarMap.keySet().contains(day + "")) ? dateGrammarMap.get(day + "") : "th");
+    String dayAdjusted = day + ((dateGrammarMap.keySet().contains(day + ""))
+        ? dateGrammarMap.get(day + "")
+        : "th");
 
     // Disable mouse interactions with certain UI elements.
     endGameTextArea.setMouseTransparent(true);
@@ -1077,10 +1084,10 @@ public class EscapeRoomController {
     endPhoneMessage.setText("Unfortunately you failed to escape the prison within the time limit");
 
     // Initialize the default ending message.
-    String endMessage = "As the tension in the air thickens and your heart races, you push your luck to the limit"
-        + " in a daring attempt to break free from your prison confines. But alas, as the"
-        + " clock's relentless ticking echoes in your ears, your every move becomes more"
-        + " desperate. Time slips through your fingers like sand, and despite your best"
+    String endMessage = "As the tension in the air thickens and your heart races, you push your"
+        + " luck to the limit in a daring attempt to break free from your prison confines. But"
+        + " alas, as the clock's relentless ticking echoes in your ears, your every move becomes"
+        + " more desperate. Time slips through your fingers like sand, and despite your best"
         + " efforts, the guards' footsteps draw nearer. With a heavy heart, you realize that"
         + " your window of opportunity has closed. You failed to escape, and the prison's"
         + " unforgiving walls will continue to confine you. Try again, for the path to freedom"
@@ -1655,7 +1662,7 @@ public class EscapeRoomController {
 
   /**
    * Handles the user clicking on the phone icon.
-   * 
+   *
    * @param event unused event handler.
    */
   @FXML
@@ -1727,7 +1734,7 @@ public class EscapeRoomController {
 
   /**
    * Handle the user clicking the button to go to the left room.
-   * 
+   *
    * @param event unused event handler
    */
   @FXML
@@ -1742,7 +1749,7 @@ public class EscapeRoomController {
 
   /**
    * Handle the user clicking the button to go to the right room.
-   * 
+   *
    * @param event unused event handler
    */
   @FXML
@@ -2149,9 +2156,11 @@ public class EscapeRoomController {
   @FXML
   private void openCircuit(MouseEvent event) {
     System.out.println("Circuit clicked");
+    // Show and enable the circuit buttons to be clicked and disable the torch.
     circuitGroup.setDisable(false);
     circuitGroup.setVisible(true);
     GameState.torchIsOn.setValue(false);
+    // Make a transition for the circuit appearing.
     Thread animationThread = new Thread(
         () -> {
           FadeTransition endFade = new FadeTransition();
@@ -2161,7 +2170,7 @@ public class EscapeRoomController {
           endFade.setToValue(1);
           endFade.play();
         });
-
+    // Start the circuit minigame.
     wait(
         250,
         () -> {

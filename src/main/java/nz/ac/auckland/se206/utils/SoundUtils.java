@@ -13,7 +13,7 @@ public class SoundUtils {
 
   /**
    * Plays a provided audio clip to the user.
-   * 
+   *
    * @param fileName   the file that is to be played.
    * @param cycleCount the amount of times that it should be played.
    * @param volume     the volume level that it is to be played at.
@@ -48,7 +48,7 @@ public class SoundUtils {
 
   /**
    * Plays a provided media to the user.
-   * 
+   *
    * @param fileName the file that is to be played.
    * @param volume   the volume level that it is to be played at.
    */
