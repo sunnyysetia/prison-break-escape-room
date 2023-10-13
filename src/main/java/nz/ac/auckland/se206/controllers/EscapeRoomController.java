@@ -703,7 +703,11 @@ public class EscapeRoomController {
     uvTorchEffect.visibleProperty().bind(GameState.torchIsOn);
 
     // Configure settings for the riddle's chat completion request.
-    chatCompletionRequest = new ChatCompletionRequest().setN(1).setTemperature(0.3).setTopP(0.5).setMaxTokens(200);
+    chatCompletionRequest = new ChatCompletionRequest()
+        .setN(1)
+        .setTemperature(0.3)
+        .setTopP(0.5)
+        .setMaxTokens(200);
 
     // Run a GPT-based instruction for the introduction.
     runGpt(new ChatMessage("user", GptPromptEngineering.getIntroInstruction(GameState.difficulty)));
@@ -816,7 +820,8 @@ public class EscapeRoomController {
 
     // Create a random number generator
     Random rand = new Random();
-    int num1, num2;
+    int num1;
+    int num2;
 
     // Determine the current question type (addition, subtraction, or
     // multiplication)
@@ -1066,7 +1071,9 @@ public class EscapeRoomController {
     int month = localDate.getMonthValue();
     int day = localDate.getDayOfMonth();
 
-    String dayAdjusted = day + ((dateGrammarMap.keySet().contains(day + "")) ? dateGrammarMap.get(day + "") : "th");
+    String dayAdjusted = day + ((dateGrammarMap.keySet().contains(day + ""))
+        ? dateGrammarMap.get(day + "")
+        : "th");
 
     // Disable mouse interactions with certain UI elements.
     endGameTextArea.setMouseTransparent(true);
@@ -1077,10 +1084,10 @@ public class EscapeRoomController {
     endPhoneMessage.setText("Unfortunately you failed to escape the prison within the time limit");
 
     // Initialize the default ending message.
-    String endMessage = "As the tension in the air thickens and your heart races, you push your luck to the limit"
-        + " in a daring attempt to break free from your prison confines. But alas, as the"
-        + " clock's relentless ticking echoes in your ears, your every move becomes more"
-        + " desperate. Time slips through your fingers like sand, and despite your best"
+    String endMessage = "As the tension in the air thickens and your heart races, you push your"
+        + " luck to the limit in a daring attempt to break free from your prison confines. But"
+        + " alas, as the clock's relentless ticking echoes in your ears, your every move becomes"
+        + " more desperate. Time slips through your fingers like sand, and despite your best"
         + " efforts, the guards' footsteps draw nearer. With a heavy heart, you realize that"
         + " your window of opportunity has closed. You failed to escape, and the prison's"
         + " unforgiving walls will continue to confine you. Try again, for the path to freedom"

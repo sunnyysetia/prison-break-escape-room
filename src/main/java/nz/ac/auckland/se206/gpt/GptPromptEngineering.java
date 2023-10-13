@@ -15,11 +15,12 @@ public class GptPromptEngineering {
     String hintString;
     if (difficulty.equals("hard")) {
       // In the hard difficulty, the guard should never provide hints or help.
-      hintString = "You are never to provide the user with hints or help across all future protocols. ";
+      hintString = "You are never to provide the user with hints or help across all future "
+          + "protocols. ";
     } else {
       // In other difficulties, the guard can provide hints if requested by the user.
-      hintString = "Future orders issued by the system may specify that users are able to request for hints"
-          + " or help. When providing a hint, start your reply with Hint:. You should not"
+      hintString = "Future orders issued by the system may specify that users are able to request "
+          + "for hints or help. When providing a hint, start your reply with Hint:. You should not"
           + " provide hints without being asked. ";
     }
 
@@ -88,11 +89,11 @@ public class GptPromptEngineering {
       hintString = ""; // No hint for the "hard" difficulty level.
     } else {
       // Provide a hint for other difficulty levels about what to do next.
-      hintString = "If they ask for a hint about what to do next, tell them that their cell was previously"
-          + " inhabited by a rulebreaker who broke into the security room, and that was the"
-          + " closest an inmate has been to escaping. The guards always heard scratching sounds"
-          + " at night from his cell. Only say this if the user asks for a hint, not in the"
-          + " current message. ";
+      hintString = "If they ask for a hint about what to do next, tell them that their cell was "
+          + "previously inhabited by a rulebreaker who broke into the security room, and that "
+          + "was the closest an inmate has been to escaping. The guards always heard scratching "
+          + "sounds at night from his cell. Only say this if the user asks for a hint, not in the "
+          + "current message. ";
     }
 
     // Return an instruction message for when the riddle is solved and the item is
@@ -128,9 +129,9 @@ public class GptPromptEngineering {
       hintString = ""; // No hint for the "hard" difficulty level.
     } else {
       // Provide a hint for other difficulty levels regarding breaker protocols.
-      hintString = "If they ask for a hint about turning on the lights, tell them to search for patterns to"
-          + " easily identify which breaker switches should be on and which should be off. "
-          + "Only say this if they ask for a hint, not in the current message. ";
+      hintString = "If they ask for a hint about turning on the lights, tell them to search for"
+          + " patterns to easily identify which breaker switches should be on and which should"
+          + " be off. Only say this if they ask for a hint, not in the current message. ";
     }
 
     // Return an instruction message for turning on lights in a dark room.
