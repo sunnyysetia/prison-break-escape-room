@@ -458,6 +458,9 @@ public class EscapeRoomController {
     // Update the UI label to display the timer.
     updateTimerLabel();
 
+    // Initialise memory recall minigame
+    initialiseMemoryGame();
+
     // Binds send button so that it is disabled while gpt is writing a message.
     sendButton.disableProperty().bind(GameState.gptThinking);
 
@@ -2355,12 +2358,12 @@ public class EscapeRoomController {
             showGuideArrow(redArrowComputer);
           });
     } else {
+      initialiseMemoryGame();
       startMemoryRecallGame();
     }
   }
 
   private void startMemoryRecallGame() {
-    initialiseMemoryGame();
     goBackMemory.setLayoutX(469);
     goBackMemory.setLayoutY(528);
     checkGuessMemory.setVisible(false);
