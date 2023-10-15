@@ -74,6 +74,9 @@ import nz.ac.auckland.se206.utils.SoundUtils;
 /** Controller class for the room view. */
 public class EscapeRoomController {
 
+  // This class is used to play audio and music and is used in App.
+  public static SoundUtils soundUtils = new SoundUtils();
+
   // This pane contains all the three panes below, we move this pane left and
   // right
   @FXML
@@ -297,8 +300,6 @@ public class EscapeRoomController {
   private Rectangle b5;
   @FXML
   private Rectangle c5;
-
-  public static SoundUtils soundUtils = new SoundUtils();
 
   private List<String> allSwitches = new ArrayList<>(
       List.of(
