@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.controllers.EscapeRoomController;
 import nz.ac.auckland.se206.speech.TextToSpeech;
-import nz.ac.auckland.se206.utils.SoundUtils;
 
 /**
  * This is the entry point of the JavaFX application, while you can change this
