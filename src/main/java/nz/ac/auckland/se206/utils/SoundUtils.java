@@ -8,7 +8,6 @@ import nz.ac.auckland.se206.GameState;
 /** Handles sound effects and music that is played throughout the game. */
 public class SoundUtils {
   private static MediaPlayer currentMediaPlayer;
-
   private static AudioClip audioClip;
 
   /**
