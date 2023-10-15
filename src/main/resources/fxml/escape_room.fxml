@@ -247,7 +247,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="checkGuessMemory" alignment="CENTER" layoutX="500.0" layoutY="527.0" onMouseClicked="#closeCircuit" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="35.0" prefWidth="147.0" style="-fx-border-color: white; -fx-font-size: 20;" styleClass="stencilText" stylesheets="@../css/font.css" text="Check Guess" textFill="WHITE">
+            <Label fx:id="checkGuessMemory" alignment="CENTER" layoutX="500.0" layoutY="527.0" onMouseClicked="#checkIfUserInputCorrect" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="35.0" prefWidth="147.0" style="-fx-border-color: white; -fx-font-size: 20;" styleClass="stencilText" stylesheets="@../css/font.css" text="Check Guess" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
