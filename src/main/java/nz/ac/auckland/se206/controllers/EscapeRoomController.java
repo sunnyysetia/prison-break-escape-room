@@ -525,7 +525,7 @@ public class EscapeRoomController {
                             + "System:>Welcome back Prison Guard!\n"
                             + "System:>Here is a list of admin functions you have access"
                             + " to:\n\n",
-                        10);
+                        10, true);
                     typeWrite(
                         computerConsoleTextArea,
                         "  1. Unlock all prison cell doors\n"
@@ -533,7 +533,7 @@ public class EscapeRoomController {
                             + "  3. Retrieve new uniform\n"
                             + "\n Choose a function by typing the corresponding number\n"
                             + "System:>Choose an Option:",
-                        6);
+                        6, true);
                   });
               writerThread.setDaemon(true);
               writerThread.start();
@@ -543,7 +543,7 @@ public class EscapeRoomController {
                     typeWrite(
                         computerConsoleTextArea,
                         "\n" + "System:>Incorrect Password!\n" + "System:>Enter Password:",
-                        15);
+                        15, true);
                   });
               writerThread.setDaemon(true);
               writerThread.start();
@@ -562,7 +562,7 @@ public class EscapeRoomController {
                     typeWrite(
                         computerConsoleTextArea,
                         "\n" + "System:>Invalid Option!\n" + "System:>Choose an Option:",
-                        15);
+                        15, true);
                   });
               writerThread.setDaemon(true);
               writerThread.start();
@@ -1160,7 +1160,7 @@ public class EscapeRoomController {
           } catch (InterruptedException e) {
             e.printStackTrace();
           }
-          typeWrite(endGameTextArea, finalEndMessage, 10); // Type the final ending message.
+          typeWrite(endGameTextArea, finalEndMessage, 10, false); // Type the final ending message.
           System.out.println("finished typing ending message");
           try {
             Thread.sleep(2000); // Wait for 2 seconds after typing the ending message.
@@ -1171,7 +1171,7 @@ public class EscapeRoomController {
           typeWrite(
               clickContinueTextArea,
               "Click anywhere to continue",
-              15); // Display a click-to-continue message.
+              15, false); // Display a click-to-continue message.
           GameState.continueEnabled = true; // Enable the click-to-continue functionality.
         });
 
@@ -1180,13 +1180,15 @@ public class EscapeRoomController {
     textThread.start();
   }
 
-  private void typeWrite(TextArea sceneTextArea, String message, int interval) {
+  private void typeWrite(TextArea sceneTextArea, String message, int interval, boolean sound) {
     int i = 0;
     SoundUtils typingSoundUtils = new SoundUtils();
     while (i < message.length()) {
       int j = i;
       int k = (int) (Math.random() * 5 + 1);
-      typingSoundUtils.playSound("typing" + k + ".mp3", 0.04);
+      if (sound) {
+        typingSoundUtils.playSound("typing" + k + ".mp3", 0.04);
+      }
       Platform.runLater(
           () -> {
             // Append the character at position j from the message to the sceneTextArea.
