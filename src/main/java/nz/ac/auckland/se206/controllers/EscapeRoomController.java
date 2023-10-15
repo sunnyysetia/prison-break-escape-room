@@ -264,9 +264,9 @@ public class EscapeRoomController {
   @FXML
   private Label memoryCountdownLabel;
   @FXML
-  private Button goBackMemory;
+  private Label goBackMemory;
   @FXML
-  private Button checkGuessMemory;
+  private Label checkGuessMemory;
   @FXML
   private Rectangle a1;
   @FXML
@@ -298,7 +298,7 @@ public class EscapeRoomController {
   @FXML
   private Rectangle c5;
 
-  private SoundUtils soundUtils = new SoundUtils();
+  public static SoundUtils soundUtils = new SoundUtils();
 
   private List<String> allSwitches = new ArrayList<>(
       List.of(

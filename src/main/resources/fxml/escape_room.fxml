@@ -128,11 +128,11 @@
       </ImageView>
       <Pane fx:id="UIPane" layoutY="660.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="1022.0">
          <children>
-            <Label fx:id="leftButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" onMouseClicked="#leftPane" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="31.0" prefWidth="63.0" style="-fx-border-color: white;" styleClass="stencilText" stylesheets="@../css/font.css" text="Left" textFill="WHITE">
+            <Label fx:id="leftButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" onMouseClicked="#leftPane" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="31.0" prefWidth="63.0" style="-fx-border-color: white; -fx-font-size: 24;" styleClass="stencilText" stylesheets="@../css/font.css" text="Left" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font></Label>
-            <Label fx:id="rightButton" alignment="CENTER" layoutX="930.0" layoutY="10.0" onMouseClicked="#rightPane" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="31.0" prefWidth="80.0" style="-fx-border-color: white;" styleClass="stencilText" stylesheets="@../css/font.css" text="Right" textFill="WHITE">
+            <Label fx:id="rightButton" alignment="CENTER" layoutX="930.0" layoutY="10.0" onMouseClicked="#rightPane" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="31.0" prefWidth="80.0" style="-fx-border-color: white; -fx-font-size: 24;" styleClass="stencilText" stylesheets="@../css/font.css" text="Right" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font></Label>
@@ -237,21 +237,21 @@
             <Rectangle fx:id="a5" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="635.0" layoutY="264.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
             <Rectangle fx:id="b5" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="635.0" layoutY="338.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
             <Rectangle fx:id="c5" arcHeight="5.0" arcWidth="5.0" fill="RED" height="35.0" layoutX="635.0" layoutY="409.0" onMouseClicked="#clickSwitch" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" stroke="BLACK" strokeType="INSIDE" width="35.0" />
-            <Label fx:id="memoryCountdownLabel" layoutX="378.0" layoutY="462.0" textFill="WHITE">
+            <Label fx:id="memoryCountdownLabel" alignment="CENTER" layoutX="322.0" layoutY="460.0" prefHeight="26.0" prefWidth="359.0" style="-fx-font-size: 20;" styleClass="stencilText" stylesheets="@../css/font.css" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font size="18.0" />
+                  <Font size="20.0" />
                </font>
             </Label>
-            <Button fx:id="checkGuessMemory" focusTraversable="false" layoutX="500.0" layoutY="527.0" mnemonicParsing="false" onMouseClicked="#checkIfUserInputCorrect" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="35.0" prefWidth="105.0" text="Check Guess" visible="false">
+            <Label fx:id="goBackMemory" alignment="CENTER" layoutX="469.0" layoutY="527.0" onMouseClicked="#closeCircuit" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="35.0" prefWidth="65.0" style="-fx-border-color: white; -fx-font-size: 20;" styleClass="stencilText" stylesheets="@../css/font.css" text="Back" textFill="WHITE">
                <font>
-                  <Font size="15.0" />
+                  <Font size="20.0" />
                </font>
-            </Button>
-            <Button fx:id="goBackMemory" focusTraversable="false" layoutX="469.0" layoutY="528.0" mnemonicParsing="false" onMouseClicked="#closeCircuit" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="35.0" prefWidth="75.0" text="Back">
+            </Label>
+            <Label fx:id="checkGuessMemory" alignment="CENTER" layoutX="500.0" layoutY="527.0" onMouseClicked="#closeCircuit" onMouseEntered="#changeCursorToHand" onMouseExited="#resetCursor" prefHeight="35.0" prefWidth="147.0" style="-fx-border-color: white; -fx-font-size: 20;" styleClass="stencilText" stylesheets="@../css/font.css" text="Check Guess" textFill="WHITE">
                <font>
-                  <Font size="15.0" />
+                  <Font size="20.0" />
                </font>
-            </Button>
+            </Label>
          </children>
       </Group>
       <Group fx:id="chatGroup" layoutX="225.0" layoutY="-400.0">
