@@ -1,6 +1,10 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/K_kBlAWd)
 
 # SOFTENG 206 - EscAIpe Room
+Project for SOFTENG 206 (Software Engineering Design 1) as part of Software Engineering degree @ The University of Auckland.
+
+# Game Walkthrough
+https://github.com/sunnyysetia/prison-break-escape-room/assets/89380644/90b11786-edb3-475d-bcdc-4f0540247009
 
 ## To setup OpenAI's API
 
